@@ -1,0 +1,15 @@
+@import "assets/css/config";
+
+.app {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  min-height: 100vh;
+}
+
+.main {
+  align-self: center;
+  padding: 0 $content-padding;
+  width: 100%;
+  max-width: calc($content-width + $content-padding * 2);
+}

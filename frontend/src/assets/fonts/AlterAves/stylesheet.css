@@ -1,0 +1,18 @@
+@font-face {
+  font-family: "Alter Aves";
+  src: url("alter_aves.eot");
+  src: url("alter_aves.eot?#iefix") format("embedded-opentype"),
+    url("alter_aves.woff") format("woff"),
+    url("alter_aves.ttf") format("truetype"),
+    url("alter_aves.svg#alter_aves") format("svg");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+
+  /*font-weight: normal;*/
+  /*font-kerning: normal;*/
+  /*-moz-font-feature-settings: "kern=1";*/
+  /*-moz-font-feature-settings: "kern";*/
+  /*-ms-font-feature-settings: "kern" 1;*/
+  /*font-feature-settings: "kern";*/
+}

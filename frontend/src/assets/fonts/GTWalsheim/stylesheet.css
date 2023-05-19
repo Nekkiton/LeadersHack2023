@@ -1,0 +1,65 @@
+@font-face {
+  font-family: "GT Walsheim LC";
+  src: url("GT-Walsheim-LC-Bold.otf") format("opentype"),
+    url("GT-Walsheim-LC-Bold.woff2") format("woff2"),
+    url("GT-Walsheim-LC-Bold.woff") format("woff"),
+    url("GT-Walsheim-LC-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Walsheim LC";
+  src: url("GT-Walsheim-LC-Bold-Oblique.otf") format("opentype"),
+    url("GT-Walsheim-LC-Bold-Oblique.woff2") format("woff2"),
+    url("GT-Walsheim-LC-Bold-Oblique.woff") format("woff"),
+    url("GT-Walsheim-LC-Bold-Oblique.ttf") format("truetype");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Walsheim LC";
+  src: url("GT-Walsheim-LC-Light.otf") format("opentype"),
+    url("GT-Walsheim-LC-Light.woff2") format("woff2"),
+    url("GT-Walsheim-LC-Light.woff") format("woff"),
+    url("GT-Walsheim-LC-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Walsheim LC";
+  src: url("GT-Walsheim-LC-Light-Oblique.otf") format("opentype"),
+    url("GT-Walsheim-LC-Light-Oblique.woff2") format("woff2"),
+    url("GT-Walsheim-LC-Light-Oblique.woff") format("woff"),
+    url("GT-Walsheim-LC-Light-Oblique.ttf") format("truetype");
+  font-weight: 300;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Walsheim LC";
+  src: url("GT-Walsheim-LC-Regular.otf") format("opentype"),
+    url("GT-Walsheim-LC-Regular.woff2") format("woff2"),
+    url("GT-Walsheim-LC-Regular.woff") format("woff"),
+    url("GT-Walsheim-LC-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "GT Walsheim LC";
+  src: url("GT-Walsheim-LC-Regular-Oblique.otf") format("opentype"),
+    url("GT-Walsheim-LC-Regular-Oblique.woff2") format("woff2"),
+    url("GT-Walsheim-LC-Regular-Oblique.woff") format("woff"),
+    url("GT-Walsheim-LC-Regular-Oblique.ttf") format("truetype");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
