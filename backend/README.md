@@ -33,3 +33,9 @@ $ yarn run test:e2e
 # test coverage
 $ yarn run test:cov
 ```
+
+## Swagger
+OpenAPI (Swagger) is available by the following path:
+```
+<service-url>/api
+```
