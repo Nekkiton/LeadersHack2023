@@ -22,8 +22,8 @@ jobs:
       - name: Check folder
         run: pwd
 
-      - name: Check whoami
-        run: whoami
+      - name: Check config
+        run: kubectl config view
 
       # - name: Check kubectl
       #   run: kubectl get namespaces
