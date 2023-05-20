@@ -1,0 +1,29 @@
+name: 'Deployment check'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - deployment
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      # - name: Setup node
+      #   uses: actions/setup-node@v3
+      #   with:
+      #     node-version: 16.13.x
+      #     cache: npm
+
+      - name: Check folder
+        run: pwd
+
+      - name: Check kubectl
+        run: kubectl get namespaces
+
+      - name: Check helm
+        run: helm list
