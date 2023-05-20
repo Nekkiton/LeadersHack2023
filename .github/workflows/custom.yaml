@@ -22,8 +22,11 @@ jobs:
       - name: Check folder
         run: pwd
 
-      - name: Check kubectl
-        run: kubectl get namespaces
+      - name: Check whoami
+        run: whoami
 
-      - name: Check helm
-        run: helm list
+      # - name: Check kubectl
+      #   run: kubectl get namespaces
+
+      # - name: Check helm
+      #   run: helm list
