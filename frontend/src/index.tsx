@@ -5,7 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import App from "App"
 import MainPage from "pages/Main"
 import ErrorPage from "pages/Error"
-import LoginPage from "pages/Login"
+import Vacancies from "pages/staff/Vacancies"
+
 import { store } from "store"
 import "assets/css/index.scss"
 
@@ -17,8 +18,8 @@ const router = createBrowserRouter([
     children: [
       { path: "/", element: <MainPage /> },
       {
-        path: "/login",
-        element: <LoginPage />,
+        path: "/staff/vacancies",
+        element: <Vacancies />,
       },
     ],
   },

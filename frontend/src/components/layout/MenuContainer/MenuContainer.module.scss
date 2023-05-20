@@ -1,0 +1,63 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+}
+
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  width: 25%;
+  border-radius: 8px;
+  background: $white;
+}
+
+.link {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  padding: 8px 0;
+
+  &.disabled {
+    opacity: 0.5;
+  }
+
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    height: 2px;
+    width: 0;
+    background: $gray-1;
+    border-radius: 3px;
+    transition: $transition;
+  }
+
+  &:global(.active):after {
+    width: 100%;
+  }
+}
+
+.linkIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  flex-grow: 1;
+}
+
+.footer {
+  align-self: flex-start;
+}

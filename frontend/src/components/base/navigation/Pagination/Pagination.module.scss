@@ -1,0 +1,69 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.pagination {
+  display: flex;
+  align-items: center;
+  align-self: center;
+  gap: 8px;
+}
+
+.paginationEnd {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.paginationCenter {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.line {
+  width: 24px;
+  border: 1px solid $gray-3;
+}
+
+.page {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 8px;
+  color: $gray-3;
+  background: $gray-6;
+
+  &.active {
+    background: $gray-3;
+    color: $white;
+  }
+}
+
+.icon path {
+  stroke: $gray-3;
+}
+
+@include mobile {
+  .paginationCenter {
+    gap: 5px;
+
+    .page:first-child,
+    .page:last-child {
+      display: none;
+    }
+  }
+
+  .line {
+    display: none;
+  }
+}

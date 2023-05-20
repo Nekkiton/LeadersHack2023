@@ -3,13 +3,17 @@
 .app {
   display: flex;
   flex-direction: column;
-  gap: 30px;
   min-height: 100vh;
 }
 
 .main {
+  @include content;
+
+  display: flex;
   align-self: center;
-  padding: 0 $content-padding;
+  align-items: stretch;
+  //justify-items: stretch;
+  flex-grow: 1;
+  margin: 24px 0;
   width: 100%;
-  max-width: calc($content-width + $content-padding * 2);
 }

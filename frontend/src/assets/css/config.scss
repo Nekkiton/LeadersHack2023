@@ -1,14 +1,172 @@
-$primary: #ff0f43;
-$background: #ffffff;
-$text: #1a1230;
+// colors
 
-$font: "Alter Aves";
-$font-heading: "GT Walsheim LC";
+$gray-1: #1a1230;
+$gray-2: #1a1230;
+$gray-3: #6f6f6f;
+$gray-4: #c1c2c7;
+$gray-5: #d7d8de;
+$gray-6: #e9eaee;
+$white: #ffffff;
+$blue: #2f80ed;
+$red: #eb5757;
+$orange: #ff9900;
+$green: #219653;
+$purpure: #B390EC;
+$light-blue: #5CD5DD;
 
-$font-size: 18px;
-$font-weight: 400;
+$text: $gray-2;
 
-$content-width: 1600px;
-$content-padding: 30px;
+//transition
 
 $transition: 0.3s;
+
+// typography
+
+@mixin title {
+  font-size: 64px;
+  line-height: 130%;
+  font-family: "Alter Aves";
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+@mixin heading-1 {
+  font-size: 40px;
+  line-height: 130%;
+  font-family: "Alter Aves";
+  font-weight: 400;
+}
+
+@mixin heading-2 {
+  font-size: 30px;
+  line-height: 130%;
+  font-family: "GT Walsheim LC";
+  font-weight: 700;
+}
+
+@mixin heading-3 {
+  font-size: 24px;
+  line-height: 130%;
+  font-family: "GT Walsheim LC";
+  font-weight: 700;
+}
+
+@mixin heading-4 {
+  font-size: 20px;
+  line-height: 130%;
+  font-family: "GT Walsheim LC";
+  font-weight: 700;
+}
+
+@mixin heading-5 {
+  font-size: 18px;
+  line-height: 140%;
+  font-family: "GT Walsheim LC";
+  font-weight: 700;
+}
+
+@mixin heading-6 {
+  font-size: 18px;
+  line-height: 140%;
+  font-family: "GT Walsheim LC";
+  font-weight: 700;
+}
+
+@mixin heading-7 {
+  font-size: 16px;
+  line-height: 140%;
+  font-family: "GT Walsheim LC";
+  font-weight: 700;
+}
+
+@mixin heading-8 {
+  font-size: 14px;
+  line-height: 160%;
+  font-family: "GT Walsheim LC";
+  font-weight: 700;
+}
+
+@mixin paragraph-1 {
+  font-size: 20px;
+  line-height: 160%;
+  font-family: "GT Walsheim LC";
+  font-weight: 400;
+}
+
+@mixin paragraph-2 {
+  font-size: 16px;
+  line-height: 160%;
+  font-family: "GT Walsheim LC";
+  font-weight: 400;
+}
+
+@mixin paragraph-3 {
+  font-size: 14px;
+  line-height: 160%;
+  font-family: "GT Walsheim LC";
+  font-weight: 400;
+}
+
+@mixin caption-1 {
+  font-size: 12px;
+  line-height: 140%;
+  font-family: "GT Walsheim LC";
+  font-weight: 400;
+}
+
+@mixin caption-2 {
+  font-size: 10px;
+  line-height: 140%;
+  font-family: "GT Walsheim LC";
+  font-weight: 400;
+}
+
+@mixin button {
+  font-size: 16px;
+  line-height: 140%;
+  font-family: "GT Walsheim LC";
+  font-weight: 400;
+}
+
+// media
+
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 375px) {
+    @content;
+  }
+}
+
+@mixin mobile-narrow {
+  @media (max-width: 320px) {
+    @content;
+  }
+}
+
+// layout
+
+@mixin content {
+  padding: 0 30px;
+  width: 100%;
+  max-width: calc(1200px + 60px);
+
+  @include tablet {
+    padding: 0 20px;
+    max-width: calc(728px + 40px);
+  }
+
+  @include mobile {
+    padding: 0 16px;
+    max-width: calc(343px + 32px);
+  }
+
+  @include mobile-narrow {
+    padding: 0 16px;
+    max-width: calc(288px + 32px);
+  }
+}

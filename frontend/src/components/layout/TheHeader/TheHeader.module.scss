@@ -1,13 +1,68 @@
 @import "assets/css/config";
 
 .header {
-  padding: 20px $content-padding;
-  background: $primary;
-  color: $background;
+  padding: 16px 0;
+  background: $white;
 }
 
 .content {
+  @include content;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   margin: 0 auto;
   width: 100%;
-  max-width: $content-width;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logoImg {
+  height: 58px;
+}
+
+.logoName {
+  @include paragraph-2;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.userProfile {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.userImg {
+  width: 58px;
+  height: 58px;
+  object-fit: cover;
+}
+
+.userInfoContainer {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.userName {
+  @include paragraph-1;
+}
+
+.userRole {
+  @include caption-1;
+  color: $gray-3;
 }

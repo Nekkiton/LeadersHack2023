@@ -1,0 +1,110 @@
+@import "assets/css/config";
+
+.select {
+  position: relative;
+  min-width: 180px;
+  width: min-content;
+}
+
+.selectBackdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  .select.active & {
+    display: block;
+  }
+}
+
+.selectHeader {
+  @include paragraph-2;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  padding: 10px 12px;
+  width: 100%;
+  z-index: 11;
+  background: $white;
+  border-radius: 8px;
+  border: 1px solid $gray-4;
+  cursor: default;
+
+  &.empty {
+    color: $gray-4;
+  }
+
+  .select.active & {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+}
+
+.selectHeaderIcon {
+  transition: transform $transition;
+
+  .select.active & {
+    transform: rotate(180deg);
+  }
+}
+
+.selectBody {
+  @include paragraph-2;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: absolute;
+  top: calc(100% - 0.5px);
+  left: 0;
+  width: max-content;
+  max-height: 0;
+  background: $white;
+  border: 1px solid $gray-4;
+  overflow: auto;
+  opacity: 0;
+  z-index: 10;
+  border-radius: 0 8px 8px 8px;
+  box-shadow: 0px 0px 20px rgba(71, 91, 172, 0.25);
+  transition: $transition;
+
+  .select.active & {
+    padding: 16px 0;
+    max-height: 350px;
+    opacity: 1;
+  }
+}
+
+.selectItems {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+}
+
+.selectItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 8px 16px;
+  transition: $transition;
+
+  &:hover {
+    background: $gray-6;
+    cursor: pointer;
+  }
+}
+
+.selectControls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 50px;
+  padding: 0 16px;
+}
