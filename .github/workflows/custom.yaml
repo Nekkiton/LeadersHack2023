@@ -23,7 +23,7 @@ jobs:
         run: pwd
 
       - name: Check root
-        run: echo ~
+        run: which kubectl
 
       # - name: Check kubectl
       #   run: kubectl get namespaces
