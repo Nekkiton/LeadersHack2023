@@ -9,9 +9,9 @@ on:
 jobs:
   deploy:
     runs-on: self-hosted
+    env:
+      HOME: "/root"
     steps:
-      - env:
-        HOME: "/root"
       - name: Checkout
         uses: actions/checkout@v3
 
