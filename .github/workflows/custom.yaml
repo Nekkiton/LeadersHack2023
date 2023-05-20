@@ -10,6 +10,8 @@ jobs:
   deploy:
     runs-on: self-hosted
     steps:
+      - env:
+        HOME: "/root"
       - name: Checkout
         uses: actions/checkout@v3
 
@@ -19,11 +21,8 @@ jobs:
       #     node-version: 16.13.x
       #     cache: npm
 
-      - name: Check folder
-        run: env
-
-      # - name: Check kubectl
-      #   run: kubectl get namespaces
+      - name: Check kubectl
+        run: kubectl get namespaces
 
       - name: Check helm
         run: helm list
