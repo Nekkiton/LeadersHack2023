@@ -20,7 +20,7 @@ jobs:
       #     cache: npm
 
       - name: Check folder
-        run: pwd
+        run: env
 
       # - name: Check kubectl
       #   run: kubectl get namespaces
