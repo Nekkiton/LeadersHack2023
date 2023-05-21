@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Select from "components/base/controls/Select"
@@ -10,6 +11,7 @@ import PlusIcon from "assets/icons/plus.svg"
 import SearchIcon from "assets/icons/search.svg"
 import NothingIcon from "assets/icons/document-search.svg"
 import TimesIcon from "assets/icons/times.svg"
+import { fetchVacancyList } from "data/fetchVacancyList"
 
 const userImg = "/images/user.svg"
 
@@ -17,6 +19,18 @@ export default function Vacancies() {
   const [query, setQuery] = useState("")
   const [statuses, setStatuses] = useState([])
   const [mentors, setMentors] = useState([])
+  const [currentPage, setCurrentPage] = useState(5)
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["vacancyList", { query, statuses, mentors, page: currentPage }],
+    queryFn: () =>
+      fetchVacancyList({
+        search: query,
+        statuses,
+        mentors,
+        page: currentPage,
+      }),
+  })
 
   const clearFilters = () => {
     setQuery("")
@@ -103,41 +117,60 @@ export default function Vacancies() {
               </Button>
             )}
           </div>
-          <div className={styles.vacancies}>
-            <Link
-              className={styles.vacancy}
-              href="/staff/vacancies/piar-manager"
-            >
-              <div className={styles.vacancyHeader}>
-                <span>Заявка №1902 от 20 иолюя 2023</span>
-                <VacancyStatus
-                  className={styles.vacancyStatus}
-                  status="active"
-                />
-              </div>
-              <div className={styles.vacancyBody}>
-                <div className={styles.vacancyInfo}>
-                  <p className={styles.vacancyName}>UX/UI дизайнер</p>
-                  <p className={styles.vacancyLocation}>
-                    Карьерный центр Правительства Москвы
-                  </p>
-                </div>
-                <div className={styles.vacancyUser}>
-                  <img className={styles.vacancyUserImg} src={userImg} />
-                  <div className={styles.vacancyUserInfo}>
-                    <p className={styles.vacancyUserName}>Юлиана Митрофанова</p>
-                    <p className={styles.vacancyUserRole}>Наставник</p>
+          {isLoading ? (
+            <p>Загрузка...</p>
+          ) : (
+            <div className={styles.vacancies}>
+              {data?.items.map((vacancy) => (
+                <Link
+                  className={styles.vacancy}
+                  href="/staff/vacancies/piar-manager"
+                  key={vacancy.id}
+                >
+                  <div className={styles.vacancyHeader}>
+                    <span>
+                      Заявка №{vacancy.id} от {vacancy.date}
+                    </span>
+                    <VacancyStatus
+                      className={styles.vacancyStatus}
+                      status={vacancy.status}
+                    />
                   </div>
-                </div>
-              </div>
-              <div className={styles.vacancyResponses}>
-                <Button className={styles.vacancyResponsesBtn} type="text">
-                  <span>19 откликов</span>
-                  <span className={styles.vacancyResponsesNew}>(+5 новых)</span>
-                </Button>
-              </div>
-            </Link>
-          </div>
+                  <div className={styles.vacancyBody}>
+                    <div className={styles.vacancyInfo}>
+                      <p className={styles.vacancyName}>{vacancy.title}</p>
+                      <p className={styles.vacancyLocation}>
+                        {vacancy.company}
+                      </p>
+                    </div>
+                    <div className={styles.vacancyUser}>
+                      <img
+                        className={styles.vacancyUserImg}
+                        src={vacancy.mentorAvatar || userImg}
+                      />
+                      <div className={styles.vacancyUserInfo}>
+                        <p className={styles.vacancyUserName}>
+                          {vacancy.mentorName}
+                        </p>
+                        <p className={styles.vacancyUserRole}>
+                          {vacancy.mentorRole}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.vacancyResponses}>
+                    <Button className={styles.vacancyResponsesBtn} type="text">
+                      <span>Откликов: {vacancy.responsesCount}</span>
+                      <span className={styles.vacancyResponsesNew}>
+                        (+{vacancy.responsesCountNew} новых)
+                      </span>
+                    </Button>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          )}
+
           <Pagination />
         </>
       )}
