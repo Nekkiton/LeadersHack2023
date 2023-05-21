@@ -6,15 +6,21 @@ import VacancyStatus from "components/base/vacancy/Status"
 
 interface Props {
   vacancy: VacancyData
+  noUser?: boolean
 }
 
 const userImg = "/images/user.svg"
 
-export default function VacancyCard({ vacancy }: Props) {
+export default function VacancyCard({ vacancy, noUser }: Props) {
+  const user = {
+    //role: "staff",
+    role: "mentor",
+  }
+
   return (
     <Link
       className={styles.vacancy}
-      href={`/staff/vacancies/${vacancy.id}`}
+      href={`/${user.role}/vacancies/${vacancy.id}`}
       key={vacancy.id}
     >
       <div className={styles.vacancyHeader}>
@@ -31,16 +37,18 @@ export default function VacancyCard({ vacancy }: Props) {
           <p className={styles.vacancyName}>{vacancy.title}</p>
           <p className={styles.vacancyLocation}>{vacancy.company}</p>
         </div>
-        <div className={styles.vacancyUser}>
-          <img
-            className={styles.vacancyUserImg}
-            src={vacancy.mentorAvatar || userImg}
-          />
-          <div className={styles.vacancyUserInfo}>
-            <p className={styles.vacancyUserName}>{vacancy.mentorName}</p>
-            <p className={styles.vacancyUserRole}>{vacancy.mentorRole}</p>
+        {!noUser && (
+          <div className={styles.vacancyUser}>
+            <img
+              className={styles.vacancyUserImg}
+              src={vacancy.mentorAvatar || userImg}
+            />
+            <div className={styles.vacancyUserInfo}>
+              <p className={styles.vacancyUserName}>{vacancy.mentorName}</p>
+              <p className={styles.vacancyUserRole}>{vacancy.mentorRole}</p>
+            </div>
           </div>
-        </div>
+        )}
       </div>
       <div className={styles.vacancyResponses}>
         <Button className={styles.vacancyResponsesBtn} type="text">

@@ -17,6 +17,32 @@ import { fetchVacancyList } from "data/fetchVacancyList"
 const userImg = "/images/user.svg"
 
 export default function Vacancies() {
+  const user = {
+    role: "mentor",
+    //role: "staff",
+  }
+
+  const getNothingText = (role: string) => {
+    if (role === "staff") {
+      return (
+        <>
+          Вы еще не создали ни одной вакансии.
+          <br />
+          Самое время это исправить
+        </>
+      )
+    } else if (role === "mentor") {
+      return (
+        <>
+          Ни одной вакансии, для которой вы назначены наставником, еще нет.
+          <br />
+          Когда кадровый специалист назначит вас на вакансию, вы увидите это
+          здесь
+        </>
+      )
+    }
+  }
+
   const [query, setQuery] = useState("")
   const [statuses, setStatuses] = useState([])
   const [mentors, setMentors] = useState([])
@@ -43,7 +69,7 @@ export default function Vacancies() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.headerTitle}>Вакансии</h1>
-        {true && (
+        {user.role === "staff" && (
           <Link href="/staff/add-vacancy">
             <Button>
               <PlusIcon className="icon" />
@@ -55,17 +81,15 @@ export default function Vacancies() {
       {false ? (
         <div className={styles.nothing}>
           <NothingIcon className={styles.nothingIcon} />
-          <p className={styles.nothingText}>
-            Вы еще не создали ни одной вакансии.
-            <br />
-            Самое время это исправить
-          </p>
-          <Link href="/staff/add-vacancy">
-            <Button>
-              <PlusIcon className="icon" />
-              <span>Создать вакансию</span>
-            </Button>
-          </Link>
+          <p className={styles.nothingText}>{getNothingText(user.role)}</p>
+          {user.role === "staff" && (
+            <Link href="/staff/add-vacancy">
+              <Button>
+                <PlusIcon className="icon" />
+                <span>Создать вакансию</span>
+              </Button>
+            </Link>
+          )}
         </div>
       ) : (
         <>
@@ -89,23 +113,28 @@ export default function Vacancies() {
                 onChange={setStatuses}
                 multiple
               />
-              <Select
-                className={styles.filtersSelect}
-                placeholder="Все наставники"
-                items={{
-                  1: (
-                    <div className={styles.filtersMentor}>
-                      <img className={styles.filtersMentorImg} src={userImg} />
-                      <p className={styles.filtersMentorName}>
-                        Юлиана Митрофанова
-                      </p>
-                    </div>
-                  ),
-                }}
-                value={mentors}
-                onChange={setMentors}
-                multiple
-              />
+              {user.role === "staff" && (
+                <Select
+                  className={styles.filtersSelect}
+                  placeholder="Все наставники"
+                  items={{
+                    1: (
+                      <div className={styles.filtersMentor}>
+                        <img
+                          className={styles.filtersMentorImg}
+                          src={userImg}
+                        />
+                        <p className={styles.filtersMentorName}>
+                          Юлиана Митрофанова
+                        </p>
+                      </div>
+                    ),
+                  }}
+                  value={mentors}
+                  onChange={setMentors}
+                  multiple
+                />
+              )}
             </div>
             {(query || !!statuses.length || !!mentors.length) && (
               <Button
@@ -123,7 +152,10 @@ export default function Vacancies() {
           ) : (
             <div className={styles.vacancies}>
               {data?.items.map((vacancy) => (
-                <VacancyCard vacancy={vacancy} />
+                <VacancyCard
+                  vacancy={vacancy}
+                  noUser={user.role === "mentor"}
+                />
               ))}
             </div>
           )}
