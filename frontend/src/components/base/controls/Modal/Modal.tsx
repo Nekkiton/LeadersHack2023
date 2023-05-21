@@ -2,8 +2,8 @@ import React, { ReactNode } from "react"
 import { Modal as BaseModal } from "antd"
 import styles from "./Modal.module.scss"
 
-interface Props {
-  title: string
+export interface ModalProps {
+  title?: string
   isOpen: boolean
   onOk?: (e: React.MouseEvent<HTMLButtonElement>) => void
   onCancel?: (e: React.MouseEvent<HTMLButtonElement>) => void
@@ -27,7 +27,7 @@ export default function Modal({
   cancelText = "Отмена",
   onOk,
   onCancel,
-}: Props) {
+}: ModalProps) {
   return (
     <>
       <BaseModal
