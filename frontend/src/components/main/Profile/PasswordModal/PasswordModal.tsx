@@ -13,7 +13,8 @@ export default function PasswordModal({
   onCancel,
 }: ModalProps) {
   return (
-    <>
+    // TODO: добавить валидацию старого пароля через запрос на сервер
+    // Добавить валидацию двух текущих паролей
       <Modal
         className={`${className}`}
         title={title}
@@ -27,6 +28,5 @@ export default function PasswordModal({
         <Input label="Новый пароль" password />
         <Input label="Повторите пароль" password />
       </Modal>
-    </>
   )
 }
