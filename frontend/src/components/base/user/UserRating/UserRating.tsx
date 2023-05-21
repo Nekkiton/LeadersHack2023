@@ -2,14 +2,19 @@ import Button from "components/base/controls/Button"
 import styles from "./UserRating.module.scss"
 import StarIcon from "assets/icons/star.svg"
 
-export default function UserRating() {
+interface Props {
+  count: number
+  averageRate: number
+}
+
+export default function UserRating({ count, averageRate }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.rating}>
-        <span>4,7</span>
+        <span>{averageRate}</span>
         <StarIcon className={styles.ratingIcon} />
       </div>
-      <Button type="text">24 отзыва</Button>
+      <Button type="text">отзывов: {count}</Button>
     </div>
   )
 }

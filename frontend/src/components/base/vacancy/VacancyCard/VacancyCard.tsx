@@ -37,20 +37,20 @@ export default function VacancyCard({ vacancy, noUser, link }: Props) {
           <div className={styles.vacancyUser}>
             <img
               className={styles.vacancyUserImg}
-              src={vacancy.mentorAvatar || userImg}
+              src={vacancy.mentor.avatar || userImg}
             />
             <div className={styles.vacancyUserInfo}>
-              <p className={styles.vacancyUserName}>{vacancy.mentorName}</p>
-              <p className={styles.vacancyUserRole}>{vacancy.mentorRole}</p>
+              <p className={styles.vacancyUserName}>{vacancy.mentor.name}</p>
+              <p className={styles.vacancyUserRole}>Наставник</p>
             </div>
           </div>
         )}
       </div>
       <div className={styles.vacancyResponses}>
         <Button className={styles.vacancyResponsesBtn} type="text">
-          <span>Откликов: {vacancy.responsesCount}</span>
+          <span>Откликов: {vacancy.responses.count}</span>
           <span className={styles.vacancyResponsesNew}>
-            (+{vacancy.responsesCountNew} новых)
+            (+{vacancy.responses.countNew} новых)
           </span>
         </Button>
       </div>

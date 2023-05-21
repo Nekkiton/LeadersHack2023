@@ -1,4 +1,5 @@
 import Link from "next/link"
+import { useRouter } from "next/router"
 import Button from "components/base/controls/Button"
 import UserRating from "components/base/user/UserRating"
 import VacancyResponses from "components/base/vacancy/Responses"
@@ -9,6 +10,8 @@ import PenIcon from "assets/icons/pen.svg"
 import PlusIcon from "assets/icons/plus.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import DocumentIcon from "assets/icons/document2.svg"
+import { useQuery } from "@tanstack/react-query"
+import { fetchVacancyInfo } from "data/fetchVacancyInfo"
 
 interface Props {
   backLink: string
@@ -22,6 +25,18 @@ export default function Vacancy({ backLink, link }: Props) {
     //role: 'staff',
     role: "mentor",
   }
+
+  const { query } = useRouter()
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["vacancyInfo", { id: query.id }],
+    queryFn: () =>
+      fetchVacancyInfo({
+        id: query.id as string,
+      }),
+  })
+
+  if (!data || isLoading) return <div>Загрузка...</div>
 
   const statuses = {
     created: "Создана",
@@ -42,7 +57,7 @@ export default function Vacancy({ backLink, link }: Props) {
         </Button>
       </Link>
       <div className={styles.header}>
-        <h1 className={styles.headerTitle}>Пиар-менеджер</h1>
+        <h1 className={styles.headerTitle}>{data.title}</h1>
         <div className={styles.headerControls}>
           {user.role === "staff" && (
             <>
@@ -75,16 +90,16 @@ export default function Vacancy({ backLink, link }: Props) {
         </div>
       </div>
       <div className={styles.organization}>
-        <p className={styles.organizationName}>
-          АНО «Проектный офис по развитию туризма и гостеприимства Москвы»,
-          пресс-центр
-        </p>
+        <p className={styles.organizationName}>{data.company.name}</p>
         <div className={styles.organizationInfo}>
           <div className={styles.organizationAddress}>
             <span className={styles.organizationAddressDot}></span>
-            <span>Калужская, ул. Большая Дмитровка, 7/5</span>
+            <span>{data?.company.address}</span>
           </div>
-          <UserRating />
+          <UserRating
+            count={data.company.reviews.count}
+            averageRate={data.company.reviews.averageRate}
+          />
         </div>
       </div>
       <div className={styles.cards}>
@@ -94,46 +109,50 @@ export default function Vacancy({ backLink, link }: Props) {
               <div className={styles.card}>
                 <p className={styles.cardTitle}>Наставник</p>
                 <div className={styles.mentor}>
-                  <img className={styles.mentorImg} src={userImg} />
+                  <img
+                    className={styles.mentorImg}
+                    src={data.mentor.avatar ?? userImg}
+                  />
                   <div>
-                    <p>Юлиана Митрофанова</p>
-                    <UserRating />
+                    <p>{data?.mentor.name}</p>
+                    <UserRating
+                      count={data.mentor.reviews.count}
+                      averageRate={data.mentor.reviews.averageRate}
+                    />
                   </div>
                 </div>
               </div>
               <div className={styles.card}>
                 <p className={styles.cardTitle}>Даты стажировки</p>
-                <p>1 августа — 30 сентября</p>
+                <p>
+                  {data.internship.startDate} - {data.internship.endDate}
+                </p>
               </div>
             </div>
             <div className={styles.card}>
               <p className={styles.cardTitle}>Описание</p>
-              <p>
-                Прежде всего, постоянное информационно-пропагандистское
-                обеспечение нашей деятельности, в своём классическом
-                представлении, допускает внедрение приоретизации разума над
-                эмоциями. Таким образом, сплочённость команды профессионалов, а
-                также свежий взгляд на привычные вещи — безусловно открывает
-                новые горизонты для укрепления.
-              </p>
+              <p>{data.description}</p>
             </div>
             <div className={styles.card}>
               <p className={styles.cardTitle}>Тестовое задание</p>
-              <p>
-                Тут краткое описание текстового задания и может быть добавлена
-                ссылка, например, https://lk.leaders2023.innoagency.ru/todo и
-                файл.
-              </p>
+              <p>{data.testTask.description}</p>
               <div className={styles.file}>
                 <div className={styles.fileNameContainer}>
                   <DocumentIcon className={styles.fileIcon} />
-                  <span>Document_name... .pdf</span>
+                  <span>{data.testTask.fileName}</span>
                 </div>
-                <span className={styles.fileSize}>2 Mb</span>
+                <span className={styles.fileSize}>
+                  {data.testTask.fileSize}
+                </span>
               </div>
             </div>
           </div>
-          <VacancyResponses link={`${link}/piar-manager/responses`} />
+          <VacancyResponses
+            link={`${link}/piar-manager/responses`}
+            responses={data.responses.items}
+            responsesCount={data.responses.count}
+            responsesCountNew={data.responses.countNew}
+          />
         </div>
         <div className={styles.card}>
           <p className={styles.cardTitle}>Статус</p>
@@ -142,7 +161,7 @@ export default function Vacancy({ backLink, link }: Props) {
               <div
                 className={`${styles.timelineItem} ${
                   status === "created" ? styles.past : ""
-                } ${status === "testTask" ? styles.active : ""}`}
+                } ${status === data.status ? styles.active : ""}`}
                 key={status}
               >
                 <span className={styles.timelineDot}></span>
@@ -150,14 +169,13 @@ export default function Vacancy({ backLink, link }: Props) {
               </div>
             ))}
           </div>
-          <div className={styles.statusComment}>
-            <p className={styles.statusCommentTitle}>Причина отклонения</p>
-            <p className={styles.statusCommentText}>
-              У вас уже создана аналогичная вакансия на выбранные даты. Укажите
-              другие сроки стажировки или измените данные вакансии и подайте
-              заявку повторно.
-            </p>
-          </div>
+          {data.rejectionReason && (
+            <div className={styles.statusComment}>
+              <p className={styles.statusCommentTitle}>Причина отклонения</p>
+              <p className={styles.statusCommentText}>{data.rejectionReason}</p>
+            </div>
+          )}
+
           <Button type="text">
             <span>Подробнее о смене статусов</span>
             <LinkExternalIcon className="icon" />
