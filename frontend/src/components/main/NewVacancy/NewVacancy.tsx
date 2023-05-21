@@ -123,7 +123,8 @@ export default function NewVacancy() {
                 Создать
               </Button>
             </Form.Item>
-            {true && (
+            {/* TODO: добавить кнопку если редактируем */}
+            {false && (
               <Button
                 className={styles.formDeleteBtn}
                 type="text"
