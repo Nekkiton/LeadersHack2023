@@ -3,7 +3,13 @@ import styles from "./Pagination.module.scss"
 import ChevronRightIcon from "assets/icons/chevron-right.svg"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 
-export default function Pagination() {
+interface Props {
+  currentPage: number
+  setCurrentPage: (page: number) => void
+  totalPages: number
+}
+
+export default function Pagination({}: Props) {
   return (
     <div className={styles.container}>
       <Button className={styles.showMore} type="secondary">
