@@ -9,7 +9,11 @@ interface Props {
   totalPages: number
 }
 
-export default function Pagination({}: Props) {
+export default function Pagination({
+  setCurrentPage,
+  currentPage,
+  totalPages,
+}: Props) {
   return (
     <div className={styles.container}>
       <Button className={styles.showMore} type="secondary">
@@ -17,8 +21,13 @@ export default function Pagination({}: Props) {
       </Button>
       <div className={styles.pagination}>
         <div className={styles.paginationEnd}>
-          <ChevronLeftIcon className={styles.icon} />
-          <span className={styles.page}>1</span>
+          <Button type="text" onClick={() => setCurrentPage(currentPage - 1)}>
+            <ChevronLeftIcon className={styles.icon} />
+          </Button>
+
+          <Button type="text" onClick={() => setCurrentPage(1)}>
+            <span className={styles.page}>1</span>
+          </Button>
         </div>
         <span className={styles.line}></span>
         <div className={styles.paginationCenter}>
@@ -30,8 +39,13 @@ export default function Pagination({}: Props) {
         </div>
         <span className={styles.line}></span>
         <div className={styles.paginationEnd}>
-          <span className={styles.page}>1</span>
-          <ChevronRightIcon className={styles.icon} />
+          <Button type="text" onClick={() => setCurrentPage(totalPages)}>
+            <span className={styles.page}>{totalPages}</span>
+          </Button>
+
+          <Button type="text" onClick={() => setCurrentPage(currentPage + 1)}>
+            <ChevronRightIcon className={styles.icon} />
+          </Button>
         </div>
       </div>
     </div>

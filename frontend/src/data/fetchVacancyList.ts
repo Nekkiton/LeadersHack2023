@@ -7,11 +7,15 @@ const testData = [
     title: "UX/UI дизайнер",
     company: "Карьерный центр Правительства Москвы",
     status: "active",
-    mentorName: "Юлиана Митрофанова",
-    mentorRole: "Наставник",
-    mentorAvatar: null,
-    responsesCount: 19,
-    responsesCountNew: 5,
+    mentor: {
+      id: "1",
+      name: "Юлиана Митрофанова",
+      avatar: null,
+    },
+    responses: {
+      count: 19,
+      countNew: 5,
+    },
   },
 ]
 
@@ -21,11 +25,15 @@ export interface VacancyData {
   title: string
   company: string
   status: string
-  mentorName: string
-  mentorRole: string
-  mentorAvatar: string | null
-  responsesCount: number
-  responsesCountNew: number
+  mentor: {
+    id: string
+    name: string
+    avatar: string | null
+  }
+  responses: {
+    count: number
+    countNew: number
+  }
 }
 
 interface QueryParams {
