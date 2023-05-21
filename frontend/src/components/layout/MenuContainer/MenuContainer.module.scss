@@ -40,7 +40,7 @@
     transition: $transition;
   }
 
-  &:global(.active):after {
+  &.active:after {
     width: 100%;
   }
 }

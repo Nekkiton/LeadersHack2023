@@ -1,9 +1,9 @@
 import UserRating from "components/base/user/UserRating"
-import Status from "components/base/vacancy/Status"
 import Select from "components/base/controls/Select"
 import styles from "./Responses.module.scss"
-import { ReactComponent as NothingIcon } from "assets/icons/document-search.svg"
-import userImg from "assets/images/user.svg"
+import NothingIcon from "assets/icons/document-search.svg"
+
+const userImg = "/images/user.svg"
 
 export default function Responses() {
   return (

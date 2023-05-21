@@ -1,5 +1,6 @@
 import { ReactNode } from "react"
-import { NavLink } from "react-router-dom"
+import Link from "next/link"
+import { useRouter } from "next/router"
 import Button from "components/base/controls/Button"
 import styles from "./MenuContainer.module.scss"
 
@@ -15,11 +16,15 @@ interface MenuItemProps {
 }
 
 function MenuItem({ item, children }: MenuItemProps) {
+  const router = useRouter()
+
+  const activeClassName = router.pathname === item.link ? styles.active : ""
+
   if (item.link)
     return (
-      <NavLink className={styles.link} to={item.link}>
+      <Link className={`${styles.link} ${activeClassName}`} href={item.link}>
         {children}
-      </NavLink>
+      </Link>
     )
   return <div className={`${styles.link} ${styles.disabled}`}>{children}</div>
 }

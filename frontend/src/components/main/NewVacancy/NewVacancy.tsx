@@ -1,15 +1,16 @@
 import { useEffect, useState } from "react"
 import { Form } from "antd"
-import { Link } from "react-router-dom"
+import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Select from "components/base/controls/Select"
 import Input from "components/base/controls/Input"
 import styles from "./NewVacancy.module.scss"
-import { ReactComponent as ChevronLeftIcon } from "assets/icons/chevron-left.svg"
-import { ReactComponent as ExclamationIcon } from "assets/icons/exclamation.svg"
-import { ReactComponent as LinkExternalIcon } from "assets/icons/link-external.svg"
-import { ReactComponent as TimesIcon } from "assets/icons/times.svg"
-import userImg from "assets/images/user.svg"
+import ChevronLeftIcon from "assets/icons/chevron-left.svg"
+import ExclamationIcon from "assets/icons/exclamation.svg"
+import LinkExternalIcon from "assets/icons/link-external.svg"
+import TimesIcon from "assets/icons/times.svg"
+
+const userImg = "/images/user.svg"
 
 export default function NewVacancy() {
   const [isValid, setIsValid] = useState(false)
@@ -25,7 +26,7 @@ export default function NewVacancy() {
 
   return (
     <div className={styles.container}>
-      <Link to="/staff/vacancies">
+      <Link href="/staff/vacancies">
         <Button className={styles.navBtn} type="text">
           <ChevronLeftIcon className="icon" />
           <span>Вернуться к вакансиям</span>
