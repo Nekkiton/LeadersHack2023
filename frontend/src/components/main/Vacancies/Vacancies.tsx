@@ -43,7 +43,7 @@ export default function Vacancies() {
       <div className={styles.header}>
         <h1 className={styles.headerTitle}>Вакансии</h1>
         {true && (
-          <Link href="/staff/vacancies/new">
+          <Link href="/staff/add-vacancy">
             <Button>
               <PlusIcon className="icon" />
               <span>Создать вакансию</span>
@@ -59,7 +59,7 @@ export default function Vacancies() {
             <br />
             Самое время это исправить
           </p>
-          <Link href="/staff/vacancies/new">
+          <Link href="/staff/add-vacancy">
             <Button>
               <PlusIcon className="icon" />
               <span>Создать вакансию</span>
@@ -124,7 +124,7 @@ export default function Vacancies() {
               {data?.items.map((vacancy) => (
                 <Link
                   className={styles.vacancy}
-                  href="/staff/vacancies/piar-manager"
+                  href={`/staff/vacancies/${vacancy.id}`}
                   key={vacancy.id}
                 >
                   <div className={styles.vacancyHeader}>
@@ -171,7 +171,11 @@ export default function Vacancies() {
             </div>
           )}
 
-          <Pagination />
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={data?.totalPages ?? 0}
+          />
         </>
       )}
     </div>
