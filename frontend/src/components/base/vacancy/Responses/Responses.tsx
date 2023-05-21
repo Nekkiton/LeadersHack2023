@@ -3,7 +3,11 @@ import styles from "./Responses.module.scss"
 import NothingIcon from "assets/icons/document-search.svg"
 import ResponseCard from "../ResponseCard"
 
-export default function Responses() {
+interface Props {
+  link: string
+}
+
+export default function Responses({ link }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -24,8 +28,8 @@ export default function Responses() {
         </>
       ) : (
         <div className={styles.responses}>
-          <ResponseCard />
-          <ResponseCard />
+          <ResponseCard link={link} />
+          <ResponseCard link={link} />
         </div>
       )}
     </div>

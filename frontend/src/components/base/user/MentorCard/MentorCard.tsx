@@ -6,11 +6,15 @@ import PhoneIcon from "assets/icons/phone.svg"
 import MailIcon from "assets/icons/mail.svg"
 import TrashIcon from "assets/icons/trash.svg"
 
+interface Props {
+  link: string
+}
+
 const userImg = "/images/user.svg"
 
-export default function UserCard() {
+export default function UserCard({ link }: Props) {
   return (
-    <Link className={styles.card} href="/staff/mentors/masha">
+    <Link className={styles.card} href={`${link}/masha`}>
       <div className={styles.cardBlock}>
         <ResponseStatus className={styles.cardStatus} status="new" />
         <div className={styles.cardUser}>

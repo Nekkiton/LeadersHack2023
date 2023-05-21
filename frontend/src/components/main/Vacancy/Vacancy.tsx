@@ -10,9 +10,14 @@ import PlusIcon from "assets/icons/plus.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import DocumentIcon from "assets/icons/document2.svg"
 
+interface Props {
+  backLink: string
+  link: string
+}
+
 const userImg = "/images/user.svg"
 
-export default function Vacancy() {
+export default function Vacancy({ backLink, link }: Props) {
   const user = {
     //role: 'staff',
     role: "mentor",
@@ -30,7 +35,7 @@ export default function Vacancy() {
 
   return (
     <div className={styles.vacancy}>
-      <Link className={styles.topLink} href={`/${user.role}/vacancies`}>
+      <Link className={styles.topLink} href={backLink}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
           <span>Вернуться к вакансиям</span>
@@ -128,7 +133,7 @@ export default function Vacancy() {
               </div>
             </div>
           </div>
-          <VacancyResponses />
+          <VacancyResponses link={`${link}/piar-manager/responses`} />
         </div>
         <div className={styles.card}>
           <p className={styles.cardTitle}>Статус</p>

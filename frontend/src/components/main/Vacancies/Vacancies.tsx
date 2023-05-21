@@ -14,9 +14,13 @@ import TimesIcon from "assets/icons/times.svg"
 import VacancyCard from "components/base/vacancy/VacancyCard"
 import { fetchVacancyList } from "data/fetchVacancyList"
 
+interface Props {
+  link: string
+}
+
 const userImg = "/images/user.svg"
 
-export default function Vacancies() {
+export default function Vacancies({ link }: Props) {
   const user = {
     role: "mentor",
     //role: "staff",
@@ -155,6 +159,7 @@ export default function Vacancies() {
                 <VacancyCard
                   vacancy={vacancy}
                   noUser={user.role === "mentor"}
+                  link={link}
                 />
               ))}
             </div>

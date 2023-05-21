@@ -1,8 +1,8 @@
 import MenuContainer from "components/layout/MenuContainer"
-import Vacancies from "components/main/Vacancies"
 import DocumentIcon from "assets/icons/document.svg"
-import MentorIcon from "assets/icons/mentor.svg"
+import StudentIcon from "assets/icons/student.svg"
 import CalendarIcon from "assets/icons/calendar.svg"
+import Interns from "components/main/Interns"
 
 export default function VacanciesPage() {
   return (
@@ -10,14 +10,14 @@ export default function VacanciesPage() {
       items={[
         {
           text: "Вакансии",
-          link: "/staff/vacancies",
+          link: "/mentor/vacancies",
           icon: <DocumentIcon />,
         },
-        { text: "Наставники", link: "/staff/mentors", icon: <MentorIcon /> },
+        { text: "Стажеры", link: "/mentor/interns", icon: <StudentIcon /> },
         { text: "Расписание стажеров", icon: <CalendarIcon /> },
       ]}
     >
-      <Vacancies link="/staff/vacancies" />
+      <Interns />
     </MenuContainer>
   )
 }

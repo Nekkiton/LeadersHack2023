@@ -8,9 +8,13 @@ import PhoneIcon from "assets/icons/phone.svg"
 import MailIcon from "assets/icons/mail.svg"
 import UserRating from "components/base/user/UserRating"
 
+interface Props {
+  backLink: string
+}
+
 const userImg = "/images/user.svg"
 
-export default function VacancyResponse() {
+export default function VacancyResponse({ backLink }: Props) {
   const user = {
     role: "mentor",
     //role: "staff",
@@ -18,7 +22,7 @@ export default function VacancyResponse() {
 
   return (
     <div className={styles.container}>
-      <Link href={`/${user.role}/vacancies/piar-manager`}>
+      <Link href={backLink}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
           <span>Вернуться к вакансии</span>

@@ -7,20 +7,16 @@ import VacancyStatus from "components/base/vacancy/Status"
 interface Props {
   vacancy: VacancyData
   noUser?: boolean
+  link: string
 }
 
 const userImg = "/images/user.svg"
 
-export default function VacancyCard({ vacancy, noUser }: Props) {
-  const user = {
-    //role: "staff",
-    role: "mentor",
-  }
-
+export default function VacancyCard({ vacancy, noUser, link }: Props) {
   return (
     <Link
       className={styles.vacancy}
-      href={`/${user.role}/vacancies/${vacancy.id}`}
+      href={`${link}/${vacancy.id}`}
       key={vacancy.id}
     >
       <div className={styles.vacancyHeader}>

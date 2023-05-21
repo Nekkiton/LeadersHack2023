@@ -39,8 +39,8 @@ export default function Mentors() {
             prefix={<SearchIcon />}
           />
           <div className={styles.mentors}>
-            <MentorCard />
-            <MentorCard />
+            <MentorCard link="/staff/mentors" />
+            <MentorCard link="/staff/mentors" />
           </div>
           <Pagination />
         </>

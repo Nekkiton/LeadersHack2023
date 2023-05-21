@@ -33,6 +33,7 @@ export default function StaffMain() {
                 responsesCount: 19,
                 responsesCountNew: 5,
               }}
+              link="/staff/vacancies"
             />
             <Link href="/staff/vacancies">
               <Button type="secondary">Смотреть все</Button>

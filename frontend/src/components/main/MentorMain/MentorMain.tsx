@@ -38,6 +38,7 @@ export default function StaffMain() {
                   responsesCount: 19,
                   responsesCountNew: 5,
                 }}
+                link="/mentor/vacancies"
               />
               <Link href="/mentor/vacancies">
                 <Button type="secondary">Смотреть все</Button>
@@ -57,8 +58,8 @@ export default function StaffMain() {
             </div>
           ) : (
             <div className={styles.vacancies}>
-              <ResponseCard />
-              <ResponseCard />
+              <ResponseCard link="/mentor/interns" />
+              <ResponseCard link="/mentor/interns" />
               <Link href="/mentor/interns">
                 <Button type="secondary">Смотреть всеx</Button>
               </Link>
