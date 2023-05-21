@@ -22,17 +22,7 @@
 .cardStatus {
   @include paragraph-3;
 
-  display: flex;
-  align-items: center;
-  gap: 7px;
   color: $gray-3;
-}
-
-.cardStatusDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: $orange;
 }
 
 .cardUser {

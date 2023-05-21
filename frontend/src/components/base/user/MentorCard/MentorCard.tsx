@@ -1,5 +1,6 @@
 import Link from "next/link"
 import UserRating from "components/base/user/UserRating"
+import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import styles from "./MentorCard.module.scss"
 import PhoneIcon from "assets/icons/phone.svg"
 import MailIcon from "assets/icons/mail.svg"
@@ -11,10 +12,7 @@ export default function UserCard() {
   return (
     <Link className={styles.card} href="/staff/mentors/masha">
       <div className={styles.cardBlock}>
-        <div className={styles.cardStatus}>
-          <span className={styles.cardStatusDot}></span>
-          <span>Обучение пройдено</span>
-        </div>
+        <ResponseStatus className={styles.cardStatus} status="new" />
         <div className={styles.cardUser}>
           <img className={styles.cardUserImg} src={userImg} />
           <div>
