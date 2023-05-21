@@ -6,10 +6,15 @@ import styles from "./ResponseCard.module.scss"
 const userImg = "/images/user.svg"
 
 export default function ResponseCard() {
+  const user = {
+    role: "mentor",
+    //role: "staff",
+  }
+
   return (
     <Link
       className={styles.response}
-      href="/staff/vacancies/piar-manager/responses/masha"
+      href={`/${user.role}/vacancies/piar-manager/responses/masha`}
     >
       <div className={styles.responseBlock}>
         <ResponseStatus className={styles.responseStatus} status="new" />

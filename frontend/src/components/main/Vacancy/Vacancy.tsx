@@ -6,12 +6,18 @@ import styles from "./Vacancy.module.scss"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import CopyIcon from "assets/icons/copy.svg"
 import PenIcon from "assets/icons/pen.svg"
+import PlusIcon from "assets/icons/plus.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import DocumentIcon from "assets/icons/document2.svg"
 
 const userImg = "/images/user.svg"
 
 export default function Vacancy() {
+  const user = {
+    //role: 'staff',
+    role: "mentor",
+  }
+
   const statuses = {
     created: "Создана",
     testTask: "Добавление тестового задания",
@@ -24,7 +30,7 @@ export default function Vacancy() {
 
   return (
     <div className={styles.vacancy}>
-      <Link className={styles.topLink} href="/staff/vacancies">
+      <Link className={styles.topLink} href={`/${user.role}/vacancies`}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
           <span>Вернуться к вакансиям</span>
@@ -33,18 +39,34 @@ export default function Vacancy() {
       <div className={styles.header}>
         <h1 className={styles.headerTitle}>Пиар-менеджер</h1>
         <div className={styles.headerControls}>
-          <Link href="/staff/add-vacancy">
-            <Button type="text">
-              <CopyIcon className="icon" />
-              <span>Создать копию</span>
-            </Button>
-          </Link>
-          <Link href="/staff/add-vacancy">
-            <Button type="secondary">
-              <PenIcon className="icon" />
-              <span>Редактировать</span>
-            </Button>
-          </Link>
+          {user.role === "staff" && (
+            <>
+              <Link href="/staff/add-vacancy">
+                <Button type="text">
+                  <CopyIcon className="icon" />
+                  <span>Создать копию</span>
+                </Button>
+              </Link>
+              <Link href="/staff/add-vacancy">
+                <Button type="secondary">
+                  <PenIcon className="icon" />
+                  <span>Редактировать</span>
+                </Button>
+              </Link>
+            </>
+          )}
+          {user.role === "mentor" && (
+            <>
+              <Button>
+                <PlusIcon className="icon" />
+                <span>Добавить тестовое задание</span>
+              </Button>
+              <Button type="secondary">
+                <PenIcon className="icon" />
+                <span>Редактировать тестовое задание</span>
+              </Button>
+            </>
+          )}
         </div>
       </div>
       <div className={styles.organization}>
