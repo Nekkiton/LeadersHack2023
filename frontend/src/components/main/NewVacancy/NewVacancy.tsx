@@ -3,6 +3,7 @@ import { Form } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Select from "components/base/controls/Select"
+import Modal from "components/base/controls/Modal"
 import Input from "components/base/controls/Input"
 import styles from "./NewVacancy.module.scss"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
@@ -14,8 +15,11 @@ const userImg = "/images/user.svg"
 
 export default function NewVacancy() {
   const [isValid, setIsValid] = useState(false)
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const [form] = Form.useForm()
   const formValues = Form.useWatch([], form)
+
+  const toggleModal = () => setIsModalOpen(!isModalOpen)
 
   useEffect(() => {
     form.validateFields({ validateOnly: true }).then(
@@ -26,6 +30,14 @@ export default function NewVacancy() {
 
   return (
     <div className={styles.container}>
+      {/* TODO: onOk should remove vacancy */}
+      <Modal
+        isOpen={isModalOpen}
+        title="Вы уверены, что хотите удалить вакансию?"
+        onCancel={toggleModal}
+        onOk={toggleModal}
+        okText="Удалить"
+      />
       <Link href="/staff/vacancies">
         <Button className={styles.navBtn} type="text">
           <ChevronLeftIcon className="icon" />
@@ -98,7 +110,7 @@ export default function NewVacancy() {
                         </p>
                       </div>
                     ),
-                    selectedValue: "Юлиана Митрофанов",
+                    selectedValue: "Юлиана Митрофанова",
                   },
                 }}
                 same
@@ -111,8 +123,12 @@ export default function NewVacancy() {
                 Создать
               </Button>
             </Form.Item>
-            {false && (
-              <Button className={styles.formDeleteBtn} type="text">
+            {true && (
+              <Button
+                className={styles.formDeleteBtn}
+                type="text"
+                onClick={toggleModal}
+              >
                 <TimesIcon className="icon" />
                 <span>Удалить вакансию</span>
               </Button>
