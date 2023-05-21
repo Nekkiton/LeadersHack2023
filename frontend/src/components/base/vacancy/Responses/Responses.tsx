@@ -1,3 +1,4 @@
+import Link from "next/link"
 import UserRating from "components/base/user/UserRating"
 import Select from "components/base/controls/Select"
 import styles from "./Responses.module.scss"
@@ -26,7 +27,10 @@ export default function Responses() {
         </>
       ) : (
         <div className={styles.responses}>
-          <div className={styles.response}>
+          <Link
+            className={styles.response}
+            href="/staff/vacancies/piar-manager/responses/masha"
+          >
             <div className={styles.responseStatus}>
               <span className={styles.responseStatusDot}></span>
               <span>Новый</span>
@@ -44,7 +48,7 @@ export default function Responses() {
                 <p>МГУ им. Ломоносова, выпуск 2023 г.</p>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
       )}
     </div>

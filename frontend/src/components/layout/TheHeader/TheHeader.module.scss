@@ -39,6 +39,7 @@
   display: flex;
   align-items: center;
   gap: 16px;
+  cursor: pointer;
 }
 
 .userImg {
@@ -65,4 +66,20 @@
 .userRole {
   @include caption-1;
   color: $gray-3;
+}
+
+.userLogout {
+  color: $red !important;
+
+  path {
+    stroke: $red !important;
+  }
+}
+
+.userMenuIcon {
+  transition: $transition;
+
+  &.active {
+    transform: rotate(180deg);
+  }
 }

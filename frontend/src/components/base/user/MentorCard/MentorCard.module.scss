@@ -1,0 +1,81 @@
+@import "assets/css/config";
+
+.card {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px;
+  background: $white;
+  border-radius: 8px;
+  transition: $transition;
+
+  &:hover {
+    box-shadow: 0px 0px 20px rgba(71, 91, 172, 0.25);
+  }
+}
+
+.cardBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cardStatus {
+  @include paragraph-3;
+
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: $gray-3;
+}
+
+.cardStatusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $orange;
+}
+
+.cardUser {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.cardUserImg {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.cardUserName {
+  @include paragraph-1;
+}
+
+.cardIconBlock {
+  @include paragraph-3;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.deleteIcon {
+  align-self: flex-end;
+  opacity: 0;
+  transition: $transition;
+
+  path {
+    stroke: $red;
+  }
+
+  .card:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+  }
+}

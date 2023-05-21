@@ -1,0 +1,15 @@
+@import "assets/css/config";
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.dot {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $gray-4;
+}
