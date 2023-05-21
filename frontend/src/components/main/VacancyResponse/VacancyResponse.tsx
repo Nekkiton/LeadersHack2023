@@ -11,9 +11,14 @@ import UserRating from "components/base/user/UserRating"
 const userImg = "/images/user.svg"
 
 export default function VacancyResponse() {
+  const user = {
+    role: "mentor",
+    //role: "staff",
+  }
+
   return (
     <div className={styles.container}>
-      <Link href="/staff/vacancies/piar-manager">
+      <Link href={`/${user.role}/vacancies/piar-manager`}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
           <span>Вернуться к вакансии</span>
@@ -33,6 +38,9 @@ export default function VacancyResponse() {
         <div className={styles.headerControls}>
           <Button type="secondary">Отклонить</Button>
           <Button>Принять на стажировку</Button>
+          {user.role === "mentor" && (
+            <Button>Пригласить на собеседование</Button>
+          )}
         </div>
       </div>
       <div className={styles.cards}>
