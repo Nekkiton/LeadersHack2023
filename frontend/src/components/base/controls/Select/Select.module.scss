@@ -1,9 +1,18 @@
 @import "assets/css/config";
 
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  @include paragraph-3;
+}
+
 .select {
   position: relative;
-  min-width: 180px;
-  width: min-content;
+  width: 100%;
 }
 
 .selectBackdrop {
@@ -30,7 +39,7 @@
   position: relative;
   padding: 10px 12px;
   width: 100%;
-  z-index: 11;
+  z-index: 10;
   background: $white;
   border-radius: 8px;
   border: 1px solid $gray-4;
@@ -78,6 +87,11 @@
     padding: 16px 0;
     max-height: 350px;
     opacity: 1;
+  }
+
+  .select.same & {
+    width: 100%;
+    border-top-right-radius: 0;
   }
 }
 

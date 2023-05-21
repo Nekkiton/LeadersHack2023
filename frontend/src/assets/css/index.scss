@@ -60,3 +60,13 @@ a {
   color: inherit;
   text-decoration: none;
 }
+
+.ant-form-item-explain-error {
+  @include paragraph-3;
+
+  color: $red !important;
+}
+
+.ant-form-item {
+  margin: 0;
+}

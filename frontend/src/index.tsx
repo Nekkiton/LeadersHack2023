@@ -5,7 +5,9 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import App from "App"
 import MainPage from "pages/Main"
 import ErrorPage from "pages/Error"
-import Vacancies from "pages/staff/Vacancies"
+import VacanciesPage from "pages/staff/Vacancies"
+import NewVacancyPage from "pages/staff/NewVacancy"
+import VacancyPage from "pages/staff/Vacancy/Vacancy"
 
 import { store } from "store"
 import "assets/css/index.scss"
@@ -19,7 +21,15 @@ const router = createBrowserRouter([
       { path: "/", element: <MainPage /> },
       {
         path: "/staff/vacancies",
-        element: <Vacancies />,
+        element: <VacanciesPage />,
+      },
+      {
+        path: "/staff/vacancies/new",
+        element: <NewVacancyPage />,
+      },
+      {
+        path: "/staff/vacancies/piar-manager",
+        element: <VacancyPage />,
       },
     ],
   },

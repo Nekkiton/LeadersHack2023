@@ -20,8 +20,13 @@
       stroke: $gray-6;
     }
 
-    &:hover {
+    &:not([disabled]):hover {
       box-shadow: 0 0 10px 0 $gray-3;
+    }
+
+    &[disabled] {
+      background: $gray-3;
+      border-color: $gray-3 !important;
     }
   }
 
@@ -32,6 +37,10 @@
     &:hover {
       background: $gray-2;
       color: $gray-6;
+
+      :global(.icon) path {
+        stroke: $gray-6;
+      }
     }
   }
 

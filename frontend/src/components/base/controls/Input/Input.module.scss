@@ -1,18 +1,35 @@
 @import "assets/css/config";
 
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
 .input {
   @include paragraph-2;
   padding: 10px 12px;
   background: $white;
   border: 1px solid $gray-4 !important;
   border-radius: 8px;
-  box-shadow: none;
 
   :global(.ant-input-prefix) {
     margin-right: 8px;
   }
 
+  &,
   :global(.ant-input) {
     @include paragraph-2;
+
+    box-shadow: none !important;
   }
+}
+
+.label {
+  @include paragraph-3;
+}
+
+.textarea {
+  resize: none !important;
+  height: 154px !important;
 }

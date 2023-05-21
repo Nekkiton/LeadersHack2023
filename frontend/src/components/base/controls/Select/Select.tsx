@@ -5,38 +5,60 @@ import { ReactComponent as ChevronDownIcon } from "assets/icons/chevron-down.svg
 import { ReactComponent as CheckIcon } from "assets/icons/check.svg"
 
 interface Props {
+  label?: string
   placeholder?: string
   items?: {
     [key: string | number]: any
   }
-  value?: any[]
+  value?: any[] | any // multiple ? any[] : any
   onChange?: (alue: any) => void
+  className?: string
+  multiple?: boolean
+  same?: boolean
 }
 
 export default function Select({
+  label,
+  same,
   placeholder,
   items = {},
   value,
   onChange,
+  className,
+  multiple,
 }: Props) {
   const [isActive, setIsActive] = useState(false)
   const [newValue, setNewValue] = useState<(string | number)[]>([])
 
-  useEffect(() => setNewValue(value || []), [value])
+  useEffect(() => {
+    if (multiple) setNewValue(value || [])
+    else setNewValue(value ? [value] : [])
+  }, [value])
 
   const toggleItem = (key: string | number) => {
-    if (newValue.includes(key)) {
-      setNewValue([
-        ...newValue.slice(0, newValue.indexOf(key)),
-        ...newValue.slice(newValue.indexOf(key) + 1, newValue.length),
-      ])
+    if (multiple) {
+      if (newValue.includes(key)) {
+        setNewValue([
+          ...newValue.slice(0, newValue.indexOf(key)),
+          ...newValue.slice(newValue.indexOf(key) + 1, newValue.length),
+        ])
+      } else {
+        setNewValue([...newValue, key])
+      }
     } else {
-      setNewValue([...newValue, key])
+      if (newValue[0] === key) {
+        onChange?.(null)
+      } else {
+        onChange?.(key)
+      }
+      setIsActive(false)
     }
   }
 
   const clear = () => {
-    setNewValue(value || [])
+    if (multiple) {
+      setNewValue(value || [])
+    }
     setIsActive(false)
   }
 
@@ -46,37 +68,50 @@ export default function Select({
   }
 
   return (
-    <div className={`${styles.select} ${isActive ? styles.active : ""}`}>
-      <span className={styles.selectBackdrop} onClick={clear} />
+    <div className={styles.container}>
+      {label && <p className={styles.label}>{label}</p>}
       <div
-        className={`${styles.selectHeader} ${
-          newValue?.length ? "" : styles.empty
-        }`}
-        onClick={() => setIsActive((val) => !val)}
+        className={`${styles.select} ${isActive ? styles.active : ""}  ${
+          same ? styles.same : ""
+        } ${className}`}
       >
-        <span>
-          {newValue?.length ? `Выбрано: ${newValue.length}` : placeholder}
-        </span>{" "}
-        <ChevronDownIcon className={styles.selectHeaderIcon} />
-      </div>
-      <div className={styles.selectBody}>
-        <div className={styles.selectItems}>
-          {Object.keys(items).map((key) => (
-            <div
-              className={styles.selectItem}
-              onClick={() => toggleItem(key)}
-              key={key}
-            >
-              {items[key]}
-              {newValue?.includes(key) && <CheckIcon />}
+        <span className={styles.selectBackdrop} onClick={clear} />
+        <div className={styles.selectBody}>
+          <div className={styles.selectItems}>
+            {Object.keys(items).map((key) => (
+              <div
+                className={styles.selectItem}
+                onClick={() => toggleItem(key)}
+                key={key}
+              >
+                {items[key].value || items[key]}
+                {multiple && newValue?.includes(key) && <CheckIcon />}
+              </div>
+            ))}
+          </div>
+          {multiple && (
+            <div className={styles.selectControls}>
+              <Button type="text" onClick={clear}>
+                Сбросить
+              </Button>
+              <Button onClick={save}>Применить</Button>
             </div>
-          ))}
+          )}
         </div>
-        <div className={styles.selectControls}>
-          <Button type="text" onClick={clear}>
-            Сбросить
-          </Button>
-          <Button onClick={save}>Применить</Button>
+        <div
+          className={`${styles.selectHeader} ${
+            newValue.length ? "" : styles.empty
+          }`}
+          onClick={() => setIsActive((val) => !val)}
+        >
+          <span>
+            {newValue?.length
+              ? multiple
+                ? `Выбрано: ${newValue.length}`
+                : items[newValue[0]].selectedValue || items[newValue[0]]
+              : placeholder}
+          </span>
+          <ChevronDownIcon className={styles.selectHeaderIcon} />
         </div>
       </div>
     </div>

@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { Link } from "react-router-dom"
 import Button from "components/base/controls/Button"
 import Select from "components/base/controls/Select"
 import Input from "components/base/controls/Input"
@@ -7,7 +8,7 @@ import VacancyStatus from "components/base/vacancy/Status"
 import styles from "./Vacancies.module.scss"
 import { ReactComponent as PlusIcon } from "assets/icons/plus.svg"
 import { ReactComponent as SearchIcon } from "assets/icons/search.svg"
-import { ReactComponent as NothingIcon } from "assets/icons/nothing.svg"
+import { ReactComponent as NothingIcon } from "assets/icons/document-search.svg"
 import { ReactComponent as TimesIcon } from "assets/icons/times.svg"
 import userImg from "assets/images/user.svg"
 
@@ -25,24 +26,30 @@ export default function Vacancies() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.headerTitle}>Заявки на стажеров</h1>
-        <Button>
-          <PlusIcon className="icon" />
-          <span>Подать заявку</span>
-        </Button>
+        <h1 className={styles.headerTitle}>Вакансии</h1>
+        {true && (
+          <Link to="/staff/vacancies/new">
+            <Button>
+              <PlusIcon className="icon" />
+              <span>Создать вакансию</span>
+            </Button>
+          </Link>
+        )}
       </div>
       {false ? (
         <div className={styles.nothing}>
           <NothingIcon />
           <p className={styles.nothingText}>
-            Вы еще не создали ни одной заявки.
+            Вы еще не создали ни одной вакансии.
             <br />
             Самое время это исправить
           </p>
-          <Button>
-            <PlusIcon className="icon" />
-            <span>Подать заявку</span>
-          </Button>
+          <Link to="/staff/vacancies/new">
+            <Button>
+              <PlusIcon className="icon" />
+              <span>Создать вакансию</span>
+            </Button>
+          </Link>
         </div>
       ) : (
         <>
@@ -56,6 +63,7 @@ export default function Vacancies() {
                 onChange={setQuery}
               />
               <Select
+                className={styles.filtersSelect}
                 placeholder="Все статусы"
                 items={{
                   active: <VacancyStatus status="active" />,
@@ -63,8 +71,10 @@ export default function Vacancies() {
                 }}
                 value={statuses}
                 onChange={setStatuses}
+                multiple
               />
               <Select
+                className={styles.filtersSelect}
                 placeholder="Все наставники"
                 items={{
                   1: (
@@ -78,6 +88,7 @@ export default function Vacancies() {
                 }}
                 value={mentors}
                 onChange={setMentors}
+                multiple
               />
             </div>
             {(query || !!statuses.length || !!mentors.length) && (
@@ -92,7 +103,7 @@ export default function Vacancies() {
             )}
           </div>
           <div className={styles.vacancies}>
-            <div className={styles.vacancy}>
+            <Link className={styles.vacancy} to="/staff/vacancies/piar-manager">
               <div className={styles.vacancyHeader}>
                 <span>Заявка №1902 от 20 иолюя 2023</span>
                 <VacancyStatus
@@ -121,7 +132,7 @@ export default function Vacancies() {
                   <span className={styles.vacancyResponsesNew}>(+5 новых)</span>
                 </Button>
               </div>
-            </div>
+            </Link>
           </div>
           <Pagination />
         </>
