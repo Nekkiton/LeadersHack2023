@@ -1,7 +1,7 @@
 import Button from "components/base/controls/Button"
 import styles from "./Pagination.module.scss"
-import { ReactComponent as ChevronRightIcon } from "assets/icons/chevron-right.svg"
-import { ReactComponent as ChevronLeftIcon } from "assets/icons/chevron-left.svg"
+import ChevronRightIcon from "assets/icons/chevron-right.svg"
+import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 
 export default function Pagination() {
   return (

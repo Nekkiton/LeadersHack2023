@@ -1,14 +1,15 @@
-import { Link } from "react-router-dom"
+import Link from "next/link"
 import Button from "components/base/controls/Button"
 import UserRating from "components/base/user/UserRating"
 import VacancyResponses from "components/base/vacancy/Responses"
 import styles from "./Vacancy.module.scss"
-import { ReactComponent as ChevronLeftIcon } from "assets/icons/chevron-left.svg"
-import { ReactComponent as CopyIcon } from "assets/icons/copy.svg"
-import { ReactComponent as PenIcon } from "assets/icons/pen.svg"
-import { ReactComponent as LinkExternalIcon } from "assets/icons/link-external.svg"
-import { ReactComponent as DocumentIcon } from "assets/icons/document2.svg"
-import userImg from "assets/images/user.svg"
+import ChevronLeftIcon from "assets/icons/chevron-left.svg"
+import CopyIcon from "assets/icons/copy.svg"
+import PenIcon from "assets/icons/pen.svg"
+import LinkExternalIcon from "assets/icons/link-external.svg"
+import DocumentIcon from "assets/icons/document2.svg"
+
+const userImg = "/images/user.svg"
 
 export default function Vacancy() {
   const statuses = {
@@ -23,7 +24,7 @@ export default function Vacancy() {
 
   return (
     <div className={styles.vacancy}>
-      <Link className={styles.topLink} to="/staff/vacancies">
+      <Link className={styles.topLink} href="/staff/vacancies">
         <Button type="text">
           <ChevronLeftIcon className="icon" />
           <span>Вернуться к вакансиям</span>

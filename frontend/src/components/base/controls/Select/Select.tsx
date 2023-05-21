@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react"
 import Button from "components/base/controls/Button"
 import styles from "./Select.module.scss"
-import { ReactComponent as ChevronDownIcon } from "assets/icons/chevron-down.svg"
-import { ReactComponent as CheckIcon } from "assets/icons/check.svg"
+import ChevronDownIcon from "assets/icons/chevron-down.svg"
+import CheckIcon from "assets/icons/check.svg"
 
 interface Props {
   label?: string

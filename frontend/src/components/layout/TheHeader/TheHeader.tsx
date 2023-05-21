@@ -1,10 +1,11 @@
 import Button from "components/base/controls/Button"
 import styles from "./TheHeader.module.scss"
-import { ReactComponent as LoginIcon } from "assets/icons/login.svg"
-import { ReactComponent as BellIcon } from "assets/icons/bell.svg"
-import { ReactComponent as ChevronDownIcon } from "assets/icons/chevron-down.svg"
-import logoImg from "assets/images/logo.svg"
-import userImg from "assets/images/user.svg"
+import LoginIcon from "assets/icons/login.svg"
+import BellIcon from "assets/icons/bell.svg"
+import ChevronDownIcon from "assets/icons/chevron-down.svg"
+
+const userImg = "/images/user.svg"
+const logoImg = "/images/logo.svg"
 
 export default function TheHeader() {
   return (

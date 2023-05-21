@@ -1,16 +1,17 @@
 import { useState } from "react"
-import { Link } from "react-router-dom"
+import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Select from "components/base/controls/Select"
 import Input from "components/base/controls/Input"
 import Pagination from "components/base/navigation/Pagination"
 import VacancyStatus from "components/base/vacancy/Status"
 import styles from "./Vacancies.module.scss"
-import { ReactComponent as PlusIcon } from "assets/icons/plus.svg"
-import { ReactComponent as SearchIcon } from "assets/icons/search.svg"
-import { ReactComponent as NothingIcon } from "assets/icons/document-search.svg"
-import { ReactComponent as TimesIcon } from "assets/icons/times.svg"
-import userImg from "assets/images/user.svg"
+import PlusIcon from "assets/icons/plus.svg"
+import SearchIcon from "assets/icons/search.svg"
+import NothingIcon from "assets/icons/document-search.svg"
+import TimesIcon from "assets/icons/times.svg"
+
+const userImg = "/images/user.svg"
 
 export default function Vacancies() {
   const [query, setQuery] = useState("")
@@ -28,7 +29,7 @@ export default function Vacancies() {
       <div className={styles.header}>
         <h1 className={styles.headerTitle}>Вакансии</h1>
         {true && (
-          <Link to="/staff/vacancies/new">
+          <Link href="/staff/vacancies/new">
             <Button>
               <PlusIcon className="icon" />
               <span>Создать вакансию</span>
@@ -44,7 +45,7 @@ export default function Vacancies() {
             <br />
             Самое время это исправить
           </p>
-          <Link to="/staff/vacancies/new">
+          <Link href="/staff/vacancies/new">
             <Button>
               <PlusIcon className="icon" />
               <span>Создать вакансию</span>
@@ -103,7 +104,10 @@ export default function Vacancies() {
             )}
           </div>
           <div className={styles.vacancies}>
-            <Link className={styles.vacancy} to="/staff/vacancies/piar-manager">
+            <Link
+              className={styles.vacancy}
+              href="/staff/vacancies/piar-manager"
+            >
               <div className={styles.vacancyHeader}>
                 <span>Заявка №1902 от 20 иолюя 2023</span>
                 <VacancyStatus
