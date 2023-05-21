@@ -2,33 +2,44 @@ import Link from "next/link"
 import UserRating from "components/base/user/UserRating"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import styles from "./ResponseCard.module.scss"
+import { ResponseData } from "data/fetchVacancyInfo"
 
 const userImg = "/images/user.svg"
 
 interface Props {
   link: string
+  responseInfo: ResponseData
 }
 
-export default function ResponseCard({ link }: Props) {
+export default function ResponseCard({ link, responseInfo }: Props) {
   return (
     <Link className={styles.response} href={`${link}/masha`}>
       <div className={styles.responseBlock}>
-        <ResponseStatus className={styles.responseStatus} status="new" />
+        <ResponseStatus
+          className={styles.responseStatus}
+          status={responseInfo.status}
+        />
 
         <div className={styles.responseUser}>
-          <img className={styles.responseUserImg} src={userImg} />
+          <img
+            className={styles.responseUserImg}
+            src={responseInfo.avatar ?? userImg}
+          />
           <div>
-            <p>Марина Высокова</p>
-            <UserRating />
+            <p>{responseInfo.name}</p>
+            <UserRating
+              count={responseInfo.reviews.count}
+              averageRate={responseInfo.reviews.averageRate}
+            />
           </div>
         </div>
       </div>
       <div className={styles.responseBlock}>
-        <p className={styles.responseScore}>20 баллов</p>
-        <p className={styles.responseText}>22 года, г. Москва</p>
+        <p className={styles.responseScore}>{responseInfo.score} баллов</p>
         <p className={styles.responseText}>
-          МГУ им. Ломоносова, выпуск 2023 г.
+          {responseInfo.age} года, {responseInfo.address}
         </p>
+        <p className={styles.responseText}>{responseInfo.education}</p>
       </div>
     </Link>
   )

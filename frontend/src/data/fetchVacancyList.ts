@@ -50,7 +50,7 @@ interface QueryResponse {
 }
 
 export const fetchVacancyList = async ({ page }: QueryParams) => {
-  return axios.get("").then(
+  return axios.get("https://api.publicapis.org/entries").then(
     (res) =>
       ({
         items: testData,
