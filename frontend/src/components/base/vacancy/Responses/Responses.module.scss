@@ -43,57 +43,8 @@
   text-align: center;
 }
 
-.response {
+.responses {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  padding: 16px;
-  background: $white;
-  border-radius: 8px;
-}
-
-.responseStatus {
-  @include paragraph-3;
-
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  color: $gray-3;
-}
-
-.responseStatusDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: $orange;
-}
-
-.responseInfo {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.responseUser {
-  @include paragraph-2;
-
-  display: flex;
-  align-items: center;
-  gap: 16px;
-}
-
-.responseUserImg {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
-.responseUserInfo {
-  @include paragraph-3;
-
-  display: flex;
-  flex-direction: column;
-  align-items: flex-end;
   gap: 8px;
 }

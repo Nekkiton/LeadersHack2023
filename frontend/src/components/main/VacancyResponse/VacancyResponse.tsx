@@ -115,6 +115,7 @@ export default function VacancyResponse() {
               более яркими и интересными.
             </div>
           </div>
+          <div>*еще баллы*</div>
         </div>
       </div>
     </div>

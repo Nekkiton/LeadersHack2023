@@ -15,7 +15,7 @@ const testData = [
   },
 ]
 
-interface VacancyData {
+export interface VacancyData {
   id: string
   date: string
   title: string

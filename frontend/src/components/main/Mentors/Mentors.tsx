@@ -13,7 +13,7 @@ export default function Mentors() {
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Наставники</h1>
-        <Link href="/staff/mentors/new">
+        <Link href="/staff/add-mentor">
           <Button>
             <PlusIcon className="icon" />
             <span>Добавить наставника</span>
@@ -24,7 +24,7 @@ export default function Mentors() {
         <div className={styles.nothing}>
           <UserSearchIcon />
           <p>В вашей организации еще нет наставников</p>
-          <Link href="/staff/mentors/new">
+          <Link href="/staff/add-mentor">
             <Button>
               <PlusIcon className="icon" />
               <span>Добавить наставника</span>

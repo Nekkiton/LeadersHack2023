@@ -1,4 +1,4 @@
-<svg width="150" height="150" viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg  viewBox="0 0 150 150" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g clip-path="url(#clip0_5410_8974)">
 <path d="M50 31.25H37.5C34.1848 31.25 31.0054 32.567 28.6612 34.9112C26.317 37.2554 25 40.4348 25 43.75V118.75C25 122.065 26.317 125.245 28.6612 127.589C31.0054 129.933 34.1848 131.25 37.5 131.25H73.1063" stroke="#D7D8DE" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
 <path d="M112.5 75V43.75C112.5 40.4348 111.183 37.2554 108.839 34.9112C106.495 32.567 103.315 31.25 100 31.25H87.5" stroke="#D7D8DE" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>

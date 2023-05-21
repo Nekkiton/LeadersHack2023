@@ -33,14 +33,18 @@ export default function Vacancy() {
       <div className={styles.header}>
         <h1 className={styles.headerTitle}>Пиар-менеджер</h1>
         <div className={styles.headerControls}>
-          <Button type="text">
-            <CopyIcon className="icon" />
-            <span>Создать копию</span>
-          </Button>
-          <Button type="secondary">
-            <PenIcon className="icon" />
-            <span>Редактировать</span>
-          </Button>
+          <Link href="/staff/add-vacancy">
+            <Button type="text">
+              <CopyIcon className="icon" />
+              <span>Создать копию</span>
+            </Button>
+          </Link>
+          <Link href="/staff/add-vacancy">
+            <Button type="secondary">
+              <PenIcon className="icon" />
+              <span>Редактировать</span>
+            </Button>
+          </Link>
         </div>
       </div>
       <div className={styles.organization}>

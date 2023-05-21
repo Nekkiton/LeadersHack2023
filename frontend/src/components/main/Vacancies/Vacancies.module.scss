@@ -26,6 +26,11 @@
   height: 100%;
 }
 
+.nothingIcon {
+  width: 150px;
+  height: 150px;
+}
+
 .nothingText {
   @include paragraph-2;
 
@@ -36,95 +41,6 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-}
-
-.vacancy {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px;
-  border-radius: 8px;
-  background: $white;
-}
-
-.vacancyHeader {
-  @include paragraph-3;
-
-  display: flex;
-  align-items: center;
-  gap: 24px;
-  color: $gray-3;
-}
-
-.vacancyStatus {
-  gap: 7px;
-}
-
-.vacancyBody {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 16px;
-}
-
-.vacancyInfo {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.vacancyName {
-  @include paragraph-1;
-}
-
-.vacancyLocation {
-  @include paragraph-3;
-
-  color: $gray-3;
-}
-
-.vacancyUser {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  margin-right: 20px;
-}
-
-.vacancyUserImg {
-  width: 48px;
-  height: 48px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.vacancyUserInfo {
-  display: flex;
-  flex-direction: column;
-}
-
-.vacancyUserName {
-  @include paragraph-2;
-}
-
-.vacancyUserRole {
-  @include paragraph-3;
-
-  color: $gray-3;
-}
-
-.vacancyResponses {
-  padding-top: 7px;
-  border-top: 1px solid $gray-6;
-}
-
-.vacancyResponsesBtn {
-  gap: 8px;
-}
-
-.vacancyResponsesNew {
-  @include paragraph-3;
-
-  color: $green;
 }
 
 .filters {
