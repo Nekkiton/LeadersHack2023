@@ -36,11 +36,11 @@ export default function Input({
   const [passwordVisible, setPasswordVisible] = useState(false)
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${className}`}>
       {label && <p className={styles.label}>{label}</p>}
       {!textarea && !datepicker && !password && !timepicker && (
         <BaseInput
-          className={`${styles.input} ${className}`}
+          className={styles.input}
           value={value}
           onChange={(e) => onChange?.(e.target.value)}
           placeholder={placeholder}

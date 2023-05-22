@@ -4,6 +4,8 @@ import UserRating from "components/base/user/UserRating"
 import Tabs from "components/base/navigation/Tabs"
 import Vacancies from "components/main/Vacancies"
 import Mentors from "components/main/Mentors"
+import Staffs from "components/main/Staffs"
+import Departments from "components/main/Departments"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import PhoneIcon from "assets/icons/phone.svg"
 import EmailIcon from "assets/icons/mail.svg"
@@ -47,9 +49,12 @@ export default function Organization({ backLink }: Props) {
             title: "Вакансии",
             content: <Vacancies link="/curator/vacancies" noHeader />,
           },
-          { title: "Кадровые специалисты", content: <div>ss</div> },
+          {
+            title: "Кадровые специалисты",
+            content: <Staffs link="/" />,
+          },
           { title: "Наставники", content: <Mentors link="/" noHeader /> },
-          { title: "Подразделения", content: <div>ss</div> },
+          { title: "Подразделения", content: <Departments link="/" /> },
         ]}
       />
     </div>
