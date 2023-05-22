@@ -20,14 +20,14 @@ export default function TheHeader() {
   return (
     <header className={styles.header}>
       <div className={styles.content}>
-        <div className={styles.logo}>
+        <Link className={styles.logo} href="/">
           <img className={styles.logoImg} src={logoImg} />
           <div className={styles.logoName}>
             Карьерный центр стажеров
             <br />
             Правительства Москвы
           </div>
-        </div>
+        </Link>
         <div className={styles.user}>
           <BellIcon />
           {false ? (
