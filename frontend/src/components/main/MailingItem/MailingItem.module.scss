@@ -1,0 +1,62 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.backLink {
+  align-self: flex-start;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 100px;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cards {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.card {
+  @include paragraph-2;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background: $white;
+  width: 100%;
+
+  &:first-child {
+    flex-shrink: 0.7;
+  }
+}
+
+.cardTitle {
+  @include paragraph-3;
+
+  color: $gray-3;
+}
+
+.cardBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

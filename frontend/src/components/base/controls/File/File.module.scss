@@ -1,0 +1,30 @@
+@import "assets/css/config";
+
+.file {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: $gray-6;
+  border-radius: 24.5px;
+}
+
+.fileNameContainer {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fileIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.fileSize {
+  @include paragraph-3;
+
+  color: $gray-3;
+}

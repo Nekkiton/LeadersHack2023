@@ -1,0 +1,67 @@
+@import "assets/css/config";
+
+.modal {
+  :global(.ant-modal-content) {
+    padding: 32px;
+  }
+
+  :global(.ant-modal-title) {
+    @include heading-3;
+  }
+
+  :global(.ant-modal-header) {
+    margin-bottom: 16px;
+  }
+
+  :global(.ant-modal-footer) {
+    margin-top: 16px;
+    text-align: start;
+
+    :global(.ant-btn-default) {
+      @include button;
+
+      padding: 0 24px;
+      height: 46px;
+      border-radius: 30px;
+      border: 1px solid $gray-2 !important;
+      transition: $transition;
+
+      color: $gray-2;
+      background: none;
+
+      &:hover {
+        background: $gray-2;
+        color: $gray-6;
+
+        :global(.icon) path {
+          stroke: $gray-6;
+        }
+      }
+    }
+    :global(.ant-btn-primary) {
+      @include button;
+
+      padding: 0 24px;
+      height: 46px;
+      border-radius: 30px;
+      border: 1px solid $gray-2 !important;
+      transition: $transition;
+
+      background: $gray-2;
+      color: $gray-6 !important;
+
+      :global(.icon) path {
+        stroke: $gray-6;
+      }
+
+      &:not([disabled]):hover {
+        box-shadow: 0 0 10px 0 $gray-3;
+      }
+
+      &[disabled] {
+        background: $gray-3;
+        border-color: $gray-3 !important;
+      }
+    }
+  }
+}

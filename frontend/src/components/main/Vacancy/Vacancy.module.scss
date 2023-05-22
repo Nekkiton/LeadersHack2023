@@ -1,0 +1,208 @@
+@import "assets/css/config";
+
+.responsesContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+  width: 100%;
+  flex-shrink: 0.75;
+}
+
+.vacancy {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.topLink {
+  align-self: flex-start;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerTitle {
+  text-transform: uppercase;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.organization {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.organizationName {
+  @include paragraph-2;
+}
+
+.organizationInfo {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  color: $gray-3;
+}
+
+.organizationAddress {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.organizationAddressDot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: $orange;
+}
+
+.cards {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.vCards {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.hCards {
+  display: flex;
+  gap: 18px;
+}
+
+.card {
+  @include paragraph-2;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background: $white;
+  width: 100%;
+}
+
+.cardTitle {
+  @include paragraph-3;
+
+  color: $gray-3;
+}
+
+.mentor {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.mentorImg {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    border: 1px solid $gray-5;
+    top: 12px;
+    bottom: 12px;
+    left: 5px;
+  }
+}
+
+.timelineItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &.past {
+    color: $gray-4;
+  }
+}
+
+.timelineDot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid $gray-4;
+  background: $white;
+  z-index: 1;
+
+  .timelineItem.active & {
+    border-color: $orange;
+    background: $orange;
+  }
+
+  .timelineItem.past & {
+    background: $gray-4;
+  }
+}
+
+.file {
+  align-self: flex-start;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: $gray-6;
+  border-radius: 24.5px;
+}
+
+.fileNameContainer {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.fileIcon {
+  width: 18px;
+  height: 18px;
+}
+
+.fileSize {
+  @include paragraph-3;
+
+  color: $gray-3;
+}
+
+.statusComment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background: $gray-5;
+  color: $gray-1;
+}
+
+.statusCommentTitle {
+  @include heading-7;
+}
+
+.statusCommentText {
+  @include paragraph-2;
+}

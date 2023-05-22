@@ -1,0 +1,86 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.navBtn {
+  align-self: flex-start;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.content {
+  display: flex;
+  gap: 32px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  width: 100%;
+  background: $white;
+  border-radius: 8px;
+}
+
+.formHFields {
+  display: flex;
+  gap: 16px;
+
+  > :global(.ant-form-item) {
+    width: 100%;
+  }
+}
+
+.formHLongField {
+  flex-shrink: 0.7;
+  width: 100%;
+}
+
+.formCheckboxes {
+  gap: 24px;
+}
+
+.formControls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.formDeleteBtn {
+  color: $red !important;
+
+  :global(.icon) path {
+    stroke: $red !important;
+  }
+}
+
+.hint {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-self: flex-start;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
+  width: 40%;
+  background: $white;
+  border-radius: 8px;
+}
+
+.hintIcon path {
+  stroke: $gray-3;
+}
+
+.hintText {
+  @include paragraph-2;
+
+  color: $gray-3;
+}

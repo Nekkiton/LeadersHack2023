@@ -1,0 +1,26 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.rating {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: $gray-3;
+}
+
+.ratingIcon {
+  width: 16px;
+  height: 16px;
+  fill: $orange;
+
+  path {
+    stroke: $orange;
+  }
+}

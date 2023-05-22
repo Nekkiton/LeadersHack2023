@@ -1,0 +1,50 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.titleContainer {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+}
+
+.headerCount {
+  @include paragraph-2;
+  color: $gray-3;
+}
+
+.headerSelect {
+  width: 218px;
+}
+
+.nothingIcon {
+  align-self: center;
+  width: 150px;
+  height: 150px;
+
+  path {
+    stroke: $gray-5;
+  }
+}
+
+.nothingText {
+  @include paragraph-2;
+
+  text-align: center;
+}
+
+.responses {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

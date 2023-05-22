@@ -1,0 +1,73 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  gap: 16px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.card {
+  padding: 16px;
+  border-radius: 8px;
+  background: $white;
+}
+
+.nothing {
+  @include paragraph-2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.nothingIcon {
+  width: 100px;
+  height: 100px;
+}
+
+.ratingBlock {
+  width: 35%;
+}
+
+.ratingCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.ratingValue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ratingIcon {
+  width: 24px;
+  height: 24px;
+  fill: $orange;
+
+  path {
+    stroke: $orange;
+  }
+}
+
+.ratingHint {
+  @include paragraph-3;
+
+  color: $gray-3;
+  text-align: center;
+}
+
+.vacancies {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

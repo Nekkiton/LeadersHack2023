@@ -1,0 +1,37 @@
+@import "assets/css/config";
+
+.tabs {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: min-content;
+  padding: 4px;
+  background: $white;
+  border: 1px solid $gray-5;
+  border-radius: 28px;
+}
+
+.tab {
+  @include paragraph-2;
+
+  padding: 8px 24px;
+  border-radius: 30px;
+  white-space: nowrap;
+  cursor: pointer;
+  z-index: 1;
+  transition: $transition;
+
+  &.active {
+    color: $gray-6;
+  }
+}
+
+.tabBackground {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  width: 100px;
+  background: $gray-3;
+  border-radius: 30px;
+  transition: $transition;
+}

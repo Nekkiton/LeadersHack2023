@@ -1,0 +1,34 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  flex-grow: 1;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.searchInput {
+  width: 100%;
+}
+
+.mentors {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

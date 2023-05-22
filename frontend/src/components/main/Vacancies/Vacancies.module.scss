@@ -1,0 +1,85 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.headerTitle {
+  text-transform: uppercase;
+}
+
+.nothing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  height: 100%;
+}
+
+.nothingIcon {
+  width: 150px;
+  height: 150px;
+}
+
+.nothingText {
+  @include paragraph-2;
+
+  text-align: center;
+}
+
+.vacancies {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+}
+
+.filtersFields {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filtersInput {
+  width: 296px;
+}
+
+.filtersSelect {
+  width: 180px;
+}
+
+.filtersMentor {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 20px;
+}
+
+.filtersMentorImg {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.filtersMentorName {
+  @include paragraph-2;
+}
+
+.filtersClear {
+  margin: auto;
+}

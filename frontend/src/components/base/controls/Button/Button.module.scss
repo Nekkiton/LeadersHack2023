@@ -1,0 +1,62 @@
+@import "assets/css/config";
+
+.button {
+  @include button;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 24px;
+  height: 46px;
+  border-radius: 30px;
+  border: 1px solid $gray-2 !important;
+  transition: $transition;
+
+  &:global(.primary) {
+    background: $gray-2;
+    color: $gray-6 !important;
+
+    :global(.icon) path {
+      stroke: $gray-6;
+    }
+
+    &:not([disabled]):hover {
+      box-shadow: 0 0 10px 0 $gray-3;
+    }
+
+    &[disabled] {
+      background: $gray-3;
+      border-color: $gray-3 !important;
+    }
+  }
+
+  &:global(.secondary) {
+    color: $gray-2;
+    background: none;
+
+    &:hover {
+      background: $gray-2;
+      color: $gray-6;
+
+      :global(.icon) path {
+        stroke: $gray-6;
+      }
+    }
+  }
+
+  &:global(.text) {
+    @include paragraph-2;
+
+    gap: 4px;
+    background: none;
+    border: none !important;
+    padding: 0;
+    height: auto;
+    color: $blue;
+    box-shadow: none;
+
+    :global(.icon) path {
+      stroke: $blue;
+    }
+  }
+}
