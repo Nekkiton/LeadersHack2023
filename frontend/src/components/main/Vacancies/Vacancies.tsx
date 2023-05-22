@@ -171,6 +171,7 @@ export default function Vacancies({ link, noHeader }: Props) {
             <div className={styles.vacancies}>
               {data?.items.map((vacancy) => (
                 <VacancyCard
+                  key={vacancy.id}
                   vacancy={vacancy}
                   noUser={user.role === "mentor"}
                   link={link}
