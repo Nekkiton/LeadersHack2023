@@ -1,0 +1,50 @@
+@import "assets/css/config";
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 16px;
+  border-radius: 8px;
+  background: $white;
+  transition: $transition;
+
+  &:hover {
+    box-shadow: 0px 0px 20px rgba(71, 91, 172, 0.25);
+  }
+
+  > *:not(:last-child) {
+    position: relative;
+  }
+
+  > *:not(:last-child):after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -8px;
+    border: 1px solid $gray-5;
+  }
+}
+
+.title {
+  @include paragraph-1;
+}
+
+.info {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.infoItem {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.infoItemTitle {
+  color: $gray-3;
+}

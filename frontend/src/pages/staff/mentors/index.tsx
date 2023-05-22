@@ -17,7 +17,7 @@ export default function VacanciesPage() {
         { text: "Расписание стажеров", icon: <CalendarIcon /> },
       ]}
     >
-      <Mentors />
+      <Mentors link="/staff/mentors" />
     </MenuContainer>
   )
 }

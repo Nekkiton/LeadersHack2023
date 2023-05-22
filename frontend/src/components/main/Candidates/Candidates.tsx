@@ -1,35 +1,41 @@
 import Input from "components/base/controls/Input"
+import Button from "components/base/controls/Button"
 import ResponseCard from "components/base/vacancy/ResponseCard"
 import Pagination from "components/base/navigation/Pagination"
-import StudentIcon from "assets/icons/student.svg"
+import UserQuestionIcon from "assets/icons/user-question.svg"
 import SearchIcon from "assets/icons/search.svg"
-import styles from "./Interns.module.scss"
+import styles from "./Candidates.module.scss"
 
-interface Props {
-  link: string
-}
-
-export default function Interns({ link }: Props) {
+export default function Candidates() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <h1 className={styles.title}>Стажеры</h1>
+        <h1 className={styles.title}>Кандидаты</h1>
       </div>
       {false ? (
         <div className={styles.nothing}>
-          <StudentIcon className={styles.nothingIcon} />
-          <p>У вас еще нет стажеров на наставничестве</p>
+          <UserQuestionIcon className={styles.nothingIcon} />
+          <p>
+            На стажировку еще не зарегистрировался
+            <br />
+            ни один кандидат
+          </p>
         </div>
       ) : (
         <>
           <Input
             className={styles.searchInput}
-            placeholder="Поиск по стажерам"
+            placeholder="Поиск по кандидатам"
             prefix={<SearchIcon />}
           />
-          <div className={styles.interns}>
+          <div className={styles.sorting}>
+            <p>Сортировать по</p>
+            <Button type="text">ФИО</Button>
+            <Button type="text">количеству баллов</Button>
+          </div>
+          <div className={styles.candidates}>
             <ResponseCard
-              link={link}
+              link="/curator/candidates"
               responseInfo={{
                 id: "101",
                 status: "new",

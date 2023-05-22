@@ -44,6 +44,7 @@
   border-radius: 8px;
   border: 1px solid $gray-4;
   cursor: default;
+  white-space: nowrap;
 
   &.empty {
     color: $gray-4;
@@ -113,6 +114,11 @@
     background: $gray-6;
     cursor: pointer;
   }
+}
+
+.selectItemIcon {
+  width: 24px;
+  height: 24px;
 }
 
 .selectControls {

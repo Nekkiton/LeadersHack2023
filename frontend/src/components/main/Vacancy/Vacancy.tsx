@@ -28,6 +28,9 @@ export default function Vacancy({ backLink, link }: Props) {
     role: "mentor",
   }
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const toggleModal = () => setIsModalOpen(!isModalOpen)
+
   const { query } = useRouter()
 
   const { data, isLoading } = useQuery({
@@ -49,9 +52,6 @@ export default function Vacancy({ backLink, link }: Props) {
   } as {
     [key: string]: string
   }
-
-  const [isModalOpen, setIsModalOpen] = useState(false)
-  const toggleModal = () => setIsModalOpen(!isModalOpen)
 
   return (
     <div className={styles.vacancy}>

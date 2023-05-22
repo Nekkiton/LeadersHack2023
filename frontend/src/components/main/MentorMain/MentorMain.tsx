@@ -32,11 +32,15 @@ export default function StaffMain() {
                   title: "UX/UI дизайнер",
                   company: "Карьерный центр Правительства Москвы",
                   status: "active",
-                  mentorName: "Юлиана Митрофанова",
-                  mentorRole: "Наставник",
-                  mentorAvatar: null,
-                  responsesCount: 19,
-                  responsesCountNew: 5,
+                  mentor: {
+                    id: "1",
+                    name: "Юлиана Митрофанова",
+                    avatar: null,
+                  },
+                  responses: {
+                    count: 19,
+                    countNew: 5,
+                  },
                 }}
                 link="/mentor/vacancies"
               />
@@ -58,8 +62,23 @@ export default function StaffMain() {
             </div>
           ) : (
             <div className={styles.vacancies}>
-              <ResponseCard link="/mentor/interns" />
-              <ResponseCard link="/mentor/interns" />
+              <ResponseCard
+                link="/mentor/interns"
+                responseInfo={{
+                  id: "101",
+                  status: "new",
+                  name: "Марина Высокова",
+                  age: "22",
+                  score: 20,
+                  address: "г. Москва",
+                  education: "МГУ им. Ломоносова, выпуск 2023 г.",
+                  isNew: true,
+                  reviews: {
+                    count: 24,
+                    averageRate: 4.7,
+                  },
+                }}
+              />
               <Link href="/mentor/interns">
                 <Button type="secondary">Смотреть всеx</Button>
               </Link>

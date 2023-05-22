@@ -8,18 +8,25 @@ import UserSearchIcon from "assets/icons/user-search.svg"
 import SearchIcon from "assets/icons/search.svg"
 import styles from "./Mentors.module.scss"
 
-export default function Mentors() {
+interface Props {
+  link: string
+  noHeader?: boolean
+}
+
+export default function Mentors({ link, noHeader }: Props) {
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.title}>Наставники</h1>
-        <Link href="/staff/add-mentor">
-          <Button>
-            <PlusIcon className="icon" />
-            <span>Добавить наставника</span>
-          </Button>
-        </Link>
-      </div>
+      {!noHeader && (
+        <div className={styles.header}>
+          <h1 className={styles.title}>Наставники</h1>
+          <Link href="/staff/add-mentor">
+            <Button>
+              <PlusIcon className="icon" />
+              <span>Добавить наставника</span>
+            </Button>
+          </Link>
+        </div>
+      )}
       {false ? (
         <div className={styles.nothing}>
           <UserSearchIcon />
@@ -33,14 +40,22 @@ export default function Mentors() {
         </div>
       ) : (
         <>
-          <Input
-            className={styles.searchInput}
-            placeholder="Поиск по наставникам"
-            prefix={<SearchIcon />}
-          />
+          <div className={styles.filters}>
+            <Input
+              className={styles.searchInput}
+              placeholder="Поиск по наставникам"
+              prefix={<SearchIcon />}
+            />
+            {noHeader && (
+              <Button>
+                <PlusIcon className="icon" />
+                <span>Добавить наставника</span>
+              </Button>
+            )}
+          </div>
           <div className={styles.mentors}>
-            <MentorCard link="/staff/mentors" />
-            <MentorCard link="/staff/mentors" />
+            <MentorCard link={link} />
+            <MentorCard link={link} />
           </div>
           <Pagination />
         </>

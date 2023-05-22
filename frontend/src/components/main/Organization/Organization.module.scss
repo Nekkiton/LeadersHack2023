@@ -1,0 +1,54 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 860px;
+}
+
+.backLink {
+  align-self: flex-start;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.contacts {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.contact {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.info {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  color: $gray-3;
+}
+
+.address {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.addressDot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: $orange;
+}

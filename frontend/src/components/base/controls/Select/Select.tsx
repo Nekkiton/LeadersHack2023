@@ -85,7 +85,9 @@ export default function Select({
                 key={key}
               >
                 {items[key].value || items[key]}
-                {multiple && newValue?.includes(key) && <CheckIcon />}
+                {multiple && newValue?.includes(key) && (
+                  <CheckIcon className={styles.selectItemIcon} />
+                )}
               </div>
             ))}
           </div>

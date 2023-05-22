@@ -27,11 +27,15 @@ export default function StaffMain() {
                 title: "UX/UI дизайнер",
                 company: "Карьерный центр Правительства Москвы",
                 status: "active",
-                mentorName: "Юлиана Митрофанова",
-                mentorRole: "Наставник",
-                mentorAvatar: null,
-                responsesCount: 19,
-                responsesCountNew: 5,
+                mentor: {
+                  id: "1",
+                  name: "Юлиана Митрофанова",
+                  avatar: null,
+                },
+                responses: {
+                  count: 19,
+                  countNew: 5,
+                },
               }}
               link="/staff/vacancies"
             />

@@ -16,14 +16,16 @@ import { fetchVacancyList } from "data/fetchVacancyList"
 
 interface Props {
   link: string
+  noHeader?: boolean
 }
 
 const userImg = "/images/user.svg"
 
-export default function Vacancies({ link }: Props) {
+export default function Vacancies({ link, noHeader }: Props) {
   const user = {
-    role: "mentor",
+    //role: "mentor",
     //role: "staff",
+    role: "curator",
   }
 
   const getNothingText = (role: string) => {
@@ -71,17 +73,19 @@ export default function Vacancies({ link }: Props) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.header}>
-        <h1 className={styles.headerTitle}>Вакансии</h1>
-        {user.role === "staff" && (
-          <Link href="/staff/add-vacancy">
-            <Button>
-              <PlusIcon className="icon" />
-              <span>Создать вакансию</span>
-            </Button>
-          </Link>
-        )}
-      </div>
+      {!noHeader && (
+        <div className={styles.header}>
+          <h1 className={styles.headerTitle}>Вакансии</h1>
+          {user.role === "staff" && (
+            <Link href="/staff/add-vacancy">
+              <Button>
+                <PlusIcon className="icon" />
+                <span>Создать вакансию</span>
+              </Button>
+            </Link>
+          )}
+        </div>
+      )}
       {false ? (
         <div className={styles.nothing}>
           <NothingIcon className={styles.nothingIcon} />
@@ -137,6 +141,16 @@ export default function Vacancies({ link }: Props) {
                   value={mentors}
                   onChange={setMentors}
                   multiple
+                />
+              )}
+              {user.role === "curator" && (
+                <Select
+                  className={styles.filtersSelect}
+                  placeholder="Все организации"
+                  multiple
+                  items={{
+                    1: "Московская дирекция транспортного обслуживания",
+                  }}
                 />
               )}
             </div>
