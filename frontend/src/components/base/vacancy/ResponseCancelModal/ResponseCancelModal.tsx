@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react"
 import Modal from "components/base/controls/Modal"
 import Input from "components/base/controls/Input"
-import { ModalProps } from "components/base/controls/Modal/Modal"
+import { ModalProps } from "components/base/controls/Modal"
 
 export default function ResponseCancelModal({
   title="Вы уверены, что хотите отклонить отклик?",

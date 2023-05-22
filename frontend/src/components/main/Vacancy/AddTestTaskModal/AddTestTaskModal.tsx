@@ -9,18 +9,16 @@ const bodyStyle = {
   gap: "16px",
 }
 
-export default function PasswordModal({
-  title = "Изменить пароль",
+export default function AddTestTaskModal({
+  title = "Добавьте тестовое задание",
   isOpen,
   className,
-  okText = "Сохранить",
+  okText = "Отправить на модерацию",
   cancelText = "Отмена",
   onOk,
   onCancel,
 }: ModalProps) {
   return (
-    // TODO: добавить валидацию старого пароля через запрос на сервер
-    // Добавить валидацию двух текущих паролей
     <Modal
       className={`${className}`}
       bodyStyle={bodyStyle}
@@ -31,9 +29,8 @@ export default function PasswordModal({
       okText={okText}
       cancelText={cancelText}
     >
-      <Input label="Старый пароль" password />
-      <Input label="Новый пароль" password />
-      <Input label="Повторите пароль" password />
+      <Input label="Описание тестового задания" placeholder="Опишите, что нужно сделать стажеру в рамках задания" textarea />
+      
     </Modal>
   )
 }

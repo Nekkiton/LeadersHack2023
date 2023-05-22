@@ -12,6 +12,8 @@ import LinkExternalIcon from "assets/icons/link-external.svg"
 import DocumentIcon from "assets/icons/document2.svg"
 import { useQuery } from "@tanstack/react-query"
 import { fetchVacancyInfo } from "data/fetchVacancyInfo"
+import { useState } from "react"
+import AddTestTaskModal from "./AddTestTaskModal"
 
 interface Props {
   backLink: string
@@ -48,8 +50,16 @@ export default function Vacancy({ backLink, link }: Props) {
     [key: string]: string
   }
 
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const toggleModal = () => setIsModalOpen(!isModalOpen)
+
   return (
     <div className={styles.vacancy}>
+      <AddTestTaskModal
+        isOpen={isModalOpen}
+        onCancel={toggleModal}
+        onOk={toggleModal}
+      />
       <Link className={styles.topLink} href={backLink}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
@@ -77,11 +87,11 @@ export default function Vacancy({ backLink, link }: Props) {
           )}
           {user.role === "mentor" && (
             <>
-              <Button>
+              <Button onClick={toggleModal}>
                 <PlusIcon className="icon" />
                 <span>Добавить тестовое задание</span>
               </Button>
-              <Button type="secondary">
+              <Button type="secondary" onClick={toggleModal}>
                 <PenIcon className="icon" />
                 <span>Редактировать тестовое задание</span>
               </Button>

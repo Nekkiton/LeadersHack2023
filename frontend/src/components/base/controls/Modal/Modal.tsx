@@ -11,6 +11,7 @@ export interface ModalProps {
   cancelText?: string
   children?: ReactNode
   className?: string
+  bodyStyle?: React.CSSProperties
 }
 
 const maskStyle = {
@@ -23,6 +24,7 @@ export default function Modal({
   isOpen,
   children,
   className,
+  bodyStyle,
   okText = "Ок",
   cancelText = "Отмена",
   onOk,
@@ -33,6 +35,7 @@ export default function Modal({
       <BaseModal
         className={`${styles.modal} ${className}`}
         maskStyle={maskStyle}
+        bodyStyle={bodyStyle}
         title={title}
         open={isOpen}
         onOk={onOk}
