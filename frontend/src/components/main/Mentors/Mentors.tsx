@@ -68,6 +68,7 @@ export default function Mentors({ link, noHeader, longSearchInput }: Props) {
             )}
           </div>
           <div className={styles.mentors}>
+            {/* TODO: add mentor page */}
             <MentorCard link={link} />
             <MentorCard link={link} />
           </div>

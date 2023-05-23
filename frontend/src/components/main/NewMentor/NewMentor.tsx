@@ -1,14 +1,18 @@
 import { useEffect, useState } from "react"
-import { Form } from "antd"
+import { Form, notification } from "antd"
+import { useRouter } from "next/router"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Input from "components/base/controls/Input"
-import styles from "./NewMentor.module.scss"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import ExclamationIcon from "assets/icons/exclamation.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
+import TimesIcon from "assets/icons/times.svg"
+import styles from "./NewMentor.module.scss"
 
 export default function NewVacancy() {
+  const router = useRouter()
+
   const [isValid, setIsValid] = useState(false)
   const [form] = Form.useForm()
   const formValues = Form.useWatch([], form)
@@ -20,6 +24,16 @@ export default function NewVacancy() {
     )
   }, [formValues])
 
+  // TODO: create mentor, handle errors
+  const saveMentor = (data: any) => {
+    console.log(data)
+    notification.open({
+      message: "Ссылка на регистрацию отправлена наставнику",
+      closeIcon: <TimesIcon />,
+    })
+    router.push("/staff/mentors")
+  }
+
   return (
     <div className={styles.container}>
       <Link href="/staff/mentors">
@@ -30,7 +44,7 @@ export default function NewVacancy() {
       </Link>
       <h1 className={styles.title}>Добавить наставника</h1>
       <div className={styles.content}>
-        <Form className={styles.form} form={form}>
+        <Form className={styles.form} form={form} onFinish={saveMentor}>
           <div className={styles.formHFields}>
             <Form.Item
               name="name"
@@ -77,6 +91,7 @@ export default function NewVacancy() {
             Обратите внимание: для того, чтобы закреплять стажеров
             за наставником, ему необходимо пройти обучение в Школе наставников
           </p>
+          {/* TODO: add link */}
           <Button type="text">
             <span>Подробнее о добавлении наставников</span>
             <LinkExternalIcon className="icon" />
