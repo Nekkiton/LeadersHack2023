@@ -38,8 +38,18 @@
   }
 }
 
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .searchInput {
-  width: 422px;
+  width: 484px;
+}
+
+.filtersSelect {
+  width: 180px;
 }
 
 .candidates {

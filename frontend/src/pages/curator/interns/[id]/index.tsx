@@ -1,5 +1,5 @@
-import VacancyResponse from "components/main/VacancyResponse"
+import Intern from "components/main/Intern"
 
 export default function InternPage() {
-  return <VacancyResponse backLink="/curator/interns" />
+  return <Intern backLink="/curator/interns" />
 }

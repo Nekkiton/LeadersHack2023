@@ -6,13 +6,17 @@ import Select from "components/base/controls/Select"
 import Input from "components/base/controls/Input"
 import Pagination from "components/base/navigation/Pagination"
 import VacancyStatus from "components/base/vacancy/Status"
-import styles from "./Vacancies.module.scss"
+import SmallSwitch from "components/base/controls/SmallSwitch"
+import Map from "components/base/Map"
 import PlusIcon from "assets/icons/plus.svg"
 import SearchIcon from "assets/icons/search.svg"
 import NothingIcon from "assets/icons/document-search.svg"
 import TimesIcon from "assets/icons/times.svg"
+import ListIcon from "assets/icons/list.svg"
+import MapIcon from "assets/icons/map.svg"
 import VacancyCard from "components/base/vacancy/VacancyCard"
 import { fetchVacancyList } from "data/fetchVacancyList"
+import styles from "./Vacancies.module.scss"
 
 interface Props {
   link: string
@@ -68,6 +72,8 @@ export default function Vacancies({ link, noHeader }: Props) {
       )
     }
   }
+
+  const [viewMode, setViewMode] = useState("list")
 
   const [query, setQuery] = useState("")
   const [statuses, setStatuses] = useState([])
@@ -143,7 +149,23 @@ export default function Vacancies({ link, noHeader }: Props) {
                 className={styles.filtersSelect}
                 placeholder="Все статусы"
                 items={[
+                  {
+                    key: "testTask",
+                    value: <VacancyStatus status="testTask" />,
+                  },
+                  {
+                    key: "moderating",
+                    value: <VacancyStatus status="moderating" />,
+                  },
                   { key: "active", value: <VacancyStatus status="active" /> },
+                  {
+                    key: "rejected",
+                    value: <VacancyStatus status="rejected" />,
+                  },
+                  {
+                    key: "archived",
+                    value: <VacancyStatus status="archived" />,
+                  },
                 ]}
                 value={statuses}
                 onChange={setStatuses}
@@ -186,39 +208,59 @@ export default function Vacancies({ link, noHeader }: Props) {
                 />
               )}
             </div>
-            {(query ||
-              !!statuses.length ||
-              !!mentors.length ||
-              !!organizations.length) && (
-              <Button
-                className={styles.filtersClear}
-                type="text"
-                onClick={clearFilters}
-              >
-                <TimesIcon className="icon" />
-                <span>Сбросить все</span>
-              </Button>
+            {false &&
+              (query ||
+                !!statuses.length ||
+                !!mentors.length ||
+                !!organizations.length) && (
+                <Button
+                  className={styles.filtersClear}
+                  type="text"
+                  onClick={clearFilters}
+                >
+                  <TimesIcon className="icon" />
+                  <span>Сбросить все</span>
+                </Button>
+              )}
+            {/* TODO: show if user if curator and page is not organization */}
+            {user.role === "curator" && (
+              <SmallSwitch
+                className={styles.viewSwitch}
+                value={viewMode}
+                onChange={setViewMode}
+                items={[
+                  { key: "list", value: <ListIcon className="icon" /> },
+                  { key: "map", value: <MapIcon className="icon" /> },
+                ]}
+              />
             )}
           </div>
           {isLoading ? (
             <p>Загрузка...</p>
           ) : (
-            <div className={styles.vacancies}>
-              {data?.items.map((vacancy) => (
-                <VacancyCard
-                  key={vacancy.id}
-                  vacancy={vacancy}
-                  noUser={user.role === "mentor"}
-                  link={link}
-                />
-              ))}
-            </div>
+            <>
+              {viewMode === "list" && (
+                <>
+                  <div className={styles.vacancies}>
+                    {data?.items.map((vacancy) => (
+                      <VacancyCard
+                        key={vacancy.id}
+                        vacancy={vacancy}
+                        noUser={user.role === "mentor"}
+                        link={link}
+                      />
+                    ))}
+                  </div>
+                  <Pagination
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    totalPages={data?.totalPages ?? 0}
+                  />
+                </>
+              )}
+              {viewMode === "map" && <Map items={data?.items} card={<div />} />}
+            </>
           )}
-          <Pagination
-            currentPage={currentPage}
-            setCurrentPage={setCurrentPage}
-            totalPages={data?.totalPages ?? 0}
-          />
         </>
       )}
     </div>

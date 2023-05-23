@@ -1,0 +1,36 @@
+@import "assets/css/config";
+
+.switch {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 8px;
+  background: $white;
+  border: 1px solid $gray-4;
+}
+
+.item {
+  display: flex;
+  position: relative;
+  cursor: pointer;
+
+  &:not(:last-child):after {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    border: 1px solid $gray-5;
+    right: -5px;
+  }
+
+  .icon path {
+    width: 24px;
+    height: 24px;
+    transition: $transition;
+  }
+
+  &:not(.active) :global(.icon) path {
+    stroke: $gray-4;
+  }
+}
