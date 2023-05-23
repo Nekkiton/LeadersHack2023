@@ -210,7 +210,6 @@ export default function Vacancies({ link, noHeader }: Props) {
                   vacancy={vacancy}
                   noUser={user.role === "mentor"}
                   link={link}
-                  key={vacancy.id}
                 />
               ))}
             </div>
