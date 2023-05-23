@@ -84,6 +84,8 @@ jobs:
         run: yarn test
   build-and-push:
     runs-on: self-hosted
+    env:
+      HOME: "/root"
     needs:
       - build-frontend
       - build-backend
