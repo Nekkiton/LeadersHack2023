@@ -7,18 +7,31 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import PhoneIcon from "assets/icons/phone.svg"
 import MailIcon from "assets/icons/mail.svg"
 import UserRating from "components/base/user/UserRating"
+import { useQuery } from "@tanstack/react-query"
+import { fetchVacancyResponseInfo } from "data/fetchVacancyResponseInfo"
 
 interface Props {
   backLink: string
+  responseId?: string
 }
 
 const userImg = "/images/user.svg"
 
-export default function VacancyResponse({ backLink }: Props) {
+export default function VacancyResponse({ backLink, responseId }: Props) {
   const user = {
     role: "mentor",
     //role: "staff",
   }
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["vacancyResponseInfo", { id: responseId }],
+    queryFn: () =>
+      fetchVacancyResponseInfo({
+        id: responseId ?? "",
+      }),
+  })
+
+  if (!data || isLoading) return <div>Загрузка...</div>
 
   return (
     <div className={styles.container}>
@@ -30,12 +43,17 @@ export default function VacancyResponse({ backLink }: Props) {
       </Link>
       <div className={styles.header}>
         <div className={styles.user}>
-          <img className={styles.userImg} src={userImg} />
+          <img className={styles.userImg} src={data.user.avatar ?? userImg} />
           <div className={styles.userInfoContainer}>
-            <h1 className={styles.userName}>Марина Высокова</h1>
+            <h1 className={styles.userName}>{data.user.name}</h1>
             <div className={styles.userInfo}>
-              <p>22 года, г. Москва</p>
-              <UserRating />
+              <p>
+                {data.user.age} года, {data.user.address}
+              </p>
+              <UserRating
+                count={data.user.reviews.count}
+                averageRate={data.user.reviews.averageRate}
+              />
             </div>
           </div>
         </div>
@@ -54,78 +72,55 @@ export default function VacancyResponse({ backLink }: Props) {
               <p className={styles.cardTitle}>Контакты</p>
               <div className={styles.contact}>
                 <PhoneIcon />
-                <p>+7 (910) 234-56-78</p>
+                <p>{data.user.phone}</p>
               </div>
               <div className={styles.contact}>
                 <MailIcon />
-                <p>marina@gmail.com</p>
+                <p>{data.user.email}</p>
               </div>
             </div>
             <div className={styles.card}>
               <p className={styles.cardTitle}>График работы</p>
-              <p>20 часов в неделю</p>
+              <p>{data.schedule}</p>
             </div>
           </div>
           <div className={styles.card}>
             <p className={styles.cardTitle}>Образование</p>
             <div className={styles.education}>
-              <p>Московский государственный университет им. М.Ломоносова</p>
-              <p>Юридический факультет</p>
-              <p>Год выпуска: 2024</p>
+              <p>{data.education.name}</p>
+              <p>{data.education.specialty}</p>
+              <p>Год выпуска: {data.education.graduationYear}</p>
             </div>
           </div>
           <div className={styles.card}>
             <p className={styles.cardTitle}>Опыт работы</p>
-            <p>
-              ООО «Рога и копыта» с мая 2022 по май 2023. Ведение социальных
-              сетей, придумывание рекламных креативов АНО «Объединение умов» с
-              января по май 2022. Создание контента для пиара мероприятий
-            </p>
+            <p>{data.experience}</p>
           </div>
           <div className={styles.card}>
             <p className={styles.cardTitle}>Проектная деятельность</p>
-            <p>
-              В своём стремлении улучшить пользовательский опыт мы упускаем, что
-              базовые сценарии поведения пользователей объективно рассмотрены
-              соответствующими инстанциями. Прежде всего,
-              социально-экономическое развитие в значительной степени
-              обусловливает важность переосмысления.
-            </p>
+            <p>{data.projectActivity}</p>
           </div>
           <div className={styles.card}>
             <p className={styles.cardTitle}>О себе</p>
-            <p>
-              Противоположная точка зрения подразумевает, что сделанные на базе
-              интернет-аналитики выводы рассмотрены исключительно в разрезе
-              маркетинговых и финансовых предпосылок. Банальные, но
-              неопровержимые выводы, а также независимые государства, вне
-              зависимости от их уровня.
-            </p>
+            <p>{data.about}</p>
           </div>
         </div>
         <div className={`${styles.card} ${styles.complexCard}`}>
           <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Статус</p>
-            <ResponseStatus status="new" />
+            <p className={styles.cardTitle}>Статус отклика</p>
+            <ResponseStatus status={data.status} />
           </div>
           <div className={styles.statusComment}>
             <p className={styles.statusCommentTitle}>Причина отклонения</p>
-            <p>
-              Спасибо за ваш отклик. К сожалению, пока что мы не готовы взять
-              вас на стажировку.
-            </p>
+            <p>{data.rejectionReason}</p>
           </div>
           <div className={styles.complexCardBlock}>
             <p className={styles.cardTitle}>Тестовое задание</p>
-            <File />
+            <File name={data.testTask.fileName} size={data.testTask.fileSize} />
           </div>
           <div className={styles.complexCardBlock}>
             <p className={styles.cardTitle}>Сопроводительное письмо</p>
-            <div>
-              Добрый день. Я бы очень хотела работать у вас. У меня есть для
-              этого необходимый опыт и я знаю, как сделать ваши пресс релизы
-              более яркими и интересными.
-            </div>
+            <div>{data.coveringLetter}</div>
           </div>
           <div>*еще баллы*</div>
         </div>
