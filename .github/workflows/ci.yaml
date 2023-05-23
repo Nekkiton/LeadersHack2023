@@ -132,9 +132,9 @@ jobs:
 
       - name: Deploy
         run: |
-          helm upgrade ${{ matrix.deployment }} --atomic --history-max=3 --set image.tag=${{ steps.meta.output.tags }} ${{ matrix.context }}/deployment
+          helm upgrade ${{ matrix.deployment }} --atomic --history-max=3 --set image.tag=$DOCKER_METADATA_OUTPUT_VERSION ${{ matrix.context }}/deployment
 
       - name: Clean up
         run: |
-          docker rmi ${{ matrix.image }}:${{ steps.meta.output.tags }}
+          docker rmi $DOCKER_METADATA_OUTPUT_TAGS
           docker builder prune -f
