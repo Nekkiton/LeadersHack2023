@@ -1,5 +1,8 @@
+import { useState } from "react"
 import Input from "components/base/controls/Input"
 import Button from "components/base/controls/Button"
+import Select from "components/base/controls/Select"
+import Status from "components/base/vacancy/Status"
 import ResponseCard from "components/base/vacancy/ResponseCard"
 import Pagination from "components/base/navigation/Pagination"
 import UserQuestionIcon from "assets/icons/user-question.svg"
@@ -7,6 +10,10 @@ import SearchIcon from "assets/icons/search.svg"
 import styles from "./Candidates.module.scss"
 
 export default function Candidates() {
+  const [query, setQuery] = useState("")
+  const [statuses, setStatuses] = useState([])
+  const [currentPage, setCurrentPage] = useState(0)
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -23,11 +30,49 @@ export default function Candidates() {
         </div>
       ) : (
         <>
-          <Input
-            className={styles.searchInput}
-            placeholder="Поиск по кандидатам"
-            prefix={<SearchIcon />}
-          />
+          <div className={styles.filters}>
+            <Input
+              className={styles.searchInput}
+              placeholder="Поиск по кандидатам"
+              prefix={<SearchIcon />}
+              value={query}
+              onChange={setQuery}
+            />
+            <Select
+              className={styles.filtersSelect}
+              placeholder="Все статусы"
+              value={statuses}
+              onChange={setStatuses}
+              items={[
+                {
+                  key: "studying",
+                  value: <Status status="studying" />,
+                },
+                {
+                  key: "moderating",
+                  value: <Status status="moderating" />,
+                },
+                {
+                  key: "finishedTesting",
+                  value: <Status status="finishedTesting" />,
+                },
+                {
+                  key: "case",
+                  value: <Status status="case" />,
+                },
+                {
+                  key: "internship",
+                  value: <Status status="internship" />,
+                },
+                {
+                  key: "rejected",
+                  value: <Status status="rejected" />,
+                },
+              ]}
+              multiple
+            />
+          </div>
+          {/* TODO: add sorting */}
           <div className={styles.sorting}>
             <p>Сортировать по</p>
             <Button type="text">ФИО</Button>
@@ -40,6 +85,7 @@ export default function Candidates() {
                 id: "101",
                 status: "new",
                 name: "Марина Высокова",
+                avatar: null,
                 age: "22",
                 score: 20,
                 address: "г. Москва",
@@ -52,7 +98,11 @@ export default function Candidates() {
               }}
             />
           </div>
-          <Pagination />
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={10}
+          />
         </>
       )}
     </div>

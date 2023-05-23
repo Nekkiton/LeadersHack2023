@@ -23,7 +23,8 @@ const userImg = "/images/user.svg"
 
 export default function VacancyResponse({ backLink, responseId }: Props) {
   const user = {
-    role: "mentor",
+    role: "curator",
+    //role: "mentor",
     //role: "staff",
   }
 
@@ -94,20 +95,22 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
             </div>
           </div>
         </div>
-        {/* TODO: Manage buttons visibility */}
+        {/* TODO: Manage buttons visibility, add modal */}
         <div className={styles.headerControls}>
           <Button type="secondary" onClick={toggleCancelModal}>
             Отклонить
           </Button>
           <Button onClick={acceptInternship}>Принять на стажировку</Button>
-          {/* TODO: add modal */}
           {user.role === "mentor" && (
             <Button onClick={acceptInterview}>
               Пригласить на собеседование
             </Button>
           )}
-          {/* TODO: add modal */}
           {user.role === "mentor" && <Button>Оценить стажера</Button>}
+          {user.role === "curator" && <Button>Оценить резюме</Button>}
+          {user.role === "curator" && (
+            <Button>Внести результаты кейс-чемпионата</Button>
+          )}
         </div>
       </div>
       <div className={styles.cards}>

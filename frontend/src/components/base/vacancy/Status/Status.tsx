@@ -27,6 +27,18 @@ export default function Status({ status, className }: Props) {
   } else if (status === "archived") {
     text = "В архиве"
     color = "gray"
+  } else if (status === "studying") {
+    text = "Проходит обучение"
+    color = "gray"
+  } else if (status === "finishedTesting") {
+    text = "Прошел тестирование"
+    color = "purpure"
+  } else if (status === "case") {
+    text = "Проходит кейс-чемпионат"
+    color = "light-blue"
+  } else if (status === "internship") {
+    text = "Отобран на стажировку"
+    color = "green"
   }
 
   return (
