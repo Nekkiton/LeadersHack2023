@@ -3,6 +3,7 @@ import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { ConfigService } from '@nestjs/config';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +13,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(username: string, passwordHash: string): Promise<any> {
+  async signIn(username: string, passwordHash: string): Promise<string> {
     const user = await this.usersService.findOne(username);
     if (!user) {
       throw new UnauthorizedException('Invalid username or password');
@@ -25,16 +26,24 @@ export class AuthService {
       sub: user.id,
       name: user.username,
     };
-    return {
-      access_token: await this.jwtService.signAsync(payload),
-    };
+    return this.jwtService.signAsync(payload);
   }
 
-  async create(username: string, password: string): Promise<void> {
+  async validateToken<T extends object>(token: string): Promise<T> {
+    try {
+      return await this.jwtService.verifyAsync<T>(token, {
+        secret: this.configService.get('jwt.secret'),
+      });
+    } catch {
+      throw new UnauthorizedException();
+    }
+  }
+
+  async create(username: string, password: string): Promise<User> {
     const passwordHash = await hash(
       password,
       this.configService.get('jwt.saltRounds'),
     );
-    this.usersService.create({ username, passwordHash });
+    return this.usersService.create({ username, passwordHash });
   }
 }

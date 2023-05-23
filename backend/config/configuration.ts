@@ -10,6 +10,6 @@ export default () => ({
   jwt: {
     secret: process.env.JWT_SECRET,
     saltRounds: 10,
-    expiresIn: '5m',
+    expiresIn: 60 * 60 * 3, // 3 hours
   },
 });
