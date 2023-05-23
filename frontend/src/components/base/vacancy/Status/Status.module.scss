@@ -12,11 +12,23 @@
   height: 8px;
   border-radius: 50%;
 
-  .status:global(.active) & {
+  .status.light-blue & {
+    background: $light-blue;
+  }
+
+  .status.orange & {
+    background: $orange;
+  }
+
+  .status.green & {
     background: $green;
   }
 
-  .status:global(.archived) & {
+  .status.red & {
+    background: $red;
+  }
+
+  .status.gray & {
     background: $gray-4;
   }
 }

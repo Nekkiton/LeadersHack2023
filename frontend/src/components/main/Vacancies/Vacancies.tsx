@@ -143,7 +143,23 @@ export default function Vacancies({ link, noHeader }: Props) {
                 className={styles.filtersSelect}
                 placeholder="Все статусы"
                 items={[
+                  {
+                    key: "testTask",
+                    value: <VacancyStatus status="testTask" />,
+                  },
+                  {
+                    key: "moderating",
+                    value: <VacancyStatus status="moderating" />,
+                  },
                   { key: "active", value: <VacancyStatus status="active" /> },
+                  {
+                    key: "rejected",
+                    value: <VacancyStatus status="rejected" />,
+                  },
+                  {
+                    key: "archived",
+                    value: <VacancyStatus status="archived" />,
+                  },
                 ]}
                 value={statuses}
                 onChange={setStatuses}
