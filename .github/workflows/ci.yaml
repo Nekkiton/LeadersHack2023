@@ -93,9 +93,11 @@ jobs:
           include:
             - dockerfile: backend/deployment/Dockerfile
               context: backend
+              deployment: backend
               image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/backend
             - dockerfile: frontend/deployment/Dockerfile
               context: frontend
+              deployment: frontend
               image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/frontend
     steps:      
       - name: Checkout
@@ -125,3 +127,7 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+      - name: Deploy
+        run: |
+          helm upgrade ${{ matrix.deployment }} --atomic --history-max=3 --set image.tag=${{ steps.meta.output.tags }} ${{ matrix.context }}/deployment
