@@ -5,12 +5,12 @@
 replicaCount: 1
 
 image:
-  repository: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/backend
+  repository: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/frontend
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
-imagePullSecrets: 
+imagePullSecrets:
   - name: "docker-credentials"
 nameOverride: ""
 fullnameOverride: ""
@@ -45,12 +45,10 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
   hosts:
     - host: geek-battle-2023.ru
       paths:
-        - path: /api
+        - path: /
           pathType: ImplementationSpecific
   tls:
    - secretName: geek-battle-ssl
