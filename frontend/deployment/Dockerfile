@@ -6,6 +6,7 @@ WORKDIR /application
 COPY . /application
 
 RUN yarn install --frozen-lockfile
+RUN yarn build
 
 # Stage 2. Prepare runtime
 FROM node:18-alpine as runtime
