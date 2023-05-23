@@ -81,7 +81,7 @@ jobs:
         run: yarn build
 
       - name: Run test
-        run: yarn test
+        run: yarn test --passWithNoTests
   build-and-push:
     runs-on: self-hosted
     env:

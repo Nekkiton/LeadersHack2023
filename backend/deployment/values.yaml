@@ -82,10 +82,14 @@ tolerations: []
 
 affinity: {}
 
-envSecrets:
+envPlain:
   - name: DATABASE_HOST
+    value: 10.0.0.29
+
+envSecrets:
+  - name: DATABASE_USERNAME
     secretName: application-credentials
-    secretKey: DATABASE_HOST
+    secretKey: DATABASE_USERNAME
   - name: DATABASE_PASSWORD
     secretName: application-credentials
     secretKey: DATABASE_PASSWORD
