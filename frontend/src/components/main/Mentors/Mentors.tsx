@@ -1,3 +1,4 @@
+import { useState } from "react"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Input from "components/base/controls/Input"
@@ -11,9 +12,17 @@ import styles from "./Mentors.module.scss"
 interface Props {
   link: string
   noHeader?: boolean
+  longSearchInput?: boolean
 }
 
-export default function Mentors({ link, noHeader }: Props) {
+export default function Mentors({ link, noHeader, longSearchInput }: Props) {
+  const [query, setQuery] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+
+  // TODO
+  // fetch mentors
+  // if user is curator and page is organization - filter by organization
+
   return (
     <div className={styles.container}>
       {!noHeader && (
@@ -27,6 +36,7 @@ export default function Mentors({ link, noHeader }: Props) {
           </Link>
         </div>
       )}
+      {/* TODO: if there are no mentors at all */}
       {false ? (
         <div className={styles.nothing}>
           <UserSearchIcon />
@@ -42,9 +52,13 @@ export default function Mentors({ link, noHeader }: Props) {
         <>
           <div className={styles.filters}>
             <Input
-              className={styles.searchInput}
+              className={`${styles.searchInput} ${
+                longSearchInput ? styles.long : ""
+              }`}
               placeholder="Поиск по наставникам"
               prefix={<SearchIcon />}
+              value={query}
+              onChange={setQuery}
             />
             {noHeader && (
               <Button>
@@ -54,10 +68,15 @@ export default function Mentors({ link, noHeader }: Props) {
             )}
           </div>
           <div className={styles.mentors}>
+            {/* TODO: add mentor page */}
             <MentorCard link={link} />
             <MentorCard link={link} />
           </div>
-          <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={10}
+          />
         </>
       )}
     </div>

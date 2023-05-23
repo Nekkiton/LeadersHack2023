@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, ReactNode } from "react"
 import Button from "components/base/controls/Button"
 import styles from "./Select.module.scss"
 import ChevronDownIcon from "assets/icons/chevron-down.svg"
@@ -8,8 +8,10 @@ interface Props {
   label?: string
   placeholder?: string
   items?: {
-    [key: string | number]: any
-  }
+    key: any
+    value: ReactNode
+    selectedValue?: ReactNode
+  }[]
   value?: any[] | any // multiple ? any[] : any
   onChange?: (alue: any) => void
   className?: string
@@ -21,7 +23,7 @@ export default function Select({
   label,
   same,
   placeholder,
-  items = {},
+  items = [],
   value,
   onChange,
   className,
@@ -67,6 +69,19 @@ export default function Select({
     setIsActive(false)
   }
 
+  const getHeaderValue = () => {
+    if (newValue?.length) {
+      if (multiple) {
+        return `Выбрано: ${newValue.length}`
+      } else {
+        const selected = items.find((i) => i.key === newValue[0])
+        return selected?.selectedValue || selected?.value
+      }
+    } else {
+      return placeholder
+    }
+  }
+
   return (
     <div className={styles.container}>
       {label && <p className={styles.label}>{label}</p>}
@@ -78,14 +93,14 @@ export default function Select({
         <span className={styles.selectBackdrop} onClick={clear} />
         <div className={styles.selectBody}>
           <div className={styles.selectItems}>
-            {Object.keys(items).map((key) => (
+            {items.map((item) => (
               <div
                 className={styles.selectItem}
-                onClick={() => toggleItem(key)}
-                key={key}
+                onClick={() => toggleItem(item.key)}
+                key={item.key}
               >
-                {items[key].value || items[key]}
-                {multiple && newValue?.includes(key) && (
+                {item.value}
+                {multiple && newValue?.includes(item.key) && (
                   <CheckIcon className={styles.selectItemIcon} />
                 )}
               </div>
@@ -106,13 +121,7 @@ export default function Select({
           }`}
           onClick={() => setIsActive((val) => !val)}
         >
-          <span>
-            {newValue?.length
-              ? multiple
-                ? `Выбрано: ${newValue.length}`
-                : items[newValue[0]].selectedValue || items[newValue[0]]
-              : placeholder}
-          </span>
+          <span>{getHeaderValue()}</span>
           <ChevronDownIcon className={styles.selectHeaderIcon} />
         </div>
       </div>

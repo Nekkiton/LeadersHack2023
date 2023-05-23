@@ -1,27 +1,77 @@
+import { useState } from "react"
+import { notification } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import File from "components/base/controls/File"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
-import styles from "./VacancyResponse.module.scss"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import PhoneIcon from "assets/icons/phone.svg"
 import MailIcon from "assets/icons/mail.svg"
 import UserRating from "components/base/user/UserRating"
+import TimesIcon from "assets/icons/times.svg"
+import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
+import { useQuery } from "@tanstack/react-query"
+import { fetchVacancyResponseInfo } from "data/fetchVacancyResponseInfo"
+import styles from "./VacancyResponse.module.scss"
 
 interface Props {
   backLink: string
+  responseId?: string
 }
 
 const userImg = "/images/user.svg"
 
-export default function VacancyResponse({ backLink }: Props) {
+export default function VacancyResponse({ backLink, responseId }: Props) {
   const user = {
     role: "mentor",
     //role: "staff",
   }
 
+  const [isCancelModalShowed, setIsCancelModalShowed] = useState(false)
+  const toggleCancelModal = () => setIsCancelModalShowed((prev) => !prev)
+
+  // TODO: validate modal data, cancel response, handle errors
+  const cancelResponse = () => {
+    toggleCancelModal()
+    notification.open({
+      message: "Отклик отклонен",
+      closeIcon: <TimesIcon />,
+    })
+  }
+
+  // TODO: accept response, handle errors, notification text
+  const acceptInternship = () => {
+    notification.open({
+      message: "Принято на стажировку",
+      closeIcon: <TimesIcon />,
+    })
+  }
+
+  // TODO: accept response, handle errors, notification text
+  const acceptInterview = () => {
+    notification.open({
+      message: "Приглашено на собеседование",
+      closeIcon: <TimesIcon />,
+    })
+  }
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["vacancyResponseInfo", { id: responseId }],
+    queryFn: () =>
+      fetchVacancyResponseInfo({
+        id: responseId ?? "",
+      }),
+  })
+
+  if (!data || isLoading) return <div>Загрузка...</div>
+
   return (
     <div className={styles.container}>
+      <ResponseCancelModal
+        isOpen={isCancelModalShowed}
+        onCancel={toggleCancelModal}
+        onOk={cancelResponse}
+      />
       <Link href={backLink}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
@@ -30,21 +80,34 @@ export default function VacancyResponse({ backLink }: Props) {
       </Link>
       <div className={styles.header}>
         <div className={styles.user}>
-          <img className={styles.userImg} src={userImg} />
+          <img className={styles.userImg} src={data.user.avatar ?? userImg} />
           <div className={styles.userInfoContainer}>
-            <h1 className={styles.userName}>Марина Высокова</h1>
+            <h1 className={styles.userName}>{data.user.name}</h1>
             <div className={styles.userInfo}>
-              <p>22 года, г. Москва</p>
-              <UserRating count={5} averageRate={10} />
+              <p>
+                {data.user.age} года, {data.user.address}
+              </p>
+              <UserRating
+                count={data.user.reviews.count}
+                averageRate={data.user.reviews.averageRate}
+              />
             </div>
           </div>
         </div>
+        {/* TODO: Manage buttons visibility */}
         <div className={styles.headerControls}>
-          <Button type="secondary">Отклонить</Button>
-          <Button>Принять на стажировку</Button>
+          <Button type="secondary" onClick={toggleCancelModal}>
+            Отклонить
+          </Button>
+          <Button onClick={acceptInternship}>Принять на стажировку</Button>
+          {/* TODO: add modal */}
           {user.role === "mentor" && (
-            <Button>Пригласить на собеседование</Button>
+            <Button onClick={acceptInterview}>
+              Пригласить на собеседование
+            </Button>
           )}
+          {/* TODO: add modal */}
+          {user.role === "mentor" && <Button>Оценить стажера</Button>}
         </div>
       </div>
       <div className={styles.cards}>
@@ -54,79 +117,57 @@ export default function VacancyResponse({ backLink }: Props) {
               <p className={styles.cardTitle}>Контакты</p>
               <div className={styles.contact}>
                 <PhoneIcon />
-                <p>+7 (910) 234-56-78</p>
+                <p>{data.user.phone}</p>
               </div>
               <div className={styles.contact}>
                 <MailIcon />
-                <p>marina@gmail.com</p>
+                <p>{data.user.email}</p>
               </div>
             </div>
             <div className={styles.card}>
               <p className={styles.cardTitle}>График работы</p>
-              <p>20 часов в неделю</p>
+              <p>{data.schedule}</p>
             </div>
           </div>
           <div className={styles.card}>
             <p className={styles.cardTitle}>Образование</p>
             <div className={styles.education}>
-              <p>Московский государственный университет им. М.Ломоносова</p>
-              <p>Юридический факультет</p>
-              <p>Год выпуска: 2024</p>
+              <p>{data.education.name}</p>
+              <p>{data.education.specialty}</p>
+              <p>Год выпуска: {data.education.graduationYear}</p>
             </div>
           </div>
           <div className={styles.card}>
             <p className={styles.cardTitle}>Опыт работы</p>
-            <p>
-              ООО «Рога и копыта» с мая 2022 по май 2023. Ведение социальных
-              сетей, придумывание рекламных креативов АНО «Объединение умов» с
-              января по май 2022. Создание контента для пиара мероприятий
-            </p>
+            <p>{data.experience}</p>
           </div>
           <div className={styles.card}>
             <p className={styles.cardTitle}>Проектная деятельность</p>
-            <p>
-              В своём стремлении улучшить пользовательский опыт мы упускаем, что
-              базовые сценарии поведения пользователей объективно рассмотрены
-              соответствующими инстанциями. Прежде всего,
-              социально-экономическое развитие в значительной степени
-              обусловливает важность переосмысления.
-            </p>
+            <p>{data.projectActivity}</p>
           </div>
           <div className={styles.card}>
             <p className={styles.cardTitle}>О себе</p>
-            <p>
-              Противоположная точка зрения подразумевает, что сделанные на базе
-              интернет-аналитики выводы рассмотрены исключительно в разрезе
-              маркетинговых и финансовых предпосылок. Банальные, но
-              неопровержимые выводы, а также независимые государства, вне
-              зависимости от их уровня.
-            </p>
+            <p>{data.about}</p>
           </div>
         </div>
         <div className={`${styles.card} ${styles.complexCard}`}>
           <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Статус</p>
-            <ResponseStatus status="new" />
+            <p className={styles.cardTitle}>Статус отклика</p>
+            <ResponseStatus status={data.status} />
           </div>
           <div className={styles.statusComment}>
             <p className={styles.statusCommentTitle}>Причина отклонения</p>
-            <p>
-              Спасибо за ваш отклик. К сожалению, пока что мы не готовы взять
-              вас на стажировку.
-            </p>
+            <p>{data.rejectionReason}</p>
           </div>
           <div className={styles.complexCardBlock}>
             <p className={styles.cardTitle}>Тестовое задание</p>
-            <File />
+            <File name={data.testTask.fileName} size={data.testTask.fileSize} />
           </div>
           <div className={styles.complexCardBlock}>
             <p className={styles.cardTitle}>Сопроводительное письмо</p>
-            <div>
-              Добрый день. Я бы очень хотела работать у вас. У меня есть для
-              этого необходимый опыт и я знаю, как сделать ваши пресс релизы
-              более яркими и интересными.
-            </div>
+            <div>{data.coveringLetter}</div>
           </div>
+          {/* TODO: add component */}
           <div>*еще баллы*</div>
         </div>
       </div>

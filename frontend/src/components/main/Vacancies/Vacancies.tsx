@@ -28,6 +28,18 @@ export default function Vacancies({ link, noHeader }: Props) {
     role: "curator",
   }
 
+  // TODO: fetch mentors for staff or for curator on organization page
+  const allMentors = [
+    { name: "Юлиана", image: null, id: "1" },
+    { name: "Митрофановна", image: null, id: "2" },
+  ]
+
+  // TODO: fetch organizations for curator (not on organization page)
+  const allOrganizations = [
+    { name: "First", id: "1" },
+    { name: "Second", id: "2" },
+  ]
+
   const getNothingText = (role: string) => {
     if (role === "staff") {
       return (
@@ -46,13 +58,27 @@ export default function Vacancies({ link, noHeader }: Props) {
           здесь
         </>
       )
+    } else if (role === "curator") {
+      return (
+        <>
+          На эту стажировку еще не создано
+          <br />
+          ни одной вакансии
+        </>
+      )
     }
   }
 
   const [query, setQuery] = useState("")
   const [statuses, setStatuses] = useState([])
   const [mentors, setMentors] = useState([])
+  const [organizations, setOrganizations] = useState([])
   const [currentPage, setCurrentPage] = useState(5)
+
+  // TODO
+  // if user is mentor - filter vacancies by mentor
+  // if user is curator and page is vacancies - find vacancies for curator internship
+  // if user is curator and page is organization - filter by organization
 
   const { data, isLoading } = useQuery({
     queryKey: ["vacancyList", { query, statuses, mentors, page: currentPage }],
@@ -69,6 +95,7 @@ export default function Vacancies({ link, noHeader }: Props) {
     setQuery("")
     setStatuses([])
     setMentors([])
+    setOrganizations([])
   }
 
   return (
@@ -86,6 +113,7 @@ export default function Vacancies({ link, noHeader }: Props) {
           )}
         </div>
       )}
+      {/* TODO: if there are no vacancies at all */}
       {false ? (
         <div className={styles.nothing}>
           <NothingIcon className={styles.nothingIcon} />
@@ -110,51 +138,58 @@ export default function Vacancies({ link, noHeader }: Props) {
                 value={query}
                 onChange={setQuery}
               />
+              {/* TODO: add all statuses */}
               <Select
                 className={styles.filtersSelect}
                 placeholder="Все статусы"
-                items={{
-                  active: <VacancyStatus status="active" />,
-                  archived: <VacancyStatus status="archived" />,
-                }}
+                items={[
+                  { key: "active", value: <VacancyStatus status="active" /> },
+                ]}
                 value={statuses}
                 onChange={setStatuses}
                 multiple
               />
+              {/* TODO: if user is staff or (user is curator and page is organization) */}
               {user.role === "staff" && (
                 <Select
                   className={styles.filtersSelect}
                   placeholder="Все наставники"
-                  items={{
-                    1: (
+                  items={allMentors.map((i) => ({
+                    key: i.id,
+                    value: (
                       <div className={styles.filtersMentor}>
                         <img
                           className={styles.filtersMentorImg}
-                          src={userImg}
+                          src={i.image || userImg}
                         />
-                        <p className={styles.filtersMentorName}>
-                          Юлиана Митрофанова
-                        </p>
+                        <p className={styles.filtersMentorName}>{i.name}</p>
                       </div>
                     ),
-                  }}
+                  }))}
                   value={mentors}
                   onChange={setMentors}
                   multiple
                 />
               )}
+              {/* TODO: if user is curator and page is vacancies (not organization) */}
               {user.role === "curator" && (
                 <Select
                   className={styles.filtersSelect}
                   placeholder="Все организации"
                   multiple
-                  items={{
-                    1: "Московская дирекция транспортного обслуживания",
-                  }}
+                  value={organizations}
+                  onChange={setOrganizations}
+                  items={allOrganizations.map((i) => ({
+                    key: i.id,
+                    value: i.name,
+                  }))}
                 />
               )}
             </div>
-            {(query || !!statuses.length || !!mentors.length) && (
+            {(query ||
+              !!statuses.length ||
+              !!mentors.length ||
+              !!organizations.length) && (
               <Button
                 className={styles.filtersClear}
                 type="text"
@@ -171,14 +206,15 @@ export default function Vacancies({ link, noHeader }: Props) {
             <div className={styles.vacancies}>
               {data?.items.map((vacancy) => (
                 <VacancyCard
+                  key={vacancy.id}
                   vacancy={vacancy}
                   noUser={user.role === "mentor"}
                   link={link}
+                  key={vacancy.id}
                 />
               ))}
             </div>
           )}
-
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}

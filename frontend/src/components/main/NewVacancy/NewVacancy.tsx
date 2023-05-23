@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import { useRouter } from "next/router"
 import { Form } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
@@ -10,10 +11,17 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import ExclamationIcon from "assets/icons/exclamation.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import TimesIcon from "assets/icons/times.svg"
+import { notification } from "antd"
+
+interface Props {
+  editId: string
+}
 
 const userImg = "/images/user.svg"
 
-export default function NewVacancy() {
+export default function NewVacancy({ editId }: Props) {
+  const router = useRouter()
+
   const [isValid, setIsValid] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [form] = Form.useForm()
@@ -28,14 +36,74 @@ export default function NewVacancy() {
     )
   }, [formValues])
 
+  // TODO: fetch all of these
+  const departments = [
+    {
+      name: "department 1",
+      id: "1",
+    },
+  ]
+  const dates = [
+    {
+      start: "today",
+      end: "tomorrow",
+      id: "2",
+    },
+  ]
+  const mentors = [
+    {
+      id: "1",
+      name: "Nikita",
+      image: null,
+    },
+  ]
+
+  const [initialData, setInitialData] = useState<{} | null>(null)
+
+  useEffect(() => {
+    // TODO: fetch vacancy, handle 404
+    if (editId || router.query.copy) {
+      setInitialData({
+        name: "name",
+        description: "description",
+        division: "1",
+        dates: "2",
+        mentor: "1",
+      })
+    }
+  }, [editId, router.query.copy])
+
+  if ((router.query.copy || editId) && !initialData) {
+    return <div>Загрузка...</div>
+  }
+
+  // TODO: create or edit vacancy, handle errors
+  const saveVacancy = (data: any) => {
+    console.log(data)
+    notification.open({
+      message: editId ? "Вакансия изменена" : "Вакансия создана",
+      closeIcon: <TimesIcon />,
+    })
+    router.push("/staff/vacancies")
+  }
+
+  // TODO: delete vacancy, handle errors
+  const deleteVacancy = () => {
+    toggleModal()
+    notification.open({
+      message: "Вакансия удалена",
+      closeIcon: <TimesIcon />,
+    })
+    router.push("/staff/vacancies")
+  }
+
   return (
     <div className={styles.container}>
-      {/* TODO: onOk should remove vacancy */}
       <Modal
         isOpen={isModalOpen}
         title="Вы уверены, что хотите удалить вакансию?"
         onCancel={toggleModal}
-        onOk={toggleModal}
+        onOk={deleteVacancy}
         okText="Удалить"
       />
       <Link href="/staff/vacancies">
@@ -46,7 +114,12 @@ export default function NewVacancy() {
       </Link>
       <h1 className={styles.title}>Создать вакансию</h1>
       <div className={styles.content}>
-        <Form className={styles.form} form={form}>
+        <Form
+          className={styles.form}
+          form={form}
+          initialValues={initialData || {}}
+          onFinish={saveVacancy}
+        >
           <Form.Item
             name="name"
             rules={[{ required: true, message: "Заполните это поле" }]}
@@ -70,11 +143,10 @@ export default function NewVacancy() {
             <Select
               placeholder="Выберите из списка"
               label="Подразделение"
-              items={{
-                1: "Бухгалтерия",
-                2: "Отдел закупок",
-                3: "Пресс-центр",
-              }}
+              items={departments.map((i) => ({
+                key: i.id,
+                value: i.name,
+              }))}
               same
             />
           </Form.Item>
@@ -86,10 +158,10 @@ export default function NewVacancy() {
               <Select
                 placeholder="Выберите из списка"
                 label="Даты стажировки"
-                items={{
-                  1: "1 августа - 30 сентября",
-                  2: "1 октября - 30 ноября",
-                }}
+                items={dates.map((i) => ({
+                  key: i.id,
+                  value: `${i.start} - ${i.end}`,
+                }))}
                 same
               />
             </Form.Item>
@@ -100,19 +172,19 @@ export default function NewVacancy() {
               <Select
                 placeholder="Выберите из списка"
                 label="Наставник"
-                items={{
-                  1: {
-                    value: (
-                      <div className={styles.formMentor}>
-                        <img className={styles.formMentorImg} src={userImg} />
-                        <p className={styles.formMentorName}>
-                          Юлиана Митрофанова
-                        </p>
-                      </div>
-                    ),
-                    selectedValue: "Юлиана Митрофанова",
-                  },
-                }}
+                items={mentors.map((i) => ({
+                  key: i.id,
+                  value: (
+                    <div className={styles.formMentor}>
+                      <img
+                        className={styles.formMentorImg}
+                        src={i.image || userImg}
+                      />
+                      <p className={styles.formMentorName}>{i.name}</p>
+                    </div>
+                  ),
+                  selectedValue: i.name,
+                }))}
                 same
               />
             </Form.Item>
@@ -120,11 +192,10 @@ export default function NewVacancy() {
           <div className={styles.formControls}>
             <Form.Item>
               <Button htmlType="submit" disabled={!isValid}>
-                Создать
+                {editId ? "Сохранить" : "Создать"}
               </Button>
             </Form.Item>
-            {/* TODO: добавить кнопку если редактируем */}
-            {false && (
+            {editId && (
               <Button
                 className={styles.formDeleteBtn}
                 type="text"

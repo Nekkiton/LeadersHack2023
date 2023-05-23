@@ -1,8 +1,10 @@
+import { useState } from "react"
 import Select from "components/base/controls/Select"
-import styles from "./Responses.module.scss"
 import NothingIcon from "assets/icons/document-search.svg"
 import ResponseCard from "../ResponseCard"
+import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import { ResponseData } from "data/fetchVacancyInfo"
+import styles from "./Responses.module.scss"
 
 interface ResponsesProps {
   link: string
@@ -17,6 +19,9 @@ export default function Responses({
   responsesCount,
   responsesCountNew,
 }: ResponsesProps) {
+  // TODO: filter resopnses by statuses
+  const [statuses, setStatuses] = useState([])
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -26,9 +31,13 @@ export default function Responses({
             {responsesCount} (+{responsesCountNew} новых)
           </span>
         </div>
+        {/* add statuses */}
         <Select
           className={styles.headerSelect}
           placeholder="Все статусы"
+          value={statuses}
+          onChange={setStatuses}
+          items={[{ key: "new", value: <ResponseStatus status="new" /> }]}
           multiple
         />
       </div>
