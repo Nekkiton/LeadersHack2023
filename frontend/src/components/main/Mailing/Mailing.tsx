@@ -61,7 +61,7 @@ export default function Mailing({ link }: Props) {
             <MailingCard link={link} />
             <MailingCard link={link} />
           </div>
-          <Pagination />
+          <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
         </>
       )}
     </div>
