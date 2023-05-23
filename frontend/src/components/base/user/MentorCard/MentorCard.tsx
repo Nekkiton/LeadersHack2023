@@ -9,14 +9,16 @@ import MailIcon from "assets/icons/mail.svg"
 import TrashIcon from "assets/icons/trash.svg"
 import TimesIcon from "assets/icons/times.svg"
 import styles from "./MentorCard.module.scss"
+import { MentorData } from "data/fetchMentorList"
 
 interface Props {
   link: string
+  mentorInfo: MentorData
 }
 
 const userImg = "/images/user.svg"
 
-export default function UserCard({ link }: Props) {
+export default function UserCard({ link, mentorInfo }: Props) {
   const router = useRouter()
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -51,10 +53,16 @@ export default function UserCard({ link }: Props) {
         <div className={styles.cardBlock}>
           <ResponseStatus className={styles.cardStatus} status="new" />
           <div className={styles.cardUser}>
-            <img className={styles.cardUserImg} src={userImg} />
+            <img
+              className={styles.cardUserImg}
+              src={mentorInfo.avatar ?? userImg}
+            />
             <div>
-              <p className={styles.cardUserName}>Марина Высокова</p>
-              <UserRating count={1} averageRate={4.4} />
+              <p className={styles.cardUserName}>{mentorInfo.name}</p>
+              <UserRating
+                count={mentorInfo.reviews.count}
+                averageRate={mentorInfo.reviews.averageRate}
+              />
             </div>
           </div>
         </div>
@@ -65,11 +73,11 @@ export default function UserCard({ link }: Props) {
           />
           <div className={styles.cardIconBlock}>
             <PhoneIcon />
-            <p>+7 (910) 234-56-78</p>
+            <p>{mentorInfo.phone}</p>
           </div>
           <div className={styles.cardIconBlock}>
             <MailIcon />
-            <p>marina@gmail.com</p>
+            <p>{mentorInfo.email}</p>
           </div>
         </div>
       </div>
