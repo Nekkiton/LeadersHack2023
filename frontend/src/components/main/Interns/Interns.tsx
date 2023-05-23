@@ -43,10 +43,11 @@ export default function Interns({ link }: Props) {
                   count: 24,
                   averageRate: 4.7,
                 },
+                avatar: null
               }}
             />
           </div>
-          <Pagination />
+          <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
         </>
       )}
     </div>

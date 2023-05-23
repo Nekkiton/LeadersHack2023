@@ -35,7 +35,7 @@ export default function VacancyResponse({ backLink }: Props) {
             <h1 className={styles.userName}>Марина Высокова</h1>
             <div className={styles.userInfo}>
               <p>22 года, г. Москва</p>
-              <UserRating />
+              <UserRating count={5} averageRate={10} />
             </div>
           </div>
         </div>

@@ -57,7 +57,7 @@ export default function Mentors({ link, noHeader }: Props) {
             <MentorCard link={link} />
             <MentorCard link={link} />
           </div>
-          <Pagination />
+          <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
         </>
       )}
     </div>

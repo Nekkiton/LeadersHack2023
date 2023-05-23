@@ -30,7 +30,7 @@ export default function Staffs({ link }: Props) {
         <StaffCard link={link} />
         <StaffCard link={link} />
       </div>
-      <Pagination />
+      <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
     </div>
   )
 }

@@ -21,7 +21,7 @@ export default function UserCard({ link }: Props) {
           <img className={styles.cardUserImg} src={userImg} />
           <div>
             <p className={styles.cardUserName}>Марина Высокова</p>
-            <UserRating />
+            <UserRating count={10} averageRate={10}/>
           </div>
         </div>
       </div>

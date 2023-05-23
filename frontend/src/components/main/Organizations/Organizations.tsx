@@ -46,7 +46,7 @@ export default function Vacancies({ link }: Props) {
             <OrganizationCard link="/curator/organizations" />
             <OrganizationCard link="/curator/organizations" />
           </div>
-          <Pagination />
+          <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
         </>
       )}
     </div>

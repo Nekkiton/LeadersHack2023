@@ -49,10 +49,11 @@ export default function Candidates() {
                   count: 24,
                   averageRate: 4.7,
                 },
+                avatar: null
               }}
             />
           </div>
-          <Pagination />
+          <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
         </>
       )}
     </div>

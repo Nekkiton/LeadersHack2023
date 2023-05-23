@@ -28,7 +28,7 @@ export default function Departments({ link }: Props) {
         <DepartmentCard link={link} />
         <DepartmentCard link={link} />
       </div>
-      <Pagination />
+      <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
     </div>
   )
 }
