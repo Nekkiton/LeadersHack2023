@@ -23,9 +23,9 @@ jobs:
           node-version: 18
 
       - name: Get node version
-        id: node
+        id: node_version
         run: |
-          echo "::set-output name=version::$(node -v)"
+          echo "version=$(node -v)" >> $GITHUB_OUTPUT
 
       - name: Get node_modules cache
         uses: actions/cache@v3
@@ -33,7 +33,7 @@ jobs:
         with:
           path: |
             **/node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.node.outputs.version }}
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.node_version.outputs.version }}
 
       - name: Install yarn
         run: npm install -g yarn
@@ -59,9 +59,9 @@ jobs:
           node-version: 18
 
       - name: Get node version
-        id: node
+        id: node_version
         run: |
-          echo "::set-output name=version::$(node -v)"
+          echo "version=$(node -v)" >> $GITHUB_OUTPUT
 
       - name: Get node_modules cache
         uses: actions/cache@v3
@@ -69,7 +69,7 @@ jobs:
         with:
           path: |
             **/node_modules
-          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.node.outputs.version }}
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/yarn.lock') }}-${{ steps.node_version.outputs.version }}
 
       - name: Install yarn
         run: npm install -g yarn
