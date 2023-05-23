@@ -1,5 +1,5 @@
-import VacancyResponse from "components/main/VacancyResponse"
+import Candidate from "components/main/Candidate"
 
 export default function VacancyResponsePage() {
-  return <VacancyResponse backLink="/curator/candidates" />
+  return <Candidate backLink="/curator/candidates" />
 }

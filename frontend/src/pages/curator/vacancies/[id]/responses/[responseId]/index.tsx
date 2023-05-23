@@ -1,10 +1,10 @@
 import { useRouter } from "next/router"
-import VacancyResponse from "components/main/VacancyResponse"
+import Intern from "components/main/Intern"
 
 export default function VacancyResponsePage() {
   const { query } = useRouter()
   return (
-    <VacancyResponse
+    <Intern
       backLink={`/curator/vacancies/${query.id}`}
       responseId={String(query.responseId)}
     />

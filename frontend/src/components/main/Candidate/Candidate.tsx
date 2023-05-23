@@ -5,14 +5,13 @@ import Button from "components/base/controls/Button"
 import File from "components/base/controls/File"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
-import PhoneIcon from "assets/icons/phone.svg"
-import MailIcon from "assets/icons/mail.svg"
 import UserRating from "components/base/user/UserRating"
 import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import { useQuery } from "@tanstack/react-query"
 import { fetchVacancyResponseInfo } from "data/fetchVacancyResponseInfo"
-import styles from "./VacancyResponse.module.scss"
+import styles from "./Candidate.module.scss"
+import StudentProfile from "components/main/StudentProfile"
 
 interface Props {
   backLink: string
@@ -21,7 +20,7 @@ interface Props {
 
 const userImg = "/images/user.svg"
 
-export default function VacancyResponse({ backLink, responseId }: Props) {
+export default function Candidate({ backLink, responseId }: Props) {
   const user = {
     role: "curator",
     //role: "mentor",
@@ -114,45 +113,7 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
         </div>
       </div>
       <div className={styles.cards}>
-        <div className={styles.vCards}>
-          <div className={styles.hCards}>
-            <div className={styles.card}>
-              <p className={styles.cardTitle}>Контакты</p>
-              <div className={styles.contact}>
-                <PhoneIcon />
-                <p>{data.user.phone}</p>
-              </div>
-              <div className={styles.contact}>
-                <MailIcon />
-                <p>{data.user.email}</p>
-              </div>
-            </div>
-            <div className={styles.card}>
-              <p className={styles.cardTitle}>График работы</p>
-              <p>{data.schedule}</p>
-            </div>
-          </div>
-          <div className={styles.card}>
-            <p className={styles.cardTitle}>Образование</p>
-            <div className={styles.education}>
-              <p>{data.education.name}</p>
-              <p>{data.education.specialty}</p>
-              <p>Год выпуска: {data.education.graduationYear}</p>
-            </div>
-          </div>
-          <div className={styles.card}>
-            <p className={styles.cardTitle}>Опыт работы</p>
-            <p>{data.experience}</p>
-          </div>
-          <div className={styles.card}>
-            <p className={styles.cardTitle}>Проектная деятельность</p>
-            <p>{data.projectActivity}</p>
-          </div>
-          <div className={styles.card}>
-            <p className={styles.cardTitle}>О себе</p>
-            <p>{data.about}</p>
-          </div>
-        </div>
+        <StudentProfile profile={data} />
         <div className={`${styles.card} ${styles.complexCard}`}>
           <div className={styles.complexCardBlock}>
             <p className={styles.cardTitle}>Статус отклика</p>

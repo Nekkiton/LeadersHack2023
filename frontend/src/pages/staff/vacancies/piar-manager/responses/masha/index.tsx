@@ -1,5 +1,5 @@
-import VacancyResponse from "components/main/VacancyResponse"
+import Intern from "components/main/Intern"
 
 export default function VacancyResponsePage() {
-  return <VacancyResponse backLink={`/staff/vacancies/piar-manager`} />
+  return <Intern backLink={`/staff/vacancies/piar-manager`} />
 }
