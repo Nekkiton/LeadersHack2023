@@ -9,10 +9,9 @@ import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import { useQuery } from "@tanstack/react-query"
 import { fetchVacancyResponseInfo } from "data/fetchVacancyResponseInfo"
-import styles from "./Candidate.module.scss"
+import styles from "./VacancyResponse.module.scss"
 import StudentProfile from "components/main/StudentProfile"
 import StudentInfo from "components/main/StudentProfile/StudentInfo"
-import Timeline from "components/base/controls/Timeline"
 
 interface Props {
   backLink: string
@@ -21,22 +20,11 @@ interface Props {
 
 const userImg = "/images/user.svg"
 
-export default function Candidate({ backLink, responseId }: Props) {
+export default function VacancyResponse({ backLink, responseId }: Props) {
   const user = {
     role: "curator",
     //role: "mentor",
     //role: "staff",
-  }
-
-  const statuses = {
-    accepted: "Заявка принята",
-    moderation: "На модерации",
-    education: "Проходит обучение",
-    test: "Прошел тестирование",
-    hackathon: "Проходит кейс-чемпионат",
-    passed: "Отобран на стажировку",
-  } as {
-    [key: string]: string
   }
 
   const [isCancelModalShowed, setIsCancelModalShowed] = useState(false)
@@ -91,7 +79,7 @@ export default function Candidate({ backLink, responseId }: Props) {
         </Button>
       </Link>
       <div className={styles.header}>
-        <StudentInfo profile={data.user}/>
+        <StudentInfo profile={data.user} />
         {/* TODO: Manage buttons visibility, add modal */}
         <div className={styles.headerControls}>
           <Button type="secondary" onClick={toggleCancelModal}>
@@ -114,8 +102,8 @@ export default function Candidate({ backLink, responseId }: Props) {
         <StudentProfile profile={data} />
         <div className={`${styles.card} ${styles.complexCard}`}>
           <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Статус</p>
-            <Timeline statuses={statuses} activeStatus={data.status} />
+            <p className={styles.cardTitle}>Статус отклика</p>
+            <ResponseStatus status={data.status} />
           </div>
           <div className={styles.statusComment}>
             <p className={styles.statusCommentTitle}>Причина отклонения</p>

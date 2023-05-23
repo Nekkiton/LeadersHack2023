@@ -1,0 +1,46 @@
+@import "assets/css/config";
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+
+  &:before {
+    content: "";
+    position: absolute;
+    border: 1px solid $gray-5;
+    top: 12px;
+    bottom: 12px;
+    left: 5px;
+  }
+}
+
+.timelineItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  &.past {
+    color: $gray-4;
+  }
+}
+
+.timelineDot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid $gray-4;
+  background: $white;
+  z-index: 1;
+
+  .timelineItem.active & {
+    border-color: $orange;
+    background: $orange;
+  }
+
+  .timelineItem.past & {
+    background: $gray-4;
+  }
+}

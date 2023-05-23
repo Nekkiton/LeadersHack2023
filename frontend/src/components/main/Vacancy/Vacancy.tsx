@@ -16,6 +16,7 @@ import { fetchVacancyInfo } from "data/fetchVacancyInfo"
 import { useState } from "react"
 import AddTestTaskModal from "./AddTestTaskModal"
 import { notification } from "antd"
+import Timeline from "components/base/controls/Timeline"
 
 interface Props {
   backLink: string
@@ -201,19 +202,7 @@ export default function Vacancy({ backLink, link }: Props) {
         <div className={styles.card}>
           <p className={styles.cardTitle}>Статус</p>
           {/* TODO: fix statuses */}
-          <div className={styles.timeline}>
-            {Object.keys(statuses).map((status) => (
-              <div
-                className={`${styles.timelineItem} ${
-                  status === "created" ? styles.past : ""
-                } ${status === data.status ? styles.active : ""}`}
-                key={status}
-              >
-                <span className={styles.timelineDot}></span>
-                <span>{statuses[status]}</span>
-              </div>
-            ))}
-          </div>
+          <Timeline statuses={statuses} activeStatus={data.status} />
           {data.rejectionReason && (
             <div className={styles.statusComment}>
               <p className={styles.statusCommentTitle}>Причина отклонения</p>

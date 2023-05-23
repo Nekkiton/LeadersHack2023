@@ -5,13 +5,13 @@ import Button from "components/base/controls/Button"
 import File from "components/base/controls/File"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
-import UserRating from "components/base/user/UserRating"
 import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import { useQuery } from "@tanstack/react-query"
 import { fetchVacancyResponseInfo } from "data/fetchVacancyResponseInfo"
 import styles from "./Intern.module.scss"
 import StudentProfile from "components/main/StudentProfile"
+import StudentInfo from "components/main/StudentProfile/StudentInfo"
 
 interface Props {
   backLink: string
@@ -79,21 +79,7 @@ export default function Intern({ backLink, responseId }: Props) {
         </Button>
       </Link>
       <div className={styles.header}>
-        <div className={styles.user}>
-          <img className={styles.userImg} src={data.user.avatar ?? userImg} />
-          <div className={styles.userInfoContainer}>
-            <h1 className={styles.userName}>{data.user.name}</h1>
-            <div className={styles.userInfo}>
-              <p>
-                {data.user.age} года, {data.user.address}
-              </p>
-              <UserRating
-                count={data.user.reviews.count}
-                averageRate={data.user.reviews.averageRate}
-              />
-            </div>
-          </div>
-        </div>
+        <StudentInfo profile={data.user}/>
         {/* TODO: Manage buttons visibility, add modal */}
         <div className={styles.headerControls}>
           <Button type="secondary" onClick={toggleCancelModal}>
