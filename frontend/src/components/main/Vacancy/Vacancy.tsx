@@ -24,14 +24,14 @@ const userImg = "/images/user.svg"
 
 export default function Vacancy({ backLink, link }: Props) {
   const user = {
-    //role: 'staff',
-    role: "mentor",
+    role: "staff",
+    //role: "mentor",
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleModal = () => setIsModalOpen(!isModalOpen)
 
-  const { query } = useRouter()
+  const { query, asPath } = useRouter()
 
   const { data, isLoading } = useQuery({
     queryKey: ["vacancyInfo", { id: query.id }],
@@ -71,18 +71,21 @@ export default function Vacancy({ backLink, link }: Props) {
         <div className={styles.headerControls}>
           {user.role === "staff" && (
             <>
-              <Link href="/staff/add-vacancy">
+              <Link href={`/staff/add-vacancy?copy=${data.id}`}>
                 <Button type="text">
                   <CopyIcon className="icon" />
                   <span>Создать копию</span>
                 </Button>
               </Link>
-              <Link href="/staff/add-vacancy">
-                <Button type="secondary">
-                  <PenIcon className="icon" />
-                  <span>Редактировать</span>
-                </Button>
-              </Link>
+              {/* TODO: show when status is lower then active */}
+              {true && (
+                <Link href={`${asPath}/edit`}>
+                  <Button type="secondary">
+                    <PenIcon className="icon" />
+                    <span>Редактировать</span>
+                  </Button>
+                </Link>
+              )}
             </>
           )}
           {user.role === "mentor" && (
@@ -166,6 +169,7 @@ export default function Vacancy({ backLink, link }: Props) {
         </div>
         <div className={styles.card}>
           <p className={styles.cardTitle}>Статус</p>
+          {/* TODO: fix statuses */}
           <div className={styles.timeline}>
             {Object.keys(statuses).map((status) => (
               <div
@@ -185,7 +189,7 @@ export default function Vacancy({ backLink, link }: Props) {
               <p className={styles.statusCommentText}>{data.rejectionReason}</p>
             </div>
           )}
-
+          {/* TODO: add link */}
           <Button type="text">
             <span>Подробнее о смене статусов</span>
             <LinkExternalIcon className="icon" />

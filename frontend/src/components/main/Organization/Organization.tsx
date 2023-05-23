@@ -53,7 +53,10 @@ export default function Organization({ backLink }: Props) {
             title: "Кадровые специалисты",
             content: <Staffs link="/" />,
           },
-          { title: "Наставники", content: <Mentors link="/" noHeader /> },
+          {
+            title: "Наставники",
+            content: <Mentors link="/" noHeader longSearchInput />,
+          },
           { title: "Подразделения", content: <Departments link="/" /> },
         ]}
       />

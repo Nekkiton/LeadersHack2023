@@ -109,9 +109,15 @@ body::-webkit-scrollbar-thumb {
   background: $white;
   border-radius: 8px;
 
+  div[role="alert"] {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
   .ant-notification-notice-message {
-    @include paragraph-1;
-    margin-bottom: 8px;
+    @include paragraph-3;
+    margin: 0;
   }
 
   .ant-notification-notice-description {
