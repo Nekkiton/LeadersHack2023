@@ -118,8 +118,8 @@ jobs:
         uses: docker/login-action@v2
         with:
           registry: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023
-          username: ru-moscow-1@D9TPYVB2YX73MZJUHE04
-          password: 1bfc45a521e83d16f19727fdfcadae806218ef1b1cd59b8f54f3a28db42163a9
+          username: ru-moscow-1@43HZUCF2A4U5KI59XCYZ
+          password: 950777769ccc9430201abb70e82a358711dd404f56775356aeac3cccdd28b415
 
       - name: Build and push
         uses: docker/build-push-action@v4
@@ -133,3 +133,8 @@ jobs:
       - name: Deploy
         run: |
           helm upgrade ${{ matrix.deployment }} --atomic --history-max=3 --set image.tag=${{ steps.meta.output.tags }} ${{ matrix.context }}/deployment
+
+      - name: Clean up
+        run: |
+          docker rmi ${{ matrix.image }}:${{ steps.meta.output.tags }}
+          docker builder prune -f
