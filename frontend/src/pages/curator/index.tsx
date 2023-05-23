@@ -1,3 +1,4 @@
+import CuratorMain from "components/main/CuratorMain"
 import MenuContainer from "components/layout/MenuContainer"
 import UserQuestionIcon from "assets/icons/user-question.svg"
 import StudentIcon from "assets/icons/student.svg"
@@ -29,6 +30,9 @@ export default function InternsPage() {
         { link: "/curator/mailing", text: "Рассылки", icon: <UploadIcon /> },
         { text: "Расписание стажеров", icon: <CalendarIcon /> },
       ]}
-    ></MenuContainer>
+    >
+    <CuratorMain />
+    
+    </MenuContainer>
   )
 }

@@ -17,6 +17,7 @@ interface Props {
   className?: string
   multiple?: boolean
   same?: boolean
+  disabled?: boolean
 }
 
 export default function Select({
@@ -28,6 +29,7 @@ export default function Select({
   onChange,
   className,
   multiple,
+  disabled,
 }: Props) {
   const [isActive, setIsActive] = useState(false)
   const [newValue, setNewValue] = useState<(string | number)[]>([])
@@ -83,12 +85,12 @@ export default function Select({
   }
 
   return (
-    <div className={styles.container}>
+    <div className={`${styles.container} ${className}`}>
       {label && <p className={styles.label}>{label}</p>}
       <div
         className={`${styles.select} ${isActive ? styles.active : ""}  ${
           same ? styles.same : ""
-        } ${className}`}
+        } ${disabled ? styles.disabled : ""}`}
       >
         <span className={styles.selectBackdrop} onClick={clear} />
         <div className={styles.selectBody}>
@@ -119,7 +121,7 @@ export default function Select({
           className={`${styles.selectHeader} ${
             newValue.length ? "" : styles.empty
           }`}
-          onClick={() => setIsActive((val) => !val)}
+          onClick={() => !disabled && setIsActive((val) => !val)}
         >
           <span>{getHeaderValue()}</span>
           <ChevronDownIcon className={styles.selectHeaderIcon} />

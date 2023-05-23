@@ -54,6 +54,11 @@
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
   }
+
+  .select.disabled & {
+    background: $gray-6;
+    color: $gray-3;
+  }
 }
 
 .selectHeaderIcon {

@@ -24,7 +24,7 @@
     right: -5px;
   }
 
-  .icon path {
+  :global(.icon) path {
     width: 24px;
     height: 24px;
     transition: $transition;

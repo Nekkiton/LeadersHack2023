@@ -14,7 +14,7 @@ import TimesIcon from "assets/icons/times.svg"
 import { notification } from "antd"
 
 interface Props {
-  editId: string
+  editId?: string
 }
 
 const userImg = "/images/user.svg"
