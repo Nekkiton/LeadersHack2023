@@ -80,10 +80,12 @@ export default function NewVacancy() {
                 <Select
                   placeholder="Выберите из списка"
                   label="Получатели"
-                  items={{
-                    1: "Наставники",
-                    2: "Кураторы",
-                  }}
+                  items={
+                    [
+                      { key: 1, value: 'Наставники'},
+                      { key: 2, value: 'Кураторы' },
+                    ]
+                  }
                   multiple
                 />
               </Form.Item>

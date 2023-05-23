@@ -1,5 +1,5 @@
 import NewVacancy from "components/main/NewVacancy"
 
 export default function NewVacancyPage() {
-  return <NewVacancy />
+  return <NewVacancy editId="Создать"/>
 }

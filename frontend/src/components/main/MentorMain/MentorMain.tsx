@@ -77,6 +77,7 @@ export default function StaffMain() {
                     count: 24,
                     averageRate: 4.7,
                   },
+                  avatar: null
                 }}
               />
               <Link href="/mentor/interns">
