@@ -3,9 +3,10 @@ import Intern from "components/main/Intern"
 
 export default function VacancyResponsePage() {
   const { query } = useRouter()
+
   return (
     <Intern
-      backLink={`/curator/vacancies/${query.id}`}
+      backLink={`/staff/vacancies/${query.id}`}
       responseId={String(query.responseId)}
     />
   )

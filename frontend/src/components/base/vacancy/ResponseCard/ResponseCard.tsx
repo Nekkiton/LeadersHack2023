@@ -13,7 +13,7 @@ interface Props {
 
 export default function ResponseCard({ link, responseInfo }: Props) {
   return (
-    <Link className={styles.response} href={`${link}/masha`}>
+    <Link className={styles.response} href={`${link}/${responseInfo.id}`}>
       <div className={styles.responseBlock}>
         <ResponseStatus
           className={styles.responseStatus}

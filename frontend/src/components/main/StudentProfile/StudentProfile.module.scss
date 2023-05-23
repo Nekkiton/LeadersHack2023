@@ -1,0 +1,122 @@
+@import "assets/css/config";
+// TODO: cleanup styles here
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.userImg {
+  width: 164px;
+  height: 164px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userInfoContainer {
+  @include paragraph-2;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.userName {
+  text-transform: uppercase;
+}
+
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.headerControls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.cards {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.vCards {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.hCards {
+  display: flex;
+  gap: 16px;
+}
+
+.card {
+  @include paragraph-2;
+
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background: $white;
+  width: 100%;
+}
+
+.cardTitle {
+  @include paragraph-3;
+
+  color: $gray-3;
+}
+
+.education {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.complexCard {
+  gap: 16px;
+  flex-shrink: 0.88;
+}
+
+.complexCardBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.statusComment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background: $gray-5;
+  color: $gray-1;
+}
+
+.statusCommentTitle {
+  @include heading-7;
+}
