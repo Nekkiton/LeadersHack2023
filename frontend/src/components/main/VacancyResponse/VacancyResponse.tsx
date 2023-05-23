@@ -1,14 +1,18 @@
+import { useState } from "react"
+import { notification } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import File from "components/base/controls/File"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
-import styles from "./VacancyResponse.module.scss"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import PhoneIcon from "assets/icons/phone.svg"
 import MailIcon from "assets/icons/mail.svg"
 import UserRating from "components/base/user/UserRating"
+import TimesIcon from "assets/icons/times.svg"
+import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import { useQuery } from "@tanstack/react-query"
 import { fetchVacancyResponseInfo } from "data/fetchVacancyResponseInfo"
+import styles from "./VacancyResponse.module.scss"
 
 interface Props {
   backLink: string
@@ -23,6 +27,34 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
     //role: "staff",
   }
 
+  const [isCancelModalShowed, setIsCancelModalShowed] = useState(false)
+  const toggleCancelModal = () => setIsCancelModalShowed((prev) => !prev)
+
+  // TODO: validate modal data, cancel response, handle errors
+  const cancelResponse = () => {
+    toggleCancelModal()
+    notification.open({
+      message: "Отклик отклонен",
+      closeIcon: <TimesIcon />,
+    })
+  }
+
+  // TODO: accept response, handle errors, notification text
+  const acceptInternship = () => {
+    notification.open({
+      message: "Принято на стажировку",
+      closeIcon: <TimesIcon />,
+    })
+  }
+
+  // TODO: accept response, handle errors, notification text
+  const acceptInterview = () => {
+    notification.open({
+      message: "Приглашено на собеседование",
+      closeIcon: <TimesIcon />,
+    })
+  }
+
   const { data, isLoading } = useQuery({
     queryKey: ["vacancyResponseInfo", { id: responseId }],
     queryFn: () =>
@@ -35,6 +67,11 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
 
   return (
     <div className={styles.container}>
+      <ResponseCancelModal
+        isOpen={isCancelModalShowed}
+        onCancel={toggleCancelModal}
+        onOk={cancelResponse}
+      />
       <Link href={backLink}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
@@ -58,10 +95,15 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
           </div>
         </div>
         <div className={styles.headerControls}>
-          <Button type="secondary">Отклонить</Button>
-          <Button>Принять на стажировку</Button>
+          {/* Manage buttons visibility */}
+          <Button type="secondary" onClick={toggleCancelModal}>
+            Отклонить
+          </Button>
+          <Button onClick={acceptInternship}>Принять на стажировку</Button>
           {user.role === "mentor" && (
-            <Button>Пригласить на собеседование</Button>
+            <Button onClick={acceptInterview}>
+              Пригласить на собеседование
+            </Button>
           )}
         </div>
       </div>

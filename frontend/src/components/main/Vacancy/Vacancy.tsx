@@ -138,6 +138,7 @@ export default function Vacancy({ backLink, link }: Props) {
               <div className={styles.card}>
                 <p className={styles.cardTitle}>Даты стажировки</p>
                 <p>
+                  {/* TODO: human view */}
                   {data.internship.startDate} - {data.internship.endDate}
                 </p>
               </div>
