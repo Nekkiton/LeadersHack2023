@@ -1,0 +1,195 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.hBlocks {
+  display: flex;
+  gap: 24px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+
+.blockHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.blockSelect {
+  width: 225px;
+}
+
+.fatBlockTitle {
+  line-height: 46px;
+}
+
+.card {
+  padding: 16px;
+  background: $white;
+  border-radius: 8px;
+}
+
+.timelineNothing {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.timelineNothingMsg {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.timelineNothingIcon {
+  width: 64px;
+  height: 64px;
+
+  path {
+    stroke: $gray-5;
+  }
+}
+
+.chartNothing {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.chartNothingIcon {
+  width: 150px;
+  height: 150px;
+
+  path {
+    stroke: $gray-5;
+  }
+}
+
+.chartNothingText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chartNothingTitle {
+  @include paragraph-2;
+}
+
+.chartNothingDescription {
+  @include paragraph-3;
+
+  color: $gray-3;
+}
+
+.chart {
+  :global(.apexcharts-legend) {
+    flex-direction: column;
+
+    :global(.apexcharts-legend-series) {
+      margin: 4px 0 !important;
+    }
+
+    :global(.apexcharts-legend-text) {
+      font-size: 12px !important;
+    }
+
+    :global(.apexcharts-legend-marker) {
+      margin-right: 8px;
+      width: 12px;
+      height: 12px;
+    }
+  }
+
+  :global(.apexcharts-text) {
+    &:first-child {
+      font-size: 10px;
+      transform: translateY(28px);
+    }
+
+    &:last-child {
+      font-size: 16px;
+      font-weight: 700;
+      transform: translateY(-28px);
+    }
+  }
+}
+
+.timelineCard {
+  overflow: auto;
+  padding: 16px;
+}
+
+.timeline {
+  display: flex;
+  gap: 24px;
+  margin-top: 7px;
+}
+
+.timelineItem {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 8px;
+  position: relative;
+
+  &.past {
+    color: $gray-4;
+  }
+
+  &:not(:last-child):after {
+    content: "";
+    position: absolute;
+    top: 5.5px;
+    left: 5px;
+    right: -24px;
+    height: 1px;
+    background: $gray-5;
+  }
+
+  &:last-child {
+    padding-right: 16px;
+  }
+}
+
+.timelineItemDot {
+  width: 12px;
+  height: 12px;
+  z-index: 1;
+  border-radius: 50%;
+  background: $white;
+  border: 1px solid $gray-4;
+
+  .timelineItem.past & {
+    background: $gray-4;
+  }
+
+  .timelineItem.active & {
+    border-color: $orange;
+    background: $orange;
+  }
+}
+
+.timelineItemTitle {
+  @include paragraph-2;
+}
+
+.timelineItemDates {
+  @include caption-1;
+
+  .timelineItem:not(.past) & {
+    color: $gray-3;
+  }
+}

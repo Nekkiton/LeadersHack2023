@@ -15,6 +15,7 @@ import TimesIcon from "assets/icons/times.svg"
 import ListIcon from "assets/icons/list.svg"
 import MapIcon from "assets/icons/map.svg"
 import VacancyCard from "components/base/vacancy/VacancyCard"
+import VacancyMapCard from "components/base/vacancy/VacancyMapCard"
 import { fetchVacancyList } from "data/fetchVacancyList"
 import styles from "./Vacancies.module.scss"
 
@@ -258,7 +259,13 @@ export default function Vacancies({ link, noHeader }: Props) {
                   />
                 </>
               )}
-              {viewMode === "map" && <Map items={data?.items} card={<div />} />}
+              {viewMode === "map" && (
+                <Map items={data?.items}>
+                  {(data, props) => (
+                    <VacancyMapCard vacancy={data} link={link} {...props} />
+                  )}
+                </Map>
+              )}
             </>
           )}
         </>
