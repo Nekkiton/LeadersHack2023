@@ -1,5 +1,6 @@
-import React, { ReactNode } from "react"
-import { Modal as BaseModal } from "antd"
+import React, { ReactNode, useState, useEffect } from "react"
+import { Modal as BaseModal, Form } from "antd"
+import { Store } from "antd/es/form/interface"
 import styles from "./Modal.module.scss"
 
 export interface ModalProps {
@@ -12,11 +13,14 @@ export interface ModalProps {
   children?: ReactNode
   className?: string
   bodyStyle?: React.CSSProperties
+  formId?: string
+  initialValues?: Store
+  onFinish?: (values: any) => void
 }
 
 const maskStyle = {
   background: "rgba(111, 111, 111, 0.7",
-  "backdrop-filter": "blur(2px)",
+  backdropFilter: "blur(2px)",
 }
 
 export default function Modal({
@@ -29,7 +33,29 @@ export default function Modal({
   cancelText = "Отмена",
   onOk,
   onCancel,
+  formId,
+  initialValues,
+  onFinish,
 }: ModalProps) {
+  const [isValid, setIsValid] = useState(false)
+  const [form] = Form.useForm()
+  const formValues = Form.useWatch([], form)
+
+  const validate = () => {
+    form.validateFields({ validateOnly: true }).then(
+      () => setIsValid(true),
+      () => setIsValid(false)
+    )
+  }
+
+  useEffect(() => validate(), [formValues])
+
+  useEffect(() => {
+    if (isOpen) {
+      setTimeout(validate, 100)
+    }
+  }, [isOpen])
+
   return (
     <>
       <BaseModal
@@ -38,15 +64,32 @@ export default function Modal({
         bodyStyle={bodyStyle}
         title={title}
         open={isOpen}
-        onOk={onOk}
+        onOk={!formId ? onOk : undefined}
         onCancel={onCancel}
         okText={okText}
         cancelText={cancelText}
         closable={false}
         centered
         destroyOnClose
+        okButtonProps={
+          formId
+            ? {
+                htmlType: "submit",
+                form: formId,
+                disabled: !isValid,
+              }
+            : {}
+        }
       >
-        {children}
+        <Form
+          onFinish={onFinish}
+          id={formId}
+          initialValues={initialValues}
+          form={form}
+          preserve={false}
+        >
+          {children}
+        </Form>
       </BaseModal>
     </>
   )

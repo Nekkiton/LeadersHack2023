@@ -8,12 +8,14 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import CopyIcon from "assets/icons/copy.svg"
 import PenIcon from "assets/icons/pen.svg"
 import PlusIcon from "assets/icons/plus.svg"
+import TimesIcon from "assets/icons/times.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import DocumentIcon from "assets/icons/document2.svg"
 import { useQuery } from "@tanstack/react-query"
 import { fetchVacancyInfo } from "data/fetchVacancyInfo"
 import { useState } from "react"
 import AddTestTaskModal from "./AddTestTaskModal"
+import { notification } from "antd"
 
 interface Props {
   backLink: string
@@ -24,12 +26,32 @@ const userImg = "/images/user.svg"
 
 export default function Vacancy({ backLink, link }: Props) {
   const user = {
-    role: "staff",
-    //role: "mentor",
+    //role: "staff",
+    role: "mentor",
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleModal = () => setIsModalOpen(!isModalOpen)
+
+  const [editTestTask, setEditTestTask] = useState({})
+
+  const startTestTaskEditing = () => {
+    if (data) {
+      setEditTestTask(data.testTask)
+      toggleModal()
+    }
+  }
+
+  // TODO: create and edit test task, handle errors
+  const addTestTask = (data: any) => {
+    console.log(data)
+    toggleModal()
+    notification.open({
+      message:
+        "Вакансия и тестовое задание отправлены на модерацию. Обычно она занимает не более 3 рабочих дней",
+      closeIcon: <TimesIcon />,
+    })
+  }
 
   const { query, asPath } = useRouter()
 
@@ -55,10 +77,12 @@ export default function Vacancy({ backLink, link }: Props) {
 
   return (
     <div className={styles.vacancy}>
+      {/* TODO: finish modal */}
       <AddTestTaskModal
         isOpen={isModalOpen}
         onCancel={toggleModal}
-        onOk={toggleModal}
+        onFinish={addTestTask}
+        initialValues={editTestTask}
       />
       <Link className={styles.topLink} href={backLink}>
         <Button type="text">
@@ -90,14 +114,20 @@ export default function Vacancy({ backLink, link }: Props) {
           )}
           {user.role === "mentor" && (
             <>
-              <Button onClick={toggleModal}>
-                <PlusIcon className="icon" />
-                <span>Добавить тестовое задание</span>
-              </Button>
-              <Button type="secondary" onClick={toggleModal}>
-                <PenIcon className="icon" />
-                <span>Редактировать тестовое задание</span>
-              </Button>
+              {/* TODO: show if status is testTask */}
+              {true && (
+                <Button onClick={toggleModal}>
+                  <PlusIcon className="icon" />
+                  <span>Добавить тестовое задание</span>
+                </Button>
+              )}
+              {/* TODO: show if status is moderating or rejected */}
+              {true && (
+                <Button type="secondary" onClick={startTestTaskEditing}>
+                  <PenIcon className="icon" />
+                  <span>Редактировать тестовое задание</span>
+                </Button>
+              )}
             </>
           )}
         </div>

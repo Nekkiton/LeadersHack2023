@@ -105,6 +105,9 @@ body::-webkit-scrollbar-thumb {
 
 .ant-notification .ant-notification-notice {
   padding: 16px;
+  min-width: 247px;
+  max-width: 412px;
+  width: fit-content;
   box-shadow: 0px 0px 20px rgba(71, 91, 172, 0.25);
   background: $white;
   border-radius: 8px;
@@ -122,6 +125,7 @@ body::-webkit-scrollbar-thumb {
 
   .ant-notification-notice-description {
     @include paragraph-3;
+    display: none;
   }
 
   .ant-notification-notice-close {

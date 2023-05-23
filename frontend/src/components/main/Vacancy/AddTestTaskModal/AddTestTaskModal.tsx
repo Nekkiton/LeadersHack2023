@@ -1,7 +1,9 @@
 import React from "react"
+import { Form } from "antd"
 import Modal from "components/base/controls/Modal"
 import Input from "components/base/controls/Input"
 import { ModalProps } from "components/base/controls/Modal"
+import { init } from "next/dist/compiled/@vercel/og/satori"
 
 const bodyStyle = {
   display: "flex",
@@ -15,8 +17,9 @@ export default function AddTestTaskModal({
   className,
   okText = "Отправить на модерацию",
   cancelText = "Отмена",
-  onOk,
   onCancel,
+  onFinish,
+  initialValues,
 }: ModalProps) {
   return (
     <Modal
@@ -24,13 +27,23 @@ export default function AddTestTaskModal({
       bodyStyle={bodyStyle}
       title={title}
       isOpen={isOpen}
-      onOk={onOk}
       onCancel={onCancel}
       okText={okText}
       cancelText={cancelText}
+      formId="add-test-task-modal"
+      onFinish={onFinish}
+      initialValues={initialValues}
     >
-      <Input label="Описание тестового задания" placeholder="Опишите, что нужно сделать стажеру в рамках задания" textarea />
-      
+      <Form.Item
+        name="description"
+        rules={[{ required: true, message: "Заполните эо поле" }]}
+      >
+        <Input
+          label="Описание тестового задания"
+          placeholder="Опишите, что нужно сделать стажеру в рамках задания"
+          textarea
+        />
+      </Form.Item>
     </Modal>
   )
 }

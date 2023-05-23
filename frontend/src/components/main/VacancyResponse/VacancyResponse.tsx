@@ -94,17 +94,20 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
             </div>
           </div>
         </div>
+        {/* TODO: Manage buttons visibility */}
         <div className={styles.headerControls}>
-          {/* Manage buttons visibility */}
           <Button type="secondary" onClick={toggleCancelModal}>
             Отклонить
           </Button>
           <Button onClick={acceptInternship}>Принять на стажировку</Button>
+          {/* TODO: add modal */}
           {user.role === "mentor" && (
             <Button onClick={acceptInterview}>
               Пригласить на собеседование
             </Button>
           )}
+          {/* TODO: add modal */}
+          {user.role === "mentor" && <Button>Оценить стажера</Button>}
         </div>
       </div>
       <div className={styles.cards}>
@@ -164,6 +167,7 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
             <p className={styles.cardTitle}>Сопроводительное письмо</p>
             <div>{data.coveringLetter}</div>
           </div>
+          {/* TODO: add component */}
           <div>*еще баллы*</div>
         </div>
       </div>
