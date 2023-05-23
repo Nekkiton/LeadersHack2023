@@ -1,9 +1,10 @@
 name: 'Project check & deploy'
 
-on: 
+on:
   push:
-    - main
-    - deployment
+    branches:
+      - main
+      - deployment
 
 jobs:
   build-frontend:
