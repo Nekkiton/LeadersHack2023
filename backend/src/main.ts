@@ -1,9 +1,13 @@
 import { NestFactory } from '@nestjs/core';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  app.setGlobalPrefix('api/v1');
   const config = new DocumentBuilder()
     .setTitle('GeekBattle Project')
     .setDescription('GeekBattle Project API description')
@@ -12,6 +16,9 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  await app.listen(3000);
+  app.useGlobalPipes(new ValidationPipe());
+  app.use(cookieParser());
+  const configService: ConfigService = app.get(ConfigService);
+  await app.listen(configService.get('port'));
 }
 bootstrap();

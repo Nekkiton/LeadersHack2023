@@ -20,12 +20,12 @@ export default function SignIn() {
 
   const handleSubmit = (data: any) => {
     console.log(data);
-    signin(data);
+    signIn(data);
   }
 
-  const signin = async ({ email, password }: any) => {
+  const signIn = async ({ email, password }: any) => {
     return axios
-      .post("/endpoint/api/v1/auth/signin", {
+      .post("/api/v1/auth/signIn", {
         username: email,
         password: password,
       })
