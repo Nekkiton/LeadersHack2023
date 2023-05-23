@@ -12,7 +12,7 @@ const userImg = "/images/user.svg"
 
 export default function UserCard({ link }: Props) {
   return (
-    <Link className={styles.card} href={`${link}/masha`}>
+    <Link className={styles.card} href={`${link}/`}>
       <div className={styles.cardUser}>
         <img className={styles.cardUserImg} src={userImg} />
         <p className={styles.cardUserName}>Марина Высокова</p>

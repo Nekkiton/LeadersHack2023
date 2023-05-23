@@ -192,7 +192,7 @@ export default function Vacancy({ backLink, link }: Props) {
             </div>
           </div>
           <VacancyResponses
-            link={`${link}/piar-manager/responses`}
+            link={`${link}/${data.id}/responses`}
             responses={data.responses.items}
             responsesCount={data.responses.count}
             responsesCountNew={data.responses.countNew}
