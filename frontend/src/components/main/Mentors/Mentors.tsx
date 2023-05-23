@@ -8,6 +8,9 @@ import PlusIcon from "assets/icons/plus.svg"
 import UserSearchIcon from "assets/icons/user-search.svg"
 import SearchIcon from "assets/icons/search.svg"
 import styles from "./Mentors.module.scss"
+import { useQuery } from "@tanstack/react-query"
+import { fetchMentorList } from "data/fetchMentorList"
+import { Spin } from "antd"
 
 interface Props {
   link: string
@@ -22,6 +25,17 @@ export default function Mentors({ link, noHeader, longSearchInput }: Props) {
   // TODO
   // fetch mentors
   // if user is curator and page is organization - filter by organization
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["mentorList", { query, page: currentPage }],
+    queryFn: () =>
+      fetchMentorList({
+        search: query,
+        page: currentPage,
+      }),
+  })
+
+  if (isLoading) return <Spin />
 
   return (
     <div className={styles.container}>
@@ -69,13 +83,14 @@ export default function Mentors({ link, noHeader, longSearchInput }: Props) {
           </div>
           <div className={styles.mentors}>
             {/* TODO: add mentor page */}
-            <MentorCard link={link} />
-            <MentorCard link={link} />
+            {data?.items.map((mentor) => (
+              <MentorCard link={link} key={mentor.id} mentorInfo={mentor} />
+            ))}
           </div>
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            totalPages={10}
+            totalPages={data?.totalPages ?? 1}
           />
         </>
       )}
