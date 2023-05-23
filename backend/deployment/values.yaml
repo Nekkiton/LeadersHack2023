@@ -81,3 +81,14 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+envSecrets:
+  - name: DATABASE_HOST
+    secretName: application-credentials
+    secretKey: DATABASE_HOST
+  - name: DATABASE_PASSWORD
+    secretName: application-credentials
+    secretKey: DATABASE_PASSWORD
+  - name: JWT_SECRET
+    secretName: application-credentials
+    secretKey: JWT_SECRET
