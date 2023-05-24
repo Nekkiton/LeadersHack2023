@@ -1,0 +1,71 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.backLink {
+  align-self: flex-start;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.cards {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.card {
+  padding: 16px;
+  border-radius: 8px;
+  background: $white;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formHFields {
+  display: flex;
+  gap: 16px;
+}
+
+.formField {
+  width: calc(50% - 8px);
+}
+
+.formSubmitBtn {
+  align-self: flex-start;
+}
+
+.hint {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 40%;
+  flex-shrink: 0;
+}
+
+.hintIcon path {
+  stroke: $gray-3;
+}
+
+.hintText {
+  @include paragraph-2;
+
+  color: $gray-3;
+}
