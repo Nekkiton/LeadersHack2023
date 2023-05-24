@@ -40,7 +40,7 @@ export default function TheHeader() {
           ) : (
             <BurgerMenu
               items={[
-                <Link href="/staff/profile">
+                <Link href="/profile">
                   <Button type="text">
                     <UserIcon className="icon" />
                     <span>Профиль</span>

@@ -50,7 +50,7 @@ export default function MobileMenu({ isShowed, setIsShowed }: Props) {
             <DocumentIcon className={styles.linksLinkIcon} />
             <p>Заявка на стажировку 2023 — 2024</p>
           </Link>
-          <Link className={styles.linksLink} href="/candidate/profile">
+          <Link className={styles.linksLink} href="/profile">
             <UserIcon className={styles.linksLinkIcon} />
             <p>Профиль</p>
           </Link>

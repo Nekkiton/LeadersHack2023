@@ -62,3 +62,13 @@
 .footer {
   align-self: flex-start;
 }
+
+@include mobile {
+  .menu {
+    display: none;
+  }
+
+  .footer {
+    display: none;
+  }
+}

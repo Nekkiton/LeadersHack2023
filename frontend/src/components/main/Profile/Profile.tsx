@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 import { Form, Spin } from "antd"
+import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Input from "components/base/controls/Input"
 import Tabs from "components/base/navigation/Tabs"
@@ -60,14 +61,16 @@ export default function Profile() {
       >
         <div className={`${styles.mobileHeader}`}>
           <h1 className={styles.mobileHeaderTitle}>Профиль</h1>
-          <Tabs
-            items={[
-              { key: "personal", value: "Личные данные" },
-              { key: "exp", value: "Опыт" },
-            ]}
-            value={activeTab}
-            onChange={setActiveTab}
-          />
+          {(data?.role === "candidate" || data?.role === "intern") && (
+            <Tabs
+              items={[
+                { key: "personal", value: "Личные данные" },
+                { key: "exp", value: "Опыт" },
+              ]}
+              value={activeTab}
+              onChange={setActiveTab}
+            />
+          )}
         </div>
         <div className={styles.userImgContainer}>
           <img className={styles.userImg} src={userImg} />
@@ -238,9 +241,17 @@ export default function Profile() {
               type="text"
               onClick={toggleModal}
             >
-              <PenIcon className="icon" />
-              <span>Изменить пароль</span>
+              Изменить пароль
             </Button>
+            <Link
+              className={`${styles.passwordBtn} ${styles.mobile}`}
+              href="/profile/password"
+            >
+              <Button type="text">
+                <PenIcon className="icon" />
+                <span>Изменить пароль</span>
+              </Button>
+            </Link>
           </div>
         </div>
       </Form>
