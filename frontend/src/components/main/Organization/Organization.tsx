@@ -1,3 +1,4 @@
+import { useState } from "react"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import UserRating from "components/base/user/UserRating"
@@ -16,6 +17,8 @@ interface Props {
 }
 
 export default function Organization({ backLink }: Props) {
+  const [activeTab, setActiveTab] = useState("vacancies")
+
   return (
     <div className={styles.container}>
       <Link className={styles.backLink} href={backLink}>
@@ -43,23 +46,21 @@ export default function Organization({ backLink }: Props) {
         <UserRating count={1} averageRate={2} />
       </div>
       <Tabs
-        defaultTab={0}
+        value={activeTab}
+        onChange={setActiveTab}
         items={[
-          {
-            title: "Вакансии",
-            content: <Vacancies link="/curator/vacancies" noHeader />,
-          },
-          {
-            title: "Кадровые специалисты",
-            content: <Staffs link="/" />,
-          },
-          {
-            title: "Наставники",
-            content: <Mentors link="/" noHeader longSearchInput />,
-          },
-          { title: "Подразделения", content: <Departments link="/" /> },
+          { key: "vacancies", value: "Вакансии" },
+          { key: "staffs", value: "Кадровые специалисты" },
+          { key: "mentors", value: "Наставники" },
+          { key: "deparments", value: "Подразделения" },
         ]}
       />
+      {activeTab === "vacancies" && (
+        <Vacancies link="/curator/vacancies" noHeader />
+      )}
+      {activeTab === "staffs" && <Staffs link="/" />}
+      {activeTab === "mentors" && <Mentors link="/" noHeader longSearchInput />}
+      {activeTab === "deparments" && <Departments link="/" />}
     </div>
   )
 }
