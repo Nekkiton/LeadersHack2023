@@ -6,7 +6,7 @@ import styles from "./InternshipApp.module.scss"
 
 export default function InternshipApp() {
   const isReceptionOpen = false
-  const status = "moderating" // waitStuding, studying, waitTesting, testing, waitCompetition, competition, rejected
+  const status: string = "moderating" // waitStuding, studying, waitTesting, testing, waitCompetition, competition, rejected
   const timeline = [
     {
       title: "Заявка принята",
