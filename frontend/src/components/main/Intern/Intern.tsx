@@ -8,7 +8,7 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import { useQuery } from "@tanstack/react-query"
-import { fetchVacancyResponseInfo } from "data/fetchVacancyResponseInfo"
+import { fetchVacancyResponseInfo } from "data"
 import styles from "./Intern.module.scss"
 import StudentProfile from "components/main/StudentProfile"
 import StudentInfo from "components/main/StudentProfile/StudentInfo"
@@ -79,7 +79,7 @@ export default function Intern({ backLink, responseId }: Props) {
         </Button>
       </Link>
       <div className={styles.header}>
-        <StudentInfo profile={data.user}/>
+        <StudentInfo profile={data.user} />
         {/* TODO: Manage buttons visibility, add modal */}
         <div className={styles.headerControls}>
           <Button type="secondary" onClick={toggleCancelModal}>
