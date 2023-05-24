@@ -29,7 +29,7 @@ $transition: 0.3s;
 }
 
 @mixin mobile {
-  @media (max-width: 400px) {
+  @media (max-width: 768px) {
     @content;
   }
 
