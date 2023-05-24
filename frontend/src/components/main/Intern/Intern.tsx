@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { notification } from "antd"
+import { Spin, notification } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import File from "components/base/controls/File"
@@ -56,14 +56,14 @@ export default function Intern({ backLink, responseId }: Props) {
   }
 
   const { data, isLoading } = useQuery({
-    queryKey: ["vacancyResponseInfo", { id: responseId }],
+    queryKey: ["internInfo", { id: responseId }],
     queryFn: () =>
       fetchVacancyResponseInfo({
         id: responseId ?? "",
       }),
   })
 
-  if (!data || isLoading) return <div>Загрузка...</div>
+  if (!data || isLoading) return <Spin />
 
   return (
     <div className={styles.container}>

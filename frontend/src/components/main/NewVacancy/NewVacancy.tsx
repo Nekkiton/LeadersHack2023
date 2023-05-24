@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useRouter } from "next/router"
-import { Form } from "antd"
+import { Form, Spin } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Select from "components/base/controls/Select"
@@ -74,7 +74,7 @@ export default function NewVacancy({ editId }: Props) {
   }, [editId, router.query.copy])
 
   if ((router.query.copy || editId) && !initialData) {
-    return <div>Загрузка...</div>
+    return <Spin />
   }
 
   // TODO: create or edit vacancy, handle errors
