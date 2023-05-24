@@ -68,16 +68,15 @@ export default function StaffMain() {
                   id: "101",
                   status: "new",
                   name: "Марина Высокова",
-                  age: "22",
+                  age: 22,
                   score: 20,
                   address: "г. Москва",
                   education: "МГУ им. Ломоносова, выпуск 2023 г.",
-                  isNew: true,
                   reviews: {
                     count: 24,
                     averageRate: 4.7,
                   },
-                  avatar: null
+                  avatar: null,
                 }}
               />
               <Link href="/mentor/interns">
