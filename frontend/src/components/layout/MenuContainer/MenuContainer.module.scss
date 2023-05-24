@@ -9,6 +9,7 @@
 .menu {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
   gap: 16px;
   padding: 16px;
   width: 25%;

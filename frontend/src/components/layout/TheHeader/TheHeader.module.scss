@@ -3,6 +3,7 @@
 .header {
   padding: 16px 0;
   background: $white;
+  z-index: 1;
 }
 
 .content {
@@ -81,5 +82,20 @@
 
   &.active {
     transform: rotate(180deg);
+  }
+}
+
+@include mobile {
+  .header {
+    padding: 8px 0;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .logoImg {
+    height: 45px;
+  }
+
+  .user {
+    display: none;
   }
 }

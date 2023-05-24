@@ -5,12 +5,18 @@
 
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
   padding: 0 24px;
   height: 46px;
   border-radius: 30px;
   border: 1px solid $gray-2 !important;
   transition: $transition;
+
+  :global(.icon) {
+    width: 24px;
+    height: 24px;
+  }
 
   &:global(.primary) {
     background: $gray-2;

@@ -28,3 +28,9 @@
     stroke: $white;
   }
 }
+
+@include mobile {
+  .checkbox {
+    @include caption-1;
+  }
+}

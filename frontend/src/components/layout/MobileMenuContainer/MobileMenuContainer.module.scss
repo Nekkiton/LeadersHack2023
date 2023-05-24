@@ -1,0 +1,63 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  //width: calc(100% + 32px);
+  //margin: 0 -16px -24px -16px;
+  margin-bottom: -24px;
+
+  width: 100%;
+  //border: 1px solid red;
+}
+
+.menu {
+  @include full-width;
+
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  position: sticky;
+  padding: 12px 16px;
+  margin-top: auto;
+  bottom: 0;
+  background: $white;
+  border-radius: 8px 8px 0 0;
+  box-shadow: 0px 0px 20px rgba(71, 91, 172, 0.25);
+}
+
+.item {
+  @include caption-2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  width: 100%;
+  color: $gray-3;
+  transition: $transition;
+
+  .icon {
+    width: 24px;
+    height: 24px;
+
+    path {
+      stroke: $gray-3;
+      transition: $transition;
+    }
+  }
+
+  &.active {
+    color: $gray-2;
+
+    .icon path {
+      stroke: $gray-2;
+    }
+  }
+}
+
+.content {
+  //border: 1px solid red;
+  height: 100%;
+}

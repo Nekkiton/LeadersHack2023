@@ -81,6 +81,10 @@ a {
 
 body::-webkit-scrollbar {
   width: 14px;
+
+  @include mobile {
+    display: none;
+  }
 }
 
 body::-webkit-scrollbar-track {

@@ -1,0 +1,231 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  width: 100%;
+}
+
+.intro {
+  @include full-width;
+
+  position: relative;
+  margin-top: calc(-24px - 8px);
+  padding: 0 !important;
+}
+
+.introImg {
+  width: 100%;
+}
+
+.introContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: absolute;
+  top: calc(32px + 8px);
+  left: 23px;
+  right: 23px;
+  text-align: center;
+}
+
+.introTitle {
+  padding: 16px;
+  background: $white;
+  border-radius: 20px;
+  box-shadow: 0px 0px 20px rgba(71, 91, 172, 0.25);
+  color: $purpure;
+  font-family: "Alter Aves";
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 130%;
+  text-transform: uppercase;
+
+  .intro.orange & {
+    color: $orange;
+  }
+}
+
+.introDescription {
+  @include paragraph-2;
+  color: $white;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.who {
+  @include main-scrollable;
+
+  display: flex;
+  gap: 8px;
+}
+
+.whoItem {
+  @include caption-1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 8px;
+  width: 109px;
+  padding: 8px;
+  background: $white;
+  border-radius: 8px;
+}
+
+.whoItemIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.why {
+  @include main-scrollable;
+
+  display: flex;
+  gap: 8px;
+}
+
+.whyItem {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 8px;
+  padding: 16px;
+  width: 250px;
+  border-radius: 8px;
+  background: $white;
+}
+
+.whyItemText {
+  @include paragraph-2;
+
+  .colored {
+    color: $purpure;
+  }
+}
+
+.directions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.direction {
+  @include paragraph-1;
+
+  padding: 8px 24px;
+  background: $white;
+  border-radius: 59px;
+}
+
+.timelineContainer {
+  @include full-width;
+
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  margin-bottom: -24px;
+  background: $white;
+  border-radius: 24px 24px 0 0;
+}
+
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.timelineItem {
+  display: flex;
+  gap: 8px;
+  position: relative;
+
+  &:not(:last-child):after {
+    content: "";
+    position: absolute;
+    width: 1px;
+    background: $gray-5;
+    top: 14px;
+    bottom: -18px;
+    left: 5.5px;
+  }
+}
+
+.timelineItemMarker {
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1px solid $purpure;
+  background: $white;
+
+  .timelineItem.active & {
+    background: $purpure;
+  }
+}
+
+.timelineItemContent {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.timelineItemHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timelineItemDates {
+  @include caption-1;
+
+  color: $gray-3;
+}
+
+.timelineItemDescription {
+  @include paragraph-2;
+
+  .colored {
+    color: $purpure;
+    font-weight: 700;
+  }
+
+  .link {
+    color: $blue;
+  }
+}
+
+.popupForm {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+
+.popupFormHint {
+  @include paragraph-2;
+  color: $gray-3;
+}
+
+.popupFormLink {
+  color: $blue;
+}
+
+.notification {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notificationIcon {
+  width: 24px;
+  height: 24px;
+}

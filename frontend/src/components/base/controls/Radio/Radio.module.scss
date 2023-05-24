@@ -1,0 +1,66 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.label {
+  @include paragraph-3;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.radio {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+}
+
+.marker {
+  position: relative;
+  width: 24px;
+  height: 24px;
+  border: 1px solid $gray-2;
+  border-radius: 50%;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: 7px;
+    bottom: 7px;
+    left: 7px;
+    right: 7px;
+    border-radius: 50%;
+    background: $gray-2;
+    opacity: 0;
+    transition: $transition;
+  }
+
+  .radio.active &:after {
+    opacity: 1;
+  }
+}
+
+.icon {
+  width: 24px;
+  height: 24px;
+  border: 1px solid $gray-3;
+  border-radius: 4px;
+
+  path {
+    transition: $transition;
+  }
+
+  .checkbox:not(.active) & path {
+    stroke: $white;
+  }
+}

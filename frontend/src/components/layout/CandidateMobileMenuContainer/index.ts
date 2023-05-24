@@ -1,0 +1,3 @@
+import CandidateMobileMenuContainer from "./CandidateMobileMenuContainer"
+
+export default CandidateMobileMenuContainer

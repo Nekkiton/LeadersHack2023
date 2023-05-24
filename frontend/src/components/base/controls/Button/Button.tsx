@@ -1,4 +1,4 @@
-import { ReactNode } from "react"
+import { CSSProperties, ReactNode } from "react"
 import { Button as BaseButton } from "antd"
 import styles from "./Button.module.scss"
 
@@ -9,6 +9,7 @@ interface Props {
   className?: string
   onClick?: () => void
   htmlType?: "button" | "submit" | "reset"
+  style?: CSSProperties
 }
 
 export default function Button({
@@ -18,6 +19,7 @@ export default function Button({
   className,
   onClick,
   htmlType,
+  style,
 }: Props) {
   return (
     <BaseButton
@@ -25,6 +27,7 @@ export default function Button({
       onClick={onClick}
       htmlType={htmlType}
       disabled={disabled}
+      style={style}
     >
       {children}
     </BaseButton>

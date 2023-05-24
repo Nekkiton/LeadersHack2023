@@ -30,6 +30,10 @@
   @include paragraph-3;
 }
 
+.labelHint {
+  color: $gray-4;
+}
+
 .textarea {
   resize: none !important;
   height: 154px !important;

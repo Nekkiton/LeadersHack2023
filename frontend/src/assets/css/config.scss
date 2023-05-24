@@ -11,14 +11,38 @@ $blue: #2f80ed;
 $red: #eb5757;
 $orange: #ff9900;
 $green: #219653;
-$purpure: #B390EC;
-$light-blue: #5CD5DD;
+$purpure: #b390ec;
+$light-blue: #5cd5dd;
 
 $text: $gray-2;
 
 //transition
 
 $transition: 0.3s;
+
+// media
+
+@mixin tablet {
+  @media (max-width: 768px) {
+    @content;
+  }
+}
+
+@mixin mobile {
+  @media (max-width: 400px) {
+    @content;
+  }
+
+  //@media (max-width: 375px) {
+  //@content;
+  //}
+}
+
+@mixin mobile-narrow {
+  @media (max-width: 320px) {
+    @content;
+  }
+}
 
 // typography
 
@@ -28,6 +52,10 @@ $transition: 0.3s;
   font-family: "Alter Aves";
   font-weight: 400;
   text-transform: uppercase;
+
+  @include mobile {
+    font-size: 35px;
+  }
 }
 
 @mixin heading-1 {
@@ -35,6 +63,10 @@ $transition: 0.3s;
   line-height: 130%;
   font-family: "Alter Aves";
   font-weight: 400;
+
+  @include mobile {
+    font-size: 30px;
+  }
 }
 
 @mixin heading-2 {
@@ -42,6 +74,10 @@ $transition: 0.3s;
   line-height: 130%;
   font-family: "GT Walsheim LC";
   font-weight: 700;
+
+  @include mobile {
+    font-size: 28px;
+  }
 }
 
 @mixin heading-3 {
@@ -70,6 +106,10 @@ $transition: 0.3s;
   line-height: 140%;
   font-family: "GT Walsheim LC";
   font-weight: 700;
+
+  @include mobile {
+    font-size: 16px;
+  }
 }
 
 @mixin heading-7 {
@@ -77,6 +117,10 @@ $transition: 0.3s;
   line-height: 140%;
   font-family: "GT Walsheim LC";
   font-weight: 700;
+
+  @include mobile {
+    font-size: 14px;
+  }
 }
 
 @mixin heading-8 {
@@ -91,6 +135,10 @@ $transition: 0.3s;
   line-height: 160%;
   font-family: "GT Walsheim LC";
   font-weight: 400;
+
+  @include mobile {
+    font-size: 16px;
+  }
 }
 
 @mixin paragraph-2 {
@@ -98,6 +146,10 @@ $transition: 0.3s;
   line-height: 160%;
   font-family: "GT Walsheim LC";
   font-weight: 400;
+
+  @include mobile {
+    font-size: 14px;
+  }
 }
 
 @mixin paragraph-3 {
@@ -126,25 +178,9 @@ $transition: 0.3s;
   line-height: 140%;
   font-family: "GT Walsheim LC";
   font-weight: 400;
-}
 
-// media
-
-@mixin tablet {
-  @media (max-width: 768px) {
-    @content;
-  }
-}
-
-@mixin mobile {
-  @media (max-width: 375px) {
-    @content;
-  }
-}
-
-@mixin mobile-narrow {
-  @media (max-width: 320px) {
-    @content;
+  @include mobile {
+    font-size: 14px;
   }
 }
 
@@ -162,11 +198,48 @@ $transition: 0.3s;
 
   @include mobile {
     padding: 0 16px;
-    max-width: calc(343px + 32px);
+    //max-width: calc(343px + 32px);
   }
 
   @include mobile-narrow {
     padding: 0 16px;
     max-width: calc(288px + 32px);
   }
+}
+
+@mixin full-width {
+  margin-left: -30px;
+  margin-right: -30px;
+  padding-left: 30px;
+  padding-right: 30px;
+
+  @include tablet {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  @include mobile {
+    margin-left: -16px;
+    margin-right: -16px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@mixin scrollable($pad) {
+  overflow: auto;
+  margin-left: -$pad;
+  margin-right: -$pad;
+  padding-left: $pad;
+  padding-right: $pad;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin main-scrollable() {
+  @include scrollable(16px);
 }

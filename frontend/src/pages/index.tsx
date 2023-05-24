@@ -6,6 +6,7 @@ export default function Home() {
       <Link href="/staff">Staff</Link>
       <Link href="/mentor">Mentor</Link>
       <Link href="/curator">Curator</Link>
+      <Link href="/candidate">Candidate</Link>
     </div>
   )
 }

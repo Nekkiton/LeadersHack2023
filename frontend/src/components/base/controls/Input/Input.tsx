@@ -18,6 +18,7 @@ interface Props {
   password?: boolean
   timepicker?: boolean
   postscript?: string
+  notRequired?: boolean
 }
 
 export default function Input({
@@ -32,12 +33,20 @@ export default function Input({
   password,
   timepicker,
   postscript,
+  notRequired,
 }: Props) {
   const [passwordVisible, setPasswordVisible] = useState(false)
 
   return (
     <div className={`${styles.container} ${className}`}>
-      {label && <p className={styles.label}>{label}</p>}
+      {label && (
+        <p className={styles.label}>
+          {label}
+          {notRequired && (
+            <span className={styles.labelHint}> — необязательно</span>
+          )}
+        </p>
+      )}
       {!textarea && !datepicker && !password && !timepicker && (
         <BaseInput
           className={styles.input}

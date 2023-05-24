@@ -1,0 +1,122 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.titleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.titleHint {
+  @include paragraph-2;
+
+  color: $gray-3;
+}
+
+.form {
+  @include full-width;
+
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 32px;
+  margin-bottom: -24px;
+  padding: 16px 16px 24px;
+  background: $white;
+  border-radius: 20px 20px 0 0;
+}
+
+.formStep {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  &:not(.active) {
+    display: none;
+  }
+}
+
+.formStepBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.formStepBlockTitle {
+  @include heading-7;
+}
+
+.formImgContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.formImg {
+  width: 128px;
+  height: 128px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.formCheckbox {
+  @include caption-1;
+}
+
+.formCheckboxLink {
+  color: $blue;
+}
+
+.formControls {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  margin-top: auto;
+}
+
+.formControl {
+  justify-content: center;
+  width: 100%;
+}
+
+.finished {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  text-align: center;
+}
+
+.finishedIcon {
+  width: 150px;
+  height: 150px;
+
+  path {
+    stroke: $gray-5;
+  }
+}
+
+.finishedText {
+  @include paragraph-2;
+}
+
+.finishedBtn {
+  width: 100%;
+}
