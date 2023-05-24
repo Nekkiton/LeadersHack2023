@@ -46,9 +46,13 @@
 }
 
 .fields {
-  display: flex;
+  display: none;
   flex-direction: column;
   gap: 16px;
+
+  &.active {
+    display: flex;
+  }
 }
 
 .hFields {
@@ -69,4 +73,92 @@
 .controls {
   display: flex;
   gap: 24px;
+}
+
+.mobileHeader {
+  display: none;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.mobileHeaderTitle {
+  text-transform: uppercase;
+}
+
+.passwordBtn :global(.icon) {
+  display: none;
+}
+
+.mobileImgContainer {
+  display: none;
+  align-items: center;
+  gap: 16px;
+}
+
+@include mobile {
+  .container {
+    flex-direction: column;
+    background: none;
+    padding: 0;
+  }
+
+  .userImgContainer {
+    display: none;
+  }
+
+  .mobileHeader {
+    display: flex;
+  }
+
+  .main {
+    @include full-width;
+    @include full-bottom;
+
+    gap: 32px;
+    padding: 16px 16px 24px;
+    background: $white;
+    border-radius: 20px 20px 0 0;
+  }
+
+  .fields {
+    gap: 24px;
+  }
+
+  .hFields {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .footer {
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    gap: 32px;
+  }
+
+  .cancelBtn {
+    display: none;
+  }
+
+  .controls {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .passwordBtn {
+    font-size: 16px !important;
+
+    :global(.icon) {
+      display: block;
+    }
+  }
+
+  .mobileImgContainer {
+    display: flex;
+  }
+
+  .userImg {
+    width: 128px;
+    height: 128px;
+  }
 }

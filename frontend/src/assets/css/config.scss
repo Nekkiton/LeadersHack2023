@@ -228,6 +228,12 @@ $transition: 0.3s;
   }
 }
 
+@mixin full-bottom {
+  @include mobile {
+    margin-bottom: -24px;
+  }
+}
+
 @mixin scrollable($pad) {
   overflow: auto;
   margin-left: -$pad;

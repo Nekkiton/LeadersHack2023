@@ -10,6 +10,7 @@ const testData = {
   location: "Москва",
   phone: "88005553535",
   email: "gZa8a@example.com",
+  role: "candidate",
 }
 
 interface QueryResponse {
@@ -23,6 +24,7 @@ interface QueryResponse {
   location: string
   phone: string
   email: string
+  role: string
 }
 
 export const fetchProfileInfo = async () => {

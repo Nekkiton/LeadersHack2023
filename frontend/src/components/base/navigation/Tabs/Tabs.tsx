@@ -1,26 +1,22 @@
-import { ReactNode, useState, useRef, useEffect } from "react"
+import { ReactNode, useRef, useEffect } from "react"
 import styles from "./Tabs.module.scss"
 
 interface Props {
   items: {
-    title: string
-    content: ReactNode
+    key: string
+    value: ReactNode
   }[]
-  defaultTab: number
+  value?: string
+  onChange?: (val: string) => void
 }
 
-export default function Tabs({ items, defaultTab }: Props) {
-  const [activeTabIdx, setActiveTabIdx] = useState(defaultTab)
-
+export default function Tabs({ items, value, onChange }: Props) {
   const tabBgRef = useRef<HTMLSpanElement | null>(null)
   const tabsRef = useRef<HTMLDivElement | null>(null)
 
   const updateView = () => {
-    console.log(tabsRef.current)
-
-    const activeTab = tabsRef.current?.children[
-      activeTabIdx + 1
-    ] as HTMLSpanElement
+    const idx = items.findIndex((i) => i.key === value)
+    const activeTab = tabsRef.current?.children[idx + 1] as HTMLSpanElement
 
     if (!tabBgRef.current || !activeTab) return
 
@@ -28,25 +24,24 @@ export default function Tabs({ items, defaultTab }: Props) {
     tabBgRef.current.style.left = `${activeTab.offsetLeft}px`
   }
 
-  useEffect(updateView, [activeTabIdx])
+  useEffect(updateView, [value])
 
   return (
     <>
       <div className={styles.tabs} ref={tabsRef}>
         <span className={styles.tabBackground} ref={tabBgRef}></span>
-        {items.map((item, idx) => (
+        {items.map((item) => (
           <span
             className={`${styles.tab} ${
-              idx === activeTabIdx ? styles.active : ""
+              item.key === value ? styles.active : ""
             }`}
-            key={item.title + idx}
-            onClick={() => setActiveTabIdx(idx)}
+            key={item.key}
+            onClick={() => onChange?.(item.key)}
           >
-            {item.title}
+            {item.value}
           </span>
         ))}
       </div>
-      {items[activeTabIdx].content}
     </>
   )
 }
