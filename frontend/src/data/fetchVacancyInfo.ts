@@ -43,11 +43,10 @@ const testData = {
         id: "101",
         status: "new",
         name: "Марина Высокова",
-        age: "22",
+        age: 22,
         score: 20,
         address: "г. Москва",
         education: "МГУ им. Ломоносова, выпуск 2023 г.",
-        isNew: true,
         reviews: {
           count: 24,
           averageRate: 4.7,
@@ -65,12 +64,11 @@ export interface ResponseData {
   id: string
   status: string
   name: string
-  age: string
+  age: number
   score: number
   address: string
   education: string
   avatar: string | null
-  isNew: boolean
   reviews: {
     count: number
     averageRate: number

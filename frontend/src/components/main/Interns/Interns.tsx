@@ -4,12 +4,30 @@ import Pagination from "components/base/navigation/Pagination"
 import StudentIcon from "assets/icons/student.svg"
 import SearchIcon from "assets/icons/search.svg"
 import styles from "./Interns.module.scss"
+import { Spin } from "antd"
+import { useQuery } from "@tanstack/react-query"
+import { useState } from "react"
+import { fetchInternList } from "data"
 
 interface Props {
   link: string
 }
 
 export default function Interns({ link }: Props) {
+  const [query, setQuery] = useState("")
+  const [currentPage, setCurrentPage] = useState(1)
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["mentorList", { query, page: currentPage }],
+    queryFn: () =>
+      fetchInternList({
+        search: query,
+        page: currentPage,
+      }),
+  })
+
+  if (isLoading) return <Spin />
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -26,28 +44,19 @@ export default function Interns({ link }: Props) {
             className={styles.searchInput}
             placeholder="Поиск по стажерам"
             prefix={<SearchIcon />}
+            value={query}
+            onChange={setQuery}
           />
           <div className={styles.interns}>
-            <ResponseCard
-              link={link}
-              responseInfo={{
-                id: "101",
-                status: "new",
-                name: "Марина Высокова",
-                age: "22",
-                score: 20,
-                address: "г. Москва",
-                education: "МГУ им. Ломоносова, выпуск 2023 г.",
-                isNew: true,
-                reviews: {
-                  count: 24,
-                  averageRate: 4.7,
-                },
-                avatar: null
-              }}
-            />
+            {data?.items.map((intern) => (
+              <ResponseCard key={intern.id} link={link} responseInfo={intern} />
+            ))}
           </div>
-          <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={data?.totalPages ?? 1}
+          />
         </>
       )}
     </div>
