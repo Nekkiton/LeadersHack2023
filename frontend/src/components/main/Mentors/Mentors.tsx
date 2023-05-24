@@ -9,7 +9,7 @@ import UserSearchIcon from "assets/icons/user-search.svg"
 import SearchIcon from "assets/icons/search.svg"
 import styles from "./Mentors.module.scss"
 import { useQuery } from "@tanstack/react-query"
-import { fetchMentorList } from "data/fetchMentorList"
+import { fetchMentorList } from "data"
 import { Spin } from "antd"
 
 interface Props {

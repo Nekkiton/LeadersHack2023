@@ -10,7 +10,7 @@ import styles from "./Profile.module.scss"
 import PasswordModal from "./PasswordModal"
 import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
-import { fetchProfileInfo } from "data/fetchProfileInfo"
+import { fetchProfileInfo } from "data"
 import dayjs from "dayjs"
 
 const userImg = "/images/user.svg"

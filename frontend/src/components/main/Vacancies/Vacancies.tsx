@@ -16,7 +16,7 @@ import ListIcon from "assets/icons/list.svg"
 import MapIcon from "assets/icons/map.svg"
 import VacancyCard from "components/base/vacancy/VacancyCard"
 import VacancyMapCard from "components/base/vacancy/VacancyMapCard"
-import { fetchVacancyList } from "data/fetchVacancyList"
+import { fetchVacancyList } from "data"
 import styles from "./Vacancies.module.scss"
 
 interface Props {
