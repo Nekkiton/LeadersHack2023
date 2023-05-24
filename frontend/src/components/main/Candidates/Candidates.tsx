@@ -86,11 +86,10 @@ export default function Candidates() {
                 status: "new",
                 name: "Марина Высокова",
                 avatar: null,
-                age: "22",
+                age: 22,
                 score: 20,
                 address: "г. Москва",
                 education: "МГУ им. Ломоносова, выпуск 2023 г.",
-                isNew: true,
                 reviews: {
                   count: 24,
                   averageRate: 4.7,
