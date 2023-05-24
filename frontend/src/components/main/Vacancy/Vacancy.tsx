@@ -15,7 +15,7 @@ import { useQuery } from "@tanstack/react-query"
 import { fetchVacancyInfo } from "data"
 import { useState } from "react"
 import AddTestTaskModal from "./AddTestTaskModal"
-import { notification } from "antd"
+import { Spin, notification } from "antd"
 import Timeline from "components/base/controls/Timeline"
 
 interface Props {
@@ -64,7 +64,7 @@ export default function Vacancy({ backLink, link }: Props) {
       }),
   })
 
-  if (!data || isLoading) return <div>Загрузка...</div>
+  if (!data || isLoading) return <Spin />
 
   const statuses = {
     created: "Создана",

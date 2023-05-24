@@ -18,7 +18,7 @@ export default function Interns({ link }: Props) {
   const [currentPage, setCurrentPage] = useState(1)
 
   const { data, isLoading } = useQuery({
-    queryKey: ["mentorList", { query, page: currentPage }],
+    queryKey: ["internList", { query, page: currentPage }],
     queryFn: () =>
       fetchInternList({
         search: query,

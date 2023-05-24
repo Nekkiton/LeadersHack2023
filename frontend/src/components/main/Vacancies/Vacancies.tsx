@@ -18,6 +18,7 @@ import VacancyCard from "components/base/vacancy/VacancyCard"
 import VacancyMapCard from "components/base/vacancy/VacancyMapCard"
 import { fetchVacancyList } from "data"
 import styles from "./Vacancies.module.scss"
+import { Spin } from "antd"
 
 interface Props {
   link: string
@@ -237,7 +238,7 @@ export default function Vacancies({ link, noHeader }: Props) {
             )}
           </div>
           {isLoading ? (
-            <p>Загрузка...</p>
+            <Spin />
           ) : (
             <>
               {viewMode === "list" && (

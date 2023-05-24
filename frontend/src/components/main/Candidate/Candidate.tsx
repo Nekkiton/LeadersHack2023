@@ -1,9 +1,8 @@
 import { useState } from "react"
-import { notification } from "antd"
+import { Spin, notification } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import File from "components/base/controls/File"
-import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
@@ -75,7 +74,7 @@ export default function Candidate({ backLink, responseId }: Props) {
       }),
   })
 
-  if (!data || isLoading) return <div>Загрузка...</div>
+  if (!data || isLoading) return <Spin />
 
   return (
     <div className={styles.container}>

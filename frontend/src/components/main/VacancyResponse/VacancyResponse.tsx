@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { notification } from "antd"
+import { Spin, notification } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import File from "components/base/controls/File"
@@ -63,7 +63,7 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
       }),
   })
 
-  if (!data || isLoading) return <div>Загрузка...</div>
+  if (!data || isLoading) return <Spin />
 
   return (
     <div className={styles.container}>
