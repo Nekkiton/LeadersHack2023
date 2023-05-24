@@ -20,8 +20,6 @@ interface Props {
   } // TODO: user object here
 }
 
-const userImg = "/images/user.svg"
-
 export default function StudentProfile({ profile }: Props) {
   return (
     <div className={styles.vCards}>

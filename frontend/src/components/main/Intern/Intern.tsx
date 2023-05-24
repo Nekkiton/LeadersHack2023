@@ -8,19 +8,17 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import { useQuery } from "@tanstack/react-query"
-import { fetchVacancyResponseInfo } from "data"
+import { fetchInternInfo } from "data"
 import styles from "./Intern.module.scss"
 import StudentProfile from "components/main/StudentProfile"
 import StudentInfo from "components/main/StudentProfile/StudentInfo"
 
 interface Props {
   backLink: string
-  responseId?: string
+  internId: string
 }
 
-const userImg = "/images/user.svg"
-
-export default function Intern({ backLink, responseId }: Props) {
+export default function Intern({ backLink, internId }: Props) {
   const user = {
     role: "curator",
     //role: "mentor",
@@ -56,10 +54,10 @@ export default function Intern({ backLink, responseId }: Props) {
   }
 
   const { data, isLoading } = useQuery({
-    queryKey: ["internInfo", { id: responseId }],
+    queryKey: ["internInfo", { id: internId }],
     queryFn: () =>
-      fetchVacancyResponseInfo({
-        id: responseId ?? "",
+      fetchInternInfo({
+        id: internId ?? "",
       }),
   })
 
