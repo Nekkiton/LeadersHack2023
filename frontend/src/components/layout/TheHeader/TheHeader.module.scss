@@ -47,6 +47,10 @@
   width: 58px;
   height: 58px;
   object-fit: cover;
+
+  &.mobile {
+    display: none;
+  }
 }
 
 .userInfoContainer {
@@ -97,5 +101,11 @@
 
   .user {
     display: none;
+  }
+
+  .userImg.mobile {
+    display: block;
+    width: 45px;
+    height: 45px;
   }
 }

@@ -1,0 +1,121 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 34px;
+  position: fixed;
+  padding: 8px 16px 10px 16px;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 100%;
+  opacity: 0;
+  background: $white;
+  overflow: hidden;
+  transition: $transition;
+
+  &.active {
+    bottom: 0;
+    opacity: 1;
+  }
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.logoImg {
+  height: 45px;
+}
+
+.logoName {
+  @include paragraph-2;
+}
+
+.closeIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.user {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.userImg {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.userRating {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: $gray-3;
+}
+
+.userRatingIcon {
+  width: 16px;
+  height: 16px;
+  fill: $orange;
+
+  path {
+    stroke: $orange;
+  }
+}
+
+.links {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  position: relative;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: -31px;
+    height: 1px;
+    left: 0;
+    right: 0;
+    background: $gray-5;
+  }
+}
+
+.linksLink {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+}
+
+.linksLinkIcon {
+  width: 24px;
+  height: 24px;
+}
+
+.footer {
+  align-self: flex-start;
+  margin-top: auto;
+}
