@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import configuration from 'config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { InternalController } from './_internal/_internal.controller';
 
 @Module({
   imports: [
@@ -26,5 +27,6 @@ import { AuthModule } from './auth/auth.module';
       }),
     }),
   ],
+  controllers: [InternalController],
 })
 export class AppModule {}
