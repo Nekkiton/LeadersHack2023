@@ -16,16 +16,23 @@ import { InternalController } from './_internal/_internal.controller';
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
-      useFactory: (configService: ConfigService) => ({
-        type: 'postgres',
-        host: configService.get('database.host'),
-        port: configService.get('database.port'),
-        username: configService.get('database.username'),
-        password: configService.get('database.password'),
-        database: configService.get('database.database'),
-        autoLoadEntities: true,
-        logging: 'all',
-      }),
+      useFactory: (configService: ConfigService) => {
+        console.log(`TEST TEST: ${configService.get('database.host')}`);
+        console.log(`TEST TEST: ${configService.get('database.port')}`);
+        console.log(`TEST TEST: ${configService.get('database.username')}`);
+        console.log(`TEST TEST: ${configService.get('database.password')}`);
+        console.log(`TEST TEST: ${configService.get('database.database')}`);
+        return {
+          type: 'postgres',
+          host: configService.get('database.host'),
+          port: configService.get('database.port'),
+          username: configService.get('database.username'),
+          password: configService.get('database.password'),
+          database: configService.get('database.database'),
+          autoLoadEntities: true,
+          logging: 'all',
+        };
+      },
     }),
   ],
   controllers: [InternalController],

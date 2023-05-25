@@ -20,21 +20,12 @@ import { ConfigService } from '@nestjs/config';
 @Injectable()
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-    private configService: ConfigService,
-  ) {}
+  constructor(private authService: AuthService, private configService: ConfigService) {}
 
   @HttpCode(HttpStatus.OK)
   @Post('signIn')
-  async signIn(
-    @Body() signInDto: SignInDto,
-    @Res({ passthrough: true }) res: Response,
-  ) {
-    const token = await this.authService.signIn(
-      signInDto.username,
-      signInDto.password,
-    );
+  async signIn(@Body() signInDto: SignInDto, @Res({ passthrough: true }) res: Response) {
+    const token = await this.authService.signIn(signInDto.username, signInDto.password);
     /**
      * TODO:
      * 1. Set domain

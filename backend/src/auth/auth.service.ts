@@ -40,10 +40,7 @@ export class AuthService {
   }
 
   async create(username: string, password: string): Promise<User> {
-    const passwordHash = await hash(
-      password,
-      this.configService.get('jwt.saltRounds'),
-    );
+    const passwordHash = await hash(password, this.configService.get('jwt.saltRounds'));
     return this.usersService.create({ username, passwordHash });
   }
 }
