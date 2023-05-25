@@ -2,6 +2,7 @@ import { ReactNode } from "react"
 import Link from "next/link"
 import { useRouter } from "next/router"
 import Button from "components/base/controls/Button"
+import HomeIcon from "assets/icons/home.svg"
 import styles from "./MenuContainer.module.scss"
 
 interface MenuItem {
@@ -35,9 +36,18 @@ interface Props {
 }
 
 export default function MenuContainer({ items = [], children }: Props) {
+  const generalItem = {
+    link: "/",
+    text: "Главная",
+    icon: <HomeIcon />,
+  }
   return (
     <div className={styles.container}>
       <div className={styles.menu}>
+        <MenuItem item={generalItem} key={generalItem.link}>
+          {generalItem.icon && <span className={styles.linkIcon}>{generalItem.icon}</span>}
+          <span>{generalItem.text}</span>
+        </MenuItem>
         {items.map((item) => (
           <MenuItem item={item} key={item.text + item.link}>
             {item.icon && <span className={styles.linkIcon}>{item.icon}</span>}
