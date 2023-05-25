@@ -73,7 +73,7 @@ export default function Intern({ backLink, internId }: Props) {
       <Link href={backLink}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
-          <span>Вернуться к вакансии</span>
+          <span>Вернуться к стажерам</span>
         </Button>
       </Link>
       <div className={styles.header}>
