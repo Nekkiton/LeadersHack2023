@@ -1,0 +1,110 @@
+@import "assets/css/config";
+
+.container {
+  position: relative;
+}
+
+.iconContainer {
+  flex-shrink: 0;
+  position: relative;
+  width: 24px;
+  height: 24px;
+
+  &:after {
+    content: "";
+    position: absolute;
+    top: -2px;
+    right: 1px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $orange;
+  }
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  transition: $transition;
+
+  &:hover {
+    transform: scale(1.1);
+    cursor: pointer;
+  }
+}
+
+.backdrop {
+  position: fixed;
+  z-index: 200;
+
+  &.active {
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+}
+
+.popup {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: absolute;
+  top: calc(100% + 17px);
+  left: 50%;
+  width: 494px;
+  max-height: 0;
+  overflow: hidden;
+  background: $white;
+  opacity: 0;
+  z-index: 200;
+  border-radius: 8px;
+  box-shadow: 0px 0px 20px rgba(71, 91, 172, 0.25);
+  transform: translateX(-50%);
+  transition: $transition;
+
+  &.active {
+    padding: 16px;
+    max-height: 479px;
+    opacity: 1;
+  }
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.headerIcon {
+  width: 24px;
+  height: 24px;
+  transition: $transition;
+
+  &:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+}
+
+.notifications {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+}
+
+.notification {
+  padding: 0;
+  background: none;
+  border-radius: 0;
+
+  &:not(:last-child) {
+    padding-bottom: 15px;
+    border-bottom: 1px solid $gray-5;
+  }
+
+  &:not(:first-child) {
+    padding-top: 16px;
+  }
+}

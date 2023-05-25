@@ -3,6 +3,7 @@ import Link from "next/link"
 import Button from "components/base/controls/Button"
 import BurgerMenu from "components/base/controls/BurgerMenu"
 import MobileMenu from "components/layout/MobileMenu"
+import DesktopNotifications from "components/main/DesktopNotifications"
 import LoginIcon from "assets/icons/login.svg"
 import LogoutIcon from "assets/icons/logout.svg"
 import UserIcon from "assets/icons/user.svg"
@@ -31,7 +32,7 @@ export default function TheHeader() {
           </div>
         </Link>
         <div className={styles.user}>
-          <BellIcon />
+          <DesktopNotifications />
           {/* TODO: show if user is not authed */}
           {false ? (
             <Link href="/login">
