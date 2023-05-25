@@ -84,7 +84,7 @@ affinity: {}
 
 envPlain:
   - name: DATABASE_HOST
-    value: 10.0.0.29
+    value: rds.production-zone
 
 envSecrets:
   - name: DATABASE_USERNAME
