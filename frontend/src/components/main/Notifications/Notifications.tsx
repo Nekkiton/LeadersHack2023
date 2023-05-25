@@ -24,7 +24,7 @@ export default function Notifications() {
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
-        totalPages={10}
+        totalItems={500} // take from data response
       />
     </div>
   )

@@ -89,7 +89,7 @@ export default function Mentors({ noHeader, longSearchInput }: Props) {
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            totalPages={data?.totalPages ?? 1}
+            totalItems={data?.totalItems ?? 1}
           />
         </>
       )}

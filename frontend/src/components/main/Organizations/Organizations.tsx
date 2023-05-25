@@ -7,12 +7,15 @@ import PlusIcon from "assets/icons/plus.svg"
 import SearchIcon from "assets/icons/search.svg"
 import NothingIcon from "assets/icons/document-search.svg"
 import styles from "./Organizations.module.scss"
+import { useState } from "react"
 
 interface Props {
   link: string
 }
 
 export default function Vacancies({ link }: Props) {
+  const [currentPage, setCurrentPage] = useState(1)
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
@@ -46,7 +49,11 @@ export default function Vacancies({ link }: Props) {
             <OrganizationCard link="/curator/organizations" />
             <OrganizationCard link="/curator/organizations" />
           </div>
-          <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
+          <Pagination
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalItems={500} // take from data response
+          />
         </>
       )}
     </div>

@@ -55,7 +55,7 @@ export default function Interns({ link }: Props) {
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            totalPages={data?.totalPages ?? 1}
+            totalItems={data?.totalItems ?? 1}
           />
         </>
       )}

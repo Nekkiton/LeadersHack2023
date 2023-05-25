@@ -332,7 +332,7 @@ export default function Vacancies({ link, noHeader }: Props) {
                   <Pagination
                     currentPage={currentPage}
                     setCurrentPage={setCurrentPage}
-                    totalPages={data?.totalPages ?? 0}
+                    totalItems={data?.totalItems ?? 1}
                   />
                 </>
               )}
