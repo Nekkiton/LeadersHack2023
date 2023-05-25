@@ -1,6 +1,8 @@
+import { useState } from "react"
 import Button from "components/base/controls/Button"
-import styles from "./UserRating.module.scss"
+import FeedbacksModal from "components/base/FeedbacksModal"
 import StarIcon from "assets/icons/star.svg"
+import styles from "./UserRating.module.scss"
 
 interface Props {
   count: number
@@ -8,13 +10,18 @@ interface Props {
 }
 
 export default function UserRating({ count, averageRate }: Props) {
+  const [isModalShowed, setIsModalShowed] = useState(false)
+
   return (
     <div className={styles.container}>
       <div className={styles.rating}>
         <span>{averageRate}</span>
         <StarIcon className={styles.ratingIcon} />
       </div>
-      <Button type="text">отзывов: {count}</Button>
+      <Button type="text" onClick={() => setIsModalShowed(true)}>
+        отзывов: {count}
+      </Button>
+      <FeedbacksModal isShowed={isModalShowed} setIsShowed={setIsModalShowed} />
     </div>
   )
 }

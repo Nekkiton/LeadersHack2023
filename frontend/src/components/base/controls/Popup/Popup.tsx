@@ -8,6 +8,7 @@ interface Props {
   title: ReactNode
   children?: ReactNode
   onClose?: () => void
+  className?: string
 }
 
 export default function Popup({
@@ -16,6 +17,7 @@ export default function Popup({
   title,
   children,
   onClose,
+  className,
 }: Props) {
   const close = () => {
     setIsShowed(false)
@@ -23,7 +25,11 @@ export default function Popup({
   }
 
   return (
-    <div className={`${styles.container} ${isShowed ? styles.active : ""}`}>
+    <div
+      className={`${styles.container} ${
+        isShowed ? styles.active : ""
+      } ${className}`}
+    >
       <span className={styles.backdrop} onClick={close} />
       <div className={styles.popup}>
         <div className={styles.popupHeader}>
