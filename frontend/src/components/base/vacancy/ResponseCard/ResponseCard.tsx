@@ -2,13 +2,12 @@ import Link from "next/link"
 import UserRating from "components/base/user/UserRating"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import styles from "./ResponseCard.module.scss"
-import { ResponseData } from "data/fetchVacancyInfo"
 
 const userImg = "/images/user.svg"
 
 interface Props {
   link: string
-  responseInfo: ResponseData
+  responseInfo: any
 }
 
 export default function ResponseCard({ link, responseInfo }: Props) {

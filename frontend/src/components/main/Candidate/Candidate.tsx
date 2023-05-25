@@ -7,11 +7,12 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import { useQuery } from "@tanstack/react-query"
-import { fetchVacancyResponseInfo } from "data"
+import { fetchCandidateInfo } from "data"
 import styles from "./Candidate.module.scss"
 import StudentProfile from "components/main/StudentProfile"
 import StudentInfo from "components/main/StudentProfile/StudentInfo"
 import Timeline from "components/base/controls/Timeline"
+import { useRouter } from "next/router"
 
 interface Props {
   backLink: string
@@ -66,12 +67,13 @@ export default function Candidate({ backLink, responseId }: Props) {
     })
   }
 
-  // TODO: should get candidate info here, other props should be passed by parent component
+  const { query, asPath } = useRouter()
+
   const { data, isLoading } = useQuery({
-    queryKey: ["vacancyResponseInfo", { id: responseId }],
+    queryKey: ["fetchCandidateInfo", { id: query.id }],
     queryFn: () =>
-      fetchVacancyResponseInfo({
-        id: responseId ?? "",
+      fetchCandidateInfo({
+        id: query.id as string,
       }),
   })
 

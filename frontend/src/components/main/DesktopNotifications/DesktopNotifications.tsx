@@ -4,7 +4,11 @@ import TimesIcon from "assets/icons/times.svg"
 import BellIcon from "assets/icons/bell.svg"
 import styles from "./DesktopNotifications.module.scss"
 
-export default function DesktopNotifications() {
+interface Props {
+  notificationsCount: number
+}
+
+export default function DesktopNotifications({ notificationsCount }: Props) {
   const [isShowed, setIsShowed] = useState(false)
 
   // TODO: fetch data
@@ -18,7 +22,7 @@ export default function DesktopNotifications() {
   return (
     <div className={styles.container}>
       {/* TODO: active if there are new notifications */}
-      <div className={`${styles.iconContainer} ${styles.active}`}>
+      <div className={`${styles.iconContainer} ${!!notificationsCount ? styles.active : ""}`}>
         <BellIcon className={styles.icon} onClick={() => setIsShowed(true)} />
       </div>
       <span
@@ -27,7 +31,7 @@ export default function DesktopNotifications() {
       />
       <div className={`${styles.popup} ${isShowed ? styles.active : ""}`}>
         <div className={styles.header}>
-          <h4>Новых уведомлений: 2</h4>
+          <h4>Новых уведомлений: {notificationsCount}</h4>
           <TimesIcon
             className={styles.headerIcon}
             onClick={() => setIsShowed(false)}

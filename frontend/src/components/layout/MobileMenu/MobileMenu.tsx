@@ -12,16 +12,16 @@ import styles from "./MobileMenu.module.scss"
 interface Props {
   isShowed: boolean
   setIsShowed: (val: boolean) => void
+  user: any // user model here
 }
 
 const userImg = "/images/user.svg"
 const logoImg = "/images/logo.svg"
 
 // mobile menu for candidate or intern
-export default function MobileMenu({ isShowed, setIsShowed }: Props) {
-  const user = {
-    role: "intern",
-  }
+export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
+  
+  // user.role = "intern";
 
   return (
     <div className={`${styles.container} ${isShowed ? styles.active : ""}`}>
@@ -41,11 +41,11 @@ export default function MobileMenu({ isShowed, setIsShowed }: Props) {
       </div>
       <div className={styles.body}>
         <div className={styles.user}>
-          <img className={styles.userImg} src={userImg} />
+          <img className={styles.userImg} src={user.avatar || userImg} />
           <div>
-            <h6>Юлиана Митрофанова</h6>
+            <h6>{user.name} {user.surname}</h6>
             <div className={styles.userRating}>
-              <span>4,8</span>
+              <span>{user.rating}</span>
               <StarIcon className={styles.userRatingIcon} />
             </div>
           </div>
@@ -59,7 +59,7 @@ export default function MobileMenu({ isShowed, setIsShowed }: Props) {
           )}
           <Link className={styles.linksLink} href="/candidate/app">
             <OrderIcon className={styles.linksLinkIcon} />
-            <p>Заявка на стажировку 2023 — 2024</p>
+            <p>Заявка на стажировку</p>
           </Link>
           <Link className={styles.linksLink} href="/profile">
             <UserIcon className={styles.linksLinkIcon} />

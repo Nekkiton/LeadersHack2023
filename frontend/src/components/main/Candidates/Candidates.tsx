@@ -8,18 +8,32 @@ import Pagination from "components/base/navigation/Pagination"
 import UserQuestionIcon from "assets/icons/user-question.svg"
 import SearchIcon from "assets/icons/search.svg"
 import styles from "./Candidates.module.scss"
+import { useQuery } from "@tanstack/react-query"
+import { fetchCandidateList } from "data"
+import { Spin } from "antd"
 
 export default function Candidates() {
   const [query, setQuery] = useState("")
   const [statuses, setStatuses] = useState([])
   const [currentPage, setCurrentPage] = useState(0)
 
+  const { data, isLoading } = useQuery({
+    queryKey: ["candidateList", { query, page: currentPage }],
+    queryFn: () =>
+      fetchCandidateList({
+        search: query,
+        page: currentPage,
+      }),
+  })
+
+  if (isLoading) return <Spin />
+
   return (
     <div className={styles.container}>
       <div className={styles.header}>
         <h1 className={styles.title}>Кандидаты</h1>
       </div>
-      {false ? (
+      {!data ? (
         <div className={styles.nothing}>
           <UserQuestionIcon className={styles.nothingIcon} />
           <p>
@@ -79,23 +93,13 @@ export default function Candidates() {
             <Button type="text">количеству баллов</Button>
           </div>
           <div className={styles.candidates}>
-            <ResponseCard
-              link="/curator/candidates"
-              responseInfo={{
-                id: "101",
-                status: "new",
-                name: "Марина Высокова",
-                avatar: null,
-                age: 22,
-                score: 20,
-                address: "г. Москва",
-                education: "МГУ им. Ломоносова, выпуск 2023 г.",
-                reviews: {
-                  count: 24,
-                  averageRate: 4.7,
-                },
-              }}
-            />
+            {data.items.map((candidate) => (
+              <ResponseCard
+                key={candidate.id}
+                link={`/curator/candidates`}
+                responseInfo={candidate}
+              />
+            ))}
           </div>
           <Pagination
             currentPage={currentPage}

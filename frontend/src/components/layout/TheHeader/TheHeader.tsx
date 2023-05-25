@@ -7,9 +7,11 @@ import DesktopNotifications from "components/main/DesktopNotifications"
 import LoginIcon from "assets/icons/login.svg"
 import LogoutIcon from "assets/icons/logout.svg"
 import UserIcon from "assets/icons/user.svg"
-import BellIcon from "assets/icons/bell.svg"
 import ChevronDownIcon from "assets/icons/chevron-down.svg"
 import styles from "./TheHeader.module.scss"
+import { useQuery } from "@tanstack/react-query"
+import { fetchUserInfo } from "data"
+import { Spin } from "antd"
 
 const userImg = "/images/user.svg"
 const logoImg = "/images/logo.svg"
@@ -19,6 +21,13 @@ export default function TheHeader() {
   const [isMobileMenuShowed, setIsMobileMenuShowed] = useState(false)
 
   const logout = () => alert("Выходи пожалуйста")
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => fetchUserInfo(),
+  })
+
+  if (!data || isLoading) return <Spin />
 
   return (
     <header className={styles.header}>
@@ -32,7 +41,7 @@ export default function TheHeader() {
           </div>
         </Link>
         <div className={styles.user}>
-          <DesktopNotifications />
+          <DesktopNotifications notificationsCount={data.notificationsCount}/>
           {/* TODO: show if user is not authed */}
           {false ? (
             <Link href="/login">
@@ -62,11 +71,11 @@ export default function TheHeader() {
               onChange={setIsMenuShowed}
             >
               <div className={styles.userProfile}>
-                <img className={styles.userImg} src={userImg} />
+                <img className={styles.userImg} src={data.avatar || userImg} />
                 <div className={styles.userInfoContainer}>
                   <div className={styles.userInfo}>
-                    <span className={styles.userName}>Евгений К.</span>
-                    <span className={styles.userRole}>Кадровый специалист</span>
+                    <span className={styles.userName}>{data.name} {data.surname?.charAt(0)}.</span>
+                    <span className={styles.userRole}>{data.role}</span>
                   </div>
                   <ChevronDownIcon
                     className={`${styles.userMenuIcon} ${
@@ -88,7 +97,7 @@ export default function TheHeader() {
         ) : (
           <img
             className={`${styles.userImg} ${styles.mobile}`}
-            src={userImg}
+            src={data.avatar || userImg}
             onClick={() => setIsMobileMenuShowed(true)}
           />
         )}
@@ -96,6 +105,7 @@ export default function TheHeader() {
       <MobileMenu
         isShowed={isMobileMenuShowed}
         setIsShowed={setIsMobileMenuShowed}
+        user={data}
       />
     </header>
   )
