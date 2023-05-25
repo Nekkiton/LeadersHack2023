@@ -33,9 +33,9 @@ const userImg = "/images/user.svg"
 
 export default function Vacancy({ backLink, link }: Props) {
   const user = {
-    role: "staff",
+    //role: "staff",
     //role: "mentor",
-    //role: "intern",
+    role: "intern",
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false)

@@ -28,6 +28,8 @@
 
 .label {
   @include paragraph-3;
+
+  text-overflow: ellipsis;
 }
 
 .labelHint {

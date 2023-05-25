@@ -3,7 +3,7 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
   width: 100%;
 }
 
@@ -29,23 +29,51 @@
   color: $gray-3;
 }
 
-.form {
-  @include full-width;
+.main {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.hint {
+  @include paragraph-2;
 
   display: flex;
   flex-direction: column;
-  flex-grow: 1;
-  gap: 32px;
-  margin-bottom: -24px;
-  padding: 16px 16px 24px;
+  flex-shrink: 1.3;
+  gap: 8px;
+  padding: 16px;
+  width: 100%;
+  border-radius: 8px;
   background: $white;
-  border-radius: 20px 20px 0 0;
+  color: $gray-3;
+}
+
+.hintIcon {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+
+  path: {
+    stroke: $gray-3;
+  }
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 24px;
+  padding: 16px;
+  width: 100%;
+  background: $white;
+  border-radius: 8px;
 }
 
 .formStep {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
 
   &:not(.active) {
     display: none;
@@ -55,11 +83,20 @@
 .formStepBlock {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 16px;
 }
 
 .formStepBlockTitle {
-  @include heading-7;
+  @include heading-3;
+}
+
+.formHFields {
+  display: flex;
+  gap: 16px;
+}
+
+.formField {
+  width: 100%;
 }
 
 .formImgContainer {
@@ -69,8 +106,8 @@
 }
 
 .formImg {
-  width: 128px;
-  height: 128px;
+  width: 164px;
+  height: 164px;
   border-radius: 50%;
   object-fit: cover;
 }
@@ -91,8 +128,8 @@
 }
 
 .formControl {
-  justify-content: center;
-  width: 100%;
+  //justify-content: center;
+  //width: 100%;
 }
 
 .finished {
@@ -100,7 +137,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 32px;
+  gap: 16px;
+  max-width: 400px;
+  margin: 0 auto;
   text-align: center;
 }
 
@@ -113,10 +152,66 @@
   }
 }
 
+.finishedTextContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
 .finishedText {
   @include paragraph-2;
 }
 
 .finishedBtn {
   width: 100%;
+}
+
+@include tablet {
+  .main {
+    flex-direction: column-reverse;
+    gap: 16px;
+  }
+}
+
+@include mobile {
+  .hint {
+    flex-direction: row;
+    font-size: 16px;
+  }
+
+  .form {
+    @include full-width;
+    @include full-bottom;
+
+    gap: 32px;
+    padding: 16px 16px 24px;
+    border-radius: 20px 20px 0 0;
+    width: 100vw;
+  }
+
+  .formStep {
+    gap: 32px;
+  }
+
+  .formStepBlock {
+    gap: 24px;
+  }
+
+  .formHFields {
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .formImg {
+    width: 128px;
+    height: 128px;
+  }
+
+  .formControl {
+    width: 100%;
+  }
+
+  .finished {
+    gap: 32px;
+  }
 }
