@@ -100,23 +100,20 @@ export default function Intern({ backLink, internId }: Props) {
         <StudentProfile profile={data} />
         <div className={`${styles.card} ${styles.complexCard}`}>
           <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Статус отклика</p>
+            <p className={styles.cardTitle}>Статус</p>
             <ResponseStatus status={data.status} />
           </div>
-          <div className={styles.statusComment}>
-            <p className={styles.statusCommentTitle}>Причина отклонения</p>
-            <p>{data.rejectionReason}</p>
+          <div className={styles.complexCardBlock}>
+            <p className={styles.cardTitle}>Последнее место стажировки</p>
+            <div>{}</div>
           </div>
           <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Тестовое задание</p>
-            <File name={data.testTask.fileName} size={data.testTask.fileSize} />
+            <p className={styles.cardTitle}>Набрано баллов</p>
+            <div>{data.score}</div>
           </div>
-          <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Сопроводительное письмо</p>
-            <div>{data.coveringLetter}</div>
-          </div>
-          {/* TODO: add component */}
-          <div>*еще баллы*</div>
+          {/* TODO: add section in accordance with Figma
+            https://www.figma.com/file/VMVVobtgBWqyjIvENBvTCO/%D0%9B%D0%A6%D0%A2-23%2F16?type=design&node-id=5526%3A31653&t=gNGKlJ35OxQRDtPf-1
+          */}
         </div>
       </div>
     </div>

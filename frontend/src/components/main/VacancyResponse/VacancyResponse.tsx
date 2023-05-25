@@ -105,10 +105,6 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
             <p className={styles.cardTitle}>Статус отклика</p>
             <ResponseStatus status={data.status} />
           </div>
-          <div className={styles.statusComment}>
-            <p className={styles.statusCommentTitle}>Причина отклонения</p>
-            <p>{data.rejectionReason}</p>
-          </div>
           <div className={styles.complexCardBlock}>
             <p className={styles.cardTitle}>Тестовое задание</p>
             <File name={data.testTask.fileName} size={data.testTask.fileSize} />
@@ -117,8 +113,13 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
             <p className={styles.cardTitle}>Сопроводительное письмо</p>
             <div>{data.coveringLetter}</div>
           </div>
-          {/* TODO: add component */}
-          <div>*еще баллы*</div>
+          {/* TODO: add section in accordance with Figma
+          https://www.figma.com/file/VMVVobtgBWqyjIvENBvTCO/%D0%9B%D0%A6%D0%A2-23%2F16?type=design&node-id=5516%3A18915&t=gNGKlJ35OxQRDtPf-1
+          */}
+          <div className={styles.complexCardBlock}>
+            <p className={styles.cardTitle}>Набрано баллов</p>
+            <div>{}</div>
+          </div>
         </div>
       </div>
     </div>

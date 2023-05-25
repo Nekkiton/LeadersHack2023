@@ -66,6 +66,7 @@ export default function Candidate({ backLink, responseId }: Props) {
     })
   }
 
+  // TODO: should get candidate info here, other props should be passed by parent component
   const { data, isLoading } = useQuery({
     queryKey: ["vacancyResponseInfo", { id: responseId }],
     queryFn: () =>
@@ -86,7 +87,7 @@ export default function Candidate({ backLink, responseId }: Props) {
       <Link href={backLink}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
-          <span>Вернуться к вакансии</span>
+          <span>Вернуться к кандидатам</span>
         </Button>
       </Link>
       <div className={styles.header}>
@@ -121,15 +122,11 @@ export default function Candidate({ backLink, responseId }: Props) {
             <p>{data.rejectionReason}</p>
           </div>
           <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Тестовое задание</p>
-            <File name={data.testTask.fileName} size={data.testTask.fileSize} />
+            <p className={styles.cardTitle}>Набрано баллов</p>
+            <div>{data.score}</div>
           </div>
-          <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Сопроводительное письмо</p>
-            <div>{data.coveringLetter}</div>
-          </div>
-          {/* TODO: add component */}
-          <div>*еще баллы*</div>
+          {/* TODO: add section in accordance with Figma
+            https://www.figma.com/file/VMVVobtgBWqyjIvENBvTCO/%D0%9B%D0%A6%D0%A2-23%2F16?type=design&node-id=5602%3A14124&t=gNGKlJ35OxQRDtPf-1          */}
         </div>
       </div>
     </div>
