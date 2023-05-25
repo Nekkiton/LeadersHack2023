@@ -1,0 +1,39 @@
+@import "assets/css/config";
+
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  background: $white;
+}
+
+.date {
+  @include caption-1;
+
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: $gray-3;
+}
+
+.dateMark {
+  display: none;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: $orange;
+
+  .card.new & {
+    display: block;
+  }
+}
+
+.title {
+  @include heading-7;
+}
+
+.content {
+  @include paragraph-3;
+}
