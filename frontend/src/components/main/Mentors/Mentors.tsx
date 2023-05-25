@@ -13,12 +13,11 @@ import { fetchMentorList } from "data"
 import { Spin } from "antd"
 
 interface Props {
-  link: string
   noHeader?: boolean
   longSearchInput?: boolean
 }
 
-export default function Mentors({ link, noHeader, longSearchInput }: Props) {
+export default function Mentors({ noHeader, longSearchInput }: Props) {
   const [query, setQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -84,7 +83,7 @@ export default function Mentors({ link, noHeader, longSearchInput }: Props) {
           <div className={styles.mentors}>
             {/* TODO: add mentor page */}
             {data?.items.map((mentor) => (
-              <MentorCard link={link} key={mentor.id} mentorInfo={mentor} />
+              <MentorCard key={mentor.id} mentorInfo={mentor} />
             ))}
           </div>
           <Pagination

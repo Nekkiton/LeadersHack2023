@@ -1,5 +1,4 @@
 import { useState } from "react"
-import { useRouter } from "next/router"
 import { notification } from "antd"
 import UserRating from "components/base/user/UserRating"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
@@ -12,15 +11,12 @@ import styles from "./MentorCard.module.scss"
 import { MentorData } from "data/fetchMentorList"
 
 interface Props {
-  link: string
   mentorInfo: MentorData
 }
 
 const userImg = "/images/user.svg"
 
-export default function UserCard({ link, mentorInfo }: Props) {
-  const router = useRouter()
-
+export default function UserCard({ mentorInfo }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleModal = () => setIsModalOpen((prev) => !prev)
 
@@ -38,8 +34,6 @@ export default function UserCard({ link, mentorInfo }: Props) {
     })
   }
 
-  const goToMentor = () => router.push(`${link}/1911`)
-
   return (
     <>
       <Modal
@@ -49,7 +43,7 @@ export default function UserCard({ link, mentorInfo }: Props) {
         onOk={deleteMentor}
         okText="Удалить"
       />
-      <div className={styles.card} onClick={goToMentor}>
+      <div className={styles.card}>
         <div className={styles.cardBlock}>
           <ResponseStatus className={styles.cardStatus} status="new" />
           <div className={styles.cardUser}>
