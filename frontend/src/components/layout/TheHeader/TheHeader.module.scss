@@ -89,6 +89,10 @@
   }
 }
 
+.mobileBtn {
+  display: none;
+}
+
 @include mobile {
   .header {
     padding: 8px 0;
@@ -107,5 +111,9 @@
     display: block;
     width: 45px;
     height: 45px;
+  }
+
+  .mobileBtn {
+    display: flex;
   }
 }

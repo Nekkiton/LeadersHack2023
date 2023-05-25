@@ -32,11 +32,14 @@ export default function TheHeader() {
         </Link>
         <div className={styles.user}>
           <BellIcon />
+          {/* TODO: show if user is not authed */}
           {false ? (
-            <Button>
-              <span> Войти</span>
-              <LoginIcon className="icon" />
-            </Button>
+            <Link href="/login">
+              <Button>
+                <span> Войти</span>
+                <LoginIcon className="icon" />
+              </Button>
+            </Link>
           ) : (
             <BurgerMenu
               items={[
@@ -74,11 +77,20 @@ export default function TheHeader() {
             </BurgerMenu>
           )}
         </div>
-        <img
-          className={`${styles.userImg} ${styles.mobile}`}
-          src={userImg}
-          onClick={() => setIsMobileMenuShowed(true)}
-        />
+        {/* TODO: if user is not authed */}
+        {false ? (
+          <Link className={styles.mobileBtn} href="/login">
+            <Button>
+              <LoginIcon className="icon" />
+            </Button>
+          </Link>
+        ) : (
+          <img
+            className={`${styles.userImg} ${styles.mobile}`}
+            src={userImg}
+            onClick={() => setIsMobileMenuShowed(true)}
+          />
+        )}
       </div>
       <MobileMenu
         isShowed={isMobileMenuShowed}
