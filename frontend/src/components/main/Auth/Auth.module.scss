@@ -1,0 +1,130 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  gap: 30px;
+  height: 100%;
+  width: 100%;
+}
+
+.image {
+  width: 100%;
+  min-width: 0;
+  flex-shrink: 1000;
+}
+
+.card {
+  flex-shrink: 0;
+  padding: 24px 16px;
+  width: 100%;
+  max-width: 375px;
+  background: $white;
+  border-radius: 8px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
+}
+
+.formHeader {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.formHeaderMain {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.formHeaderHint {
+  @include paragraph-3;
+  color: $gray-3;
+}
+
+.formTitle {
+  text-transform: uppercase;
+}
+
+.formCenterLink {
+  align-self: center;
+}
+
+.formFields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formPasswordContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formForgotPassword {
+  align-self: flex-end;
+}
+
+.formCheckbox {
+  @include caption-1;
+}
+
+.formLink {
+  color: $blue;
+}
+
+.formHint {
+  @include caption-1;
+  color: $gray-3;
+}
+
+.message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  text-align: center;
+}
+
+.messageIcon {
+  width: 150px;
+  height: 150px;
+
+  path {
+    stroke: $gray-5;
+  }
+}
+
+.messageText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.messageTextDescription {
+  @include paragraph-2;
+}
+
+@include tablet {
+  .container {
+    //align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: auto;
+  }
+
+  .image {
+    display: none;
+  }
+
+  .card {
+    padding: 0;
+    background: 0;
+  }
+}
