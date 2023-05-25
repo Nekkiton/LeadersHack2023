@@ -27,12 +27,12 @@ jobs:
     runs-on: self-hosted
     needs: files-changed
     if: needs.files-changed.outputs.frontend == 'true'
-    uses: ./.github/workflows/build-frontend.yml
+    uses: ./.github/workflows/build-frontend.yaml
 
   deploy-frontend:
     runs-on: self-hosted
     needs: build-frontend
-    uses: ./.github/workflows/deploy.yml
+    uses: ./.github/workflows/deploy.yaml
     with:
       dockerfile: frontend/deployment/Dockerfile
       context: frontend
@@ -43,12 +43,12 @@ jobs:
     runs-on: self-hosted
     needs: files-changed
     if: needs.files-changed.outputs.backend == 'true'
-    uses: ./.github/workflows/build-backend.yml
+    uses: ./.github/workflows/build-backend.yaml
 
   deploy-backend:
     runs-on: self-hosted
     needs: build-backend
-    uses: ./.github/workflows/deploy.yml
+    uses: ./.github/workflows/deploy.yaml
     with:
       dockerfile: backend/deployment/Dockerfile
       context: backend
