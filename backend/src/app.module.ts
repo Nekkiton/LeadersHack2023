@@ -24,6 +24,7 @@ import { InternalController } from './_internal/_internal.controller';
         password: configService.get('database.password'),
         database: configService.get('database.database'),
         autoLoadEntities: true,
+        logging: 'all',
       }),
     }),
   ],
