@@ -22,31 +22,35 @@ jobs:
               - 'backend/**'
             frontend:
               - 'frontend/**'
-  deploy-frontend:
+
+  build-frontend:
     runs-on: self-hosted
     needs: files-changed
     if: needs.files-changed.outputs.frontend == 'true'
-    steps:
-      - name: Build
-        uses: ./.github/workflows/build-frontend.yml
-      - name: Deploy
-        uses: ./.github/workflows/deploy.yml
-        with:
-          dockerfile: frontend/deployment/Dockerfile
-          context: frontend
-          image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/frontend
-        secrets: inherit
-  deploy-backend:
+    uses: ./.github/workflows/build-frontend.yml
+
+  deploy-frontend:
+    runs-on: self-hosted
+    needs: build-frontend
+    uses: ./.github/workflows/deploy.yml
+    with:
+      dockerfile: frontend/deployment/Dockerfile
+      context: frontend
+      image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/frontend
+    secrets: inherit
+  
+  build-backend:
     runs-on: self-hosted
     needs: files-changed
     if: needs.files-changed.outputs.backend == 'true'
-    steps:
-      - name: Build
-        uses: ./.github/workflows/build-backend.yml
-      - name: Deploy
-        uses: ./.github/workflows/deploy.yml
-        with:
-          dockerfile: backend/deployment/Dockerfile
-          context: backend
-          image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/backend
-        secrets: inherit
+    uses: ./.github/workflows/build-backend.yml
+
+  deploy-backend:
+    runs-on: self-hosted
+    needs: build-backend
+    uses: ./.github/workflows/deploy.yml
+    with:
+      dockerfile: backend/deployment/Dockerfile
+      context: backend
+      image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/backend
+    secrets: inherit
