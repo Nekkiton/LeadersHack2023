@@ -13,9 +13,11 @@ jobs:
       backend: ${{ steps.changes.outputs.backend }}
       frontend: ${{ steps.changes.outputs.frontend }}
     steps:
+      - name: Checkout
+        uses: actions/checkout@v3
       - name: Check for folder file changes
         uses: dorny/paths-filter@v2
-        id: filter
+        id: changes
         with:
           filters: |
             backend:
@@ -25,25 +27,25 @@ jobs:
   build-frontend:
     needs: files-changed
     if: needs.files-changed.outputs.frontend == 'true'
-    uses: ./.github/workflows/build-frontend.yaml@main
+    uses: ./.github/workflows/build-frontend.yaml
 
   deploy-frontend:
     needs: build-frontend
-    uses: ./.github/workflows/deploy.yaml@main
+    uses: ./.github/workflows/deploy.yaml
     with:
       dockerfile: frontend/deployment/Dockerfile
       context: frontend
-      image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/frontend@main
+      image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/frontend
     secrets: inherit
 
   build-backend:
     needs: files-changed
     if: needs.files-changed.outputs.backend == 'true'
-    uses: ./.github/workflows/build-backend.yaml@main
+    uses: ./.github/workflows/build-backend.yaml
 
   deploy-backend:
     needs: build-backend
-    uses: ./.github/workflows/deploy.yaml@main
+    uses: ./.github/workflows/deploy.yaml
     with:
       dockerfile: backend/deployment/Dockerfile
       context: backend
