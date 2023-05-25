@@ -26,7 +26,7 @@ jobs:
     runs-on: self-hosted
     needs: files-changed
     if: needs.files-changed.outputs.frontend == 'true'
-    uses: Nekkiton/LeadersHack2023/.github/workflows/build-frontend.yaml
+    uses: Nekkiton/LeadersHack2023/.github/workflows/build-frontend.yaml@main
 
   deploy-frontend:
     runs-on: self-hosted
@@ -35,19 +35,19 @@ jobs:
     with:
       dockerfile: frontend/deployment/Dockerfile
       context: frontend
-      image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/frontend
+      image: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/frontend@main
     secrets: inherit
 
   build-backend:
     runs-on: self-hosted
     needs: files-changed
     if: needs.files-changed.outputs.backend == 'true'
-    uses: Nekkiton/LeadersHack2023/.github/workflows/build-backend.yaml
+    uses: Nekkiton/LeadersHack2023/.github/workflows/build-backend.yaml@main
 
   deploy-backend:
     runs-on: self-hosted
     needs: build-backend
-    uses: Nekkiton/LeadersHack2023/.github/workflows/deploy.yaml
+    uses: Nekkiton/LeadersHack2023/.github/workflows/deploy.yaml@main
     with:
       dockerfile: backend/deployment/Dockerfile
       context: backend
