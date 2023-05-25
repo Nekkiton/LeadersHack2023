@@ -6,6 +6,7 @@ import DocumentIcon from "assets/icons/document.svg"
 import UserIcon from "assets/icons/user.svg"
 import BellIcon from "assets/icons/bell.svg"
 import BoxIcon from "assets/icons/box.svg"
+import OrderIcon from "assets/icons/order.svg"
 import styles from "./MobileMenu.module.scss"
 
 interface Props {
@@ -16,8 +17,12 @@ interface Props {
 const userImg = "/images/user.svg"
 const logoImg = "/images/logo.svg"
 
-// mobile menu for candidate
+// mobile menu for candidate or intern
 export default function MobileMenu({ isShowed, setIsShowed }: Props) {
+  const user = {
+    role: "intern",
+  }
+
   return (
     <div className={`${styles.container} ${isShowed ? styles.active : ""}`}>
       <div className={styles.header}>
@@ -46,8 +51,14 @@ export default function MobileMenu({ isShowed, setIsShowed }: Props) {
           </div>
         </div>
         <div className={styles.links}>
+          {user.role === "intern" && (
+            <Link className={styles.linksLink} href="/candidate/vacancies">
+              <DocumentIcon className={styles.linksLinkIcon} />
+              <p>Вакансии</p>
+            </Link>
+          )}
           <Link className={styles.linksLink} href="/candidate/app">
-            <DocumentIcon className={styles.linksLinkIcon} />
+            <OrderIcon className={styles.linksLinkIcon} />
             <p>Заявка на стажировку 2023 — 2024</p>
           </Link>
           <Link className={styles.linksLink} href="/profile">

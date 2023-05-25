@@ -27,3 +27,27 @@
     opacity: 1;
   }
 }
+
+@include mobile {
+  .container {
+    @include full-width;
+    @include full-bottom;
+
+    padding: 0 !important;
+  }
+
+  .map {
+    border-radius: 0;
+    border: none;
+  }
+
+  .card {
+    bottom: 0;
+    left: 0;
+    top: auto;
+    width: 100%;
+    border-radius: 24px 24px 0 0 !important;
+    transform: translateY(100%);
+    opacity: 1;
+  }
+}
