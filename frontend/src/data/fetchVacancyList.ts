@@ -46,7 +46,7 @@ interface QueryParams {
 interface QueryResponse {
   items: VacancyData[]
   page: number
-  totalPages: number
+  totalItems: number
 }
 
 export const fetchVacancyList = async ({ page }: QueryParams) => {
@@ -55,7 +55,7 @@ export const fetchVacancyList = async ({ page }: QueryParams) => {
       ({
         items: testData,
         page: 5,
-        totalPages: 10,
+        totalItems: 500,
       } as QueryResponse)
   )
 }

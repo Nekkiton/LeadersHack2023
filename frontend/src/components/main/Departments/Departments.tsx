@@ -5,12 +5,15 @@ import Pagination from "components/base/navigation/Pagination"
 import PlusIcon from "assets/icons/plus.svg"
 import SearchIcon from "assets/icons/search.svg"
 import styles from "./Departments.module.scss"
+import { useState } from "react"
 
 interface Props {
   link: string
 }
 
 export default function Departments({ link }: Props) {
+  const [currentPage, setCurrentPage] = useState(1)
+
   return (
     <div className={styles.container}>
       <div className={styles.filters}>
@@ -28,7 +31,11 @@ export default function Departments({ link }: Props) {
         <DepartmentCard link={link} />
         <DepartmentCard link={link} />
       </div>
-      <Pagination currentPage={1} totalPages={10} setCurrentPage={() => ''}/>
+      <Pagination
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        totalItems={500} // take from data response
+      />
     </div>
   )
 }
