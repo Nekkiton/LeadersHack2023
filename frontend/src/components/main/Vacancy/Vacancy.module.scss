@@ -82,6 +82,7 @@
 .hCards {
   display: flex;
   gap: 18px;
+  width: 100%;
 }
 
 .card {
@@ -160,4 +161,51 @@
 
 .statusCommentText {
   @include paragraph-2;
+}
+
+.bottomCard {
+  @include full-width;
+  @include full-bottom;
+
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  bottom: 0;
+  background: $white;
+  box-shadow: 0px 0px 20px rgba(71, 91, 172, 0.25);
+  border-radius: 24px 24px 0 0;
+}
+
+.bottomCardStatus {
+  @include paragraph-2;
+
+  align-self: center;
+}
+
+.responsePopupForm {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+
+@include mobile {
+  .organization {
+    gap: 8px;
+  }
+
+  .organizationInfo {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .rightCard {
+    display: none;
+  }
+
+  .hCards:not(.mobileHCards) {
+    flex-direction: column;
+  }
 }
