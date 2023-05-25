@@ -8,6 +8,7 @@ import Pagination from "components/base/navigation/Pagination"
 import VacancyStatus from "components/base/vacancy/Status"
 import SmallSwitch from "components/base/controls/SmallSwitch"
 import Map from "components/base/Map"
+import MobileFilters from "components/base/MobileFilters"
 import PlusIcon from "assets/icons/plus.svg"
 import SearchIcon from "assets/icons/search.svg"
 import NothingIcon from "assets/icons/document-search.svg"
@@ -46,6 +47,15 @@ export default function Vacancies({ link, noHeader }: Props) {
     { name: "Second", id: "2" },
   ]
 
+  const allDirections = [
+    { name: "IT-город", id: 1 },
+    { name: "Медийный город", id: 2 },
+    { name: "Социальный город", id: 3 },
+    { name: "HR-город", id: 4 },
+    { name: "Комфортная городская среда", id: 5 },
+    { name: "Городская экономика", id: 6 },
+  ]
+
   const getNothingText = (role: string) => {
     if (role === "staff") {
       return (
@@ -82,6 +92,12 @@ export default function Vacancies({ link, noHeader }: Props) {
   const [mentors, setMentors] = useState([])
   const [organizations, setOrganizations] = useState([])
   const [currentPage, setCurrentPage] = useState(5)
+  const [filters, setFilters] = useState<any>({
+    statuses: [],
+    organizations: [],
+    directions: [],
+    mentors: [],
+  })
 
   // TODO
   // if user is mentor - filter vacancies by mentor
@@ -210,6 +226,66 @@ export default function Vacancies({ link, noHeader }: Props) {
                 />
               )}
             </div>
+            <MobileFilters
+              value={filters}
+              onChange={setFilters}
+              items={[
+                {
+                  key: "statuses",
+                  title: "Статус вакансии",
+                  values: [
+                    {
+                      key: "active",
+                      content: <VacancyStatus status="active" />,
+                    },
+                    {
+                      key: "responsed",
+                      content: <VacancyStatus status="responsed" />,
+                    },
+                    {
+                      key: "archived",
+                      content: <VacancyStatus status="archived" />,
+                    },
+                  ],
+                },
+                {
+                  key: "organizations",
+                  title: "Организация",
+                  values: allOrganizations.map((i) => ({
+                    key: i.id,
+                    content: i.name,
+                  })),
+                  search: true,
+                },
+                {
+                  key: "directions",
+                  title: "Направление стажировки",
+                  values: allDirections.map((i) => ({
+                    key: i.id,
+                    content: i.name,
+                  })),
+                },
+                {
+                  key: "mentors",
+                  title: "Наставник",
+                  values: allMentors.map((i) => ({
+                    key: i.id,
+                    content: (
+                      <div className={styles.filtersMentor}>
+                        <img
+                          className={styles.filtersMentorImg}
+                          src={i.image || userImg}
+                        />
+                        <p className={styles.filtersMentorName}>{i.name}</p>
+                      </div>
+                    ),
+                    searchCheck: (query) =>
+                      i.name.toLowerCase().includes(query),
+                  })),
+                  search: true,
+                },
+              ]}
+            />
             {false &&
               (query ||
                 !!statuses.length ||

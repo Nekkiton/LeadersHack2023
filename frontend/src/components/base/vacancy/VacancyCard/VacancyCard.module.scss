@@ -93,3 +93,14 @@
 
   color: $green;
 }
+
+@include mobile {
+  .vacancyHeader {
+    justify-content: space-between;
+  }
+
+  .vacancyBody {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}

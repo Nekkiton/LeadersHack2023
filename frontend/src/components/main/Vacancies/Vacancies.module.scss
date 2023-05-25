@@ -87,3 +87,27 @@
 .viewSwitch {
   margin-left: auto;
 }
+
+@include mobile {
+  .container {
+    flex-grow: 1;
+    width: 100%;
+    height: auto;
+  }
+
+  .filters {
+    gap: 16px;
+  }
+
+  .filtersFields {
+    width: 100%;
+  }
+
+  .filtersInput {
+    width: 100%;
+  }
+
+  .filtersSelect {
+    display: none;
+  }
+}

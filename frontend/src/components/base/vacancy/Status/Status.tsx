@@ -39,6 +39,9 @@ export default function Status({ status, className }: Props) {
   } else if (status === "internship") {
     text = "Отобран на стажировку"
     color = "green"
+  } else if (status === "responsed") {
+    text = "Я откликнулся"
+    color = "purpure"
   }
 
   return (
