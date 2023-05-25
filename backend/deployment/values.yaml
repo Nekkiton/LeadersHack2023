@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/backend
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
