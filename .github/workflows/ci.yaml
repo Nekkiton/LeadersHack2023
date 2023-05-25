@@ -105,10 +105,10 @@ jobs:
     runs-on: self-hosted
     env:
       HOME: "/root"
-    needs: files-changed
-    if: needs.files-changed.outputs.${{ matrix.context }} == 'true'
     needs:
+      - files-changed
       - build-${{ matrix.context }}
+    if: needs.files-changed.outputs.${{ matrix.context }} == 'true'
     strategy:
         fail-fast: false
         matrix:
