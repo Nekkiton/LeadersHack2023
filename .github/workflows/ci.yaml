@@ -7,8 +7,25 @@ on:
       - deployment
 
 jobs:
+  files-changed:
+    runs-on: self-hosted
+    outputs:
+      backend: ${{ steps.changes.outputs.backend }}
+      frontend: ${{ steps.changes.outputs.frontend }}
+    steps:
+      - name: Check for folder file changes
+        uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+            frontend:
+              - 'frontend/**'
   build-frontend:
     runs-on: self-hosted
+    needs: files-changed
+    if: needs.files-changed.outputs.frontend == 'true'
     defaults:
       run:
         shell: bash
@@ -45,6 +62,8 @@ jobs:
         run: yarn build
   build-backend:
     runs-on: self-hosted
+    needs: files-changed
+    if: needs.files-changed.outputs.frontend == 'true'
     defaults:
       run:
         shell: bash
@@ -86,9 +105,10 @@ jobs:
     runs-on: self-hosted
     env:
       HOME: "/root"
+    needs: files-changed
+    if: needs.files-changed.outputs.${{ matrix.context }} == 'true'
     needs:
-      - build-frontend
-      - build-backend
+      - build-${{ matrix.context }}
     strategy:
         fail-fast: false
         matrix:
