@@ -4,7 +4,7 @@ import Vacancies from "components/main/Vacancies"
 export default function VacanciesPage() {
   return (
     <MenuContainer role="intern">
-      <Vacancies link="/candidate/vacancies" />
+      <Vacancies link="/intern/vacancies" />
     </MenuContainer>
   )
 }

@@ -1,0 +1,51 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+  gap: 24px;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.nothing {
+  @include paragraph-2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 32px;
+  max-width: 294px;
+  align-self: center;
+  text-align: center;
+}
+
+.nothingIcon {
+  width: 150px;
+  height: 150px;
+
+  path {
+    stroke: $gray-5;
+  }
+}
+
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.filtersInput {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

@@ -77,6 +77,7 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
+  width: 100%;
 }
 
 .hCards {
@@ -167,7 +168,7 @@
   @include full-width;
   @include full-bottom;
 
-  display: flex;
+  display: none;
   flex-direction: column;
   position: sticky;
   padding-top: 16px;
@@ -190,6 +191,40 @@
   gap: inherit;
 }
 
+.mobileStatus {
+  display: none !important;
+}
+
+.complexCard {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.complexCardBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@include tablet {
+  .cards {
+    flex-direction: column-reverse;
+  }
+
+  .card.desktop {
+    display: none;
+  }
+
+  .hCards:not(.mobileHCards) {
+    flex-direction: column;
+  }
+
+  .mobileStatus {
+    display: flex !important;
+  }
+}
+
 @include mobile {
   .organization {
     gap: 8px;
@@ -201,11 +236,11 @@
     gap: 8px;
   }
 
-  .rightCard {
+  .headerControls {
     display: none;
   }
 
-  .hCards:not(.mobileHCards) {
-    flex-direction: column;
+  .bottomCard {
+    display: flex;
   }
 }

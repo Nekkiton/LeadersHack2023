@@ -141,8 +141,18 @@ export default function Vacancy({ backLink, link }: Props) {
                 )}
               </>
             )}
+            {/* TODO: also if intern does not have response to this vacancy */}
+            {/* TODO: add action (modal) */}
+            {user.role === "intern" && data?.status === "active" && (
+              <Button>Отлкикнуться</Button>
+            )}
+            {/* TODO: add action, show when internship is finished */}
+            {user.role === "intern" && <Button>Оценить стажировку</Button>}
           </div>
         </div>
+        {user.role === "intern" && (
+          <Status className={styles.mobileStatus} status={data?.status} />
+        )}
         <div className={styles.organization}>
           <p className={styles.organizationName}>{data.company.name}</p>
           <div className={styles.organizationInfo}>
@@ -159,30 +169,6 @@ export default function Vacancy({ backLink, link }: Props) {
         <div className={styles.cards}>
           <div className={styles.responsesContainer}>
             <div className={styles.vCards}>
-              {/* TODO: show if candidate response status is rejected; fetch data */}
-              {user.role === "intern" && (
-                <div className={`${styles.card} ${styles.statusComment}`}>
-                  <p className={styles.cardTitle}>Причина отклонения</p>
-                  <p>
-                    К сожалению, пока что мы не можем принять вас на стажировку.
-                    Попробуйте в следующем году
-                  </p>
-                </div>
-              )}
-              {/* TODO: show if candidate response status is accepted; fetch data */}
-              {user.role === "intern" && (
-                <div className={styles.card}>
-                  <p className={styles.cardTitle}>Мой отклик</p>
-                  <p>
-                    Прежде всего, постоянное информационно-пропагандистское
-                    обеспечение нашей деятельности, в своём классическом
-                    представлении, допускает внедрение приоретизации разума над
-                    эмоциями.
-                  </p>
-                  <p className={styles.cardTitle}>Тестовое задание</p>
-                  <File name="file.tsx" size="2 Tb" />
-                </div>
-              )}
               <div className={styles.hCards}>
                 <div className={styles.card}>
                   <p className={styles.cardTitle}>Наставник</p>
@@ -232,21 +218,17 @@ export default function Vacancy({ backLink, link }: Props) {
                   </span>
                 </div>
               </div>
+              {/* TODO: also if intern doesn't have response to this vacancy */}
               {user.role === "intern" && data.status === "active" && (
                 <div className={styles.bottomCard}>
                   {/* TODO: manage visibility */}
-                  {false && (
+                  {true && (
                     <Button onClick={() => setIsResponsePopupShowed(true)}>
                       Откликнуться
                     </Button>
                   )}
                   {/* TODO: fetch status */}
-                  {true && (
-                    <Status
-                      className={styles.bottomCardStatus}
-                      status="active"
-                    />
-                  )}
+                  {false && <Button>Оценить стажировку</Button>}
                 </div>
               )}
             </div>
@@ -261,23 +243,69 @@ export default function Vacancy({ backLink, link }: Props) {
               />
             )}
           </div>
-          <div className={`${styles.card} ${styles.rightCard}`}>
-            <p className={styles.cardTitle}>Статус</p>
-            {/* TODO: fix statuses */}
-            <Timeline statuses={statuses} activeStatus={data.status} />
-            {data.rejectionReason && (
-              <div className={styles.statusComment}>
-                <p className={styles.statusCommentTitle}>Причина отклонения</p>
-                <p className={styles.statusCommentText}>
-                  {data.rejectionReason}
-                </p>
+          <div className={styles.vCards}>
+            {/* TODO: show if user has response to this vacancy, fetch response */}
+            {user.role === "intern" && (
+              <div className={`${styles.card} ${styles.complexCard}`}>
+                <div className={styles.complexCardBlock}>
+                  <p className={styles.cardTitle}>Статус отклика</p>
+                  <Status status="active" />
+                  {/* TODO: show if rejected */}
+                  <div className={styles.statusComment}>
+                    <p className={styles.statusCommentTitle}>
+                      Причина отклонения
+                    </p>
+                    <p className={styles.statusCommentText}>
+                      К сожалению, пока что мы не можем принять вас на
+                      стажировку. Попробуйте в следующем году
+                    </p>
+                  </div>
+                </div>
+                <div className={styles.complexCardBlock}>
+                  <p className={styles.cardTitle}>Мой отклик</p>
+                  <p>
+                    Прежде всего, постоянное информационно-пропагандистское
+                    обеспечение нашей деятельности, в своём классическом
+                    представлении, допускает внедрение приоретизации разума над
+                    эмоциями.
+                  </p>
+                </div>
+                <div className={styles.complexCardBlock}>
+                  <p className={styles.cardTitle}>Тестовое задание</p>
+                  <File name="fff.pdf" size="2 Gb" />
+                </div>
               </div>
             )}
-            {/* TODO: add link */}
-            <Button type="text">
-              <span>Подробнее о смене статусов</span>
-              <LinkExternalIcon className="icon" />
-            </Button>
+            {user.role === "intern" && (
+              <div className={`${styles.card} ${styles.desktop}`}>
+                <p className={styles.cardTitle}>Статус вакансии</p>
+                <Status status={data?.status} />
+              </div>
+            )}
+            {(user.role === "staff" ||
+              user.role === "curator" ||
+              user.role === "mentor") && (
+              <div className={`${styles.card} ${styles.rightCard}`}>
+                <p className={styles.cardTitle}>Статус</p>
+                {/* TODO: fix statuses */}
+                <Timeline statuses={statuses} activeStatus={data.status} />
+                {data.rejectionReason && (
+                  <div className={styles.statusComment}>
+                    <p className={styles.statusCommentTitle}>
+                      Причина отклонения
+                    </p>
+                    <p className={styles.statusCommentText}>
+                      {data.rejectionReason}
+                    </p>
+                  </div>
+                )}
+                {/* TODO: add link */}
+                <Button type="text">
+                  <span>Подробнее о смене статусов</span>
+                  <LinkExternalIcon className="icon" />
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       </div>
