@@ -33,7 +33,7 @@ export default function Candidates() {
       <div className={styles.header}>
         <h1 className={styles.title}>Кандидаты</h1>
       </div>
-      {!data ? (
+      {!data?.items ? (
         <div className={styles.nothing}>
           <UserQuestionIcon className={styles.nothingIcon} />
           <p>

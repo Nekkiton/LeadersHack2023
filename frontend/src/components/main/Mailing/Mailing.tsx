@@ -9,13 +9,28 @@ import SearchIcon from "assets/icons/search.svg"
 import UploadIcon from "assets/icons/upload.svg"
 import styles from "./Mailing.module.scss"
 import { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
+import { fetchMailingList } from "data"
+import { Spin } from "antd"
 
 interface Props {
   link: string
 }
 
 export default function Mailing({ link }: Props) {
+  const [query, setQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["mailingList", { query, page: currentPage }],
+    queryFn: () =>
+      fetchMailingList({
+        search: query,
+        page: currentPage,
+      }),
+  });
+
+  if (isLoading) return <Spin />
 
   return (
     <div className={styles.container}>
@@ -28,7 +43,7 @@ export default function Mailing({ link }: Props) {
           </Button>
         </Link>
       </div>
-      {false ? (
+      {!data?.items ? (
         <div className={styles.nothing}>
           <UploadIcon className={styles.nothingIcon} />
           <p className={styles.nothingText}>Вы еще не делали рассылок</p>
@@ -61,8 +76,11 @@ export default function Mailing({ link }: Props) {
             </div>
           </div>
           <div className={styles.vacancies}>
-            <MailingCard link={link} />
-            <MailingCard link={link} />
+            {
+              data.items.map(item => (
+                <MailingCard link={link} item={item}/>
+              ))
+            }
           </div>
           <Pagination
             currentPage={currentPage}

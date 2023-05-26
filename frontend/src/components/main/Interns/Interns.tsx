@@ -35,7 +35,7 @@ export default function Interns({ link }: Props) {
       <div className={styles.header}>
         <h1 className={styles.title}>Стажеры</h1>
       </div>
-      {false ? (
+      {!data?.items ? (
         <div className={styles.nothing}>
           <StudentIcon className={styles.nothingIcon} />
           <p>У вас еще нет стажеров на наставничестве</p>

@@ -1,28 +1,31 @@
 import Link from "next/link"
 import styles from "./MailingCard.module.scss"
+import dayjs from "dayjs"
+import "dayjs/locale/ru";
 
 interface Props {
   link: string
+  item: any // TODO: mail type here
 }
 
-export default function MailingCard({ link }: Props) {
+export default function MailingCard({ item, link }: Props) {
   return (
-    <Link className={styles.card} href={`${link}/123`}>
+    <Link className={styles.card} href={`${link}/${item.id}`}>
       <p className={styles.title}>
-        Тестирование кандидатов пройдет с 10 по 17 мая
+        {item.title}
       </p>
       <div className={styles.info}>
         <div className={styles.infoItem}>
           <span className={styles.infoItemTitle}>Отправка:</span>
-          <span>2 февраля 2023 в 11:00</span>
+          <span>{dayjs(item.date).locale("ru").format('D MMMM YYYY в hh:mm')}</span>
         </div>
         <div className={styles.infoItem}>
           <span className={styles.infoItemTitle}>Тип:</span>
-          <span>e-mail, push</span>
+          <span>{item.type.join(", ")}</span>
         </div>
         <div className={styles.infoItem}>
           <span className={styles.infoItemTitle}>Отправка:</span>
-          <span>кандидаты</span>
+          <span>{item.recepient_roles.join(", ")}</span>
         </div>
       </div>
     </Link>

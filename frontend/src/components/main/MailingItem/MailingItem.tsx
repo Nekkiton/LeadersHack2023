@@ -5,13 +5,29 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import PenIcon from "assets/icons/pen.svg"
 import CopyIcon from "assets/icons/copy.svg"
 import styles from "./MailingItem.module.scss"
+import { useQuery } from "@tanstack/react-query"
+import { fetchMailingItem } from "data"
+import { Spin } from "antd"
+import dayjs from "dayjs"
+import "dayjs/locale/ru";
 
 interface Props {
   backLink: string
+  mailId: string
 }
 
-export default function MailingItem({ backLink }: Props) {
-  const router = useRouter()
+export default function MailingItem({ backLink, mailId }: Props) {
+  const router = useRouter();
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["mailingItem", { id: mailId }],
+    queryFn: () =>
+      fetchMailingItem({
+        id: mailId ?? "",
+      }),
+  })
+
+  if (!data || isLoading) return <Spin />
 
   return (
     <div className={styles.container}>
@@ -23,7 +39,7 @@ export default function MailingItem({ backLink }: Props) {
       </Link>
       <div className={styles.header}>
         <h1 className={styles.title}>
-          Тестирование кандидатов пройдет с 10 по 17 мая
+          {data.title}
         </h1>
         <div className={styles.headerControls}>
           {/* TODO: modals */}
@@ -48,31 +64,25 @@ export default function MailingItem({ backLink }: Props) {
         <div className={styles.card}>
           <div className={styles.cardBlock}>
             <p className={styles.cardTitle}>Тема</p>
-            <p>Тестирование кандидатов пройдет с 10 по 17 мая</p>
+            <p>{data.title}</p>
           </div>
           <div className={styles.cardBlock}>
             <p className={styles.cardTitle}>Текст</p>
-            <p>
-              Для современного мира высокое качество позиционных исследований
-              прекрасно подходит для реализации поставленных обществом задач.
-              Безусловно, существующая теория способствует повышению качества
-              экспериментов, поражающих по своей масштабности и грандиозности.
-              Господа.
-            </p>
+            <p>{data.body}</p>
           </div>
         </div>
         <div className={styles.card}>
           <div className={styles.cardBlock}>
             <p className={styles.cardTitle}>Дата отправки</p>
-            <p>17 июня 2023 в 12:00</p>
+            <p>{dayjs(data.date).locale("ru").format('D MMMM YYYY в hh:mm')}</p>
           </div>
           <div className={styles.cardBlock}>
             <p className={styles.cardTitle}>Тип</p>
-            <p>e-mail, push</p>
+            <p>{data.type.join(", ")}</p>
           </div>
           <div className={styles.cardBlock}>
             <p className={styles.cardTitle}>Получатели</p>
-            <p>Стажеры, наставники, кадровые специалисты</p>
+            <p>{data.recepient_roles.join(", ")}</p>
           </div>
         </div>
       </div>
