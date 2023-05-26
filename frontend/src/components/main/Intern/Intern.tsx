@@ -1,11 +1,8 @@
-import { useState } from "react"
-import { Spin, notification } from "antd"
+import { Spin } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
-import TimesIcon from "assets/icons/times.svg"
-import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import { useQuery } from "@tanstack/react-query"
 import { fetchInternInfo } from "data"
 import styles from "./Intern.module.scss"
@@ -19,37 +16,9 @@ interface Props {
 
 export default function Intern({ backLink, internId }: Props) {
   const user = {
-    role: "curator",
-    //role: "mentor",
+    //role: "curator",
+    role: "mentor",
     //role: "staff",
-  }
-
-  const [isCancelModalShowed, setIsCancelModalShowed] = useState(false)
-  const toggleCancelModal = () => setIsCancelModalShowed((prev) => !prev)
-
-  // TODO: validate modal data, cancel response, handle errors
-  const cancelResponse = () => {
-    toggleCancelModal()
-    notification.open({
-      message: "Отклик отклонен",
-      closeIcon: <TimesIcon />,
-    })
-  }
-
-  // TODO: accept response, handle errors, notification text
-  const acceptInternship = () => {
-    notification.open({
-      message: "Принято на стажировку",
-      closeIcon: <TimesIcon />,
-    })
-  }
-
-  // TODO: accept response, handle errors, notification text
-  const acceptInterview = () => {
-    notification.open({
-      message: "Приглашено на собеседование",
-      closeIcon: <TimesIcon />,
-    })
   }
 
   const { data, isLoading } = useQuery({
@@ -64,11 +33,6 @@ export default function Intern({ backLink, internId }: Props) {
 
   return (
     <div className={styles.container}>
-      <ResponseCancelModal
-        isOpen={isCancelModalShowed}
-        onCancel={toggleCancelModal}
-        onOk={cancelResponse}
-      />
       <Link href={backLink}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
@@ -77,21 +41,10 @@ export default function Intern({ backLink, internId }: Props) {
       </Link>
       <div className={styles.header}>
         <StudentInfo profile={data.user} />
-        {/* TODO: Manage buttons visibility, add modal */}
         <div className={styles.headerControls}>
-          <Button type="secondary" onClick={toggleCancelModal}>
-            Отклонить
-          </Button>
-          <Button onClick={acceptInternship}>Принять на стажировку</Button>
-          {user.role === "mentor" && (
-            <Button onClick={acceptInterview}>
-              Пригласить на собеседование
-            </Button>
-          )}
-          {user.role === "mentor" && <Button>Оценить стажера</Button>}
-          {user.role === "curator" && <Button>Оценить резюме</Button>}
-          {user.role === "curator" && (
-            <Button>Внести результаты кейс-чемпионата</Button>
+          {/* TODO: add modal */}
+          {user.role === "mentor" && data.status === "internshipFinished" && (
+            <Button>Оценить стажера</Button>
           )}
         </div>
       </div>

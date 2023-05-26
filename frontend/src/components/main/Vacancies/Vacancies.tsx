@@ -29,8 +29,8 @@ const userImg = "/images/user.svg"
 
 export default function Vacancies({ link, noHeader }: Props) {
   const user = {
-    //role: "mentor",
-    role: "staff",
+    role: "mentor",
+    //role: "staff",
     //role: "curator",
     //role: "intern",
   }

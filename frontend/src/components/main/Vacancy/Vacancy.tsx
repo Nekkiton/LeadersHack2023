@@ -31,8 +31,8 @@ const userImg = "/images/user.svg"
 
 export default function Vacancy({ backLink, link }: Props) {
   const user = {
-    role: "staff",
-    //role: "mentor",
+    //role: "staff",
+    role: "mentor",
     //role: "intern",
   }
 
@@ -134,15 +134,14 @@ export default function Vacancy({ backLink, link }: Props) {
             )}
             {user.role === "mentor" && (
               <>
-                {/* TODO: show if status is testTask */}
-                {true && (
+                {data.status === "testTask" && (
                   <Button onClick={toggleModal}>
                     <PlusIcon className="icon" />
                     <span>Добавить тестовое задание</span>
                   </Button>
                 )}
-                {/* TODO: show if status is moderating or rejected */}
-                {true && (
+                {(data.status === "moderating" ||
+                  data.status === "rejected") && (
                   <Button type="secondary" onClick={startTestTaskEditing}>
                     <PenIcon className="icon" />
                     <span>Редактировать тестовое задание</span>

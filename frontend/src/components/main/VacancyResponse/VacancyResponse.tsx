@@ -21,8 +21,8 @@ interface Props {
 export default function VacancyResponse({ backLink, responseId }: Props) {
   const user = {
     //role: "curator",
-    //role: "mentor",
-    role: "staff",
+    role: "mentor",
+    //role: "staff",
   }
 
   const [isCancelModalShowed, setIsCancelModalShowed] = useState(false)
@@ -39,16 +39,25 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
 
   // TODO: accept response, handle errors, notification text
   const acceptInternship = () => {
-    notification.open({
-      message: "Принято на стажировку",
-      closeIcon: <TimesIcon />,
-    })
+    if (user.role === "staff") {
+      notification.open({
+        message: "Принято на стажировку",
+        closeIcon: <TimesIcon />,
+      })
+    } else if (user.role === "mentor") {
+      notification.open({
+        message:
+          "Мы сообщили о вашем решении кадровому специалисту. После его подтверждения стажер будет принят на стажировку",
+        closeIcon: <TimesIcon />,
+      })
+    }
   }
 
   // TODO: accept response, handle errors, notification text
   const acceptInterview = () => {
     notification.open({
-      message: "Приглашено на собеседование",
+      message:
+        "Собеседование назначено. После его прохождения измените статус отклика на платформе",
       closeIcon: <TimesIcon />,
     })
   }
@@ -80,7 +89,7 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
         <StudentInfo profile={data.user} />
         {/* TODO: Manage buttons visibility, add modal */}
         <div className={styles.headerControls}>
-          {data.status === "mentorAccepted" && (
+          {user.role === "staff" && data.status === "mentorAccepted" && (
             <>
               <Button type="secondary" onClick={toggleCancelModal}>
                 Отклонить
@@ -88,12 +97,28 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
               <Button onClick={acceptInternship}>Принять на стажировку</Button>
             </>
           )}
-          {false && (
-            <Button onClick={acceptInterview}>
-              Пригласить на собеседование
-            </Button>
+          {user.role === "mentor" && (
+            <>
+              {(data.status === "new" ||
+                data.status === "old" ||
+                data.status === "interview") && (
+                <Button type="secondary" onClick={toggleCancelModal}>
+                  Отклонить
+                </Button>
+              )}
+              {(data.status === "new" || data.status === "old") && (
+                <Button onClick={acceptInterview}>
+                  Пригласить на собеседование
+                </Button>
+              )}
+              {data.status === "interview" && (
+                <Button onClick={acceptInternship}>
+                  Принять на стажировку
+                </Button>
+              )}
+            </>
           )}
-          {user.role === "mentor" && <Button>Оценить стажера</Button>}
+          {user.role === "smentor" && <Button>Оценить стажера</Button>}
           {user.role === "curator" && <Button>Оценить резюме</Button>}
           {user.role === "curator" && (
             <Button>Внести результаты кейс-чемпионата</Button>

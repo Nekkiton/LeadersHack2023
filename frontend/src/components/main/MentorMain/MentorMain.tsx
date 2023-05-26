@@ -10,6 +10,8 @@ import StudentIcon from "assets/icons/student.svg"
 import styles from "./MentorMain.module.scss"
 
 export default function StaffMain() {
+  // TODO: fetch data
+
   return (
     <div className={styles.container}>
       <div className={styles.blocks}>

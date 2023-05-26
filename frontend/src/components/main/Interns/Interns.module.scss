@@ -35,8 +35,18 @@
   }
 }
 
+.filters {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .searchInput {
   width: 422px;
+}
+
+.filtersSelect {
+  width: 180px;
 }
 
 .interns {
