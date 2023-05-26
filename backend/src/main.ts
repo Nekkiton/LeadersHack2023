@@ -6,7 +6,9 @@ import { ConfigService } from '@nestjs/config';
 import * as cookieParser from 'cookie-parser';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['log', 'error', 'warn', 'debug', 'verbose'],
+  });
   app.setGlobalPrefix('api/v1');
   const config = new DocumentBuilder()
     .setTitle('GeekBattle Project')
@@ -16,7 +18,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  app.useGlobalPipes(new ValidationPipe());
+  // whitelist strip additional properties from DTO
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.use(cookieParser());
   const configService: ConfigService = app.get(ConfigService);
   await app.listen(configService.get('port'));

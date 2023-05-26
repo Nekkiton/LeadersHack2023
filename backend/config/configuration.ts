@@ -1,5 +1,8 @@
 export default () => ({
   port: 3000,
+  application: {
+    referralIdLength: 64,
+  },
   database: {
     host: process.env.DATABASE_HOST,
     port: parseInt(process.env.DATABASE_PORT, 10) || 5432,
@@ -10,6 +13,6 @@ export default () => ({
   jwt: {
     secret: process.env.JWT_SECRET,
     saltRounds: 10,
-    expiresIn: 60 * 60 * 3, // 3 hours
+    expiresIn: 60 * 60 * 24, // temporary set to 24 hours. TODO - set lower (e.g 3 hours)
   },
 });

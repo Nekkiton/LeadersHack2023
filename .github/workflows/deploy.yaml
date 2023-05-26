@@ -55,7 +55,7 @@ jobs:
 
       - name: Deploy
         run: |
-          helm upgrade ${{ inputs.context }} --atomic --history-max=3 --set image.tag=$DOCKER_METADATA_OUTPUT_VERSION ${{ inputs.context }}/deployment
+          helm upgrade ${{ inputs.context }} --timeout 2m30s --atomic --history-max=3 --set image.tag=$DOCKER_METADATA_OUTPUT_VERSION ${{ inputs.context }}/deployment
 
       - name: Clean up
         run: |

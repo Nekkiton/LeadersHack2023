@@ -1,9 +1,15 @@
-import { compare, hash } from 'bcrypt';
+import { compare } from 'bcrypt';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { ConfigService } from '@nestjs/config';
-import { User } from 'src/users/entities/user.entity';
+import { Role } from './roles/role.enum';
+import { SignInDto } from './dto/sign-in.dto';
+
+export interface UserPayload extends Record<string, unknown> {
+  email: string;
+  role: Role;
+}
 
 @Injectable()
 export class AuthService {
@@ -13,37 +19,30 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(username: string, passwordHash: string): Promise<string> {
-    const user = await this.usersService.findOne(username);
+  async signIn(dto: SignInDto): Promise<string> {
+    const user = await this.usersService.findOne(dto.email);
     if (!user) {
-      throw new UnauthorizedException('Invalid username or password');
+      throw new UnauthorizedException();
     }
-    const matched = await compare(passwordHash, user.passwordHash);
+    const matched = await compare(dto.password, user.passwordHash);
     if (!matched) {
-      throw new UnauthorizedException('Invalid username or password');
+      throw new UnauthorizedException();
     }
-    const payload = {
+    const payload: UserPayload = {
       sub: user.id,
-      name: user.username,
+      email: user.email,
+      role: user.role,
     };
     return this.jwtService.signAsync(payload);
   }
 
-  async validateToken<T extends object>(token: string): Promise<T> {
+  async validateToken(token: string): Promise<UserPayload> {
     try {
-      return await this.jwtService.verifyAsync<T>(token, {
+      return await this.jwtService.verifyAsync<UserPayload>(token, {
         secret: this.configService.get('jwt.secret'),
       });
     } catch {
       throw new UnauthorizedException();
     }
-  }
-
-  async create(username: string, password: string): Promise<User> {
-    const passwordHash = await hash(
-      password,
-      this.configService.get('jwt.saltRounds'),
-    );
-    return this.usersService.create({ username, passwordHash });
   }
 }

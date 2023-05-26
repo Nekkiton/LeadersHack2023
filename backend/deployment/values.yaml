@@ -6,7 +6,7 @@ replicaCount: 1
 
 image:
   repository: swr.ru-moscow-1.hc.sbercloud.ru/geek-battle-2023/backend
-  pullPolicy: IfNotPresent
+  pullPolicy: Always
   # Overrides the image tag whose default is the chart appVersion.
   tag: ""
 
@@ -45,13 +45,28 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+    nginx.ingress.kubernetes.io/auth-url: http://backend-backend-deployment.default.svc.cluster.local:3000/api/v1/auth
+    nginx.ingress.kubernetes.io/auth-signin: https://geek-battle-2023.ru/signin
   hosts:
     - host: geek-battle-2023.ru
       paths:
         - path: /api
           pathType: ImplementationSpecific
+  tls:
+   - secretName: geek-battle-ssl
+     hosts:
+       - geek-battle-2023.ru
+
+ingressPublic:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: geek-battle-2023.ru
+      paths:
+        - path: /api/v1/auth
+          pathType: Exact
+        - path: /api/v1/auth/signIn
+          pathType: Exact
   tls:
    - secretName: geek-battle-ssl
      hosts:
@@ -84,7 +99,7 @@ affinity: {}
 
 envPlain:
   - name: DATABASE_HOST
-    value: 10.0.0.29
+    value: rds.production-zone
 
 envSecrets:
   - name: DATABASE_USERNAME
