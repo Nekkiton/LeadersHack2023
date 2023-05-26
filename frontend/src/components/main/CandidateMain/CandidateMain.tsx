@@ -101,11 +101,14 @@ export default function CandidateMain() {
               управления?
             </p>
             {isReceptionOpen ? (
-              <Link href="/candidate/register">
+              <Link href="/intern/register" className={styles.introBtn}>
                 <Button style={{ width: "100%" }}>Подавай заявку</Button>
               </Link>
             ) : (
-              <Button onClick={() => setIsPopupShowed(true)}>
+              <Button
+                onClick={() => setIsPopupShowed(true)}
+                className={styles.introBtn}
+              >
                 Узнать о старте
               </Button>
             )}
@@ -132,7 +135,7 @@ export default function CandidateMain() {
           <h2>Зачем тебе это</h2>
           <div className={styles.why}>
             <div className={styles.whyItem}>
-              <h6>Найди, что вдохновляет</h6>
+              <p className={styles.whyItemTitle}>Найди, что вдохновляет</p>
               <p className={styles.whyItemText}>
                 Полгода стажировки{" "}
                 <span className={styles.colored}>
@@ -142,14 +145,16 @@ export default function CandidateMain() {
               </p>
             </div>
             <div className={styles.whyItem}>
-              <h6>Выбери график работы и зарплату</h6>
+              <p className={styles.whyItemTitle}>
+                Выбери график работы и зарплату
+              </p>
               <p className={styles.whyItemText}>
                 Работай 20 либо 40 часов в неделю и получай зарплату 24 600 или
                 49 200 рублей в месяц
               </p>
             </div>
             <div className={styles.whyItem}>
-              <h6>Получи оффер</h6>
+              <p className={styles.whyItemTitle}>Получи оффер</p>
               <p className={styles.whyItemText}>
                 Более 60% выпускников стажировки получают предложение о
                 дальнейшем трудоустройстве
@@ -181,7 +186,7 @@ export default function CandidateMain() {
                 <div className={styles.timelineItemContent}>
                   <div className={styles.timelineItemHeader}>
                     <p className={styles.timelineItemDates}>{item.dates}</p>
-                    <h6>{item.title}</h6>
+                    <h3 className={styles.timelineItemTitle}>{item.title}</h3>
                   </div>
                   <div className={styles.timelineItemDescription}>
                     {item.description}
@@ -193,6 +198,7 @@ export default function CandidateMain() {
         </div>
       </div>
 
+      {/* TODO: desktop version */}
       <Popup
         isShowed={isPopupShowed}
         setIsShowed={setIsPopupShowed}

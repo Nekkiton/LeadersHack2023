@@ -58,7 +58,7 @@ export default function CandidateRegistration() {
   return (
     <div className={styles.container}>
       <div className={styles.header}>
-        <Link href="/candidate">
+        <Link href="/intern">
           <Button type="text">
             <ChevronLeftIcon className="icon" />
             <span>Вернуться на главную</span>

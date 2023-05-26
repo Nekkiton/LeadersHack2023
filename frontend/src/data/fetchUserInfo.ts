@@ -5,7 +5,7 @@ const testData = {
   name: "Маргарита",
   surname: "Веселова",
   notificationsCount: 1,
-  role: "candidate",
+  role: "intern",
   rating: "4,8",
 }
 
