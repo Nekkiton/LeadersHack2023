@@ -12,6 +12,8 @@ export default function Status({ status, className }: Props) {
     text = "Новый"
   } else if (status === "old") {
     text = "Просмотрен"
+  } else {
+    text = status;
   }
 
   return (

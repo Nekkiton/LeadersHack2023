@@ -2,7 +2,6 @@ import { useState } from "react"
 import { Spin, notification } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
-import File from "components/base/controls/File"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
@@ -12,16 +11,15 @@ import styles from "./Candidate.module.scss"
 import StudentProfile from "components/main/StudentProfile"
 import StudentInfo from "components/main/StudentProfile/StudentInfo"
 import Timeline from "components/base/controls/Timeline"
-import { useRouter } from "next/router"
 
 interface Props {
   backLink: string
-  responseId?: string
+  candidateId: string
 }
 
 const userImg = "/images/user.svg"
 
-export default function Candidate({ backLink, responseId }: Props) {
+export default function Candidate({ backLink, candidateId }: Props) {
   const user = {
     role: "curator",
     //role: "mentor",
@@ -67,13 +65,11 @@ export default function Candidate({ backLink, responseId }: Props) {
     })
   }
 
-  const { query, asPath } = useRouter()
-
   const { data, isLoading } = useQuery({
-    queryKey: ["fetchCandidateInfo", { id: query.id }],
+    queryKey: ["fetchCandidateInfo", { id: candidateId }],
     queryFn: () =>
       fetchCandidateInfo({
-        id: query.id as string,
+        id: candidateId ?? "",
       }),
   })
 
