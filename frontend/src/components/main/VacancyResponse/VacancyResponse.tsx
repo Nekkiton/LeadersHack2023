@@ -55,15 +55,6 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
     }
   }
 
-  // TODO: accept response, handle errors, notification text
-  const acceptInterview = () => {
-    notification.open({
-      message:
-        "Собеседование назначено. После его прохождения измените статус отклика на платформе",
-      closeIcon: <TimesIcon />,
-    })
-  }
-
   const { data, isLoading } = useQuery({
     queryKey: ["vacancyResponseInfo", { id: responseId }],
     queryFn: () =>

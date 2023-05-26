@@ -1,0 +1,27 @@
+@import "assets/css/config";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  width: 501px;
+}
+
+.rating {
+  @include paragraph-3;
+
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.ratingIcon {
+  margin-bottom: -4px;
+  width: 24px;
+  height: 24px;
+  transition: $transition;
+
+  :global(.ant-rate-star-full) & {
+    fill: $gray-2;
+  }
+}
