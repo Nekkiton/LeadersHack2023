@@ -22,6 +22,7 @@ import { useState } from "react"
 import AddTestTaskModal from "./AddTestTaskModal"
 import { Spin, notification } from "antd"
 import Timeline from "components/base/controls/Timeline"
+import { getVacancyStatuses, statusTitles } from "./getVacancyStatuses"
 
 interface Props {
   backLink: string
@@ -83,25 +84,6 @@ export default function Vacancy({ backLink, link }: Props) {
   })
 
   if (!data || isLoading) return <Spin />
-
-  const getVacancyStatuses = (activeStatus: string) => {
-    const statuses = {
-      created: "Создана",
-      testTask: "Добавление тестового задания",
-      moderating: "На модерации",
-    } as {
-      [key: string]: string
-    }
-
-    if (activeStatus === "rejected") {
-      statuses.rejected = "Модерация не пройдена"
-    } else {
-      statuses.active = "Активна"
-      statuses.archived = "В архиве"
-    }
-
-    return statuses
-  }
 
   return (
     <>
@@ -325,8 +307,9 @@ export default function Vacancy({ backLink, link }: Props) {
               <div className={`${styles.card} ${styles.rightCard}`}>
                 <p className={styles.cardTitle}>Статус</p>
                 <Timeline
-                  statuses={getVacancyStatuses(data.status)}
-                  activeStatus={data.status}
+                  itemList={getVacancyStatuses(data.status)}
+                  itemTitles={statusTitles}
+                  activeItem={data.status}
                 />
                 {data.status === "rejected" && data.rejectionReason && (
                   <div className={styles.statusComment}>

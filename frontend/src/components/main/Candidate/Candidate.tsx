@@ -11,6 +11,7 @@ import styles from "./Candidate.module.scss"
 import StudentProfile from "components/main/StudentProfile"
 import StudentInfo from "components/main/StudentProfile/StudentInfo"
 import Timeline from "components/base/controls/Timeline"
+import { getCandidateStatuses, statusTitles } from "./getCandidateStatuses"
 
 interface Props {
   backLink: string
@@ -27,17 +28,6 @@ export default function Candidate({ backLink, candidateId }: Props) {
   const [isRateResumeShowed, setIsRateResumeShowed] = useState(false)
   const [isSetHackathonResultShowed, setIsSetHackathonResultShowed] =
     useState(false)
-
-  const statuses = {
-    accepted: "Заявка принята",
-    moderation: "На модерации",
-    education: "Проходит обучение",
-    test: "Прошел тестирование",
-    hackathon: "Проходит кейс-чемпионат",
-    passed: "Отобран на стажировку",
-  } as {
-    [key: string]: string
-  }
 
   const { data, isLoading } = useQuery({
     queryKey: ["fetchCandidateInfo", { id: candidateId }],
@@ -80,7 +70,14 @@ export default function Candidate({ backLink, candidateId }: Props) {
           <div className={`${styles.card} ${styles.complexCard}`}>
             <div className={styles.complexCardBlock}>
               <p className={styles.cardTitle}>Статус</p>
-              <Timeline statuses={statuses} activeStatus={data.status} />
+              <Timeline
+                activeItem={data.status}
+                itemList={getCandidateStatuses(
+                  data.status,
+                  data.previousStatus
+                )}
+                itemTitles={statusTitles}
+              />
             </div>
             <div className={styles.complexCardBlock}>
               <p className={styles.cardTitle}>Набрано баллов</p>
