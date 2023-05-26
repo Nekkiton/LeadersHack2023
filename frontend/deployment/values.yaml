@@ -45,6 +45,8 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
+    nginx.ingress.kubernetes.io/auth-url: http://backend-backend-deployment.default.svc.cluster.local:3000/api/v1/auth
+    nginx.ingress.kubernetes.io/auth-signin: https://geek-battle-2023.ru/signin
   hosts:
     - host: geek-battle-2023.ru
       paths:

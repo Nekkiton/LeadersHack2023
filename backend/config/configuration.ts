@@ -10,6 +10,6 @@ export default () => ({
   jwt: {
     secret: process.env.JWT_SECRET,
     saltRounds: 10,
-    expiresIn: 60 * 60 * 3, // 3 hours
+    expiresIn: 60 * 60 * 24, // temporary set to 24 hours. TODO - set lower (e.g 3 hours)
   },
 });

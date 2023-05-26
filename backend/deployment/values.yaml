@@ -57,6 +57,21 @@ ingress:
      hosts:
        - geek-battle-2023.ru
 
+ingressPublic:
+  enabled: true
+  className: "nginx"
+  hosts:
+    - host: geek-battle-2023.ru
+      paths:
+        - path: /api/v1/auth
+          pathType: Exact
+        - path: /api/v1/auth/signIn
+          pathType: Exact
+  tls:
+   - secretName: geek-battle-ssl
+     hosts:
+       - geek-battle-2023.ru
+
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious
   # choice for the user. This also increases chances charts run on environments with little
