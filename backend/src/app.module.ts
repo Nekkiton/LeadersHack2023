@@ -5,8 +5,6 @@ import configuration from 'config/configuration';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { InternalController } from './_internal/_internal.controller';
-import { CreateUserTable1685050336357 } from './migrations/1685050336357-CreateUserTable';
-import { StubUsers1685095732654 } from './migrations/1685095732654-StubUsers';
 
 @Module({
   imports: [
@@ -26,8 +24,6 @@ import { StubUsers1685095732654 } from './migrations/1685095732654-StubUsers';
         password: configService.get('database.password'),
         database: configService.get('database.database'),
         autoLoadEntities: true,
-        migrationsRun: true,
-        migrations: [CreateUserTable1685050336357, StubUsers1685095732654],
         logging: 'all',
       }),
     }),
