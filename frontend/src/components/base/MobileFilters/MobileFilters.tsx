@@ -2,11 +2,13 @@ import { useState, ReactNode, useEffect } from "react"
 import Button from "components/base/controls/Button"
 import Popup from "components/base/controls/Popup"
 import Input from "components/base/controls/Input"
+import Select from "components/base/controls/Select"
 import FilterIcon from "assets/icons/filter.svg"
 import ChevronRightIcon from "assets/icons/chevron-right.svg"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import CheckIcon from "assets/icons/check.svg"
 import SearchIcon from "assets/icons/search.svg"
+import TimesIcon from "assets/icons/times.svg"
 import styles from "./MobileFilters.module.scss"
 
 type Key = string | number
@@ -25,12 +27,12 @@ interface Props {
       searchCheck?: (query: string) => boolean
     }[]
     search?: boolean
+    placeholder?: string
   }[]
   value?: Value
   onChange?: (val: Value) => void
 }
 
-// TODO: fix changing
 export default function MobileFilters({ items, value, onChange }: Props) {
   const [newValue, setNewValue] = useState<Value | null>(null)
 
@@ -43,15 +45,25 @@ export default function MobileFilters({ items, value, onChange }: Props) {
   const toggleValue = (itemKey: Key, valueKey: Key) => {
     if (!newValue) return
 
-    const changedValue = Object.assign({}, newValue)
+    const changedValue = { ...newValue }
 
     if (newValue[itemKey].includes(valueKey)) {
-      changedValue[itemKey].splice(newValue[itemKey].indexOf(valueKey), 1)
+      // TODO: why changedValue[itemKey].splice(...) doesn't work
+      changedValue[itemKey] = [
+        ...changedValue[itemKey].filter((i) => i !== valueKey),
+      ]
       setNewValue(changedValue)
     } else {
-      changedValue[itemKey].push(valueKey)
+      // TODO: why changedValue[itemKey].push(...) doesn't work
+      changedValue[itemKey] = [...changedValue[itemKey], valueKey]
       setNewValue(changedValue)
     }
+  }
+
+  const setValue = (itemKey: Key, itemValue: Key[]) => {
+    const changedValue = { ...newValue }
+    changedValue[itemKey] = itemValue
+    setNewValue(changedValue)
   }
 
   const closeItem = () => {
@@ -60,7 +72,7 @@ export default function MobileFilters({ items, value, onChange }: Props) {
   }
 
   const clear = () => {
-    const changedValue = Object.assign({}, newValue)
+    const changedValue = { ...newValue }
     for (const key in changedValue) {
       changedValue[key] = []
     }
@@ -81,13 +93,54 @@ export default function MobileFilters({ items, value, onChange }: Props) {
     closeItem()
   }
 
+  const filtersExist = (filters?: Value) =>
+    filters && Object.values(filters).some((i) => i.length)
+
   return (
     <div className={styles.container}>
-      <FilterIcon
-        className={`${styles.icon} ${styles.mark}`}
-        onClick={() => setIsPopupShowed(true)}
-      />
+      <div
+        className={`${styles.iconContainer} ${
+          filtersExist(value) ? styles.mark : ""
+        }`}
+      >
+        <FilterIcon
+          className={styles.icon}
+          onClick={() => setIsPopupShowed(true)}
+        />
+      </div>
+
+      <div
+        className={`${styles.desktopPopup} ${
+          isPopupShowed ? styles.active : ""
+        }`}
+      >
+        <span
+          className={styles.desktopPopupBackdrop}
+          onClick={() => setIsPopupShowed(false)}
+        />
+        <div className={styles.desktopPopupContent}>
+          {items.map((item) => (
+            <Select
+              value={value?.[item.key]}
+              label={item.title}
+              placeholder={item.placeholder}
+              items={item.values.map((i) => ({ key: i.key, value: i.content }))}
+              onChange={(val) => setValue(item.key, val)}
+              multiple
+            />
+          ))}
+          <div className={styles.desktopPopupControls}>
+            <Button type="text" onClick={clear}>
+              <TimesIcon className="icon" />
+              <span>Сбросить</span>
+            </Button>
+            <Button onClick={submit}>Применить</Button>
+          </div>
+        </div>
+      </div>
+
       <Popup
+        className={styles.mobilePopup}
         title={
           activeItemIdx >= 0 ? (
             <div className={styles.popupHeader}>
@@ -132,9 +185,9 @@ export default function MobileFilters({ items, value, onChange }: Props) {
                     }
                   >
                     <div>{item.content}</div>
-                    {value?.[items[activeItemIdx].key].includes(item.key) && (
-                      <CheckIcon className={styles.popupItemIcon} />
-                    )}
+                    {newValue?.[items[activeItemIdx].key].includes(
+                      item.key
+                    ) && <CheckIcon className={styles.popupItemIcon} />}
                   </div>
                 )
             )}

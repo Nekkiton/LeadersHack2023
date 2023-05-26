@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
@@ -32,7 +32,8 @@ export default function Vacancies({ link, noHeader }: Props) {
   const user = {
     //role: "mentor",
     //role: "staff",
-    role: "curator",
+    //role: "curator",
+    role: "intern",
   }
 
   // TODO: fetch mentors for staff or for curator on organization page
@@ -99,6 +100,8 @@ export default function Vacancies({ link, noHeader }: Props) {
     mentors: [],
   })
 
+  useEffect(() => console.log("changed"), [filters])
+
   // TODO
   // if user is mentor - filter vacancies by mentor
   // if user is curator and page is vacancies - find vacancies for curator internship
@@ -163,32 +166,34 @@ export default function Vacancies({ link, noHeader }: Props) {
                 onChange={setQuery}
               />
               {/* TODO: add all statuses */}
-              <Select
-                className={styles.filtersSelect}
-                placeholder="Все статусы"
-                items={[
-                  {
-                    key: "testTask",
-                    value: <VacancyStatus status="testTask" />,
-                  },
-                  {
-                    key: "moderating",
-                    value: <VacancyStatus status="moderating" />,
-                  },
-                  { key: "active", value: <VacancyStatus status="active" /> },
-                  {
-                    key: "rejected",
-                    value: <VacancyStatus status="rejected" />,
-                  },
-                  {
-                    key: "archived",
-                    value: <VacancyStatus status="archived" />,
-                  },
-                ]}
-                value={statuses}
-                onChange={setStatuses}
-                multiple
-              />
+              {user.role === "staff" && (
+                <Select
+                  className={styles.filtersSelect}
+                  placeholder="Все статусы"
+                  items={[
+                    {
+                      key: "testTask",
+                      value: <VacancyStatus status="testTask" />,
+                    },
+                    {
+                      key: "moderating",
+                      value: <VacancyStatus status="moderating" />,
+                    },
+                    { key: "active", value: <VacancyStatus status="active" /> },
+                    {
+                      key: "rejected",
+                      value: <VacancyStatus status="rejected" />,
+                    },
+                    {
+                      key: "archived",
+                      value: <VacancyStatus status="archived" />,
+                    },
+                  ]}
+                  value={statuses}
+                  onChange={setStatuses}
+                  multiple
+                />
+              )}
               {/* TODO: if user is staff or (user is curator and page is organization) */}
               {user.role === "staff" && (
                 <Select
@@ -226,66 +231,72 @@ export default function Vacancies({ link, noHeader }: Props) {
                 />
               )}
             </div>
-            <MobileFilters
-              value={filters}
-              onChange={setFilters}
-              items={[
-                {
-                  key: "statuses",
-                  title: "Статус вакансии",
-                  values: [
-                    {
-                      key: "active",
-                      content: <VacancyStatus status="active" />,
-                    },
-                    {
-                      key: "responsed",
-                      content: <VacancyStatus status="responsed" />,
-                    },
-                    {
-                      key: "archived",
-                      content: <VacancyStatus status="archived" />,
-                    },
-                  ],
-                },
-                {
-                  key: "organizations",
-                  title: "Организация",
-                  values: allOrganizations.map((i) => ({
-                    key: i.id,
-                    content: i.name,
-                  })),
-                  search: true,
-                },
-                {
-                  key: "directions",
-                  title: "Направление стажировки",
-                  values: allDirections.map((i) => ({
-                    key: i.id,
-                    content: i.name,
-                  })),
-                },
-                {
-                  key: "mentors",
-                  title: "Наставник",
-                  values: allMentors.map((i) => ({
-                    key: i.id,
-                    content: (
-                      <div className={styles.filtersMentor}>
-                        <img
-                          className={styles.filtersMentorImg}
-                          src={i.image || userImg}
-                        />
-                        <p className={styles.filtersMentorName}>{i.name}</p>
-                      </div>
-                    ),
-                    searchCheck: (query) =>
-                      i.name.toLowerCase().includes(query),
-                  })),
-                  search: true,
-                },
-              ]}
-            />
+            {user.role === "intern" && (
+              <MobileFilters
+                value={filters}
+                onChange={setFilters}
+                items={[
+                  {
+                    key: "statuses",
+                    title: "Статус вакансии",
+                    placeholder: "Все статусы",
+                    values: [
+                      {
+                        key: "active",
+                        content: <VacancyStatus status="active" />,
+                      },
+                      {
+                        key: "responsed",
+                        content: <VacancyStatus status="responsed" />,
+                      },
+                      {
+                        key: "archived",
+                        content: <VacancyStatus status="archived" />,
+                      },
+                    ],
+                  },
+                  {
+                    key: "organizations",
+                    title: "Организация",
+                    placeholder: "Все организации",
+                    values: allOrganizations.map((i) => ({
+                      key: i.id,
+                      content: i.name,
+                    })),
+                    search: true,
+                  },
+                  {
+                    key: "directions",
+                    title: "Направление стажировки",
+                    placeholder: "Все направления",
+                    values: allDirections.map((i) => ({
+                      key: i.id,
+                      content: i.name,
+                    })),
+                  },
+                  {
+                    key: "mentors",
+                    title: "Наставник",
+                    placeholder: "Все наставники",
+                    values: allMentors.map((i) => ({
+                      key: i.id,
+                      content: (
+                        <div className={styles.filtersMentor}>
+                          <img
+                            className={styles.filtersMentorImg}
+                            src={i.image || userImg}
+                          />
+                          <p className={styles.filtersMentorName}>{i.name}</p>
+                        </div>
+                      ),
+                      searchCheck: (query) =>
+                        i.name.toLowerCase().includes(query),
+                    })),
+                    search: true,
+                  },
+                ]}
+              />
+            )}
             {false &&
               (query ||
                 !!statuses.length ||
@@ -301,7 +312,7 @@ export default function Vacancies({ link, noHeader }: Props) {
                 </Button>
               )}
             {/* TODO: show if user if curator and page is not organization */}
-            {user.role === "curator" && (
+            {(user.role === "curator" || user.role === "intern") && (
               <SmallSwitch
                 className={styles.viewSwitch}
                 value={viewMode}
