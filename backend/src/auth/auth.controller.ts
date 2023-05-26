@@ -41,7 +41,7 @@ export class AuthController {
   }
 
   @HttpCode(HttpStatus.OK)
-  @Get('auth')
+  @Get()
   async auth(@Req() req: Request) {
     const token = req.cookies['access_token'];
     if (!token) {
