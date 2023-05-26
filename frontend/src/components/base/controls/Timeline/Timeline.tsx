@@ -12,20 +12,22 @@ const base_statuses = {
 }
 
 export default function Timeline({ statuses, activeStatus }: any) {
-
   return (
-      <div className={styles.timeline}>
-        {Object.keys(statuses).map((status) => (
-          <div
-            className={`${styles.timelineItem} ${
-              status === "created" ? styles.past : ""
-            } ${status === activeStatus ? styles.active : ""}`}
-            key={status}
-          >
-            <span className={styles.timelineDot}></span>
-            <span>{statuses[status]}</span>
-          </div>
-        ))}
-      </div>
+    <div className={styles.timeline}>
+      {Object.keys(statuses).map((status) => (
+        <div
+          className={`${styles.timelineItem} ${
+            Object.keys(statuses).indexOf(status) <
+            Object.keys(statuses).indexOf(activeStatus)
+              ? styles.past
+              : ""
+          } ${status === activeStatus ? styles.active : ""}`}
+          key={status}
+        >
+          <span className={styles.timelineDot}></span>
+          <span>{statuses[status]}</span>
+        </div>
+      ))}
+    </div>
   )
 }

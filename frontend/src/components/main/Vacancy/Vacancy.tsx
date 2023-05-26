@@ -31,9 +31,9 @@ const userImg = "/images/user.svg"
 
 export default function Vacancy({ backLink, link }: Props) {
   const user = {
-    //role: "staff",
+    role: "staff",
     //role: "mentor",
-    role: "intern",
+    //role: "intern",
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -74,14 +74,23 @@ export default function Vacancy({ backLink, link }: Props) {
 
   if (!data || isLoading) return <Spin />
 
-  const statuses = {
-    created: "Создана",
-    testTask: "Добавление тестового задания",
-    moderating: "На модерации",
-    active: "Активна",
-    archived: "В архиве",
-  } as {
-    [key: string]: string
+  const getVacancyStatuses = (activeStatus: string) => {
+    const statuses = {
+      created: "Создана",
+      testTask: "Добавление тестового задания",
+      moderating: "На модерации",
+    } as {
+      [key: string]: string
+    }
+
+    if (activeStatus === "rejected") {
+      statuses.rejected = "Модерация не пройдена"
+    } else {
+      statuses.active = "Активна"
+      statuses.archived = "В архиве"
+    }
+
+    return statuses
   }
 
   return (
@@ -111,8 +120,9 @@ export default function Vacancy({ backLink, link }: Props) {
                     <span>Создать копию</span>
                   </Button>
                 </Link>
-                {/* TODO: show when status is lower then active */}
-                {true && (
+                {(data.status === "testTask" ||
+                  data.status === "moderating" ||
+                  data.status === "archived") && (
                   <Link href={`${asPath}/edit`}>
                     <Button type="secondary">
                       <PenIcon className="icon" />
@@ -210,19 +220,21 @@ export default function Vacancy({ backLink, link }: Props) {
                 <p className={styles.cardTitle}>Описание</p>
                 <p>{data.description}</p>
               </div>
-              <div className={styles.card}>
-                <p className={styles.cardTitle}>Тестовое задание</p>
-                <p>{data.testTask.description}</p>
-                <div className={styles.file}>
-                  <div className={styles.fileNameContainer}>
-                    <DocumentIcon className={styles.fileIcon} />
-                    <span>{data.testTask.fileName}</span>
+              {data.testTask && data.status !== "testTask" && (
+                <div className={styles.card}>
+                  <p className={styles.cardTitle}>Тестовое задание</p>
+                  <p>{data.testTask.description}</p>
+                  <div className={styles.file}>
+                    <div className={styles.fileNameContainer}>
+                      <DocumentIcon className={styles.fileIcon} />
+                      <span>{data.testTask.fileName}</span>
+                    </div>
+                    <span className={styles.fileSize}>
+                      {data.testTask.fileSize}
+                    </span>
                   </div>
-                  <span className={styles.fileSize}>
-                    {data.testTask.fileSize}
-                  </span>
                 </div>
-              </div>
+              )}
               {/* TODO: also if intern doesn't have response to this vacancy */}
               {user.role === "intern" && data.status === "active" && (
                 <div className={styles.bottomCard}>
@@ -292,9 +304,11 @@ export default function Vacancy({ backLink, link }: Props) {
               user.role === "mentor") && (
               <div className={`${styles.card} ${styles.rightCard}`}>
                 <p className={styles.cardTitle}>Статус</p>
-                {/* TODO: fix statuses */}
-                <Timeline statuses={statuses} activeStatus={data.status} />
-                {data.rejectionReason && (
+                <Timeline
+                  statuses={getVacancyStatuses(data.status)}
+                  activeStatus={data.status}
+                />
+                {data.status === "rejected" && data.rejectionReason && (
                   <div className={styles.statusComment}>
                     <p className={styles.statusCommentTitle}>
                       Причина отклонения

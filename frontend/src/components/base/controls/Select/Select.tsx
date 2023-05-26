@@ -61,7 +61,7 @@ export default function Select({
 
   const clear = () => {
     if (multiple) {
-      setNewValue(value || [])
+      onChange?.([])
     }
     setIsActive(false)
   }

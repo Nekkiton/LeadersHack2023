@@ -12,7 +12,6 @@ import MobileFilters from "components/base/MobileFilters"
 import PlusIcon from "assets/icons/plus.svg"
 import SearchIcon from "assets/icons/search.svg"
 import NothingIcon from "assets/icons/document-search.svg"
-import TimesIcon from "assets/icons/times.svg"
 import ListIcon from "assets/icons/list.svg"
 import MapIcon from "assets/icons/map.svg"
 import VacancyCard from "components/base/vacancy/VacancyCard"
@@ -92,6 +91,7 @@ export default function Vacancies({ link, noHeader }: Props) {
   const [statuses, setStatuses] = useState([])
   const [mentors, setMentors] = useState([])
   const [organizations, setOrganizations] = useState([])
+  const [directions, setDirections] = useState([])
   const [currentPage, setCurrentPage] = useState(5)
   const [filters, setFilters] = useState<any>({
     statuses: [],
@@ -114,16 +114,11 @@ export default function Vacancies({ link, noHeader }: Props) {
         search: query,
         statuses,
         mentors,
+        // TODO: add directions
+        //directions,
         page: currentPage,
       }),
   })
-
-  const clearFilters = () => {
-    setQuery("")
-    setStatuses([])
-    setMentors([])
-    setOrganizations([])
-  }
 
   return (
     <div className={styles.container}>
@@ -165,7 +160,6 @@ export default function Vacancies({ link, noHeader }: Props) {
                 value={query}
                 onChange={setQuery}
               />
-              {/* TODO: add all statuses */}
               {user.role === "staff" && (
                 <Select
                   className={styles.filtersSelect}
@@ -183,6 +177,10 @@ export default function Vacancies({ link, noHeader }: Props) {
                     {
                       key: "rejected",
                       value: <VacancyStatus status="rejected" />,
+                    },
+                    {
+                      key: "waitAccepting",
+                      value: <VacancyStatus status="waitAccepting" />,
                     },
                     {
                       key: "archived",
@@ -214,6 +212,19 @@ export default function Vacancies({ link, noHeader }: Props) {
                   value={mentors}
                   onChange={setMentors}
                   multiple
+                />
+              )}
+              {user.role === "staff" && (
+                <Select
+                  className={styles.filtersSelect}
+                  placeholder="Все направления"
+                  multiple
+                  value={directions}
+                  onChange={setDirections}
+                  items={allDirections.map((i) => ({
+                    key: i.id,
+                    value: i.name,
+                  }))}
                 />
               )}
               {/* TODO: if user is curator and page is vacancies (not organization) */}
@@ -297,20 +308,6 @@ export default function Vacancies({ link, noHeader }: Props) {
                 ]}
               />
             )}
-            {false &&
-              (query ||
-                !!statuses.length ||
-                !!mentors.length ||
-                !!organizations.length) && (
-                <Button
-                  className={styles.filtersClear}
-                  type="text"
-                  onClick={clearFilters}
-                >
-                  <TimesIcon className="icon" />
-                  <span>Сбросить все</span>
-                </Button>
-              )}
             {/* TODO: show if user if curator and page is not organization */}
             {(user.role === "curator" || user.role === "intern") && (
               <SmallSwitch

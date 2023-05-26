@@ -35,9 +35,16 @@ export default function StudentProfile({ profile }: Props) {
             <p>{profile.user.email}</p>
           </div>
         </div>
-        <div className={styles.card}>
-          <p className={styles.cardTitle}>График работы</p>
-          <p>{profile.schedule}</p>
+        <div className={styles.hCards}>
+          <div className={styles.card}>
+            <p className={styles.cardTitle}>График работы</p>
+            <p>{profile.schedule}</p>
+          </div>
+          <div className={styles.card}>
+            <p className={styles.cardTitle}>Направление</p>
+            {/* TODO: add profile direction*/}
+            <p>Комфортная городская среда</p>
+          </div>
         </div>
       </div>
       <div className={styles.card}>

@@ -57,6 +57,14 @@ export default function NewVacancy({ editId }: Props) {
       image: null,
     },
   ]
+  const directions = [
+    { name: "IT-город", id: 1 },
+    { name: "Медийный город", id: 2 },
+    { name: "Социальный город", id: 3 },
+    { name: "HR-город", id: 4 },
+    { name: "Комфортная городская среда", id: 5 },
+    { name: "Городская экономика", id: 6 },
+  ]
 
   const [initialData, setInitialData] = useState<{} | null>(null)
 
@@ -84,7 +92,6 @@ export default function NewVacancy({ editId }: Props) {
       message: editId ? "Вакансия изменена" : "Вакансия создана",
       closeIcon: <TimesIcon />,
     })
-    router.push("/staff/vacancies")
   }
 
   // TODO: delete vacancy, handle errors
@@ -112,7 +119,9 @@ export default function NewVacancy({ editId }: Props) {
           <span>Вернуться к вакансиям</span>
         </Button>
       </Link>
-      <h1 className={styles.title}>Создать вакансию</h1>
+      <h1 className={styles.title}>
+        {editId ? "Редактировать вакансию" : "Создать вакансию"}
+      </h1>
       <div className={styles.content}>
         <Form
           className={styles.form}
@@ -136,20 +145,36 @@ export default function NewVacancy({ editId }: Props) {
               textarea
             />
           </Form.Item>
-          <Form.Item
-            name="division"
-            rules={[{ required: true, message: "Заполните это поле" }]}
-          >
-            <Select
-              placeholder="Выберите из списка"
-              label="Подразделение"
-              items={departments.map((i) => ({
-                key: i.id,
-                value: i.name,
-              }))}
-              same
-            />
-          </Form.Item>
+          <div className={styles.formHFields}>
+            <Form.Item
+              name="division"
+              rules={[{ required: true, message: "Заполните это поле" }]}
+            >
+              <Select
+                placeholder="Выберите из списка"
+                label="Подразделение"
+                items={departments.map((i) => ({
+                  key: i.id,
+                  value: i.name,
+                }))}
+                same
+              />
+            </Form.Item>
+            <Form.Item
+              name="direction"
+              rules={[{ required: true, message: "Заполните это поле" }]}
+            >
+              <Select
+                placeholder="Выберите из списка"
+                label="Направление"
+                items={directions.map((i) => ({
+                  key: i.id,
+                  value: i.name,
+                }))}
+                same
+              />
+            </Form.Item>
+          </div>
           <div className={styles.formHFields}>
             <Form.Item
               name="dates"

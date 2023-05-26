@@ -42,6 +42,9 @@ export default function Status({ status, className }: Props) {
   } else if (status === "responsed") {
     text = "Я откликнулся"
     color = "purpure"
+  } else if (status === "waitAccepting") {
+    text = "Ждет вашего подверждения"
+    color = "purpure"
   }
 
   return (

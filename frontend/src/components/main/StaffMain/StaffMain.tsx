@@ -6,6 +6,8 @@ import StarIcon from "assets/icons/star.svg"
 import styles from "./StaffMain.module.scss"
 
 export default function StaffMain() {
+  // TODO: fetch data
+
   return (
     <div className={styles.container}>
       <div className={styles.block}>
@@ -28,7 +30,8 @@ export default function StaffMain() {
                 company: {
                   id: "1",
                   name: "Карьерный центр Правительства Москвы",
-                },                status: "active",
+                },
+                status: "active",
                 mentor: {
                   id: "1",
                   name: "Юлиана Митрофанова",

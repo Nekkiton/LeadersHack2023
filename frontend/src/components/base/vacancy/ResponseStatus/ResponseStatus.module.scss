@@ -12,4 +12,28 @@
   height: 8px;
   border-radius: 50%;
   background: $gray-4;
+
+  .status.light-blue & {
+    background: $light-blue;
+  }
+
+  .status.orange & {
+    background: $orange;
+  }
+
+  .status.green & {
+    background: $green;
+  }
+
+  .status.red & {
+    background: $red;
+  }
+
+  .status.gray & {
+    background: $gray-4;
+  }
+
+  .status.purpure & {
+    background: $purpure;
+  }
 }

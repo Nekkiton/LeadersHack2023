@@ -18,13 +18,11 @@ interface Props {
   responseId?: string
 }
 
-const userImg = "/images/user.svg"
-
 export default function VacancyResponse({ backLink, responseId }: Props) {
   const user = {
-    role: "curator",
+    //role: "curator",
     //role: "mentor",
-    //role: "staff",
+    role: "staff",
   }
 
   const [isCancelModalShowed, setIsCancelModalShowed] = useState(false)
@@ -82,11 +80,15 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
         <StudentInfo profile={data.user} />
         {/* TODO: Manage buttons visibility, add modal */}
         <div className={styles.headerControls}>
-          <Button type="secondary" onClick={toggleCancelModal}>
-            Отклонить
-          </Button>
-          <Button onClick={acceptInternship}>Принять на стажировку</Button>
-          {user.role === "mentor" && (
+          {data.status === "mentorAccepted" && (
+            <>
+              <Button type="secondary" onClick={toggleCancelModal}>
+                Отклонить
+              </Button>
+              <Button onClick={acceptInternship}>Принять на стажировку</Button>
+            </>
+          )}
+          {false && (
             <Button onClick={acceptInterview}>
               Пригласить на собеседование
             </Button>
@@ -105,6 +107,12 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
             <p className={styles.cardTitle}>Статус отклика</p>
             <ResponseStatus status={data.status} />
           </div>
+          {data.status === "rejected" && data.rejectionReason && (
+            <div className={styles.statusComment}>
+              <p className={styles.statusCommentTitle}>Причина отклонения</p>
+              <p>{data.rejectionReason}</p>
+            </div>
+          )}
           <div className={styles.complexCardBlock}>
             <p className={styles.cardTitle}>Тестовое задание</p>
             <File name={data.testTask.fileName} size={data.testTask.fileSize} />
