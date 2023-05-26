@@ -5,10 +5,13 @@ const testData = [
     id: "1902",
     date: "20 иолюя 2023",
     title: "UX/UI дизайнер",
-    company: "Карьерный центр Правительства Москвы",
+    company: {
+      id: "1",
+      name: "Карьерный центр Правительства Москвы",
+    },
     status: "active",
     mentor: {
-      id: "1",
+      id: "007",
       name: "Юлиана Митрофанова",
       avatar: null,
     },
@@ -17,13 +20,35 @@ const testData = [
       countNew: 5,
     },
   },
+  {
+    id: "1907",
+    date: "15 иолюя 2023",
+    title: "Fullstack-разработчик",
+    company: {
+      id: "1",
+      name: "Карьерный центр Правительства Москвы",
+    },
+    status: "active",
+    mentor: {
+      id: "008",
+      name: "Марина Высокова",
+      avatar: null,
+    },
+    responses: {
+      count: 11,
+      countNew: 2,
+    },
+  },
 ]
 
 export interface VacancyData {
   id: string
   date: string
   title: string
-  company: string
+  company: {
+    id: string
+    name: string
+  }
   status: string
   mentor: {
     id: string

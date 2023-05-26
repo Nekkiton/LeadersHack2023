@@ -25,8 +25,10 @@ export default function StaffMain() {
                 id: "1902",
                 date: "20 иолюя 2023",
                 title: "UX/UI дизайнер",
-                company: "Карьерный центр Правительства Москвы",
-                status: "active",
+                company: {
+                  id: "1",
+                  name: "Карьерный центр Правительства Москвы",
+                },                status: "active",
                 mentor: {
                   id: "1",
                   name: "Юлиана Митрофанова",

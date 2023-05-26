@@ -36,7 +36,7 @@ export default function VacancyMapCard({
         <div className={styles.vacancyInfo}>
           <p className={styles.vacancyName}>{vacancy.title}</p>
           {/* TODO: add department */}
-          <p className={styles.vacancyDescription}>{vacancy.company}</p>
+          <p className={styles.vacancyDescription}>{vacancy.company.name}</p>
           <Rating count={1} averageRate={1.1} />
         </div>
         <div className={styles.vacancyUserContainer}>
