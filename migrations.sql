@@ -10,6 +10,7 @@ DO $$ BEGIN
             typname = 'user_role'
     ) THEN CREATE TYPE USER_ROLE AS ENUM (
         'admin',
+        'nobody',
         'candidate',
         'intern',
         'mentor',
@@ -26,7 +27,16 @@ CREATE TABLE IF NOT EXISTS "user" (
     "passwordHash" VARCHAR(1000) NOT NULL
 );
 
-CREATE TABLE IF NOT EXISTS "userProfile" (
+INSERT INTO
+    "user" ("role", "email", "passwordHash")
+VALUES
+    (
+        'admin',
+        'admin@example.com',
+        '$2b$10$zXWjkOJUCnNrG9CL3HT8vevztpbfltWgOZE64MnalRSGiaOvR6y0e'
+    ) ON CONFLICT DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS "user_profile" (
     "id" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
     "userId" UUID NOT NULL UNIQUE,
     "name" VARCHAR(255) NOT NULL,

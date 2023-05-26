@@ -25,7 +25,7 @@ export default function SignIn() {
 
   const signIn = async ({ email, password }: any) => {
     return axios
-      .post("/api/v1/auth/signIn", {
+      .post("/api/v1/auth/sign-in", {
         username: email,
         password: password,
       })

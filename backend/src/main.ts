@@ -18,7 +18,8 @@ async function bootstrap() {
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
-  app.useGlobalPipes(new ValidationPipe());
+  // whitelist strip additional properties from DTO
+  app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.use(cookieParser());
   const configService: ConfigService = app.get(ConfigService);
   await app.listen(configService.get('port'));
