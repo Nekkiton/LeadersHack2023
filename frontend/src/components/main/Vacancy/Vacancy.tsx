@@ -10,6 +10,7 @@ import CopyIcon from "assets/icons/copy.svg"
 import Status from "components/base/vacancy/Status"
 import PenIcon from "assets/icons/pen.svg"
 import MakeResponseModal from "components/main/modals/MakeResponse"
+import CancelVacancyModal from "components/main/modals/CancelVacancy"
 import MakeInternshipFeedbackModal from "components/main/modals/MakeInternshipFeedback"
 import PlusIcon from "assets/icons/plus.svg"
 import TimesIcon from "assets/icons/times.svg"
@@ -42,6 +43,7 @@ export default function Vacancy({ backLink, link }: Props) {
 
   const [isMakeResponseShowed, setIsMakeResponseShowed] = useState(false)
   const [isMakeFeedbackShowed, setIsMakeFeedbackShowed] = useState(false)
+  const [isCancelVacancyShowed, setIsCancelVacancyShowed] = useState(false)
 
   const [editTestTask, setEditTestTask] = useState({})
 
@@ -159,8 +161,12 @@ export default function Vacancy({ backLink, link }: Props) {
             )}
             {user.role === "curator" && data.status === "moderating" && (
               <>
-                {/* TODO: modal */}
-                <Button type="secondary">Отклонить</Button>
+                <Button
+                  type="secondary"
+                  onClick={() => setIsCancelVacancyShowed(true)}
+                >
+                  Отклонить
+                </Button>
                 <Button onClick={acceptVacancy}>Согласовать</Button>
               </>
             )}
@@ -351,6 +357,11 @@ export default function Vacancy({ backLink, link }: Props) {
       <MakeInternshipFeedbackModal
         isShowed={isMakeFeedbackShowed}
         setIsShowed={setIsMakeFeedbackShowed}
+      />
+
+      <CancelVacancyModal
+        isShowed={isCancelVacancyShowed}
+        setIsShowed={setIsCancelVacancyShowed}
       />
     </>
   )
