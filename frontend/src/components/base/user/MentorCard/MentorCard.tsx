@@ -34,6 +34,8 @@ export default function UserCard({ mentorInfo }: Props) {
     })
   }
 
+  const status = mentorInfo.status + (!!mentorInfo?.progress ? ` (${mentorInfo.progress}%)` : "");
+
   return (
     <>
       <Modal
@@ -45,7 +47,7 @@ export default function UserCard({ mentorInfo }: Props) {
       />
       <div className={styles.card}>
         <div className={styles.cardBlock}>
-          <ResponseStatus className={styles.cardStatus} status="new" />
+          <ResponseStatus className={styles.cardStatus} status={status} />
           <div className={styles.cardUser}>
             <img
               className={styles.cardUserImg}

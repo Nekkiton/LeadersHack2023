@@ -7,7 +7,8 @@ const testData = [
     avatar: null,
     phone: "+7(921)123-45-67",
     email: "marina@gmail.com",
-    status: "new",
+    status: "pass_education",
+    progress: null,
     reviews: {
       count: 1,
       averageRate: 4.4,
@@ -19,7 +20,8 @@ const testData = [
     avatar: null,
     phone: "+7 (910) 234-56-78",
     email: "marina@gmail.com",
-    status: "new",
+    status: "education",
+    progress: 75,
     reviews: {
       count: 10,
       averageRate: 4.7,
@@ -34,6 +36,7 @@ export interface MentorData {
   phone: string
   email: string
   status: string
+  progress: number
   reviews: {
     count: number
     averageRate: number

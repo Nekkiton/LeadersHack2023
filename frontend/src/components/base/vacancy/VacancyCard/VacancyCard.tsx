@@ -31,7 +31,7 @@ export default function VacancyCard({ vacancy, noUser, link }: Props) {
       <div className={styles.vacancyBody}>
         <div className={styles.vacancyInfo}>
           <p className={styles.vacancyName}>{vacancy.title}</p>
-          <p className={styles.vacancyLocation}>{vacancy.company}</p>
+          <p className={styles.vacancyLocation}>{vacancy.company.name}</p>
         </div>
         {!noUser && (
           <div className={styles.vacancyUser}>
