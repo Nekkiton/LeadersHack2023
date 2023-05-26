@@ -15,35 +15,24 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from './auth.guard';
 import { SignInDto } from './dto/sign-in.dto';
 import { Request, Response } from 'express';
-import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService, private configService: ConfigService) {}
+  constructor(private authService: AuthService) {}
 
   @HttpCode(HttpStatus.OK)
   @Post('signIn')
   async signIn(@Body() signInDto: SignInDto, @Res({ passthrough: true }) res: Response) {
     const token = await this.authService.signIn(signInDto.username, signInDto.password);
-    /**
-     * TODO:
-     * 1. Set domain
-     * 2. secure: true
-     * 3. sameSite: 'strict'
-     * 4. httpOnly: true
-     */
-    const ttlSeconds = parseInt(this.configService.get('jwt.expiresIn'), 10);
-    res.cookie('access_token', token, {
-      expires: new Date(Date.now() + ttlSeconds * 1000),
-    });
+    res.setHeader('authentication', `Bearer ${token}`);
     return;
   }
 
   @HttpCode(HttpStatus.OK)
-  @Get('auth')
+  @Get()
   async auth(@Req() req: Request) {
-    const token = req.cookies['access_token'];
+    const token = req.header['authentication'];
     if (!token) {
       throw new UnauthorizedException();
     }
