@@ -1,0 +1,11 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+}
+
+.tabsContainer {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
