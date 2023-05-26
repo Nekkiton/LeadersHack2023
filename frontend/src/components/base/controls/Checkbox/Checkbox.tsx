@@ -10,6 +10,7 @@ interface Props {
   onChange?: (val: any) => void
   value?: any[]
   className?: string
+  small?: boolean
 }
 
 export default function Checkbox({
@@ -17,6 +18,7 @@ export default function Checkbox({
   onChange,
   value = [],
   className,
+  small,
 }: Props) {
   const toggleValue = (val: any) => {
     if (value.includes(val)) {
@@ -35,7 +37,7 @@ export default function Checkbox({
         <div
           className={`${styles.checkbox} ${
             value.includes(item.value) ? styles.active : ""
-          }`}
+          } ${small ? styles.small : ""} `}
           onClick={() => toggleValue(item.value)}
           key={item.value}
         >

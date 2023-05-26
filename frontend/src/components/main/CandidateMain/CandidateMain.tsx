@@ -1,15 +1,10 @@
-import { useState, useEffect } from "react"
-import { Form, notification } from "antd"
+import { useState } from "react"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
-import Popup from "components/base/controls/Popup"
-import Input from "components/base/controls/Input"
-import Checkbox from "components/base/controls/Checkbox"
+import InternshipReminderModal from "components/main/modals/InternshipReminder"
 import StudentEmoji from "assets/icons/student-emoji.svg"
 import ProgrammerEmoji from "assets/icons/programmer-emoji.svg"
 import WaiterEmoji from "assets/icons/waiter-emoji.svg"
-import TimesIcon from "assets/icons/times.svg"
-import CheckIcon from "assets/icons/check.svg"
 import styles from "./CandidateMain.module.scss"
 
 export default function CandidateMain() {
@@ -48,32 +43,10 @@ export default function CandidateMain() {
     },
   ]
 
-  const isReceptionOpen = true
+  const isReceptionOpen = false
 
-  const [isPopupShowed, setIsPopupShowed] = useState(false)
-  const [isPopupValid, setIsPopupValid] = useState(false)
-  const [form] = Form.useForm()
-  const formValues = Form.useWatch([], form)
-
-  useEffect(() => {
-    form.validateFields({ validateOnly: true }).then(
-      () => setIsPopupValid(true),
-      () => setIsPopupValid(false)
-    )
-  }, [formValues])
-
-  const subscribeInternship = (data: any) => {
-    setIsPopupShowed(false)
-    notification.open({
-      message: (
-        <div className={styles.notification}>
-          <CheckIcon className={styles.notificationIcon} />
-          <p>Напоминание установлено</p>
-        </div>
-      ),
-      closeIcon: <TimesIcon />,
-    })
-  }
+  const [isInternshipReminderShowed, setIsInternshipReminderShowed] =
+    useState(false)
 
   return (
     <>
@@ -106,7 +79,7 @@ export default function CandidateMain() {
               </Link>
             ) : (
               <Button
-                onClick={() => setIsPopupShowed(true)}
+                onClick={() => setIsInternshipReminderShowed(true)}
                 className={styles.introBtn}
               >
                 Узнать о старте
@@ -198,52 +171,10 @@ export default function CandidateMain() {
         </div>
       </div>
 
-      {/* TODO: desktop version */}
-      <Popup
-        isShowed={isPopupShowed}
-        setIsShowed={setIsPopupShowed}
-        title="Напоминание о стажировке"
-      >
-        <Form
-          className={styles.popupForm}
-          form={form}
-          onFinish={subscribeInternship}
-        >
-          <p className={styles.popupFormHint}>
-            Узнай первым о старте приема заявок на стажировку в Правительстве
-            Москвы в 2024 году
-          </p>
-          <Form.Item
-            name="email"
-            rules={[{ required: true, message: "Заполните это поле" }]}
-          >
-            <Input label="Эл. почта" />
-          </Form.Item>
-          <Form.Item
-            name="rues"
-            rules={[{ required: true, message: "Заполните это поле" }]}
-          >
-            <Checkbox
-              items={[
-                {
-                  value: "yes",
-                  content: (
-                    <div>
-                      Даю согласие на{" "}
-                      <span className={styles.popupFormLink}>
-                        обработку персональных данных
-                      </span>
-                    </div>
-                  ),
-                },
-              ]}
-            />
-          </Form.Item>
-          <Button htmlType="submit" disabled={!isPopupValid}>
-            Отправить
-          </Button>
-        </Form>
-      </Popup>
+      <InternshipReminderModal
+        isShowed={isInternshipReminderShowed}
+        setIsShowed={setIsInternshipReminderShowed}
+      />
     </>
   )
 }

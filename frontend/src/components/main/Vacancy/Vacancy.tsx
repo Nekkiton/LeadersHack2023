@@ -1,18 +1,15 @@
 import Link from "next/link"
-import { Form } from "antd"
 import { useRouter } from "next/router"
 import Button from "components/base/controls/Button"
 import UserRating from "components/base/user/UserRating"
 import VacancyResponses from "components/base/vacancy/Responses"
-import Input from "components/base/controls/Input"
 import styles from "./Vacancy.module.scss"
 import File from "components/base/controls/File"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import CopyIcon from "assets/icons/copy.svg"
 import Status from "components/base/vacancy/Status"
 import PenIcon from "assets/icons/pen.svg"
-import Popup from "components/base/controls/Popup"
-import PaperclipIcon from "assets/icons/paperclip.svg"
+import MakeResponseModal from "components/main/modals/MakeResponse"
 import PlusIcon from "assets/icons/plus.svg"
 import TimesIcon from "assets/icons/times.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
@@ -41,7 +38,8 @@ export default function Vacancy({ backLink, link }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleModal = () => setIsModalOpen(!isModalOpen)
 
-  const [isResponsePopupShowed, setIsResponsePopupShowed] = useState(false)
+  const [isMakeResponseShowed, setIsMakeResponseShowed] =
+    useState(false)
 
   const [editTestTask, setEditTestTask] = useState({})
 
@@ -144,7 +142,9 @@ export default function Vacancy({ backLink, link }: Props) {
             {/* TODO: also if intern does not have response to this vacancy */}
             {/* TODO: add action (modal) */}
             {user.role === "intern" && data?.status === "active" && (
-              <Button>Отлкикнуться</Button>
+              <Button onClick={() => setIsMakeResponseShowed(true)}>
+                Отлкикнуться
+              </Button>
             )}
             {/* TODO: add action, show when internship is finished */}
             {user.role === "intern" && <Button>Оценить стажировку</Button>}
@@ -223,7 +223,7 @@ export default function Vacancy({ backLink, link }: Props) {
                 <div className={styles.bottomCard}>
                   {/* TODO: manage visibility */}
                   {true && (
-                    <Button onClick={() => setIsResponsePopupShowed(true)}>
+                    <Button onClick={() => setIsMakeResponseShowed(true)}>
                       Откликнуться
                     </Button>
                   )}
@@ -310,29 +310,10 @@ export default function Vacancy({ backLink, link }: Props) {
         </div>
       </div>
 
-      <Popup
-        title="Откликнуться на вакансию"
-        isShowed={isResponsePopupShowed}
-        setIsShowed={setIsResponsePopupShowed}
-      >
-        <Form className={styles.responsePopupForm}>
-          <Form.Item
-            rules={[{ required: true, message: "Заполните это поле" }]}
-          >
-            <Input
-              textarea
-              placeholder="Напиши, почему ты хочешь проходить стажировку в этой компании"
-              label="Сопроводительное письмо"
-            />
-          </Form.Item>
-          {/* TODO: add action */}
-          <Button type="text" style={{ alignSelf: "flex-start" }}>
-            <PaperclipIcon className="icon" />
-            <span>Прикрепить тестовое задание</span>
-          </Button>
-          <Button>Отправить отклик</Button>
-        </Form>
-      </Popup>
+      <MakeResponseModal
+        isShowed={isMakeResponseShowed}
+        setIsShowed={setIsMakeResponseShowed}
+      />
     </>
   )
 }

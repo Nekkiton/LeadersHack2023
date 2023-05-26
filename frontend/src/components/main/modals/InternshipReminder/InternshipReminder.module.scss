@@ -1,0 +1,21 @@
+@import "assets/css/config";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  width: 343px;
+}
+
+.formHint {
+  @include paragraph-2;
+  color: $gray-3;
+}
+
+.formLink {
+  color: $blue;
+}
+
+.formRules {
+  @include caption-1;
+}

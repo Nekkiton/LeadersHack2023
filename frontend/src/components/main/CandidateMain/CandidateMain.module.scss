@@ -220,21 +220,6 @@
   }
 }
 
-.popupForm {
-  display: flex;
-  flex-direction: column;
-  gap: inherit;
-}
-
-.popupFormHint {
-  @include paragraph-2;
-  color: $gray-3;
-}
-
-.popupFormLink {
-  color: $blue;
-}
-
 .notification {
   display: flex;
   align-items: center;

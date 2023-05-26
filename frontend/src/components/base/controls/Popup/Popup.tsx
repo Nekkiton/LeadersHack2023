@@ -33,7 +33,7 @@ export default function Popup({
       <span className={styles.backdrop} onClick={close} />
       <div className={styles.popup}>
         <div className={styles.popupHeader}>
-          <h5>{title}</h5>
+          <h3 className={styles.popupTitle}>{title}</h3>
           <TimesIcon className={styles.popupHeaderIcon} onClick={close} />
         </div>
         {children}
