@@ -47,6 +47,7 @@
 }
 
 .linkIcon {
+  flex-shrink: 0;
   width: 24px;
   height: 24px;
 }
@@ -63,11 +64,13 @@
   align-self: flex-start;
 }
 
-@include mobile {
+@include tablet {
   .menu {
     display: none;
   }
+}
 
+@include mobile {
   .footer {
     display: none;
   }

@@ -2,6 +2,22 @@
 
 .container {
   display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.headerTitle {
+  text-transform: uppercase;
+}
+
+.form {
+  display: flex;
   flex-grow: 1;
   gap: 24px;
   padding: 16px;
@@ -12,6 +28,10 @@
 .userImgContainer {
   align-self: flex-start;
   position: relative;
+
+  &:not(.active) {
+    display: none;
+  }
 }
 
 .userImg {
@@ -75,16 +95,6 @@
   gap: 24px;
 }
 
-.mobileHeader {
-  display: none;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.mobileHeaderTitle {
-  text-transform: uppercase;
-}
-
 .mobileImgContainer {
   display: none;
   align-items: center;
@@ -96,15 +106,29 @@
   font-size: 16px !important;
 }
 
-@include mobile {
+@include tablet {
   .container {
-    flex-direction: column;
-    background: none;
-    padding: 0;
+    gap: 16px;
+  }
+
+  .header {
+    gap: 16px;
   }
 
   .userImgContainer {
     display: none;
+  }
+
+  .mobileImgContainer {
+    display: flex;
+  }
+}
+
+@include mobile {
+  .form {
+    flex-direction: column;
+    background: none;
+    padding: 0;
   }
 
   .mobileHeader {
@@ -152,10 +176,6 @@
     &.mobile {
       display: block;
     }
-  }
-
-  .mobileImgContainer {
-    display: flex;
   }
 
   .userImg {
