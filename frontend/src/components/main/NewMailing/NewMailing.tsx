@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
-import { Form } from "antd"
+import { useRouter } from "next/router"
+import { Form, Spin, notification } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Select from "components/base/controls/Select"
@@ -10,9 +11,16 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import ExclamationIcon from "assets/icons/exclamation.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import TrashIcon from "assets/icons/trash.svg"
+import TimesIcon from "assets/icons/times.svg"
 import styles from "./NewMailing.module.scss"
 
-export default function NewVacancy() {
+interface Props {
+  editId?: string
+}
+
+export default function NewVacancy({ editId }: Props) {
+  const router = useRouter()
+
   const [isValid, setIsValid] = useState(false)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [form] = Form.useForm()
@@ -27,14 +35,49 @@ export default function NewVacancy() {
     )
   }, [formValues])
 
+  const [initialData, setInitialData] = useState<{} | null>(null)
+
+  useEffect(() => {
+    // TODO: fetch mail, handle errors
+    if (editId || router.query.copy) {
+      setInitialData({
+        theme: "ad",
+        text: "asd",
+      })
+    }
+  }, [editId, router.query.copy])
+
+  if ((router.query.copy || editId) && !initialData) {
+    return <Spin />
+  }
+
+  // TODO: create or edit mailint, handle errors
+  const saveMailing = (data: any) => {
+    console.log(data)
+    notification.open({
+      message: editId ? "Рассылка изменена" : "Рассылка создана",
+      closeIcon: <TimesIcon />,
+    })
+    router.push("/curator/mailing")
+  }
+
+  // TODO: delete mailing, handle errors
+  const deleteMailing = () => {
+    toggleModal()
+    notification.open({
+      message: "Рассылка удалена",
+      closeIcon: <TimesIcon />,
+    })
+    router.push("/curator/mailing")
+  }
+
   return (
     <div className={styles.container}>
-      {/* TODO: onOk should remove vacancy */}
       <Modal
         isOpen={isModalOpen}
         title="Вы уверены, что хотите удалить рассылку?"
         onCancel={toggleModal}
-        onOk={toggleModal}
+        onOk={deleteMailing}
         okText="Удалить"
       />
       <Link className={styles.navBtn} href="/curator/mailing">
@@ -43,9 +86,16 @@ export default function NewVacancy() {
           <span>Вернуться к рассылкам</span>
         </Button>
       </Link>
-      <h1 className={styles.title}>Создать рассылку</h1>
+      <h1 className={styles.title}>
+        {editId ? "Редактировать рассылку" : "Создать рассылку"}
+      </h1>
       <div className={styles.content}>
-        <Form className={styles.form} form={form}>
+        <Form
+          className={styles.form}
+          form={form}
+          initialValues={initialData || {}}
+          onFinish={saveMailing}
+        >
           <Form.Item
             name="theme"
             rules={[{ required: true, message: "Заполните это поле" }]}
@@ -80,12 +130,10 @@ export default function NewVacancy() {
                 <Select
                   placeholder="Выберите из списка"
                   label="Получатели"
-                  items={
-                    [
-                      { key: 1, value: 'Наставники'},
-                      { key: 2, value: 'Кураторы' },
-                    ]
-                  }
+                  items={[
+                    { key: 1, value: "Наставники" },
+                    { key: 2, value: "Кураторы" },
+                  ]}
                   multiple
                 />
               </Form.Item>
@@ -106,11 +154,10 @@ export default function NewVacancy() {
           <div className={styles.formControls}>
             <Form.Item>
               <Button htmlType="submit" disabled={!isValid}>
-                Создать
+                Сохранить
               </Button>
             </Form.Item>
-            {/* TODO: добавить кнопку если редактируем */}
-            {false && (
+            {editId && (
               <Button
                 className={styles.formDeleteBtn}
                 type="text"

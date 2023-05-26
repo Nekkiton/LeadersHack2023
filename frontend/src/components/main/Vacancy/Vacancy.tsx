@@ -32,8 +32,9 @@ const userImg = "/images/user.svg"
 export default function Vacancy({ backLink, link }: Props) {
   const user = {
     //role: "staff",
-    role: "mentor",
+    //role: "mentor",
     //role: "intern",
+    role: "curator",
   }
 
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -58,6 +59,13 @@ export default function Vacancy({ backLink, link }: Props) {
     notification.open({
       message:
         "Вакансия и тестовое задание отправлены на модерацию. Обычно она занимает не более 3 рабочих дней",
+      closeIcon: <TimesIcon />,
+    })
+  }
+
+  const acceptVacancy = () => {
+    notification.open({
+      message: "Вакансия согласована",
       closeIcon: <TimesIcon />,
     })
   }
@@ -147,6 +155,13 @@ export default function Vacancy({ backLink, link }: Props) {
                     <span>Редактировать тестовое задание</span>
                   </Button>
                 )}
+              </>
+            )}
+            {user.role === "curator" && data.status === "moderating" && (
+              <>
+                {/* TODO: modal */}
+                <Button type="secondary">Отклонить</Button>
+                <Button onClick={acceptVacancy}>Согласовать</Button>
               </>
             )}
             {/* TODO: also if intern does not have response to this vacancy */}

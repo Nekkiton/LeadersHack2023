@@ -29,9 +29,9 @@ const userImg = "/images/user.svg"
 
 export default function Vacancies({ link, noHeader }: Props) {
   const user = {
-    role: "mentor",
+    //role: "mentor",
     //role: "staff",
-    //role: "curator",
+    role: "curator",
     //role: "intern",
   }
 
@@ -193,7 +193,7 @@ export default function Vacancies({ link, noHeader }: Props) {
                 />
               )}
               {/* TODO: if user is staff or (user is curator and page is organization) */}
-              {user.role === "staff" && (
+              {(user.role === "staff" || user.role === "curator") && (
                 <Select
                   className={styles.filtersSelect}
                   placeholder="Все наставники"
@@ -214,7 +214,7 @@ export default function Vacancies({ link, noHeader }: Props) {
                   multiple
                 />
               )}
-              {user.role === "staff" && (
+              {(user.role === "staff" || user.role === "curator") && (
                 <Select
                   className={styles.filtersSelect}
                   placeholder="Все направления"
@@ -228,7 +228,7 @@ export default function Vacancies({ link, noHeader }: Props) {
                 />
               )}
               {/* TODO: if user is curator and page is vacancies (not organization) */}
-              {user.role === "curator" && (
+              {false && user.role === "curator" && (
                 <Select
                   className={styles.filtersSelect}
                   placeholder="Все организации"

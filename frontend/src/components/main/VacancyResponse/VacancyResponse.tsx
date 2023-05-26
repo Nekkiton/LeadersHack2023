@@ -20,8 +20,8 @@ interface Props {
 
 export default function VacancyResponse({ backLink, responseId }: Props) {
   const user = {
-    //role: "curator",
-    role: "mentor",
+    role: "curator",
+    //role: "mentor",
     //role: "staff",
   }
 
@@ -117,11 +117,6 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
                 </Button>
               )}
             </>
-          )}
-          {user.role === "smentor" && <Button>Оценить стажера</Button>}
-          {user.role === "curator" && <Button>Оценить резюме</Button>}
-          {user.role === "curator" && (
-            <Button>Внести результаты кейс-чемпионата</Button>
           )}
         </div>
       </div>

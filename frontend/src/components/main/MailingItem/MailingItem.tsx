@@ -1,9 +1,7 @@
 import Link from "next/link"
+import { useRouter } from "next/router"
 import Button from "components/base/controls/Button"
-import File from "components/base/controls/File"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
-import PhoneIcon from "assets/icons/phone.svg"
-import MailIcon from "assets/icons/mail.svg"
 import PenIcon from "assets/icons/pen.svg"
 import CopyIcon from "assets/icons/copy.svg"
 import styles from "./MailingItem.module.scss"
@@ -13,6 +11,8 @@ interface Props {
 }
 
 export default function MailingItem({ backLink }: Props) {
+  const router = useRouter()
+
   return (
     <div className={styles.container}>
       <Link className={styles.backLink} href={backLink}>
@@ -26,14 +26,22 @@ export default function MailingItem({ backLink }: Props) {
           Тестирование кандидатов пройдет с 10 по 17 мая
         </h1>
         <div className={styles.headerControls}>
-          <Button type="text">
-            <CopyIcon className="icon" />
-            <span>Создать копию</span>
-          </Button>
-          <Button type="secondary">
-            <PenIcon className="icon" />
-            <span>Редактировать</span>
-          </Button>
+          {/* TODO: modals */}
+          <Link href={`/curator/add-mailing?copy=${router.query.id}`}>
+            <Button type="text">
+              <CopyIcon className="icon" />
+              <span>Создать копию</span>
+            </Button>
+          </Link>
+          {/* TODO: if mailing is in past */}
+          {true && (
+            <Link href={`/curator/mailing/${router.query.id}/edit`}>
+              <Button type="secondary">
+                <PenIcon className="icon" />
+                <span>Редактировать</span>
+              </Button>
+            </Link>
+          )}
         </div>
       </div>
       <div className={styles.cards}>

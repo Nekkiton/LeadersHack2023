@@ -1,10 +1,7 @@
-import { useState } from "react"
-import { Spin, notification } from "antd"
+import { Spin } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
-import TimesIcon from "assets/icons/times.svg"
-import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import { useQuery } from "@tanstack/react-query"
 import { fetchCandidateInfo } from "data"
 import styles from "./Candidate.module.scss"
@@ -16,8 +13,6 @@ interface Props {
   backLink: string
   candidateId: string
 }
-
-const userImg = "/images/user.svg"
 
 export default function Candidate({ backLink, candidateId }: Props) {
   const user = {
@@ -37,34 +32,6 @@ export default function Candidate({ backLink, candidateId }: Props) {
     [key: string]: string
   }
 
-  const [isCancelModalShowed, setIsCancelModalShowed] = useState(false)
-  const toggleCancelModal = () => setIsCancelModalShowed((prev) => !prev)
-
-  // TODO: validate modal data, cancel response, handle errors
-  const cancelResponse = () => {
-    toggleCancelModal()
-    notification.open({
-      message: "Отклик отклонен",
-      closeIcon: <TimesIcon />,
-    })
-  }
-
-  // TODO: accept response, handle errors, notification text
-  const acceptInternship = () => {
-    notification.open({
-      message: "Принято на стажировку",
-      closeIcon: <TimesIcon />,
-    })
-  }
-
-  // TODO: accept response, handle errors, notification text
-  const acceptInterview = () => {
-    notification.open({
-      message: "Приглашено на собеседование",
-      closeIcon: <TimesIcon />,
-    })
-  }
-
   const { data, isLoading } = useQuery({
     queryKey: ["fetchCandidateInfo", { id: candidateId }],
     queryFn: () =>
@@ -77,11 +44,6 @@ export default function Candidate({ backLink, candidateId }: Props) {
 
   return (
     <div className={styles.container}>
-      <ResponseCancelModal
-        isOpen={isCancelModalShowed}
-        onCancel={toggleCancelModal}
-        onOk={cancelResponse}
-      />
       <Link href={backLink}>
         <Button type="text">
           <ChevronLeftIcon className="icon" />
@@ -90,20 +52,12 @@ export default function Candidate({ backLink, candidateId }: Props) {
       </Link>
       <div className={styles.header}>
         <StudentInfo profile={data.user} />
-        {/* TODO: Manage buttons visibility, add modal */}
         <div className={styles.headerControls}>
-          <Button type="secondary" onClick={toggleCancelModal}>
-            Отклонить
-          </Button>
-          <Button onClick={acceptInternship}>Принять на стажировку</Button>
-          {user.role === "mentor" && (
-            <Button onClick={acceptInterview}>
-              Пригласить на собеседование
-            </Button>
-          )}
-          {user.role === "mentor" && <Button>Оценить стажера</Button>}
+          {/* TODO: если резюме не оценено еще? */}
+          {/* TODO: add modal */}
           {user.role === "curator" && <Button>Оценить резюме</Button>}
-          {user.role === "curator" && (
+          {/* TODO: если результаты еще не внесены */}
+          {user.role === "curator" && data.status === "hackathon" && (
             <Button>Внести результаты кейс-чемпионата</Button>
           )}
         </div>
@@ -114,10 +68,6 @@ export default function Candidate({ backLink, candidateId }: Props) {
           <div className={styles.complexCardBlock}>
             <p className={styles.cardTitle}>Статус</p>
             <Timeline statuses={statuses} activeStatus={data.status} />
-          </div>
-          <div className={styles.statusComment}>
-            <p className={styles.statusCommentTitle}>Причина отклонения</p>
-            <p>{data.rejectionReason}</p>
           </div>
           <div className={styles.complexCardBlock}>
             <p className={styles.cardTitle}>Набрано баллов</p>
