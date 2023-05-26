@@ -9,7 +9,7 @@ export const statusTitles: Record<VacancyStatus, string> = {
   [VacancyStatus.archived]: "В архиве",
 }
 
-export const getVacancyStatuses = (activeStatus: string) => {
+export const getVacancyStatuses = (activeStatus: VacancyStatus) => {
   const statuses = [
     VacancyStatus.created,
     VacancyStatus.testTask,
