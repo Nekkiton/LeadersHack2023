@@ -46,16 +46,18 @@
 .filters {
   display: flex;
   align-items: center;
+  gap: 16px;
 }
 
 .filtersFields {
   display: flex;
   align-items: center;
   gap: 8px;
+  width: 100%;
 }
 
 .filtersInput {
-  width: 296px;
+  width: 100%;
 }
 
 .filtersSelect {
@@ -97,14 +99,6 @@
 
   .filters {
     gap: 16px;
-  }
-
-  .filtersFields {
-    width: 100%;
-  }
-
-  .filtersInput {
-    width: 100%;
   }
 
   .filtersSelect {

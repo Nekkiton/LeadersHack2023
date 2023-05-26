@@ -5,6 +5,7 @@
   flex-direction: column;
   gap: 24px;
   width: 100%;
+  flex-grow: 1;
 }
 
 .title {
@@ -34,22 +35,18 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  max-width: 378px;
 }
 
 .nothingDescription {
   @include paragraph-2;
 }
 
-.nothingLink {
-  display: flex;
-  flex-direction: column;
-  width: 311px;
-}
-
 .card {
   @include paragraph-2;
 
   padding: 16px;
+  width: 100%;
   background: $white;
   border-radius: 8px;
 }
@@ -59,10 +56,9 @@
 }
 
 .timeline {
-  @include scrollable(16px);
-
   display: flex;
   margin-top: 7px;
+  width: 100%;
 }
 
 .timelineItem {
@@ -70,8 +66,8 @@
 
   display: flex;
   flex-direction: column;
-  flex-shrink: 0;
   gap: 8px;
+  width: 100%;
   position: relative;
   padding: 23px 24px 16px 0;
   background: $white;
@@ -128,13 +124,17 @@
   gap: 8px;
 }
 
-.hintWithButton {
+.hintWithBtn {
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 16px;
 }
 
 .comment {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   background: $gray-5;
 }
 
@@ -167,4 +167,50 @@
 .scoreDetailsItemDivider {
   flex-grow: 1;
   border-bottom: 1px dashed $gray-5;
+}
+
+.cards {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+}
+
+@include tablet {
+  .cards {
+    flex-direction: column-reverse;
+    gap: 24px;
+  }
+}
+
+@include mobile {
+  .nothingTitle {
+    @include heading-2;
+  }
+
+  .nothingLink {
+    display: flex;
+    flex-direction: column;
+    width: 311px;
+  }
+
+  .timeline {
+    @include scrollable(16px);
+
+    width: auto;
+  }
+
+  .timelineItem {
+    flex-shrink: 0;
+    width: auto;
+  }
+
+  .hintWithBtn {
+    align-items: stretch;
+  }
+
+  .hintWithBtnLink {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+  }
 }

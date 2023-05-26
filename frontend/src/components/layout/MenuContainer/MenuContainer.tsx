@@ -114,7 +114,7 @@ export default function MenuContainer({ children, role }: Props) {
       {
         // TODO: fetch active internship
         text: "Заявка на стажировку 2023 — 2024",
-        link: "/intern/responses/1",
+        link: "/intern/app",
         icon: <OrderIcon />,
       },
       { text: "Расписание стажеров", icon: <CalendarIcon /> },

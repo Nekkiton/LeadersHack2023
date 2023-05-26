@@ -81,7 +81,7 @@ export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
       {
         // TODO: fetch active internship
         text: "Заявка на стажировку 2023 — 2024",
-        link: "/intern/register",
+        link: "/intern/app",
         icon: <OrderIcon />,
       },
       { text: "Профиль", link: "/profile", icon: <UserIcon /> },
