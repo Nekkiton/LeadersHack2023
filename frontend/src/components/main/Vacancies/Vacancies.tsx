@@ -31,9 +31,9 @@ const userImg = "/images/user.svg"
 export default function Vacancies({ link, noHeader }: Props) {
   const user = {
     //role: "mentor",
-    //role: "staff",
+    role: "staff",
     //role: "curator",
-    role: "intern",
+    //role: "intern",
   }
 
   // TODO: fetch mentors for staff or for curator on organization page
