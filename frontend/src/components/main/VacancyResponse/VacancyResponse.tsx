@@ -7,6 +7,7 @@ import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
+import InterviewInviteModal from "components/main/modals/InterviewInvite"
 import { useQuery } from "@tanstack/react-query"
 import { fetchVacancyResponseInfo } from "data"
 import styles from "./VacancyResponse.module.scss"
@@ -20,11 +21,12 @@ interface Props {
 
 export default function VacancyResponse({ backLink, responseId }: Props) {
   const user = {
-    role: "curator",
-    //role: "mentor",
+    //role: "curator",
+    role: "mentor",
     //role: "staff",
   }
 
+  const [isInterviewInviteShowed, setIsInterviewInviteShowed] = useState(false)
   const [isCancelModalShowed, setIsCancelModalShowed] = useState(false)
   const toggleCancelModal = () => setIsCancelModalShowed((prev) => !prev)
 
@@ -73,83 +75,98 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
   if (!data || isLoading) return <Spin />
 
   return (
-    <div className={styles.container}>
-      <ResponseCancelModal
-        isOpen={isCancelModalShowed}
-        onCancel={toggleCancelModal}
-        onOk={cancelResponse}
-      />
-      <Link href={backLink}>
-        <Button type="text">
-          <ChevronLeftIcon className="icon" />
-          <span>Вернуться к вакансии</span>
-        </Button>
-      </Link>
-      <div className={styles.header}>
-        <StudentInfo profile={data.user} />
-        {/* TODO: Manage buttons visibility, add modal */}
-        <div className={styles.headerControls}>
-          {user.role === "staff" && data.status === "mentorAccepted" && (
-            <>
-              <Button type="secondary" onClick={toggleCancelModal}>
-                Отклонить
-              </Button>
-              <Button onClick={acceptInternship}>Принять на стажировку</Button>
-            </>
-          )}
-          {user.role === "mentor" && (
-            <>
-              {(data.status === "new" ||
-                data.status === "old" ||
-                data.status === "interview") && (
+    <>
+      <div className={styles.container}>
+        <ResponseCancelModal
+          isOpen={isCancelModalShowed}
+          onCancel={toggleCancelModal}
+          onOk={cancelResponse}
+        />
+
+        <Link href={backLink}>
+          <Button type="text">
+            <ChevronLeftIcon className="icon" />
+            <span>Вернуться к вакансии</span>
+          </Button>
+        </Link>
+        <div className={styles.header}>
+          <StudentInfo profile={data.user} />
+          {/* TODO: Manage buttons visibility, add modal */}
+          <div className={styles.headerControls}>
+            {user.role === "staff" && data.status === "mentorAccepted" && (
+              <>
                 <Button type="secondary" onClick={toggleCancelModal}>
                   Отклонить
                 </Button>
-              )}
-              {(data.status === "new" || data.status === "old") && (
-                <Button onClick={acceptInterview}>
-                  Пригласить на собеседование
-                </Button>
-              )}
-              {data.status === "interview" && (
                 <Button onClick={acceptInternship}>
                   Принять на стажировку
                 </Button>
-              )}
-            </>
-          )}
+              </>
+            )}
+            {user.role === "mentor" && (
+              <>
+                {(data.status === "new" ||
+                  data.status === "old" ||
+                  data.status === "interview") && (
+                  <Button type="secondary" onClick={toggleCancelModal}>
+                    Отклонить
+                  </Button>
+                )}
+                {(data.status === "new" || data.status === "old") && (
+                  <Button onClick={() => setIsInterviewInviteShowed(true)}>
+                    Пригласить на собеседование
+                  </Button>
+                )}
+                {data.status === "interview" && (
+                  <Button onClick={acceptInternship}>
+                    Принять на стажировку
+                  </Button>
+                )}
+              </>
+            )}
+          </div>
         </div>
-      </div>
-      <div className={styles.cards}>
-        <StudentProfile profile={data} />
-        <div className={`${styles.card} ${styles.complexCard}`}>
-          <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Статус отклика</p>
-            <ResponseStatus status={data.status} />
-          </div>
-          {data.status === "rejected" && data.rejectionReason && (
-            <div className={styles.statusComment}>
-              <p className={styles.statusCommentTitle}>Причина отклонения</p>
-              <p>{data.rejectionReason}</p>
+        <div className={styles.cards}>
+          <StudentProfile profile={data} />
+          <div className={`${styles.card} ${styles.complexCard}`}>
+            <div className={styles.complexCardBlock}>
+              <p className={styles.cardTitle}>Статус отклика</p>
+              <ResponseStatus status={data.status} />
             </div>
-          )}
-          <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Тестовое задание</p>
-            <File name={data.testTask.fileName} size={data.testTask.fileSize} />
-          </div>
-          <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Сопроводительное письмо</p>
-            <div>{data.coveringLetter}</div>
-          </div>
-          {/* TODO: add section in accordance with Figma
+            {data.status === "rejected" && data.rejectionReason && (
+              <div className={styles.statusComment}>
+                <p className={styles.statusCommentTitle}>Причина отклонения</p>
+                <p>{data.rejectionReason}</p>
+              </div>
+            )}
+            <div className={styles.complexCardBlock}>
+              <p className={styles.cardTitle}>Тестовое задание</p>
+              <File
+                name={data.testTask.fileName}
+                size={data.testTask.fileSize}
+              />
+            </div>
+            <div className={styles.complexCardBlock}>
+              <p className={styles.cardTitle}>Сопроводительное письмо</p>
+              <div>{data.coveringLetter}</div>
+            </div>
+            {/* TODO: add section in accordance with Figma
           https://www.figma.com/file/VMVVobtgBWqyjIvENBvTCO/%D0%9B%D0%A6%D0%A2-23%2F16?type=design&node-id=5516%3A18915&t=gNGKlJ35OxQRDtPf-1
           */}
-          <div className={styles.complexCardBlock}>
-            <p className={styles.cardTitle}>Набрано баллов</p>
-            <div>{}</div>
+            <div className={styles.complexCardBlock}>
+              <p className={styles.cardTitle}>Набрано баллов</p>
+              <div>{}</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <InterviewInviteModal
+        isShowed={isInterviewInviteShowed}
+        setIsShowed={setIsInterviewInviteShowed}
+        phone={data.user.phone}
+        email={data.user.email}
+      />
+    </>
   )
 }
