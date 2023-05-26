@@ -1,31 +1,24 @@
 import React from "react"
 import styles from "./Timeline.module.scss"
 
-const base_statuses = {
-  created: "Создана",
-  testTask: "Добавление тестового задания",
-  moderating: "На модерации",
-  active: "Активна",
-  archived: "В архиве",
-} as {
-  [key: string]: string
+interface Props {
+  itemList: string[]
+  itemTitles: Record<string, string>
+  activeItem: string
 }
 
-export default function Timeline({ statuses, activeStatus }: any) {
+export default function Timeline({ itemList, activeItem, itemTitles }: Props) {
   return (
     <div className={styles.timeline}>
-      {Object.keys(statuses).map((status) => (
+      {itemList.map((item, index) => (
         <div
           className={`${styles.timelineItem} ${
-            Object.keys(statuses).indexOf(status) <
-            Object.keys(statuses).indexOf(activeStatus)
-              ? styles.past
-              : ""
-          } ${status === activeStatus ? styles.active : ""}`}
-          key={status}
+            index < itemList.indexOf(activeItem) ? styles.past : ""
+          } ${item === activeItem ? styles.active : ""}`}
+          key={item}
         >
           <span className={styles.timelineDot}></span>
-          <span>{statuses[status]}</span>
+          <span>{itemTitles[item]}</span>
         </div>
       ))}
     </div>
