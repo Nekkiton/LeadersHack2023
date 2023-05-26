@@ -58,8 +58,12 @@ export default function Organization({ backLink }: Props) {
       {activeTab === "vacancies" && (
         <Vacancies link="/curator/vacancies" noHeader />
       )}
-      {activeTab === "staffs" && <Staffs link="/" />}
-      {activeTab === "mentors" && <Mentors noHeader longSearchInput />}
+      {activeTab === "staffs" && (
+        <Staffs addStaffLink="/curator/add-staff" link="/" />
+      )}
+      {activeTab === "mentors" && (
+        <Mentors noHeader longSearchInput addMentorLink="/curator/add-mentor" />
+      )}
       {activeTab === "deparments" && <Departments link="/" />}
     </div>
   )

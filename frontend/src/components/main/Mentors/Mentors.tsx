@@ -15,9 +15,14 @@ import { Spin } from "antd"
 interface Props {
   noHeader?: boolean
   longSearchInput?: boolean
+  addMentorLink?: string
 }
 
-export default function Mentors({ noHeader, longSearchInput }: Props) {
+export default function Mentors({
+  noHeader,
+  longSearchInput,
+  addMentorLink,
+}: Props) {
   const [query, setQuery] = useState("")
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -73,11 +78,14 @@ export default function Mentors({ noHeader, longSearchInput }: Props) {
               value={query}
               onChange={setQuery}
             />
-            {noHeader && (
-              <Button>
-                <PlusIcon className="icon" />
-                <span>Добавить наставника</span>
-              </Button>
+            {/* TODO: check role */}
+            {noHeader && addMentorLink && (
+              <Link href={addMentorLink}>
+                <Button>
+                  <PlusIcon className="icon" />
+                  <span>Добавить наставника</span>
+                </Button>
+              </Link>
             )}
           </div>
           <div className={styles.mentors}>

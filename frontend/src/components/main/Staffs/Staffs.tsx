@@ -10,9 +10,10 @@ import { useState } from "react"
 
 interface Props {
   link: string
+  addStaffLink?: string
 }
 
-export default function Staffs({ link }: Props) {
+export default function Staffs({ link, addStaffLink }: Props) {
   const [currentPage, setCurrentPage] = useState(1)
 
   return (
@@ -23,10 +24,15 @@ export default function Staffs({ link }: Props) {
           placeholder="Поиск по кадровым специалистам"
           prefix={<SearchIcon />}
         />
-        <Button>
-          <PlusIcon className="icon" />
-          <span>Добавить кадрового специалиста</span>
-        </Button>
+        {/* TODO: check role */}
+        {addStaffLink && (
+          <Link href={addStaffLink}>
+            <Button>
+              <PlusIcon className="icon" />
+              <span>Добавить кадрового специалиста</span>
+            </Button>
+          </Link>
+        )}
       </div>
       <div className={styles.mentors}>
         <StaffCard link={link} />
