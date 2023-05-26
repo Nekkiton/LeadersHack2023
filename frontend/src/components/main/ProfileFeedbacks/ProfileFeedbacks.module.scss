@@ -1,0 +1,111 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  gap: 30px;
+  flex-grow: 1;
+}
+
+.nothing {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  gap: 32px;
+  text-align: center;
+}
+
+.nothingIcon {
+  width: 150px;
+  height: 150px;
+
+  path {
+    stroke: $gray-5;
+  }
+}
+
+.nothingText {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.nothinTextHint {
+  @include paragraph-2;
+}
+
+.ratingContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 30%;
+}
+
+.ratingCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border-radius: 8px;
+  text-align: center;
+  background: $white;
+}
+
+.ratingValue {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ratingIcon {
+  width: 24px;
+  height: 24px;
+  fill: $orange;
+
+  path {
+    stroke: $orange;
+  }
+}
+
+.ratingHint {
+  @include paragraph-3;
+  color: $gray-3;
+}
+
+.feedbacks {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.feedbacksList {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.feedbacksFeedback {
+  border: none;
+  background: $white;
+}
+
+@include tablet {
+  .container {
+    flex-direction: column-reverse;
+    gap: 24px;
+  }
+
+  .ratingContainer {
+    width: 100%;
+    max-width: 262px;
+  }
+}
+
+@include mobile {
+  .ratingContainer {
+    max-width: 100%;
+  }
+}

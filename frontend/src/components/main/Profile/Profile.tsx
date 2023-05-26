@@ -4,6 +4,7 @@ import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Input from "components/base/controls/Input"
 import Tabs from "components/base/navigation/Tabs"
+import ProfileFeedbacks from "components/main/ProfileFeedbacks"
 import PenIcon from "assets/icons/pen.svg"
 import UploadIcon from "assets/icons/upload.svg"
 import styles from "./Profile.module.scss"
@@ -54,218 +55,236 @@ export default function Profile() {
         onOk={toggleModal}
       />
       <div className={styles.container}>
-        {(data?.role === "candidate" || data?.role === "intern") && (
-          <div className={styles.header}>
-            <h1 className={styles.headerTitle}>Профиль</h1>
-            <Tabs
-              items={[
-                { key: "personal", value: "Личные данные" },
-                { key: "exp", value: "Опыт" },
-              ]}
-              value={activeTab}
-              onChange={setActiveTab}
-            />
-          </div>
-        )}
-        <Form
-          className={styles.form}
-          initialValues={{ ...restValues, birthdate: dayjs(birthdate) }}
-          onFinish={onFinish}
-          form={form}
-        >
-          <div
-            className={`${styles.userImgContainer} ${
-              activeTab === "personal" ? styles.active : ""
-            }`}
+        <div className={styles.header}>
+          <h1 className={styles.headerTitle}>Профиль</h1>
+          <Tabs
+            items={
+              data?.role === "candidate" || data?.role === "intern"
+                ? [
+                    { key: "personal", value: "Личные данные" },
+                    { key: "exp", value: "Опыт" },
+                    { key: "feedbacks", value: "Отзывы" },
+                  ]
+                : [
+                    { key: "personal", value: "Личные данные" },
+                    { key: "feedbacks", value: "Отзывы" },
+                  ]
+            }
+            value={activeTab}
+            onChange={setActiveTab}
+          />
+        </div>
+        {activeTab === "feedbacks" ? (
+          <ProfileFeedbacks />
+        ) : (
+          <Form
+            className={styles.form}
+            initialValues={{ ...restValues, birthdate: dayjs(birthdate) }}
+            onFinish={onFinish}
+            form={form}
           >
-            <img className={styles.userImg} src={userImg} />
-            <div className={styles.userImgBtn}>
-              <PenIcon />
-            </div>
-          </div>
-          <div className={styles.main}>
             <div
-              className={`${styles.fields} ${
+              className={`${styles.userImgContainer} ${
                 activeTab === "personal" ? styles.active : ""
               }`}
             >
-              <h3>Основная информация</h3>
-              <div className={styles.mobileImgContainer}>
-                <img className={styles.userImg} src={userImg} />
-                <Button type="text">
-                  <UploadIcon className="icon" />
-                  <span>Изменить фото</span>
-                </Button>
-              </div>
-              <div className={styles.hFields}>
-                <Form.Item
-                  name="surname"
-                  rules={[{ required: true, message: "Заполните это поле" }]}
-                >
-                  <Input label="Фамилия" />
-                </Form.Item>
-                <Form.Item
-                  name="name"
-                  rules={[{ required: true, message: "Заполните это поле" }]}
-                >
-                  <Input label="Имя" />
-                </Form.Item>
-                <Form.Item name="patronymic">
-                  <Input label="Отчество" notRequired />
-                </Form.Item>
-              </div>
-              <div className={styles.hFields}>
-                <div className={styles.field}>
-                  <Form.Item
-                    name="birthdate"
-                    rules={[{ required: true, message: "Заполните это поле" }]}
-                  >
-                    <Input label="Дата рождения" datepicker />
-                  </Form.Item>
-                </div>
-                <div className={styles.field}>
-                  <Form.Item
-                    name="citizenship"
-                    rules={[{ required: true, message: "Заполните это поле" }]}
-                  >
-                    <Input className={styles.field} label="Гражданство" />
-                  </Form.Item>
-                </div>
-              </div>
-              <Form.Item
-                name="location"
-                rules={[{ required: true, message: "Заполните это поле" }]}
-              >
-                <Input label="Место жительства" />
-              </Form.Item>
-            </div>
-            <div
-              className={`${styles.fields} ${
-                activeTab === "personal" ? styles.active : ""
-              }`}
-            >
-              <h3>Контактная информация</h3>
-              <div className={styles.hFields}>
-                <div className={styles.field}>
-                  <Form.Item
-                    name="phone"
-                    rules={[{ required: true, message: "Заполните это поле" }]}
-                  >
-                    <Input label="Телефон" />
-                  </Form.Item>
-                </div>
-                <div className={styles.field}>
-                  {/* TODO: configm email logic */}
-                  <Form.Item
-                    name="email"
-                    rules={[{ required: true, message: "Заполните это поле" }]}
-                  >
-                    <Input label="Эл. почта" />
-                  </Form.Item>
-                </div>
+              <img className={styles.userImg} src={userImg} />
+              <div className={styles.userImgBtn}>
+                <PenIcon />
               </div>
             </div>
-            <div
-              className={`${styles.fields} ${
-                activeTab === "exp" ? styles.active : ""
-              }`}
-            >
-              <h3>Образование</h3>
-              <Form.Item
-                name="university"
-                rules={[
-                  {
-                    required:
-                      data?.role === "candidate" || data?.role === "intern",
-                    message: "Заполните это поле",
-                  },
-                ]}
+            <div className={styles.main}>
+              <div
+                className={`${styles.fields} ${
+                  activeTab === "personal" ? styles.active : ""
+                }`}
               >
-                <Input label="Название учебного заведения (ВУЗ или СУЗ)" />
-              </Form.Item>
-              <Form.Item
-                name="faculty"
-                rules={[
-                  {
-                    required:
-                      data?.role === "candidate" || data?.role === "intern",
-                    message: "Заполните это поле",
-                  },
-                ]}
-              >
-                <Input label="Факультет" />
-              </Form.Item>
-              <Form.Item
-                name="year"
-                rules={[
-                  {
-                    required:
-                      data?.role === "candidate" || data?.role === "intern",
-                    message: "Заполните это поле",
-                  },
-                ]}
-              >
-                <Input label="Год выпуска" />
-              </Form.Item>
-            </div>
-            <div
-              className={`${styles.fields} ${
-                activeTab === "exp" ? styles.active : ""
-              }`}
-            >
-              <h3>Опыт работы и проектной деятельности</h3>
-              <Form.Item name="exp">
-                <Input
-                  label="Опыт работы"
-                  textarea
-                  notRequired
-                  postscript="Напишите, когда и где вы работали и какие задачи выполняли. Это повысит ваши шансы на стажировку"
-                />
-              </Form.Item>
-              <Form.Item name="projects">
-                <Input
-                  label="Проектная деятельность"
-                  notRequired
-                  textarea
-                  postscript="Напишите, если у вас был опыт волонтерской или проектной деятельности и что именно вы делали. Это повысит ваши шансы на стажировку"
-                />
-              </Form.Item>
-            </div>
-            <div className={styles.footer}>
-              {/* TODO: controls logic */}
-              <div className={styles.controls}>
-                <Button className={styles.cancelBtn} type="secondary">
-                  Отмена
-                </Button>
-                <Button disabled={!isValid} htmlType="submit">
-                  Сохранить
-                </Button>
-              </div>
-              {activeTab === "personal" && (
-                <>
-                  {" "}
-                  <Button
-                    className={`${styles.passwordBtn} ${styles.desktop}`}
-                    type="text"
-                    onClick={toggleModal}
-                  >
-                    <PenIcon className="icon" />
-                    <span>Изменить пароль</span>
+                <h3>Основная информация</h3>
+                <div className={styles.mobileImgContainer}>
+                  <img className={styles.userImg} src={userImg} />
+                  <Button type="text">
+                    <UploadIcon className="icon" />
+                    <span>Изменить фото</span>
                   </Button>
-                  <Link
-                    className={`${styles.passwordBtn} ${styles.mobile}`}
-                    href="/profile/password"
+                </div>
+                <div className={styles.hFields}>
+                  <Form.Item
+                    name="surname"
+                    rules={[{ required: true, message: "Заполните это поле" }]}
                   >
-                    <Button type="text">
+                    <Input label="Фамилия" />
+                  </Form.Item>
+                  <Form.Item
+                    name="name"
+                    rules={[{ required: true, message: "Заполните это поле" }]}
+                  >
+                    <Input label="Имя" />
+                  </Form.Item>
+                  <Form.Item name="patronymic">
+                    <Input label="Отчество" notRequired />
+                  </Form.Item>
+                </div>
+                <div className={styles.hFields}>
+                  <div className={styles.field}>
+                    <Form.Item
+                      name="birthdate"
+                      rules={[
+                        { required: true, message: "Заполните это поле" },
+                      ]}
+                    >
+                      <Input label="Дата рождения" datepicker />
+                    </Form.Item>
+                  </div>
+                  <div className={styles.field}>
+                    <Form.Item
+                      name="citizenship"
+                      rules={[
+                        { required: true, message: "Заполните это поле" },
+                      ]}
+                    >
+                      <Input className={styles.field} label="Гражданство" />
+                    </Form.Item>
+                  </div>
+                </div>
+                <Form.Item
+                  name="location"
+                  rules={[{ required: true, message: "Заполните это поле" }]}
+                >
+                  <Input label="Место жительства" />
+                </Form.Item>
+              </div>
+              <div
+                className={`${styles.fields} ${
+                  activeTab === "personal" ? styles.active : ""
+                }`}
+              >
+                <h3>Контактная информация</h3>
+                <div className={styles.hFields}>
+                  <div className={styles.field}>
+                    <Form.Item
+                      name="phone"
+                      rules={[
+                        { required: true, message: "Заполните это поле" },
+                      ]}
+                    >
+                      <Input label="Телефон" />
+                    </Form.Item>
+                  </div>
+                  <div className={styles.field}>
+                    {/* TODO: configm email logic */}
+                    <Form.Item
+                      name="email"
+                      rules={[
+                        { required: true, message: "Заполните это поле" },
+                      ]}
+                    >
+                      <Input label="Эл. почта" />
+                    </Form.Item>
+                  </div>
+                </div>
+              </div>
+              <div
+                className={`${styles.fields} ${
+                  activeTab === "exp" ? styles.active : ""
+                }`}
+              >
+                <h3>Образование</h3>
+                <Form.Item
+                  name="university"
+                  rules={[
+                    {
+                      required:
+                        data?.role === "candidate" || data?.role === "intern",
+                      message: "Заполните это поле",
+                    },
+                  ]}
+                >
+                  <Input label="Название учебного заведения (ВУЗ или СУЗ)" />
+                </Form.Item>
+                <Form.Item
+                  name="faculty"
+                  rules={[
+                    {
+                      required:
+                        data?.role === "candidate" || data?.role === "intern",
+                      message: "Заполните это поле",
+                    },
+                  ]}
+                >
+                  <Input label="Факультет" />
+                </Form.Item>
+                <Form.Item
+                  name="year"
+                  rules={[
+                    {
+                      required:
+                        data?.role === "candidate" || data?.role === "intern",
+                      message: "Заполните это поле",
+                    },
+                  ]}
+                >
+                  <Input label="Год выпуска" />
+                </Form.Item>
+              </div>
+              <div
+                className={`${styles.fields} ${
+                  activeTab === "exp" ? styles.active : ""
+                }`}
+              >
+                <h3>Опыт работы и проектной деятельности</h3>
+                <Form.Item name="exp">
+                  <Input
+                    label="Опыт работы"
+                    textarea
+                    notRequired
+                    postscript="Напишите, когда и где вы работали и какие задачи выполняли. Это повысит ваши шансы на стажировку"
+                  />
+                </Form.Item>
+                <Form.Item name="projects">
+                  <Input
+                    label="Проектная деятельность"
+                    notRequired
+                    textarea
+                    postscript="Напишите, если у вас был опыт волонтерской или проектной деятельности и что именно вы делали. Это повысит ваши шансы на стажировку"
+                  />
+                </Form.Item>
+              </div>
+              <div className={styles.footer}>
+                {/* TODO: controls logic */}
+                <div className={styles.controls}>
+                  <Button className={styles.cancelBtn} type="secondary">
+                    Отмена
+                  </Button>
+                  <Button disabled={!isValid} htmlType="submit">
+                    Сохранить
+                  </Button>
+                </div>
+                {activeTab === "personal" && (
+                  <>
+                    {" "}
+                    <Button
+                      className={`${styles.passwordBtn} ${styles.desktop}`}
+                      type="text"
+                      onClick={toggleModal}
+                    >
                       <PenIcon className="icon" />
                       <span>Изменить пароль</span>
                     </Button>
-                  </Link>
-                </>
-              )}
+                    <Link
+                      className={`${styles.passwordBtn} ${styles.mobile}`}
+                      href="/profile/password"
+                    >
+                      <Button type="text">
+                        <PenIcon className="icon" />
+                        <span>Изменить пароль</span>
+                      </Button>
+                    </Link>
+                  </>
+                )}
+              </div>
             </div>
-          </div>
-        </Form>
+          </Form>
+        )}
       </div>
     </>
   )

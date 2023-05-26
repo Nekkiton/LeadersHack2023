@@ -1,11 +1,15 @@
 import StarIcon from "assets/icons/star.svg"
 import styles from "./FeedbackCard.module.scss"
 
+interface Props {
+  className?: string
+}
+
 const userImg = "/images/user.svg"
 
-export default function FeedbackCard() {
+export default function FeedbackCard({ className }: Props) {
   return (
-    <div className={styles.feedback}>
+    <div className={`${styles.feedback} ${className}`}>
       <div className={styles.header}>
         <div className={styles.user}>
           <img className={styles.userImg} src={userImg} />

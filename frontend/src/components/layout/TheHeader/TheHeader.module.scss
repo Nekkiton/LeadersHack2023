@@ -93,7 +93,7 @@
   display: none;
 }
 
-@include mobile {
+@include tablet {
   .header {
     padding: 8px 0;
     border-radius: 0 0 8px 8px;
