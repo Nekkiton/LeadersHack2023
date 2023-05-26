@@ -125,6 +125,7 @@ body::-webkit-scrollbar-thumb {
   .ant-notification-notice-message {
     @include paragraph-3;
     margin: 0;
+    margin-right: 30px;
   }
 
   .ant-notification-notice-description {
@@ -133,6 +134,7 @@ body::-webkit-scrollbar-thumb {
   }
 
   .ant-notification-notice-close {
+    top: 15px;
     width: 24px;
     height: 24px;
     background: none !important;

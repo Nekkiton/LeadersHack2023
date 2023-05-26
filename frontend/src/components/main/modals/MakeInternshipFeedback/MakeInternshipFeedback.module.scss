@@ -1,0 +1,45 @@
+@import "assets/css/config";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 501px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  &:not(:first-child) {
+    padding-top: 16px;
+    border-top: 1px solid $gray-5;
+  }
+}
+
+.rate {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.rateIcon {
+  width: 24px;
+  height: 24px;
+  margin-bottom: -5px;
+  transition: $transition;
+
+  path {
+    stroke: $gray-3;
+    transition: $transition;
+  }
+
+  :global(.ant-rate-star-full) & {
+    fill: $orange;
+
+    path {
+      stroke: $orange;
+    }
+  }
+}

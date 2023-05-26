@@ -39,6 +39,7 @@
   transform: scale(0) translate(-50%, -50%);
   transform-origin: left top;
   transition: $transition;
+  overflow: auto;
 
   .container.active & {
     transform: scale(1) translate(-50%, -50%);

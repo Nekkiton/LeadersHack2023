@@ -10,6 +10,7 @@ import CopyIcon from "assets/icons/copy.svg"
 import Status from "components/base/vacancy/Status"
 import PenIcon from "assets/icons/pen.svg"
 import MakeResponseModal from "components/main/modals/MakeResponse"
+import MakeInternshipFeedbackModal from "components/main/modals/MakeInternshipFeedback"
 import PlusIcon from "assets/icons/plus.svg"
 import TimesIcon from "assets/icons/times.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
@@ -38,8 +39,8 @@ export default function Vacancy({ backLink, link }: Props) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleModal = () => setIsModalOpen(!isModalOpen)
 
-  const [isMakeResponseShowed, setIsMakeResponseShowed] =
-    useState(false)
+  const [isMakeResponseShowed, setIsMakeResponseShowed] = useState(false)
+  const [isMakeFeedbackShowed, setIsMakeFeedbackShowed] = useState(false)
 
   const [editTestTask, setEditTestTask] = useState({})
 
@@ -147,7 +148,11 @@ export default function Vacancy({ backLink, link }: Props) {
               </Button>
             )}
             {/* TODO: add action, show when internship is finished */}
-            {user.role === "intern" && <Button>Оценить стажировку</Button>}
+            {user.role === "intern" && (
+              <Button onClick={() => setIsMakeFeedbackShowed(true)}>
+                Оценить стажировку
+              </Button>
+            )}
           </div>
         </div>
         {user.role === "intern" && (
@@ -313,6 +318,11 @@ export default function Vacancy({ backLink, link }: Props) {
       <MakeResponseModal
         isShowed={isMakeResponseShowed}
         setIsShowed={setIsMakeResponseShowed}
+      />
+
+      <MakeInternshipFeedbackModal
+        isShowed={isMakeFeedbackShowed}
+        setIsShowed={setIsMakeFeedbackShowed}
       />
     </>
   )
