@@ -127,7 +127,7 @@ export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
           </div>
         </Link>
         <div className={styles.links}>
-          {links[user.role].map((item) => (
+          {(links[user.role as keyof typeof links] || []).map((item) => (
             <Link
               className={styles.linksLink}
               href={item.link}
