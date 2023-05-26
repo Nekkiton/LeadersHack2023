@@ -1,0 +1,23 @@
+@import "assets/css/config";
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: inherit;
+  width: 636px;
+}
+
+.block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &:not(:first-child) {
+    padding-top: 16px;
+    border-top: 1px solid $gray-5;
+  }
+}
+
+.blockText {
+  @include paragraph-2;
+}

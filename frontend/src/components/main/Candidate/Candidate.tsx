@@ -2,7 +2,8 @@ import { useState } from "react"
 import { Spin } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
-import SetHackathonResultModal from "../modals/SetHackathonResult"
+import SetHackathonResultModal from "components/main/modals/SetHackathonResult"
+import RateResumeModal from "components/main/modals/RateResume"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import { useQuery } from "@tanstack/react-query"
 import { fetchCandidateInfo } from "data"
@@ -23,6 +24,7 @@ export default function Candidate({ backLink, candidateId }: Props) {
     //role: "staff",
   }
 
+  const [isRateResumeShowed, setIsRateResumeShowed] = useState(false)
   const [isSetHackathonResultShowed, setIsSetHackathonResultShowed] =
     useState(false)
 
@@ -60,8 +62,11 @@ export default function Candidate({ backLink, candidateId }: Props) {
           <StudentInfo profile={data.user} />
           <div className={styles.headerControls}>
             {/* TODO: если резюме не оценено еще? */}
-            {/* TODO: add modal */}
-            {user.role === "curator" && <Button>Оценить резюме</Button>}
+            {user.role === "curator" && (
+              <Button onClick={() => setIsRateResumeShowed(true)}>
+                Оценить резюме
+              </Button>
+            )}
             {/* TODO: если результаты еще не внесены */}
             {user.role === "curator" && data.status === "hackathon" && (
               <Button onClick={() => setIsSetHackathonResultShowed(true)}>
@@ -90,6 +95,11 @@ export default function Candidate({ backLink, candidateId }: Props) {
       <SetHackathonResultModal
         isShowed={isSetHackathonResultShowed}
         setIsShowed={setIsSetHackathonResultShowed}
+      />
+
+      <RateResumeModal
+        isShowed={isRateResumeShowed}
+        setIsShowed={setIsRateResumeShowed}
       />
     </>
   )
