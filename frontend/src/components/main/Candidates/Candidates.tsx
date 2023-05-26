@@ -93,7 +93,7 @@ export default function Candidates() {
             <Button type="text">количеству баллов</Button>
           </div>
           <div className={styles.candidates}>
-            {data.items.map((candidate) => (
+            {data?.items.map((candidate) => (
               <ResponseCard
                 key={candidate.id}
                 link={`/curator/candidates`}

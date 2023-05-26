@@ -9,6 +9,7 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import MailSentIcon from "assets/icons/mail-sent.svg"
 import TimesIcon from "assets/icons/times.svg"
 import styles from "./Auth.module.scss"
+import { signIn } from "data"
 
 interface Props {
   type: "login" | "register" | "resetPassword" | "setPassword"
@@ -30,15 +31,18 @@ export default function Auth({ type: pageType }: Props) {
 
   const [isResetPasswordFinished, setIsResetPasswordFinished] = useState(false)
 
-  /* TODO: send request */
-  const submit = (data: any) => {
+  /* TODO: send requests */
+  const submit = async (data: any) => {
     console.log(data)
 
     if (pageType === "login") {
-      router.push("/")
+      const res = await signIn(data); // role will be returned as result tomorrow (add redirect to specific page then)
+      if (res) {
+        router.push("/")
+      }
     } else if (pageType === "register") {
-      // TODO: add second step to profile page
       router.push("/profile/register")
+      // TODO: add second step to profile page
     } else if (pageType === "resetPassword") {
       setIsResetPasswordFinished(true)
     } else if (pageType === "setPassword") {
@@ -57,7 +61,7 @@ export default function Auth({ type: pageType }: Props) {
         <div className={`${styles.card} ${styles.message}`}>
           <MailSentIcon className={styles.messageIcon} />
           <div className={styles.messageText}>
-            <h3>Ссылка на восстановление пароля отправлена</h3>
+            <h3>Ссылка на восстановление пароля отправлена</h3>
             <p className={styles.messageTextDescription}>
               Перейдите по ней, чтобы установить новый пароль для входа в личный
               кабинет
@@ -191,7 +195,7 @@ export default function Auth({ type: pageType }: Props) {
               Если ты наставник или кадровый специалист организации
               Правительства Москвы, для регистрации{" "}
               <span className={styles.formLink}>
-                обратись к куратору карьерного центра
+                обратись к куратору карьерного центра
               </span>
             </div>
           )}
