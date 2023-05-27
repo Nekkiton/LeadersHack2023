@@ -26,7 +26,7 @@ export class UsersService extends TransactionService<User> {
     }
     const user = repository.create(dto);
     user.passwordHash = await hash(dto.password, this.configService.get('jwt.saltRounds'));
-    const [created] = await repository.save([user]);
+    const created = await repository.save(user);
     return created;
   }
 
@@ -41,7 +41,7 @@ export class UsersService extends TransactionService<User> {
       throw new ForbiddenException();
     }
     user.role = Role.CANDIDATE;
-    const [updated] = await repository.save([user]);
+    const updated = await repository.save(user);
     return updated;
   }
 }

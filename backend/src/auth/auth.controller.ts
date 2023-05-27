@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  ForbiddenException,
   Get,
   HttpCode,
   HttpStatus,
@@ -24,7 +25,7 @@ import { UserProfilesService } from 'src/user-profiles/user-profiles.service';
 import { User } from 'src/users/entities/user.entity';
 import { EntityManager } from 'typeorm';
 import { Role } from './roles/role.enum';
-import { CreateUserProfileDto } from 'src/user-profiles/dto/create-user-profile.dto';
+import { ReferralCreateUserProfileDto } from 'src/user-profiles/dto/create-user-profile.dto';
 import { ResponseUserProfileDto } from 'src/user-profiles/dto/response-user-profile.dto';
 import { UserProfile } from 'src/user-profiles/entities/user-profile.entity';
 import { Public } from './auth.decorator';
@@ -32,6 +33,7 @@ import {
   ApiBadRequestResponse,
   ApiCookieAuth,
   ApiCreatedResponse,
+  ApiForbiddenResponse,
   ApiOkResponse,
   ApiOperation,
   ApiTags,
@@ -73,12 +75,18 @@ export class AuthController {
   @ApiOperation({ summary: 'Sign In' })
   @ApiOkResponse({ type: ResponseSignInDto })
   @ApiUnauthorizedResponse()
+  @ApiBadRequestResponse()
   async signIn(@Body() dto: SignInDto, @Res({ passthrough: true }) res: Response) {
     const user = await this.userService.findOne(dto.email);
     if (!user) {
       throw new UnauthorizedException();
     }
     if (user.role === Role.NOBODY) {
+      throw new UnauthorizedException();
+    }
+    const profile = await this.userProfileService.findOne(user);
+    if (!profile) {
+      // User should complete sign-up first
       throw new UnauthorizedException();
     }
     const matched = await this.authService.compare(user, dto.password);
@@ -129,15 +137,23 @@ export class AuthController {
   @ApiOperation({ summary: 'Completes candidate sign-up' })
   @ApiCreatedResponse({ type: ResponseUserProfileDto })
   @ApiBadRequestResponse()
+  @ApiForbiddenResponse()
   async createUserProfile(
-    @Body() dto: CreateUserProfileDto,
+    @Body() dto: ReferralCreateUserProfileDto,
     @Res({ passthrough: true }) res: Response,
   ): Promise<ResponseUserProfileDto> {
     let userProfile: UserProfile;
     let user: User;
     await this.entityManager.transaction(async (entityManager) => {
-      userProfile = await this.userProfileService.createUserProfile(dto, { entityManager });
-      user = await this.userService.promoteToCandidate(userProfile.user, { entityManager });
+      const referral = await this.referralService.findOne(dto.referralId, { entityManager });
+      if (!referral) {
+        throw new ForbiddenException();
+      }
+      userProfile = await this.userProfileService.createUserProfile(referral.user, dto, { entityManager });
+      user = userProfile.user;
+      if (user.role === Role.NOBODY) {
+        user = await this.userService.promoteToCandidate(userProfile.user, { entityManager });
+      }
     });
     const token = await this.authService.signIn(user);
     await this.setAccessToken(token, res);

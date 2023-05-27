@@ -5,11 +5,6 @@ export class CreateUserProfileDto {
   @IsString()
   @MaxLength(255)
   @ApiProperty({ maxLength: 255 })
-  referralId: string;
-
-  @IsString()
-  @MaxLength(255)
-  @ApiProperty({ maxLength: 255 })
   name: string;
 
   @IsString()
@@ -42,4 +37,11 @@ export class CreateUserProfileDto {
   @IsOptional()
   @ApiProperty({ maxLength: 1000, required: false })
   photo: string;
+}
+
+export class ReferralCreateUserProfileDto extends CreateUserProfileDto {
+  @IsString()
+  @MaxLength(255)
+  @ApiProperty({ maxLength: 255 })
+  referralId: string;
 }

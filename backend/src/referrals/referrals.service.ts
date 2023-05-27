@@ -25,7 +25,7 @@ export class ReferralsService extends TransactionService<Referral> {
     const referralIdLength = this.configService.get('application.referralIdLength');
     const referralId = (await randomBytesAsync(referralIdLength)).toString('base64url');
     const referral = repository.create({ referralId, user });
-    const [created] = await repository.save([referral]);
+    const created = await repository.save(referral);
     return created;
   }
 

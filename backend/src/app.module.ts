@@ -9,6 +9,8 @@ import { ReferralsModule } from './referrals/referrals.module';
 import { UserProfilesModule } from './user-profiles/user-profiles.module';
 import { RolesGuard } from './auth/roles/roles.guard';
 import { AuthGuard } from './auth/auth.guard';
+import { ProfileModule } from './profile/profile.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -33,6 +35,8 @@ import { AuthGuard } from './auth/auth.guard';
     }),
     ReferralsModule,
     UserProfilesModule,
+    ProfileModule,
+    AdminModule,
   ],
   controllers: [InternalController],
   providers: [

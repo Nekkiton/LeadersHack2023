@@ -1,42 +1,56 @@
-import { Body, Controller, HttpCode, HttpStatus, Logger, Post } from '@nestjs/common';
-import { CreateUserDto } from './dto/create-user.dto';
-import { Roles } from 'src/auth/roles/roles.decorator';
-import { Role } from 'src/auth/roles/role.enum';
+import { Body, Controller, Get, NotFoundException, Patch, Req } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { ResponseUserDto } from './dto/response-user.dto';
-import { ReferralsService } from 'src/referrals/referrals.service';
-import { InjectEntityManager } from '@nestjs/typeorm';
-import { EntityManager } from 'typeorm';
+import {
+  ApiBadRequestResponse,
+  ApiCookieAuth,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
+import { ResponseUserProfileDto } from 'src/user-profiles/dto/response-user-profile.dto';
+import { UserPayload } from 'src/auth/auth.service';
+import { UserProfilesService } from 'src/user-profiles/user-profiles.service';
 import { User } from './entities/user.entity';
-import { ApiBadRequestResponse, ApiCookieAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { UpdateUserProfileDto } from 'src/user-profiles/dto/update-user-profile.dto';
 
 @Controller('users')
-@ApiTags('admin')
+@ApiTags('users')
 @ApiCookieAuth()
 export class UsersController {
-  private readonly logger = new Logger(UsersController.name);
+  constructor(private usersService: UsersService, private userProfilesService: UserProfilesService) {}
 
-  constructor(
-    private usersService: UsersService,
-    private referralService: ReferralsService,
-    @InjectEntityManager()
-    private entityManager: EntityManager,
-  ) {}
+  private async getUserByEmail(email: string): Promise<User> {
+    const user = await this.usersService.findOne(email);
+    if (!user) {
+      throw new NotFoundException('No user found. Are you signed-up?');
+    }
+    return user;
+  }
 
-  @Post()
-  @HttpCode(HttpStatus.CREATED)
-  @Roles(Role.ADMIN)
-  @ApiOperation({ summary: 'Creates user' })
-  @ApiCreatedResponse({ type: ResponseUserDto })
+  @Get('profile')
+  @ApiOperation({ summary: 'Get current user profile' })
+  @ApiOkResponse({ type: ResponseUserProfileDto })
+  @ApiNotFoundResponse()
+  async getUserProfile(@Req() req): Promise<ResponseUserProfileDto> {
+    const payload: UserPayload = req.user;
+    const user = await this.getUserByEmail(payload.email);
+    const profile = await this.userProfilesService.findOne(user);
+    if (!profile) {
+      throw new NotFoundException('User profile have not created yet. Completed sign-up');
+    }
+    return ResponseUserProfileDto.fromEntity(profile);
+  }
+
+  @Patch('profile')
+  @ApiOperation({ summary: 'Partially updates current user profile' })
+  @ApiOkResponse({ type: ResponseUserProfileDto })
   @ApiBadRequestResponse()
-  async createUser(@Body() dto: CreateUserDto): Promise<ResponseUserDto> {
-    let user: User;
-    await this.entityManager.transaction(async (entityManager) => {
-      user = await this.usersService.createUser(dto, { entityManager });
-      const referral = await this.referralService.createReferral(user, { entityManager });
-      // TODO send invitation email
-      this.logger.log(`Generated referralId="${referral.referralId}" for user="${dto.email}"`);
-    });
-    return ResponseUserDto.fromEntity(user);
+  @ApiNotFoundResponse()
+  async patchUserProfile(@Body() dto: UpdateUserProfileDto, @Req() req): Promise<ResponseUserProfileDto> {
+    const payload: UserPayload = req.user;
+    const user = await this.getUserByEmail(payload.email);
+    const profile = await this.userProfilesService.updateUserProfile(user, dto);
+    return ResponseUserProfileDto.fromEntity(profile);
   }
 }

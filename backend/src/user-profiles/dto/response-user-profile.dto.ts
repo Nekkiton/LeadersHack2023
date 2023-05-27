@@ -3,9 +3,6 @@ import { UserProfile } from '../entities/user-profile.entity';
 
 export class ResponseUserProfileDto {
   @ApiProperty()
-  email: string;
-
-  @ApiProperty()
   name: string;
 
   @ApiProperty()
@@ -28,7 +25,6 @@ export class ResponseUserProfileDto {
 
   static fromEntity(userProfile: UserProfile): ResponseUserProfileDto {
     return {
-      email: userProfile.user.email,
       name: userProfile.name,
       surname: userProfile.surname,
       patronymic: userProfile.patronymic,
