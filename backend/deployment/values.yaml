@@ -46,7 +46,7 @@ ingress:
   className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/auth-url: http://backend-backend-deployment.default.svc.cluster.local:3000/api/v1/auth
-    nginx.ingress.kubernetes.io/auth-signin: https://geek-battle-2023.ru/signin
+    nginx.ingress.kubernetes.io/auth-signin: https://geek-battle-2023.ru/login?redirectUrl=$request_uri
   hosts:
     - host: geek-battle-2023.ru
       paths:
@@ -64,9 +64,9 @@ ingressPublic:
     - host: geek-battle-2023.ru
       paths:
         - path: /api/v1/auth
-          pathType: Exact
-        - path: /api/v1/auth/signIn
-          pathType: Exact
+          pathType: ImplementationSpecific
+        # - path: /api/v1/_internal
+        #   pathType: ImplementationSpecific
   tls:
    - secretName: geek-battle-ssl
      hosts:
