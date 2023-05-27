@@ -56,7 +56,12 @@ export default function Organization({ backLink }: Props) {
         ]}
       />
       {activeTab === "vacancies" && (
-        <Vacancies link="/curator/vacancies" noHeader organizationId="12" />
+        <Vacancies
+          link="/curator/vacancies"
+          linkQuery={`?organization=${"12"}`}
+          noHeader
+          organizationId="12"
+        />
       )}
       {activeTab === "staffs" && (
         <Staffs addStaffLink={`/curator/add-staff?organization=${"12"}`} />
