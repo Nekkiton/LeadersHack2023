@@ -3,6 +3,7 @@ import { Spin } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import RateUserModal from "components/main/modals/RateUser"
+import Points from "components/base/Points"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import { useQuery } from "@tanstack/react-query"
@@ -18,8 +19,8 @@ interface Props {
 
 export default function Intern({ backLink, internId }: Props) {
   const user = {
-    //role: "curator",
-    role: "mentor",
+    role: "curator",
+    //role: "mentor",
     //role: "staff",
   }
 
@@ -64,15 +65,11 @@ export default function Intern({ backLink, internId }: Props) {
             </div>
             <div className={styles.complexCardBlock}>
               <p className={styles.cardTitle}>Последнее место стажировки</p>
+              {/* TODO: add data */}
               <div>{}</div>
             </div>
-            <div className={styles.complexCardBlock}>
-              <p className={styles.cardTitle}>Набрано баллов</p>
-              <div>{data.score}</div>
-            </div>
-            {/* TODO: add section in accordance with Figma
-            https://www.figma.com/file/VMVVobtgBWqyjIvENBvTCO/%D0%9B%D0%A6%D0%A2-23%2F16?type=design&node-id=5526%3A31653&t=gNGKlJ35OxQRDtPf-1
-          */}
+            {/* TODO: add data */}
+            <Points score={data.score} details={[]} />
           </div>
         </div>
       </div>

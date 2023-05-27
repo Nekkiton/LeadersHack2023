@@ -4,6 +4,7 @@ import Link from "next/link"
 import Button from "components/base/controls/Button"
 import SetHackathonResultModal from "components/main/modals/SetHackathonResult"
 import RateResumeModal from "components/main/modals/RateResume"
+import Points from "components/base/Points"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import { useQuery } from "@tanstack/react-query"
 import { fetchCandidateInfo } from "data"
@@ -52,7 +53,7 @@ export default function Candidate({ backLink, candidateId }: Props) {
           <StudentInfo profile={data.user} />
           <div className={styles.headerControls}>
             {/* TODO: если резюме не оценено еще? */}
-            {user.role === "curator" && (
+            {user.role === "curator" && data?.status === "moderation" && (
               <Button onClick={() => setIsRateResumeShowed(true)}>
                 Оценить резюме
               </Button>
@@ -78,13 +79,17 @@ export default function Candidate({ backLink, candidateId }: Props) {
                 )}
                 itemTitles={statusTitles}
               />
+              {data.status === "rejected" && data.rejectionReason && (
+                <div className={styles.statusComment}>
+                  <p className={styles.statusCommentTitle}>
+                    Причина отклонения
+                  </p>
+                  <p>{data.rejectionReason}</p>
+                </div>
+              )}
             </div>
-            <div className={styles.complexCardBlock}>
-              <p className={styles.cardTitle}>Набрано баллов</p>
-              <div>{data.score}</div>
-            </div>
-            {/* TODO: add section in accordance with Figma
-            https://www.figma.com/file/VMVVobtgBWqyjIvENBvTCO/%D0%9B%D0%A6%D0%A2-23%2F16?type=design&node-id=5602%3A14124&t=gNGKlJ35OxQRDtPf-1          */}
+            {/* TODO: add data */}
+            <Points score={data.score} details={[]} />
           </div>
         </div>
       </div>
