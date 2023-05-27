@@ -4,6 +4,6 @@ export enum Role {
   CANDIDATE = 'candidate',
   INTERN = 'intern',
   MENTOR = 'mentor',
-  HR = 'HR',
-  SUPERVISOR = 'supervisor',
+  CURATOR = 'curator',
+  STAFF = 'staff',
 }
