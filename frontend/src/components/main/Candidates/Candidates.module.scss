@@ -65,3 +65,30 @@
   align-items: center;
   gap: 16px;
 }
+
+.sortingIcon {
+  width: 24px;
+  height: 24px;
+
+  &.asc path:first-child,
+  &.desc path:last-child {
+    fill: $gray-2;
+  }
+
+  path {
+    fill: $gray-4;
+    transition: $transition;
+
+    &:first-child {
+      transform-origin: bottom;
+    }
+
+    &:last-child {
+      transform-origin: top;
+    }
+
+    &:hover {
+      transform: scale(1.3);
+    }
+  }
+}

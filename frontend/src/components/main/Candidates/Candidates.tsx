@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useState, MouseEvent } from "react"
 import Input from "components/base/controls/Input"
 import Button from "components/base/controls/Button"
 import Select from "components/base/controls/Select"
@@ -7,16 +7,34 @@ import ResponseCard from "components/base/vacancy/ResponseCard"
 import Pagination from "components/base/navigation/Pagination"
 import UserQuestionIcon from "assets/icons/user-question.svg"
 import SearchIcon from "assets/icons/search.svg"
+import SortingIcon from "assets/icons/sorting.svg"
 import styles from "./Candidates.module.scss"
 import { useQuery } from "@tanstack/react-query"
 import { fetchCandidateList } from "data"
 import { Spin } from "antd"
 
 export default function Candidates() {
+  const updateSorting = (
+    e: MouseEvent<HTMLButtonElement>,
+    setSorting: (val: string) => void
+  ) => {
+    const pos = e.clientY - e.currentTarget.getBoundingClientRect().top
+    const height = e.currentTarget.clientHeight
+
+    if (pos > height / 2) {
+      setSorting("desc")
+    } else {
+      setSorting("asc")
+    }
+  }
+
   const [query, setQuery] = useState("")
   const [statuses, setStatuses] = useState([])
+  const [nameSorting, setNameSorting] = useState("")
+  const [scoreSorting, setScoreSorting] = useState("")
   const [currentPage, setCurrentPage] = useState(0)
 
+  // TODO: add sorting
   const { data, isLoading } = useQuery({
     queryKey: ["candidateList", { query, page: currentPage }],
     queryFn: () =>
@@ -86,11 +104,26 @@ export default function Candidates() {
               multiple
             />
           </div>
-          {/* TODO: add sorting */}
           <div className={styles.sorting}>
             <p>Сортировать по</p>
-            <Button type="text">ФИО</Button>
-            <Button type="text">количеству баллов</Button>
+            <Button
+              type="text"
+              onClick={(e) => updateSorting(e, setNameSorting)}
+            >
+              <span>ФИО</span>
+              <SortingIcon
+                className={`${styles.sortingIcon} ${styles[nameSorting]}`}
+              />
+            </Button>
+            <Button
+              type="text"
+              onClick={(e) => updateSorting(e, setScoreSorting)}
+            >
+              <span>количеству баллов</span>
+              <SortingIcon
+                className={`${styles.sortingIcon} ${styles[scoreSorting]}`}
+              />
+            </Button>
           </div>
           <div className={styles.candidates}>
             {data?.items.map((candidate) => (

@@ -1,3 +1,4 @@
+import { MouseEventHandler } from "react"
 import { CSSProperties, ReactNode } from "react"
 import { Button as BaseButton } from "antd"
 import styles from "./Button.module.scss"
@@ -7,7 +8,7 @@ interface Props {
   disabled?: boolean
   children?: ReactNode
   className?: string
-  onClick?: () => void
+  onClick?: MouseEventHandler<any>
   htmlType?: "button" | "submit" | "reset"
   style?: CSSProperties
 }
