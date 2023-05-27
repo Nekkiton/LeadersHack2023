@@ -96,6 +96,17 @@ INSERT INTO
 VALUES
     (
         '00000000-0000-0000-0000-000000000001',
+        '00000000-0000-0000-0000-000000000001',
+        'admin name',
+        'admin surname',
+        'admin patronymic',
+        '2000-01-01',
+        'admin citizenship',
+        'admin location',
+        'admin phone'
+    ),
+    (
+        '00000000-0000-0000-0000-000000000002',
         '00000000-0000-0000-0000-000000000002',
         'candidate name',
         'candidate surname',
@@ -104,6 +115,39 @@ VALUES
         'candidate citizenship',
         'candidate location',
         'candidate phone'
+    ),
+    (
+        '00000000-0000-0000-0000-000000000003',
+        '00000000-0000-0000-0000-000000000003',
+        'intern name',
+        'intern surname',
+        'intern patronymic',
+        '2000-01-01',
+        'intern citizenship',
+        'intern location',
+        'intern phone'
+    ),
+    (
+        '00000000-0000-0000-0000-000000000004',
+        '00000000-0000-0000-0000-000000000004',
+        'mentor name',
+        'mentor surname',
+        'mentor patronymic',
+        '2000-01-01',
+        'mentor citizenship',
+        'mentor location',
+        'mentor phone'
+    ),
+    (
+        '00000000-0000-0000-0000-000000000005',
+        '00000000-0000-0000-0000-000000000005',
+        'staff name',
+        'staff surname',
+        'staff patronymic',
+        '2000-01-01',
+        'staff citizenship',
+        'staff location',
+        'staff phone'
     ) ON CONFLICT DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS "referral" (
@@ -146,5 +190,28 @@ CREATE TABLE IF NOT EXISTS "candidate_info" (
     "internshipDirection" INTERNSHIP_DIRECTION NOT NULL,
     FOREIGN KEY("userId") REFERENCES "user"("id")
 );
+
+INSERT INTO
+    "candidate_info" (
+        "id",
+        "userId",
+        "workSchedule",
+        "experience",
+        "projectActivity",
+        "about",
+        "education",
+        "internshipDirection"
+    )
+VALUES
+    (
+        '00000000-0000-0000-0000-000000000001',
+        '00000000-0000-0000-0000-000000000002',
+        'full_week',
+        'experience',
+        'projectActivity',
+        'about',
+        '"{\"name\":\"education name\",\"specialty\":\"education specialty\",\"graduationYear\":\"2000\"}"',
+        'it'
+    ) ON CONFLICT DO NOTHING;
 
 END $$

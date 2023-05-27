@@ -1,5 +1,7 @@
 DELIMITER '//';
 
+DROP TABLE "candidate_info";
+
 DO $$ BEGIN
     IF EXISTS (
         SELECT
