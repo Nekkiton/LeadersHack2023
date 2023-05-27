@@ -4,7 +4,7 @@ import { JwtService } from '@nestjs/jwt';
 import { UsersService } from 'src/users/users.service';
 import { ConfigService } from '@nestjs/config';
 import { Role } from './roles/role.enum';
-import { SignInDto } from './dto/sign-in.dto';
+import { User } from 'src/users/entities/user.entity';
 
 export interface UserPayload extends Record<string, unknown> {
   email: string;
@@ -19,15 +19,11 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async signIn(dto: SignInDto): Promise<string> {
-    const user = await this.usersService.findOne(dto.email);
-    if (!user) {
-      throw new UnauthorizedException();
-    }
-    const matched = await compare(dto.password, user.passwordHash);
-    if (!matched) {
-      throw new UnauthorizedException();
-    }
+  async compare(user: User, password): Promise<boolean> {
+    return compare(password, user.passwordHash);
+  }
+
+  async signIn(user: User): Promise<string> {
     const payload: UserPayload = {
       sub: user.id,
       email: user.email,

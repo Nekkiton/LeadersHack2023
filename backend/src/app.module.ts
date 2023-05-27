@@ -6,8 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { InternalController } from './_internal/_internal.controller';
 import { ReferralsModule } from './referrals/referrals.module';
-import { SignUpModule } from './sign-up/sign-up.module';
 import { UserProfilesModule } from './user-profiles/user-profiles.module';
+import { RolesGuard } from './auth/roles/roles.guard';
+import { AuthGuard } from './auth/auth.guard';
 
 @Module({
   imports: [
@@ -31,9 +32,18 @@ import { UserProfilesModule } from './user-profiles/user-profiles.module';
       }),
     }),
     ReferralsModule,
-    SignUpModule,
     UserProfilesModule,
   ],
   controllers: [InternalController],
+  providers: [
+    {
+      provide: 'APP_GUARD',
+      useClass: AuthGuard,
+    },
+    {
+      provide: 'APP_GUARD',
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

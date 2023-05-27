@@ -5,7 +5,9 @@ export class ResponseUserProfileDto {
   name: string;
   surname: string;
   patronymic: string;
-  residency: string;
+  citizenship: string;
+  location: string;
+  phone: string;
   photo: string;
 
   static fromEntity(userProfile: UserProfile): ResponseUserProfileDto {
@@ -14,7 +16,9 @@ export class ResponseUserProfileDto {
       name: userProfile.name,
       surname: userProfile.surname,
       patronymic: userProfile.patronymic,
-      residency: userProfile.residency,
+      citizenship: userProfile.citizenship,
+      location: userProfile.location,
+      phone: userProfile.phone,
       photo: userProfile.photo,
     };
   }

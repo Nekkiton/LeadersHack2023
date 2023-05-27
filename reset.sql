@@ -2,7 +2,7 @@ DELIMITER '//';
 
 DROP TABLE IF EXISTS "referral";
 
-DROP TABLE IF EXISTS "userProfile";
+DROP TABLE IF EXISTS "user_profile";
 
 DROP TABLE IF EXISTS "user";
 

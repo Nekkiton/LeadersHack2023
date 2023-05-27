@@ -42,7 +42,9 @@ CREATE TABLE IF NOT EXISTS "user_profile" (
     "name" VARCHAR(255) NOT NULL,
     "surname" VARCHAR(255) NOT NULL,
     "patronymic" VARCHAR(255) NULL,
-    "residency" VARCHAR(1000) NULL,
+    "citizenship" VARCHAR(255) NULL,
+    "location" VARCHAR(1000) NULL,
+    "phone" VARCHAR(255) NULL,
     "photo" VARCHAR(1000) NULL,
     FOREIGN KEY("userId") REFERENCES "user"("id")
 );

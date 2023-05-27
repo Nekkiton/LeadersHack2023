@@ -18,8 +18,16 @@ export class CreateUserProfileDto {
   patronymic: string;
 
   @IsString()
+  @MaxLength(255)
+  citizenship: string;
+
+  @IsString()
   @MaxLength(1000)
-  residency: string;
+  location: string;
+
+  @IsString()
+  @MaxLength(255)
+  phone: string;
 
   @IsString()
   @MaxLength(1000)

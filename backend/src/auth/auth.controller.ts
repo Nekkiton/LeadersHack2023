@@ -5,25 +5,46 @@ import {
   HttpCode,
   HttpStatus,
   Injectable,
+  Logger,
   Post,
-  Req,
   Res,
   UnauthorizedException,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { SignInDto } from './dto/sign-in.dto';
-import { Request, Response } from 'express';
+import { Response } from 'express';
 import { ConfigService } from '@nestjs/config';
+import { ResponseSignInDto } from './dto/response-sign-in.dto';
+import { UsersService } from 'src/users/users.service';
+import { InjectEntityManager } from '@nestjs/typeorm';
+import { ReferralsService } from 'src/referrals/referrals.service';
+import { CreateNobodyUserDto } from 'src/auth/dto/create-nobody-user.dto';
+import { ResponseNobodyUserDto } from 'src/auth/dto/response-nobody-user.dto';
+import { UserProfilesService } from 'src/user-profiles/user-profiles.service';
+import { User } from 'src/users/entities/user.entity';
+import { EntityManager } from 'typeorm';
+import { Role } from './roles/role.enum';
+import { CreateUserProfileDto } from 'src/user-profiles/dto/create-user-profile.dto';
+import { ResponseUserProfileDto } from 'src/user-profiles/dto/response-user-profile.dto';
+import { UserProfile } from 'src/user-profiles/entities/user-profile.entity';
+import { Public } from './auth.decorator';
 
 @Injectable()
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService, private configService: ConfigService) {}
+  private readonly logger = new Logger(AuthController.name);
 
-  @HttpCode(HttpStatus.OK)
-  @Post('sign-in')
-  async signIn(@Body() signInDto: SignInDto, @Res({ passthrough: true }) res: Response) {
-    const token = await this.authService.signIn(signInDto);
+  constructor(
+    private authService: AuthService,
+    private configService: ConfigService,
+    private userService: UsersService,
+    private userProfileService: UserProfilesService,
+    private referralService: ReferralsService,
+    @InjectEntityManager()
+    private entityManager: EntityManager,
+  ) {}
+
+  private async setAccessToken(token: string, res: Response): Promise<void> {
     /**
      * TODO:
      * 1. Set domain
@@ -35,16 +56,68 @@ export class AuthController {
     res.cookie('access_token', token, {
       expires: new Date(Date.now() + ttlSeconds * 1000),
     });
-    return;
+  }
+
+  @Public()
+  @HttpCode(HttpStatus.OK)
+  @Post('sign-in')
+  async signIn(@Body() dto: SignInDto, @Res({ passthrough: true }) res: Response) {
+    const user = await this.userService.findOne(dto.email);
+    if (!user) {
+      throw new UnauthorizedException();
+    }
+    const matched = await this.authService.compare(user, dto.password);
+    if (!matched) {
+      throw new UnauthorizedException();
+    }
+    const token = await this.authService.signIn(user);
+    await this.setAccessToken(token, res);
+    return ResponseSignInDto.fromEntity(user);
   }
 
   @HttpCode(HttpStatus.OK)
   @Get()
-  async auth(@Req() req: Request) {
-    const token = req.cookies['access_token'];
-    if (!token) {
-      throw new UnauthorizedException();
-    }
-    await this.authService.validateToken(token);
+  async auth() {
+    // handled by auth.guard
+    return 'ok';
+  }
+
+  @Public()
+  @Post('sign-up')
+  @HttpCode(HttpStatus.CREATED)
+  async createNobodyUser(@Body() dto: CreateNobodyUserDto): Promise<ResponseNobodyUserDto> {
+    let user: User;
+    await this.entityManager.transaction(async (entityManager) => {
+      user = await this.userService.createUser(
+        {
+          email: dto.email,
+          password: dto.password,
+          role: Role.NOBODY,
+        },
+        { entityManager },
+      );
+      const referral = await this.referralService.createReferral(user, { entityManager });
+      // TODO send invite email
+      this.logger.log(`Generated referralId="${referral.referralId}" for user="${dto.email}"`);
+    });
+    return ResponseNobodyUserDto.fromEntity(user);
+  }
+
+  @Public()
+  @Post('sign-up/profile')
+  @HttpCode(HttpStatus.CREATED)
+  async createUserProfile(
+    @Body() dto: CreateUserProfileDto,
+    @Res({ passthrough: true }) res: Response,
+  ): Promise<ResponseUserProfileDto> {
+    let userProfile: UserProfile;
+    let user: User;
+    await this.entityManager.transaction(async (entityManager) => {
+      userProfile = await this.userProfileService.createUserProfile(dto, { entityManager });
+      user = await this.userService.promoteToCandidate(userProfile.user, { entityManager });
+    });
+    const token = await this.authService.signIn(user);
+    await this.setAccessToken(token, res);
+    return ResponseUserProfileDto.fromEntity(userProfile);
   }
 }

@@ -20,8 +20,14 @@ export class UserProfile {
   patronymic: string;
 
   @Column({ length: 255 })
-  residency: string;
+  citizenship: string;
 
-  @Column({ length: 255, nullable: true })
+  @Column({ length: 1000 })
+  location: string;
+
+  @Column({ length: 255 })
+  phone: string;
+
+  @Column({ length: 1000, nullable: true })
   photo: string;
 }

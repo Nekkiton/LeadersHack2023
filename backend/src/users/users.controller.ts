@@ -1,4 +1,4 @@
-import { Body, Controller, ForbiddenException, HttpCode, HttpStatus, Logger, Post } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Logger, Post } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { Role } from 'src/auth/roles/role.enum';
