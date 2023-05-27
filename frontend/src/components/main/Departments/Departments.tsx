@@ -8,11 +8,7 @@ import SearchIcon from "assets/icons/search.svg"
 import styles from "./Departments.module.scss"
 import { useState } from "react"
 
-interface Props {
-  link: string
-}
-
-export default function Departments({ link }: Props) {
+export default function Departments() {
   const [currentPage, setCurrentPage] = useState(1)
 
   const [isAddDepartmentShowed, setIsAddDepartmentShowed] = useState(false)
@@ -32,8 +28,8 @@ export default function Departments({ link }: Props) {
           </Button>
         </div>
         <div className={styles.mentors}>
-          <DepartmentCard link={link} />
-          <DepartmentCard link={link} />
+          <DepartmentCard />
+          <DepartmentCard />
         </div>
         <Pagination
           currentPage={currentPage}

@@ -1,9 +1,11 @@
 import { useState } from "react"
+import Link from "next/link"
 import dynamic from "next/dynamic"
 import Select from "components/base/controls/Select"
 import Button from "components/base/controls/Button"
 import EventIcon from "assets/icons/event.svg"
 import SearchBlockIcon from "assets/icons/search-block.svg"
+import PenIcon from "assets/icons/pen.svg"
 import styles from "./CuratorMain.module.scss"
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
@@ -139,7 +141,18 @@ export default function CuratorMain() {
   return (
     <div className={styles.container}>
       <div className={styles.block}>
-        <h3 className={styles.fatBlockTitle}>Таймлайн стажировки</h3>
+        <div className={styles.blockHeader}>
+          <h3 className={styles.fatBlockTitle}>Таймлайн стажировки</h3>
+          {/* TODO: show if editing is enabled */}
+          {true && (
+            <Link href="/curator/internship">
+              <Button type="text">
+                <PenIcon className="icon" />
+                <span>Редактировать</span>
+              </Button>
+            </Link>
+          )}
+        </div>
         {/* TODO: show if no timeline */}
         {false ? (
           <div className={`${styles.card} ${styles.timelineNothing}`}>
@@ -147,8 +160,9 @@ export default function CuratorMain() {
               <EventIcon className={styles.timelineNothingIcon} />
               <p>Сроки стажировки 2023 - 2024 еще не определены</p>
             </div>
-            {/* Add button action */}
-            <Button>Задать сроки стажировки</Button>
+            <Link href="/curator/internship">
+              <Button>Задать сроки стажировки</Button>
+            </Link>
           </div>
         ) : (
           <div className={`${styles.card} ${styles.timelineCard}`}>

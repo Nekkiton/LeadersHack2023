@@ -9,11 +9,10 @@ import styles from "./Staffs.module.scss"
 import { useState } from "react"
 
 interface Props {
-  link: string
   addStaffLink?: string
 }
 
-export default function Staffs({ link, addStaffLink }: Props) {
+export default function Staffs({ addStaffLink }: Props) {
   const [currentPage, setCurrentPage] = useState(1)
 
   return (
@@ -35,8 +34,8 @@ export default function Staffs({ link, addStaffLink }: Props) {
         )}
       </div>
       <div className={styles.mentors}>
-        <StaffCard link={link} />
-        <StaffCard link={link} />
+        <StaffCard />
+        <StaffCard />
       </div>
       <Pagination
         currentPage={currentPage}

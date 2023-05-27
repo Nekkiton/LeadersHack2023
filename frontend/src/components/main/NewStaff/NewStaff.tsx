@@ -46,7 +46,7 @@ export default function NewStaff({ link }: Props) {
           <span>Вернуться к кадровым специалистам</span>
         </Button>
       </Link>
-      <h1 className={styles.title}>Добавить наставника</h1>
+      <h1 className={styles.title}>Добавить кадрового специалиста</h1>
       <div className={styles.content}>
         <Form className={styles.form} form={form} onFinish={saveStaff}>
           <div className={styles.formHFields}>
@@ -75,7 +75,7 @@ export default function NewStaff({ link }: Props) {
           >
             <Input
               label="Эл. почта"
-              postscript="На эту почту наставнику придет ссылка для регистрации"
+              postscript="На эту почту кадровому специалисту придет ссылка для регистрации"
               className={styles.formField}
             />
           </Form.Item>
@@ -88,16 +88,12 @@ export default function NewStaff({ link }: Props) {
         <div className={styles.hint}>
           <ExclamationIcon className={styles.hintIcon} />
           <p className={styles.hintText}>
-            После добавления наставника ему придет письмо со ссылкой для
-            регистрации на платформе.
-          </p>
-          <p className={styles.hintText}>
-            Обратите внимание: для того, чтобы закреплять стажеров
-            за наставником, ему необходимо пройти обучение в Школе наставников
+            После добавления кадрового специалиста ему придет письмо со ссылкой
+            для регистрации на платформе.
           </p>
           {/* TODO: add link */}
           <Button type="text">
-            <span>Подробнее о добавлении наставников</span>
+            <span>Подробнее о добавлении кадровых специалистов</span>
             <LinkExternalIcon className="icon" />
           </Button>
         </div>

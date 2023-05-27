@@ -9,9 +9,14 @@ import styles from "./AddDepartment.module.scss"
 interface Props {
   isShowed: boolean
   setIsShowed: (val: boolean) => void
+  editData?: { [key: string]: any }
 }
 
-export default function AddDepartmentModal({ isShowed, setIsShowed }: Props) {
+export default function AddDepartmentModal({
+  isShowed,
+  setIsShowed,
+  editData,
+}: Props) {
   const [isValid, setIsValid] = useState(false)
   const [form] = Form.useForm()
   const formValues = Form.useWatch([], form)
@@ -25,10 +30,12 @@ export default function AddDepartmentModal({ isShowed, setIsShowed }: Props) {
 
   // TODO: send request
   const submit = (data: any) => {
+    // edit or create
+
     console.log(data)
     setIsShowed(false)
     notification.open({
-      message: "Подразделение добавлено",
+      message: editData ? "Подразделение изменено" : "Подразделение добавлено",
       closeIcon: <TimesIcon />,
     })
   }
@@ -37,9 +44,16 @@ export default function AddDepartmentModal({ isShowed, setIsShowed }: Props) {
     <Popup
       isShowed={isShowed}
       setIsShowed={setIsShowed}
-      title="Добавление подразделения"
+      title={
+        editData ? "Редактирование подразделения" : "Добавление подразделение"
+      }
     >
-      <Form className={styles.form} form={form} onFinish={submit}>
+      <Form
+        className={styles.form}
+        form={form}
+        onFinish={submit}
+        initialValues={editData}
+      >
         <Form.Item
           name="name"
           rules={[{ required: true, message: "Заполните это поле" }]}
@@ -55,7 +69,7 @@ export default function AddDepartmentModal({ isShowed, setIsShowed }: Props) {
             Отмена
           </Button>
           <Button className="control" htmlType="submit" disabled={!isValid}>
-            Добавить
+            {editData ? "Сохранить" : "Добавить"}
           </Button>
         </div>
       </Form>

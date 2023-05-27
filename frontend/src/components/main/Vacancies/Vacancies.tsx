@@ -23,11 +23,12 @@ import { Spin } from "antd"
 interface Props {
   link: string
   noHeader?: boolean
+  organizationId?: string
 }
 
 const userImg = "/images/user.svg"
 
-export default function Vacancies({ link, noHeader }: Props) {
+export default function Vacancies({ link, noHeader, organizationId }: Props) {
   const user = {
     //role: "mentor",
     //role: "staff",
@@ -114,7 +115,7 @@ export default function Vacancies({ link, noHeader }: Props) {
         search: query,
         statuses,
         mentors,
-        // TODO: add directions
+        // TODO: add directions, organizationId (if exists)
         //directions,
         page: currentPage,
       }),
@@ -308,8 +309,8 @@ export default function Vacancies({ link, noHeader }: Props) {
                 ]}
               />
             )}
-            {/* TODO: show if user if curator and page is not organization */}
-            {(user.role === "curator" || user.role === "intern") && (
+            {((user.role === "curator" && !organizationId) ||
+              user.role === "intern") && (
               <SmallSwitch
                 className={styles.viewSwitch}
                 value={viewMode}

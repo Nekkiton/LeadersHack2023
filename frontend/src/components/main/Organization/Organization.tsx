@@ -56,15 +56,19 @@ export default function Organization({ backLink }: Props) {
         ]}
       />
       {activeTab === "vacancies" && (
-        <Vacancies link="/curator/vacancies" noHeader />
+        <Vacancies link="/curator/vacancies" noHeader organizationId="12" />
       )}
       {activeTab === "staffs" && (
-        <Staffs addStaffLink="/curator/add-staff" link="/" />
+        <Staffs addStaffLink={`/curator/add-staff?organization=${"12"}`} />
       )}
       {activeTab === "mentors" && (
-        <Mentors noHeader longSearchInput addMentorLink="/curator/add-mentor" />
+        <Mentors
+          noHeader
+          longSearchInput
+          addMentorLink={`/curator/add-mentor?organization=${"12"}`}
+        />
       )}
-      {activeTab === "deparments" && <Departments link="/" />}
+      {activeTab === "deparments" && <Departments />}
     </div>
   )
 }

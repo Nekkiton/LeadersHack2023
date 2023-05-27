@@ -1,5 +1,5 @@
 import NewMentor from "components/main/NewMentor"
 
 export default function NewMentorPage() {
-  return <NewMentor />
+  return <NewMentor link="/staff/mentors" />
 }

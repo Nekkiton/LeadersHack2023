@@ -10,7 +10,11 @@ import LinkExternalIcon from "assets/icons/link-external.svg"
 import TimesIcon from "assets/icons/times.svg"
 import styles from "./NewMentor.module.scss"
 
-export default function NewVacancy() {
+interface Props {
+  link: string
+}
+
+export default function NewVacancy({ link }: Props) {
   const router = useRouter()
 
   const [isValid, setIsValid] = useState(false)
@@ -31,12 +35,12 @@ export default function NewVacancy() {
       message: "Ссылка на регистрацию отправлена наставнику",
       closeIcon: <TimesIcon />,
     })
-    router.push("/staff/mentors")
+    router.push(link)
   }
 
   return (
     <div className={styles.container}>
-      <Link href="/staff/mentors">
+      <Link href={link}>
         <Button className={styles.navBtn} type="text">
           <ChevronLeftIcon className="icon" />
           <span>Вернуться к наставникам</span>
