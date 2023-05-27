@@ -149,7 +149,7 @@ export class AuthController {
       if (!referral) {
         throw new ForbiddenException();
       }
-      userProfile = await this.userProfileService.createUserProfile(referral.user, dto, { entityManager });
+      userProfile = await this.userProfileService.create(referral.user, dto, { entityManager });
       user = userProfile.user;
       if (user.role === Role.NOBODY) {
         user = await this.userService.promoteToCandidate(userProfile.user, { entityManager });

@@ -113,4 +113,38 @@ CREATE TABLE IF NOT EXISTS "referral" (
     FOREIGN KEY("userId") REFERENCES "user"("id")
 );
 
+IF NOT EXISTS (
+    SELECT
+        1
+    FROM
+        pg_type
+    WHERE
+        typname = 'work_schedule'
+) THEN CREATE TYPE WORK_SCHEDULE AS ENUM ('full_week', 'half_week');
+
+END IF;
+
+IF NOT EXISTS (
+    SELECT
+        1
+    FROM
+        pg_type
+    WHERE
+        typname = 'internship_direction'
+) THEN CREATE TYPE INTERNSHIP_DIRECTION AS ENUM ('it', 'media', 'social', 'hr', 'town', 'economy');
+
+END IF;
+
+CREATE TABLE IF NOT EXISTS "candidate_info" (
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "userId" UUID NOT NULL UNIQUE,
+    "workSchedule" WORK_SCHEDULE NOT NULL,
+    "experience" TEXT,
+    "projectActivity" TEXT,
+    "about" TEXT,
+    "education" JSONB NOT NULL,
+    "internshipDirection" INTERNSHIP_DIRECTION NOT NULL,
+    FOREIGN KEY("userId") REFERENCES "user"("id")
+);
+
 END $$

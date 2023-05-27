@@ -50,7 +50,7 @@ export class UsersController {
   async patchUserProfile(@Body() dto: UpdateUserProfileDto, @Req() req): Promise<ResponseUserProfileDto> {
     const payload: UserPayload = req.user;
     const user = await this.getUserByEmail(payload.email);
-    const profile = await this.userProfilesService.updateUserProfile(user, dto);
+    const profile = await this.userProfilesService.update(user, dto);
     return ResponseUserProfileDto.fromEntity(profile);
   }
 }

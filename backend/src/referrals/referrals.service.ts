@@ -6,7 +6,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { ConfigService } from '@nestjs/config';
 import { User } from 'src/users/entities/user.entity';
-import { TransactionOptions, TransactionService } from 'src/components/TransactionService';
+import { TransactionOptions, TransactionService } from 'src/utils/TransactionService';
 
 const randomBytesAsync = promisify(randomBytes);
 

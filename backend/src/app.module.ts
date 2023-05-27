@@ -11,6 +11,8 @@ import { RolesGuard } from './auth/roles/roles.guard';
 import { AuthGuard } from './auth/auth.guard';
 import { ProfileModule } from './profile/profile.module';
 import { AdminModule } from './admin/admin.module';
+import { CandidatesModule } from './candidates/candidates.module';
+import { CandidateInfoModule } from './candidate-info/candidate-info.module';
 
 @Module({
   imports: [
@@ -37,6 +39,8 @@ import { AdminModule } from './admin/admin.module';
     UserProfilesModule,
     ProfileModule,
     AdminModule,
+    CandidatesModule,
+    CandidateInfoModule,
   ],
   controllers: [InternalController],
   providers: [

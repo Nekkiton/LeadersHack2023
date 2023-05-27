@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import { IsDateString, IsOptional, IsString, MaxLength } from 'class-validator';
 import DateTransformer from 'src/components/DateTransformer';
@@ -42,7 +42,7 @@ export class CreateUserProfileDto {
   @IsString()
   @MaxLength(1000)
   @IsOptional()
-  @ApiProperty({ maxLength: 1000, required: false })
+  @ApiPropertyOptional({ maxLength: 1000 })
   photo: string;
 }
 
