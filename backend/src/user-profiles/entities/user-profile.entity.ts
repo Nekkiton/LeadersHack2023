@@ -19,6 +19,9 @@ export class UserProfile {
   @Column({ length: 255 })
   patronymic: string;
 
+  @Column({ type: 'date' })
+  birthday: string;
+
   @Column({ length: 255 })
   citizenship: string;
 

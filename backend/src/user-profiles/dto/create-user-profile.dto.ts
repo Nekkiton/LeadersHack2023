@@ -1,5 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, MaxLength } from 'class-validator';
+import { Transform } from 'class-transformer';
+import { IsDateString, IsOptional, IsString, MaxLength } from 'class-validator';
+import DateTransformer from 'src/components/DateTransformer';
 
 export class CreateUserProfileDto {
   @IsString()
@@ -16,6 +18,11 @@ export class CreateUserProfileDto {
   @MaxLength(255)
   @ApiProperty({ maxLength: 255 })
   patronymic: string;
+
+  @IsDateString()
+  @ApiProperty({ format: 'date' })
+  @Transform(DateTransformer)
+  birthday: string;
 
   @IsString()
   @MaxLength(255)

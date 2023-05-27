@@ -73,9 +73,10 @@ CREATE TABLE IF NOT EXISTS "user_profile" (
     "name" VARCHAR(255) NOT NULL,
     "surname" VARCHAR(255) NOT NULL,
     "patronymic" VARCHAR(255) NULL,
-    "citizenship" VARCHAR(255) NULL,
-    "location" VARCHAR(1000) NULL,
-    "phone" VARCHAR(255) NULL,
+    "birthday" DATE NOT NULL,
+    "citizenship" VARCHAR(255) NOT NULL,
+    "location" VARCHAR(1000) NOT NULL,
+    "phone" VARCHAR(255) NOT NULL,
     "photo" VARCHAR(1000) NULL,
     FOREIGN KEY("userId") REFERENCES "user"("id")
 );
@@ -87,6 +88,7 @@ INSERT INTO
         "name",
         "surname",
         "patronymic",
+        "birthday",
         "citizenship",
         "location",
         "phone"
@@ -98,6 +100,7 @@ VALUES
         'candidate name',
         'candidate surname',
         'candidate patronymic',
+        '2000-01-01',
         'candidate citizenship',
         'candidate location',
         'candidate phone'
