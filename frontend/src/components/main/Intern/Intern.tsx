@@ -33,9 +33,9 @@ export default function Intern({ backLink, internId }: Props) {
     queryKey: ["userInfo"],
     queryFn: () => fetchUserInfo(),
   })
-  const role = userInfo.data!.role;
-
-  if (!data || isLoading || userInfo.isLoading) return <Spin />
+  
+  if (!data || isLoading || !userInfo.data || userInfo.isLoading) return <Spin />
+  const role = userInfo.data.role;
 
   return (
     <>

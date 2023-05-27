@@ -36,7 +36,7 @@ export default function Candidate({ backLink, candidateId }: Props) {
     queryKey: ["userInfo"],
     queryFn: () => fetchUserInfo(),
   })
-  const role = userInfo.data!.role;
+  const role = userInfo.data?.role;
 
   if (!data || isLoading || userInfo.isLoading) return <Spin />
 

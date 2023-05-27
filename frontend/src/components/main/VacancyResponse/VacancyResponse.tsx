@@ -63,7 +63,7 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
     queryKey: ["userInfo"],
     queryFn: () => fetchUserInfo(),
   })
-  const role = userInfo.data!.role;
+  const role = userInfo.data?.role;
 
   if (!data || isLoading || userInfo.isLoading) return <Spin />
 

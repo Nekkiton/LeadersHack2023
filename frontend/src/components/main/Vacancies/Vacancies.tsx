@@ -95,7 +95,7 @@ export default function Vacancies({
     queryKey: ["userInfo"],
     queryFn: () => fetchUserInfo(),
   })
-  const role = userInfo.data!.role;
+  const role = userInfo.data?.role;
 
   const getNothingText = () => {
     if (role === Role.STAFF) {
