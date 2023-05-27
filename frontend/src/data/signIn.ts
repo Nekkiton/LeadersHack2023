@@ -8,11 +8,11 @@ interface QueryData {
 export const signIn = async ({ email, password }: QueryData) => {
   return axios
     .post("/api/v1/auth/sign-in", {
-      username: email,
-      password: password,
+      email,
+      password,
     })
     .then((res) => {
-      return res.data;
+      return res.data
     })
     .catch((err) => console.log(err))
 }

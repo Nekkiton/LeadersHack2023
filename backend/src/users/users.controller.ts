@@ -8,8 +8,11 @@ import { ReferralsService } from 'src/referrals/referrals.service';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { EntityManager } from 'typeorm';
 import { User } from './entities/user.entity';
+import { ApiBadRequestResponse, ApiCookieAuth, ApiCreatedResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
 
 @Controller('users')
+@ApiTags('admin')
+@ApiCookieAuth()
 export class UsersController {
   private readonly logger = new Logger(UsersController.name);
 
@@ -23,6 +26,9 @@ export class UsersController {
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @Roles(Role.ADMIN)
+  @ApiOperation({ summary: 'Creates user' })
+  @ApiCreatedResponse({ type: ResponseUserDto })
+  @ApiBadRequestResponse()
   async createUser(@Body() dto: CreateUserDto): Promise<ResponseUserDto> {
     let user: User;
     await this.entityManager.transaction(async (entityManager) => {

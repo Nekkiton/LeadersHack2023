@@ -28,9 +28,19 @@ import { CreateUserProfileDto } from 'src/user-profiles/dto/create-user-profile.
 import { ResponseUserProfileDto } from 'src/user-profiles/dto/response-user-profile.dto';
 import { UserProfile } from 'src/user-profiles/entities/user-profile.entity';
 import { Public } from './auth.decorator';
+import {
+  ApiBadRequestResponse,
+  ApiCookieAuth,
+  ApiCreatedResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
 @Injectable()
 @Controller('auth')
+@ApiTags('auth')
 export class AuthController {
   private readonly logger = new Logger(AuthController.name);
 
@@ -59,11 +69,16 @@ export class AuthController {
   }
 
   @Public()
-  @HttpCode(HttpStatus.OK)
   @Post('sign-in')
+  @ApiOperation({ summary: 'Sign In' })
+  @ApiOkResponse({ type: ResponseSignInDto })
+  @ApiUnauthorizedResponse()
   async signIn(@Body() dto: SignInDto, @Res({ passthrough: true }) res: Response) {
     const user = await this.userService.findOne(dto.email);
     if (!user) {
+      throw new UnauthorizedException();
+    }
+    if (user.role === Role.NOBODY) {
       throw new UnauthorizedException();
     }
     const matched = await this.authService.compare(user, dto.password);
@@ -75,8 +90,10 @@ export class AuthController {
     return ResponseSignInDto.fromEntity(user);
   }
 
-  @HttpCode(HttpStatus.OK)
   @Get()
+  @ApiOperation({ summary: 'Auth' })
+  @ApiOkResponse()
+  @ApiCookieAuth()
   async auth() {
     // handled by auth.guard
     return 'ok';
@@ -85,6 +102,9 @@ export class AuthController {
   @Public()
   @Post('sign-up')
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Creates default user' })
+  @ApiCreatedResponse({ type: ResponseNobodyUserDto })
+  @ApiBadRequestResponse()
   async createNobodyUser(@Body() dto: CreateNobodyUserDto): Promise<ResponseNobodyUserDto> {
     let user: User;
     await this.entityManager.transaction(async (entityManager) => {
@@ -106,6 +126,9 @@ export class AuthController {
   @Public()
   @Post('sign-up/profile')
   @HttpCode(HttpStatus.CREATED)
+  @ApiOperation({ summary: 'Completes candidate sign-up' })
+  @ApiCreatedResponse({ type: ResponseUserProfileDto })
+  @ApiBadRequestResponse()
   async createUserProfile(
     @Body() dto: CreateUserProfileDto,
     @Res({ passthrough: true }) res: Response,
