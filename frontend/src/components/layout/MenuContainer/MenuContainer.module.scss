@@ -52,6 +52,17 @@
   height: 24px;
 }
 
+.bottomSelect {
+  margin-top: auto;
+  position: sticky;
+  bottom: 16px;
+}
+
+.bottomSelectHeader {
+  border: none;
+  padding: 0;
+}
+
 .body {
   display: flex;
   flex-direction: column;

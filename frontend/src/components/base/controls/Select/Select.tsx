@@ -15,9 +15,11 @@ interface Props {
   value?: any[] | any // multiple ? any[] : any
   onChange?: (alue: any) => void
   className?: string
+  headerClassName?: string
   multiple?: boolean
   same?: boolean
   disabled?: boolean
+  opensUp?: boolean
 }
 
 export default function Select({
@@ -28,8 +30,10 @@ export default function Select({
   value,
   onChange,
   className,
+  headerClassName,
   multiple,
   disabled,
+  opensUp,
 }: Props) {
   const [isActive, setIsActive] = useState(false)
   const [newValue, setNewValue] = useState<(string | number)[]>([])
@@ -90,7 +94,7 @@ export default function Select({
       <div
         className={`${styles.select} ${isActive ? styles.active : ""}  ${
           same ? styles.same : ""
-        } ${disabled ? styles.disabled : ""}`}
+        } ${disabled ? styles.disabled : ""} ${opensUp ? styles.up : ""}`}
       >
         <span className={styles.selectBackdrop} onClick={clear} />
         <div className={styles.selectBody}>
@@ -120,7 +124,7 @@ export default function Select({
         <div
           className={`${styles.selectHeader} ${
             newValue.length ? "" : styles.empty
-          }`}
+          } ${headerClassName}`}
           onClick={() => !disabled && setIsActive((val) => !val)}
         >
           <span>{getHeaderValue()}</span>
