@@ -17,12 +17,13 @@ import TimesIcon from "assets/icons/times.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import DocumentIcon from "assets/icons/document2.svg"
 import { useQuery } from "@tanstack/react-query"
-import { fetchVacancyInfo } from "data"
+import { fetchUserInfo, fetchVacancyInfo } from "data"
 import { useState } from "react"
 import AddTestTaskModal from "./AddTestTaskModal"
 import { Spin, notification } from "antd"
 import Timeline from "components/base/controls/Timeline"
 import { getVacancyStatuses, statusTitles } from "./getVacancyStatuses"
+import { Role } from "models/Role"
 
 interface Props {
   backLink: string
@@ -32,13 +33,6 @@ interface Props {
 const userImg = "/images/user.svg"
 
 export default function Vacancy({ backLink, link }: Props) {
-  const user = {
-    //role: "staff",
-    role: "mentor",
-    //role: "intern",
-    //role: "curator",
-  }
-
   const [isModalOpen, setIsModalOpen] = useState(false)
   const toggleModal = () => setIsModalOpen(!isModalOpen)
 
@@ -83,7 +77,13 @@ export default function Vacancy({ backLink, link }: Props) {
       }),
   })
 
-  if (!data || isLoading) return <Spin />
+  const userInfo = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => fetchUserInfo(),
+  })
+  const role = userInfo.data!.role;
+
+  if (!data || isLoading || userInfo.isLoading) return <Spin />
 
   return (
     <>
@@ -104,7 +104,7 @@ export default function Vacancy({ backLink, link }: Props) {
         <div className={styles.header}>
           <h1 className={styles.headerTitle}>{data.title}</h1>
           <div className={styles.headerControls}>
-            {user.role === "staff" && (
+            {role === Role.STAFF && (
               <>
                 <Link href={`/staff/add-vacancy?copy=${data.id}`}>
                   <Button type="text">
@@ -124,7 +124,7 @@ export default function Vacancy({ backLink, link }: Props) {
                 )}
               </>
             )}
-            {user.role === "mentor" && (
+            {role === Role.MENTOR && (
               <>
                 {data.status === "testTask" && (
                   <Button onClick={toggleModal}>
@@ -141,7 +141,7 @@ export default function Vacancy({ backLink, link }: Props) {
                 )}
               </>
             )}
-            {user.role === "curator" && data.status === "moderating" && (
+            {role === Role.CURATOR && data.status === "moderating" && (
               <>
                 <Button
                   type="secondary"
@@ -154,20 +154,20 @@ export default function Vacancy({ backLink, link }: Props) {
             )}
             {/* TODO: also if intern does not have response to this vacancy */}
             {/* TODO: add action (modal) */}
-            {user.role === "intern" && data?.status === "active" && (
+            {role === Role.INTERN && data?.status === "active" && (
               <Button onClick={() => setIsMakeResponseShowed(true)}>
                 Отлкикнуться
               </Button>
             )}
             {/* TODO: add action, show when internship is finished */}
-            {user.role === "intern" && (
+            {role === Role.INTERN && (
               <Button onClick={() => setIsMakeFeedbackShowed(true)}>
                 Оценить стажировку
               </Button>
             )}
           </div>
         </div>
-        {user.role === "intern" && (
+        {role === Role.INTERN && (
           <Status className={styles.mobileStatus} status={data?.status} />
         )}
         <div className={styles.organization}>
@@ -238,7 +238,7 @@ export default function Vacancy({ backLink, link }: Props) {
                 </div>
               )}
               {/* TODO: also if intern doesn't have response to this vacancy */}
-              {user.role === "intern" && data.status === "active" && (
+              {role === Role.INTERN && data.status === "active" && (
                 <div className={styles.bottomCard}>
                   {/* TODO: manage visibility */}
                   {true && (
@@ -251,9 +251,9 @@ export default function Vacancy({ backLink, link }: Props) {
                 </div>
               )}
             </div>
-            {(user.role === "curator" ||
-              user.role === "staff" ||
-              user.role === "mentor") && (
+            {(role === Role.CURATOR ||
+              role === Role.STAFF ||
+              role === Role.MENTOR) && (
               <VacancyResponses
                 link={`${link}/${data.id}/responses`}
                 responses={data.responses.items}
@@ -264,7 +264,7 @@ export default function Vacancy({ backLink, link }: Props) {
           </div>
           <div className={styles.vCards}>
             {/* TODO: show if user has response to this vacancy, fetch response */}
-            {user.role === "intern" && (
+            {role === Role.INTERN && (
               <div className={`${styles.card} ${styles.complexCard}`}>
                 <div className={styles.complexCardBlock}>
                   <p className={styles.cardTitle}>Статус отклика</p>
@@ -295,15 +295,15 @@ export default function Vacancy({ backLink, link }: Props) {
                 </div>
               </div>
             )}
-            {user.role === "intern" && (
+            {role === Role.INTERN && (
               <div className={`${styles.card} ${styles.desktop}`}>
                 <p className={styles.cardTitle}>Статус вакансии</p>
                 <Status status={data?.status} />
               </div>
             )}
-            {(user.role === "staff" ||
-              user.role === "curator" ||
-              user.role === "mentor") && (
+            {(role === Role.STAFF ||
+              role === Role.CURATOR ||
+              role === Role.MENTOR) && (
               <div className={`${styles.card} ${styles.rightCard}`}>
                 <p className={styles.cardTitle}>Статус</p>
                 <Timeline

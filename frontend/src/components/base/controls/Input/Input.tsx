@@ -19,6 +19,7 @@ interface Props {
   timepicker?: boolean
   postscript?: string
   notRequired?: boolean
+  disabled?: boolean
 }
 
 export default function Input({
@@ -34,6 +35,7 @@ export default function Input({
   timepicker,
   postscript,
   notRequired,
+  disabled
 }: Props) {
   const [passwordVisible, setPasswordVisible] = useState(false)
 
@@ -54,6 +56,7 @@ export default function Input({
           onChange={(e) => onChange?.(e.target.value)}
           placeholder={placeholder}
           prefix={prefix}
+          disabled={disabled}
         />
       )}
       {password && (

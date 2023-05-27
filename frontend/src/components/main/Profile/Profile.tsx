@@ -13,6 +13,7 @@ import PasswordModal from "./PasswordModal"
 import { useState } from "react"
 import { useQuery } from "@tanstack/react-query"
 import { fetchProfileInfo } from "data"
+import { Role } from "models/Role"
 import dayjs from "dayjs"
 
 const userImg = "/images/user.svg"
@@ -48,7 +49,7 @@ export default function Profile() {
 
   if (isLoading) return <Spin />
 
-  const { birthdate, ...restValues } = data ?? {}
+  const { birthday, ...restValues } = data ?? {}
 
   return (
     <>
@@ -62,7 +63,7 @@ export default function Profile() {
           <h1 className={styles.headerTitle}>Профиль</h1>
           <Tabs
             items={
-              data?.role === "candidate" || data?.role === "intern"
+              data?.role === Role.CANDIDATE || data?.role === Role.INTERN
                 ? [
                     { key: "personal", value: "Личные данные" },
                     { key: "exp", value: "Опыт" },
@@ -82,7 +83,7 @@ export default function Profile() {
         ) : (
           <Form
             className={styles.form}
-            initialValues={{ ...restValues, birthdate: dayjs(birthdate) }}
+            initialValues={{ ...restValues, birthday: dayjs(birthday) }}
             onFinish={onFinish}
             form={form}
           >
@@ -93,7 +94,7 @@ export default function Profile() {
             >
               <img
                 className={styles.userImg}
-                src={avatarUrl || data?.avatar || userImg}
+                src={avatarUrl || data?.photo || userImg}
               />
               <div className={styles.userImgBtn}>
                 <Form.Item name="avatar">
@@ -113,7 +114,7 @@ export default function Profile() {
                 <div className={styles.mobileImgContainer}>
                   <img
                     className={styles.userImg}
-                    src={avatarUrl || data?.avatar || userImg}
+                    src={avatarUrl || data?.photo || userImg}
                   />
                   <Form.Item name="avatar">
                     <ImageUpload setImgUrl={setAvatarUrl}>
@@ -144,7 +145,7 @@ export default function Profile() {
                 <div className={styles.hFields}>
                   <div className={styles.field}>
                     <Form.Item
-                      name="birthdate"
+                      name="birthday"
                       rules={[
                         { required: true, message: "Заполните это поле" },
                       ]}
@@ -195,7 +196,7 @@ export default function Profile() {
                         { required: true, message: "Заполните это поле" },
                       ]}
                     >
-                      <Input label="Эл. почта" />
+                      <Input disabled label="Эл. почта" />
                     </Form.Item>
                   </div>
                 </div>
@@ -211,7 +212,7 @@ export default function Profile() {
                   rules={[
                     {
                       required:
-                        data?.role === "candidate" || data?.role === "intern",
+                        data?.role === Role.CANDIDATE || data?.role === Role.INTERN,
                       message: "Заполните это поле",
                     },
                   ]}
@@ -223,7 +224,7 @@ export default function Profile() {
                   rules={[
                     {
                       required:
-                        data?.role === "candidate" || data?.role === "intern",
+                        data?.role === Role.CANDIDATE || data?.role === Role.INTERN,
                       message: "Заполните это поле",
                     },
                   ]}
@@ -235,7 +236,7 @@ export default function Profile() {
                   rules={[
                     {
                       required:
-                        data?.role === "candidate" || data?.role === "intern",
+                        data?.role === Role.CANDIDATE || data?.role === Role.INTERN,
                       message: "Заполните это поле",
                     },
                   ]}

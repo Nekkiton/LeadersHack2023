@@ -7,10 +7,11 @@ import Points from "components/base/Points"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import { useQuery } from "@tanstack/react-query"
-import { fetchInternInfo } from "data"
+import { fetchInternInfo, fetchUserInfo } from "data"
 import styles from "./Intern.module.scss"
 import StudentProfile from "components/main/StudentProfile"
 import StudentInfo from "components/main/StudentProfile/StudentInfo"
+import { Role } from "models/Role"
 
 interface Props {
   backLink: string
@@ -18,12 +19,6 @@ interface Props {
 }
 
 export default function Intern({ backLink, internId }: Props) {
-  const user = {
-    role: "curator",
-    //role: "mentor",
-    //role: "staff",
-  }
-
   const [isRateUserShowed, setIsRateUserShowed] = useState(false)
 
   const { data, isLoading } = useQuery({
@@ -34,7 +29,13 @@ export default function Intern({ backLink, internId }: Props) {
       }),
   })
 
-  if (!data || isLoading) return <Spin />
+  const userInfo = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => fetchUserInfo(),
+  })
+  const role = userInfo.data!.role;
+
+  if (!data || isLoading || userInfo.isLoading) return <Spin />
 
   return (
     <>
@@ -49,7 +50,7 @@ export default function Intern({ backLink, internId }: Props) {
           <StudentInfo profile={data.user} />
           <div className={styles.headerControls}>
             {/* TODO: если еще не оценивали */}
-            {user.role === "mentor" && data.status === "internshipFinished" && (
+            {role === Role.MENTOR && data.status === "internshipFinished" && (
               <Button onClick={() => setIsRateUserShowed(true)}>
                 Оценить стажера
               </Button>
@@ -77,7 +78,7 @@ export default function Intern({ backLink, internId }: Props) {
       <RateUserModal
         isShowed={isRateUserShowed}
         setIsShowed={setIsRateUserShowed}
-        role="intern"
+        role={role}
       />
     </>
   )

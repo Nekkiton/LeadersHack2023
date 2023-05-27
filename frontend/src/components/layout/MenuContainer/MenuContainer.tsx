@@ -15,6 +15,7 @@ import BuildingIcon from "assets/icons/building.svg"
 import UploadIcon from "assets/icons/upload.svg"
 import EventIcon from "assets/icons/event.svg"
 import styles from "./MenuContainer.module.scss"
+import { Role } from "models/Role"
 
 interface MenuItem {
   link?: string
@@ -42,8 +43,7 @@ function MenuItem({ item, children }: MenuItemProps) {
 }
 
 interface Props {
-  // TODO: determine role without parameters (from user object)
-  role: "staff" | "mentor" | "curator" | "candidate" | "intern"
+  role: Role
   children?: ReactNode
 }
 
@@ -55,8 +55,8 @@ export default function MenuContainer({ children, role }: Props) {
     { id: "3", name: "Стажировка 2023-2024", status: "active" },
   ]
 
-  const links = {
-    staff: [
+  const links = { //
+    [Role.STAFF]: [
       {
         text: "Главная",
         link: "/staff",
@@ -70,7 +70,7 @@ export default function MenuContainer({ children, role }: Props) {
       { text: "Наставники", link: "/staff/mentors", icon: <MentorIcon /> },
       { text: "Расписание стажеров", icon: <CalendarIcon /> },
     ],
-    mentor: [
+    [Role.MENTOR]: [
       {
         text: "Главная",
         link: "/mentor",
@@ -85,7 +85,7 @@ export default function MenuContainer({ children, role }: Props) {
       { text: "Расписание стажеров", icon: <CalendarIcon /> },
     ],
     // TODO: add internship to curator and manage active internship
-    curator: [
+    [Role.CURATOR]: [
       {
         text: "Главная",
         link: "/curator",
@@ -111,8 +111,8 @@ export default function MenuContainer({ children, role }: Props) {
       { text: "Расписание стажеров", icon: <CalendarIcon /> },
     ],
     // TODO: remove this?
-    candidate: [],
-    intern: [
+    [Role.CANDIDATE]: [],
+    [Role.INTERN]: [
       { text: "Вакансии", link: "/intern/vacancies", icon: <DocumentIcon /> },
       { text: "Отклики", link: "/intern/responses", icon: <CommentIcon /> },
       {
@@ -138,7 +138,7 @@ export default function MenuContainer({ children, role }: Props) {
       }
     }
   }, [])
-
+const r = role.toString();
   useEffect(() => {
     if (curInternship) {
       sessionStorage.setItem("curInternship", curInternship)
@@ -148,13 +148,14 @@ export default function MenuContainer({ children, role }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.menu}>
+       {/* @ts-ignore  */}
         {links[role].map((item) => (
           <MenuItem item={item} key={item.text + item.link}>
             {item.icon && <span className={styles.linkIcon}>{item.icon}</span>}
             <span>{item.text}</span>
           </MenuItem>
         ))}
-        {role === "curator" && (
+        {role === Role.CURATOR && (
           <Select
             className={styles.bottomSelect}
             headerClassName={styles.bottomSelectHeader}

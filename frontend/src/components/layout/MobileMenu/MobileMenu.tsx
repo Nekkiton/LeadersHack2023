@@ -14,11 +14,12 @@ import BuildingIcon from "assets/icons/building.svg"
 import UploadIcon from "assets/icons/upload.svg"
 import BellIcon from "assets/icons/bell.svg"
 import styles from "./MobileMenu.module.scss"
+import { ProfileShort } from "models/Profile"
 
 interface Props {
   isShowed: boolean
   setIsShowed: (val: boolean) => void
-  user: any // user model here
+  user: ProfileShort
 }
 
 const userImg = "/images/user.svg"
@@ -110,19 +111,19 @@ export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
           href="/profile"
           onClick={() => setIsShowed(false)}
         >
-          <img className={styles.userImg} src={user.avatar || userImg} />
+          <img className={styles.userImg} src={user?.photo || userImg} />
           <div>
             <h6>
-              {user.name} {user.surname}
+              {user?.name} {user?.surname}
             </h6>
             <div className={styles.userRating}>
-              <span>{user.rating}</span>
+              <span>{user?.rating}</span>
               <StarIcon className={styles.userRatingIcon} />
             </div>
           </div>
         </Link>
         <div className={styles.links}>
-          {(links[user.role as keyof typeof links] || []).map((item) => (
+          {(links[user?.role as keyof typeof links] || []).map((item) => (
             <Link
               className={styles.linksLink}
               href={item.link}

@@ -6,11 +6,12 @@ import Input from "components/base/controls/Input"
 import StarIcon from "assets/icons/star.svg"
 import TimesIcon from "assets/icons/times.svg"
 import styles from "./RateUser.module.scss"
+import { Role } from "models/Role"
 
 interface Props {
   isShowed: boolean
   setIsShowed: (val: boolean) => void
-  role: string
+  role: Role
 }
 
 export default function RateUserModal({ isShowed, setIsShowed, role }: Props) {
@@ -27,7 +28,6 @@ export default function RateUserModal({ isShowed, setIsShowed, role }: Props) {
 
   // TODO: send request
   const submit = (data: any) => {
-    console.log(data)
     setIsShowed(false)
     notification.open({
       message: "Ваша оценка отправлена",
@@ -39,7 +39,7 @@ export default function RateUserModal({ isShowed, setIsShowed, role }: Props) {
     <Popup
       isShowed={isShowed}
       setIsShowed={setIsShowed}
-      title={role === "intern" && "Оцените работу стажера"}
+      title={role === Role.INTERN && "Оцените работу стажера"}
     >
       <Form className={styles.form} form={form} onFinish={submit}>
         <div className={styles.rating}>

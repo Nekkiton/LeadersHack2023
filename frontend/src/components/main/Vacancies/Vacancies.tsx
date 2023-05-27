@@ -16,9 +16,10 @@ import ListIcon from "assets/icons/list.svg"
 import MapIcon from "assets/icons/map.svg"
 import VacancyCard from "components/base/vacancy/VacancyCard"
 import VacancyMapCard from "components/base/vacancy/VacancyMapCard"
-import { fetchVacancyList } from "data"
+import { fetchUserInfo, fetchVacancyList } from "data"
 import styles from "./Vacancies.module.scss"
 import { Spin } from "antd"
+import { Role } from "models/Role"
 
 interface Props {
   link: string
@@ -35,13 +36,6 @@ export default function Vacancies({
   noHeader,
   organizationId,
 }: Props) {
-  const user = {
-    //role: "mentor",
-    //role: "staff",
-    //role: "curator",
-    role: "intern",
-  }
-
   // TODO: fetch mentors for staff or for curator on organization page
   const allMentors = [
     { name: "Юлиана", image: null, id: "1" },
@@ -62,36 +56,6 @@ export default function Vacancies({
     { name: "Комфортная городская среда", id: 5 },
     { name: "Городская экономика", id: 6 },
   ]
-
-  const getNothingText = (role: string) => {
-    if (role === "staff") {
-      return (
-        <>
-          Вы еще не создали ни одной вакансии.
-          <br />
-          Самое время это исправить
-        </>
-      )
-    } else if (role === "mentor") {
-      return (
-        <>
-          Ни одной вакансии, для которой вы назначены наставником, еще нет.
-          <br />
-          Когда кадровый специалист назначит вас на вакансию, вы увидите это
-          здесь
-        </>
-      )
-    } else if (role === "curator") {
-      return (
-        <>
-          На эту стажировку еще не создано
-          <br />
-          ни одной вакансии
-        </>
-      )
-    }
-  }
-
   const [viewMode, setViewMode] = useState("list")
 
   const [query, setQuery] = useState("")
@@ -127,12 +91,49 @@ export default function Vacancies({
       }),
   })
 
+  const userInfo = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => fetchUserInfo(),
+  })
+  const role = userInfo.data!.role;
+
+  const getNothingText = () => {
+    if (role === Role.STAFF) {
+      return (
+        <>
+          Вы еще не создали ни одной вакансии.
+          <br />
+          Самое время это исправить
+        </>
+      )
+    } else if (role === Role.MENTOR) {
+      return (
+        <>
+          Ни одной вакансии, для которой вы назначены наставником, еще нет.
+          <br />
+          Когда кадровый специалист назначит вас на вакансию, вы увидите это
+          здесь
+        </>
+      )
+    } else if (role === Role.CURATOR) {
+      return (
+        <>
+          На эту стажировку еще не создано
+          <br />
+          ни одной вакансии
+        </>
+      )
+    }
+  }
+
+  if (userInfo.isLoading) return <Spin />
+
   return (
     <div className={styles.container}>
       {!noHeader && (
         <div className={styles.header}>
           <h1 className={styles.headerTitle}>Вакансии</h1>
-          {user.role === "staff" && (
+          {role === Role.STAFF && (
             <Link href="/staff/add-vacancy">
               <Button>
                 <PlusIcon className="icon" />
@@ -146,8 +147,8 @@ export default function Vacancies({
       {false ? (
         <div className={styles.nothing}>
           <NothingIcon className={styles.nothingIcon} />
-          <p className={styles.nothingText}>{getNothingText(user.role)}</p>
-          {user.role === "staff" && (
+          <p className={styles.nothingText}>{getNothingText()}</p>
+          {role === Role.STAFF && (
             <Link href="/staff/add-vacancy">
               <Button>
                 <PlusIcon className="icon" />
@@ -167,7 +168,7 @@ export default function Vacancies({
                 value={query}
                 onChange={setQuery}
               />
-              {user.role === "staff" && (
+              {role === Role.STAFF && (
                 <Select
                   className={styles.filtersSelect}
                   placeholder="Все статусы"
@@ -200,7 +201,7 @@ export default function Vacancies({
                 />
               )}
               {/* TODO: if user is staff or (user is curator and page is organization) */}
-              {(user.role === "staff" || user.role === "curator") && (
+              {(role === Role.STAFF || role === Role.CURATOR) && (
                 <Select
                   className={styles.filtersSelect}
                   placeholder="Все наставники"
@@ -221,7 +222,7 @@ export default function Vacancies({
                   multiple
                 />
               )}
-              {(user.role === "staff" || user.role === "curator") && (
+              {(role === Role.STAFF || role === Role.CURATOR) && (
                 <Select
                   className={styles.filtersSelect}
                   placeholder="Все направления"
@@ -235,7 +236,7 @@ export default function Vacancies({
                 />
               )}
               {/* TODO: if user is curator and page is vacancies (not organization) */}
-              {false && user.role === "curator" && (
+              {false && role === Role.CURATOR && (
                 <Select
                   className={styles.filtersSelect}
                   placeholder="Все организации"
@@ -249,7 +250,7 @@ export default function Vacancies({
                 />
               )}
             </div>
-            {user.role === "intern" && (
+            {role === Role.INTERN && (
               <MobileFilters
                 value={filters}
                 onChange={setFilters}
@@ -315,8 +316,8 @@ export default function Vacancies({
                 ]}
               />
             )}
-            {((user.role === "curator" && !organizationId) ||
-              user.role === "intern") && (
+            {((role === Role.CURATOR && !organizationId) ||
+              role === Role.INTERN) && (
               <SmallSwitch
                 className={styles.viewSwitch}
                 value={viewMode}
@@ -339,7 +340,7 @@ export default function Vacancies({
                       <VacancyCard
                         key={vacancy.id}
                         vacancy={vacancy}
-                        noUser={user.role === "mentor"}
+                        noUser={role === Role.MENTOR}
                         link={link}
                         linkQuery={linkQuery}
                       />

@@ -7,12 +7,13 @@ import RateResumeModal from "components/main/modals/RateResume"
 import Points from "components/base/Points"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import { useQuery } from "@tanstack/react-query"
-import { fetchCandidateInfo } from "data"
+import { fetchCandidateInfo, fetchUserInfo } from "data"
 import styles from "./Candidate.module.scss"
 import StudentProfile from "components/main/StudentProfile"
 import StudentInfo from "components/main/StudentProfile/StudentInfo"
 import Timeline from "components/base/controls/Timeline"
 import { getCandidateStatuses, statusTitles } from "./getCandidateStatuses"
+import { Role } from "models/Role"
 
 interface Props {
   backLink: string
@@ -20,15 +21,8 @@ interface Props {
 }
 
 export default function Candidate({ backLink, candidateId }: Props) {
-  const user = {
-    role: "curator",
-    //role: "mentor",
-    //role: "staff",
-  }
-
   const [isRateResumeShowed, setIsRateResumeShowed] = useState(false)
-  const [isSetHackathonResultShowed, setIsSetHackathonResultShowed] =
-    useState(false)
+  const [isSetHackathonResultShowed, setIsSetHackathonResultShowed] = useState(false)
 
   const { data, isLoading } = useQuery({
     queryKey: ["fetchCandidateInfo", { id: candidateId }],
@@ -38,7 +32,13 @@ export default function Candidate({ backLink, candidateId }: Props) {
       }),
   })
 
-  if (!data || isLoading) return <Spin />
+  const userInfo = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => fetchUserInfo(),
+  })
+  const role = userInfo.data!.role;
+
+  if (!data || isLoading || userInfo.isLoading) return <Spin />
 
   return (
     <>
@@ -53,13 +53,13 @@ export default function Candidate({ backLink, candidateId }: Props) {
           <StudentInfo profile={data.user} />
           <div className={styles.headerControls}>
             {/* TODO: если резюме не оценено еще? */}
-            {user.role === "curator" && data?.status === "moderation" && (
+            {role === Role.CURATOR && data?.status === "moderation" && (
               <Button onClick={() => setIsRateResumeShowed(true)}>
                 Оценить резюме
               </Button>
             )}
             {/* TODO: если результаты еще не внесены */}
-            {user.role === "curator" && data.status === "hackathon" && (
+            {role === Role.CURATOR && data.status === "hackathon" && (
               <Button onClick={() => setIsSetHackathonResultShowed(true)}>
                 Внести результаты кейс-чемпионата
               </Button>

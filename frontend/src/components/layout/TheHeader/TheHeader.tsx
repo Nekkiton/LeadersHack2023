@@ -20,14 +20,13 @@ export default function TheHeader() {
   const [isMenuShowed, setIsMenuShowed] = useState(false)
   const [isMobileMenuShowed, setIsMobileMenuShowed] = useState(false)
 
-  const logout = () => alert("Выходи пожалуйста")
+  const logout = () => alert("Выходи пожалуйста");
+  const notificationsCount = 1; // TODO: get from notification endpoint
 
   const { data, isLoading } = useQuery({
     queryKey: ["userInfo"],
     queryFn: () => fetchUserInfo(),
   })
-
-  if (!data || isLoading) return <Spin />
 
   return (
     <header className={styles.header}>
@@ -41,7 +40,7 @@ export default function TheHeader() {
           </div>
         </Link>
         <div className={styles.user}>
-          <DesktopNotifications notificationsCount={data.notificationsCount} />
+          <DesktopNotifications notificationsCount={notificationsCount} />
           {/* TODO: show if user is not authed */}
           {false ? (
             <Link href="/login">
@@ -71,13 +70,13 @@ export default function TheHeader() {
               onChange={setIsMenuShowed}
             >
               <div className={styles.userProfile}>
-                <img className={styles.userImg} src={data.avatar || userImg} />
+                <img className={styles.userImg} src={data?.photo || userImg} />
                 <div className={styles.userInfoContainer}>
                   <div className={styles.userInfo}>
                     <span className={styles.userName}>
-                      {data.name} {data.surname?.charAt(0)}.
+                      {data?.name} {data?.surname?.charAt(0)}.
                     </span>
-                    <span className={styles.userRole}>{data.role}</span>
+                    <span className={styles.userRole}>{data?.role}</span>
                   </div>
                   <ChevronDownIcon
                     className={`${styles.userMenuIcon} ${
@@ -101,7 +100,7 @@ export default function TheHeader() {
             {/* TODO: marked if there are new notifications */}
             <img
               className={styles.userImg}
-              src={data.avatar || userImg}
+              src={data?.photo || userImg}
               onClick={() => setIsMobileMenuShowed(true)}
             />
           </div>

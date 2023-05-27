@@ -10,10 +10,11 @@ import TimesIcon from "assets/icons/times.svg"
 import ResponseCancelModal from "components/base/vacancy/ResponseCancelModal"
 import InterviewInviteModal from "components/main/modals/InterviewInvite"
 import { useQuery } from "@tanstack/react-query"
-import { fetchVacancyResponseInfo } from "data"
+import { fetchUserInfo, fetchVacancyResponseInfo } from "data"
 import styles from "./VacancyResponse.module.scss"
 import StudentProfile from "components/main/StudentProfile"
 import StudentInfo from "components/main/StudentProfile/StudentInfo"
+import { Role } from "models/Role"
 
 interface Props {
   backLink: string
@@ -21,12 +22,6 @@ interface Props {
 }
 
 export default function VacancyResponse({ backLink, responseId }: Props) {
-  const user = {
-    role: "curator",
-    //role: "mentor",
-    //role: "staff",
-  }
-
   const [isInterviewInviteShowed, setIsInterviewInviteShowed] = useState(false)
   const [isCancelModalShowed, setIsCancelModalShowed] = useState(false)
   const toggleCancelModal = () => setIsCancelModalShowed((prev) => !prev)
@@ -42,12 +37,12 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
 
   // TODO: accept response, handle errors, notification text
   const acceptInternship = () => {
-    if (user.role === "staff") {
+    if (role === Role.STAFF) {
       notification.open({
         message: "Принято на стажировку",
         closeIcon: <TimesIcon />,
       })
-    } else if (user.role === "mentor") {
+    } else if (role === Role.MENTOR) {
       notification.open({
         message:
           "Мы сообщили о вашем решении кадровому специалисту. После его подтверждения стажер будет принят на стажировку",
@@ -64,7 +59,13 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
       }),
   })
 
-  if (!data || isLoading) return <Spin />
+  const userInfo = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => fetchUserInfo(),
+  })
+  const role = userInfo.data!.role;
+
+  if (!data || isLoading || userInfo.isLoading) return <Spin />
 
   return (
     <>
@@ -85,7 +86,7 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
           <StudentInfo profile={data.user} />
           {/* TODO: Manage buttons visibility, add modal */}
           <div className={styles.headerControls}>
-            {user.role === "staff" && data.status === "mentorAccepted" && (
+            {role === Role.STAFF && data.status === "mentorAccepted" && (
               <>
                 <Button type="secondary" onClick={toggleCancelModal}>
                   Отклонить
@@ -95,7 +96,7 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
                 </Button>
               </>
             )}
-            {user.role === "mentor" && (
+            {role === Role.MENTOR && (
               <>
                 {(data.status === "new" ||
                   data.status === "old" ||
