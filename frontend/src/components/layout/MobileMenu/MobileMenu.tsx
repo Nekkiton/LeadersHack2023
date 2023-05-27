@@ -19,7 +19,7 @@ import { ProfileShort } from "models/Profile"
 interface Props {
   isShowed: boolean
   setIsShowed: (val: boolean) => void
-  user: ProfileShort
+  user: ProfileShort | undefined
 }
 
 const userImg = "/images/user.svg"
