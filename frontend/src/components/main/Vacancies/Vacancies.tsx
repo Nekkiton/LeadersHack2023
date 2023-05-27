@@ -32,8 +32,8 @@ export default function Vacancies({ link, noHeader, organizationId }: Props) {
   const user = {
     //role: "mentor",
     //role: "staff",
-    role: "curator",
-    //role: "intern",
+    //role: "curator",
+    role: "intern",
   }
 
   // TODO: fetch mentors for staff or for curator on organization page

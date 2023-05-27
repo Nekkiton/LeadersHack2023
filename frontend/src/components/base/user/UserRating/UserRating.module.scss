@@ -24,3 +24,8 @@
     stroke: $orange;
   }
 }
+
+.noFeedbacks {
+  @inlcude paragraph-2;
+  color: $gray-4;
+}

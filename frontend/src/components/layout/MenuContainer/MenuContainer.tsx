@@ -113,11 +113,6 @@ export default function MenuContainer({ children, role }: Props) {
     // TODO: remove this?
     candidate: [],
     intern: [
-      {
-        text: "Главная",
-        link: "/intern",
-        icon: <HomeIcon />,
-      },
       { text: "Вакансии", link: "/intern/vacancies", icon: <DocumentIcon /> },
       { text: "Отклики", link: "/intern/responses", icon: <CommentIcon /> },
       {

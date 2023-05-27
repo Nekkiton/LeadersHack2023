@@ -18,10 +18,20 @@ export default function UserRating({ count, averageRate }: Props) {
         <span>{averageRate}</span>
         <StarIcon className={styles.ratingIcon} />
       </div>
-      <Button type="text" onClick={() => setIsModalShowed(true)}>
-        отзывов: {count}
-      </Button>
-      <FeedbacksModal isShowed={isModalShowed} setIsShowed={setIsModalShowed} />
+      {/* TODO: if there are feedbacks */}
+      {true ? (
+        <>
+          <Button type="text" onClick={() => setIsModalShowed(true)}>
+            отзывов: {count}
+          </Button>
+          <FeedbacksModal
+            isShowed={isModalShowed}
+            setIsShowed={setIsModalShowed}
+          />
+        </>
+      ) : (
+        <p className={styles.noFeedbacks}>Нет отзывов</p>
+      )}
     </div>
   )
 }

@@ -8,6 +8,7 @@ import WaiterEmoji from "assets/icons/waiter-emoji.svg"
 import styles from "./CandidateMain.module.scss"
 
 export default function CandidateMain() {
+  // TODO: fetch dates
   const timeline = [
     {
       dates: "1 февраля — 21 апреля 2023",
@@ -43,7 +44,8 @@ export default function CandidateMain() {
     },
   ]
 
-  const isReceptionOpen = false
+  // TODO: fetch data
+  const isReceptionOpen = true
 
   const [isInternshipReminderShowed, setIsInternshipReminderShowed] =
     useState(false)

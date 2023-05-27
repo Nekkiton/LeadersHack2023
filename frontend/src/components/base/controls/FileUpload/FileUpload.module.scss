@@ -1,0 +1,71 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.label {
+  @include paragraph-3;
+}
+
+.labelHint {
+  color: $gray-4;
+}
+
+.dropAreaContainer {
+  :global(.ant-upload-drag) {
+    border: none;
+    background: none;
+  }
+
+  :global(.ant-upload-btn) {
+    padding: 0 !important;
+  }
+
+  :global(.ant-upload-list) {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+}
+
+.dropArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px;
+  border: 1px dashed $gray-4;
+  border-radius: 8px;
+  transition: $transition;
+
+  :global(.ant-upload-drag-hover) & {
+    background: $gray-6;
+  }
+
+  &:hover {
+    border-color: $blue;
+  }
+}
+
+.dropAreaIcon {
+  width: 48px;
+  height: 48px;
+
+  path {
+    stroke-width: 0.5px;
+  }
+}
+
+.dropAreaTitle {
+  @include paragraph-2;
+  color: $blue;
+}
+
+.dropAreaHint {
+  @include paragraph-3;
+  color: $gray-3;
+}

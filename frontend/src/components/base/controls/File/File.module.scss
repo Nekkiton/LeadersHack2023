@@ -28,3 +28,18 @@
 
   color: $gray-3;
 }
+
+.fileRemoveIcon {
+  width: 24px;
+  height: 24px;
+  transition: $transition;
+
+  path {
+    stroke: $red;
+  }
+
+  &:hover {
+    transform: scale(1.2);
+    cursor: pointer;
+  }
+}

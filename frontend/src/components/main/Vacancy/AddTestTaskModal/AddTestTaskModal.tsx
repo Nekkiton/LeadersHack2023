@@ -1,9 +1,10 @@
 import React from "react"
 import { Form } from "antd"
 import Modal from "components/base/controls/Modal"
+import FileUpload from "components/base/controls/FileUpload"
 import Input from "components/base/controls/Input"
 import { ModalProps } from "components/base/controls/Modal"
-import { init } from "next/dist/compiled/@vercel/og/satori"
+import styles from "./AddTestTaskModal.module.scss"
 
 const bodyStyle = {
   display: "flex",
@@ -34,16 +35,21 @@ export default function AddTestTaskModal({
       onFinish={onFinish}
       initialValues={initialValues}
     >
-      <Form.Item
-        name="description"
-        rules={[{ required: true, message: "Заполните эо поле" }]}
-      >
-        <Input
-          label="Описание тестового задания"
-          placeholder="Опишите, что нужно сделать стажеру в рамках задания"
-          textarea
-        />
-      </Form.Item>
+      <div className={styles.form}>
+        <Form.Item
+          name="description"
+          rules={[{ required: true, message: "Заполните эо поле" }]}
+        >
+          <Input
+            label="Описание тестового задания"
+            placeholder="Опишите, что нужно сделать стажеру в рамках задания"
+            textarea
+          />
+        </Form.Item>
+        <Form.Item name="files">
+          <FileUpload label="Файлы с заданием" notRequired />
+        </Form.Item>
+      </div>
     </Modal>
   )
 }
