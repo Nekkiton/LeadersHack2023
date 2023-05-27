@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { UserProfile } from '../entities/user-profile.entity';
+import { Role } from 'src/auth/roles/role.enum';
 
 export class ResponseUserProfileDto {
   @ApiProperty()
@@ -26,6 +27,12 @@ export class ResponseUserProfileDto {
   @ApiProperty({ required: false })
   photo: string;
 
+  @ApiProperty()
+  email: string;
+
+  @ApiProperty({ enum: Role })
+  role: Role;
+
   static fromEntity(userProfile: UserProfile): ResponseUserProfileDto {
     return {
       name: userProfile.name,
@@ -36,6 +43,8 @@ export class ResponseUserProfileDto {
       phone: userProfile.phone,
       photo: userProfile.photo,
       birthday: userProfile.birthday,
+      email: userProfile.user.email,
+      role: userProfile.user.role,
     };
   }
 }

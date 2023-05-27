@@ -13,6 +13,7 @@ import { UserPayload } from 'src/auth/auth.service';
 import { UserProfilesService } from 'src/user-profiles/user-profiles.service';
 import { User } from './entities/user.entity';
 import { UpdateUserProfileDto } from 'src/user-profiles/dto/update-user-profile.dto';
+import { ResponseUserProfileShortDto } from 'src/user-profiles/dto/response-user-profile-short.dto';
 
 @Controller('users')
 @ApiTags('users')
@@ -40,6 +41,23 @@ export class UsersController {
       throw new NotFoundException('User profile have not created yet. Completed sign-up');
     }
     return ResponseUserProfileDto.fromEntity(profile);
+  }
+
+  @Get('profile-short')
+  @ApiOperation({ summary: 'Get current user profile short' })
+  @ApiOkResponse({ type: ResponseUserProfileShortDto })
+  @ApiNotFoundResponse()
+  async getUserProfileShort(@Req() req): Promise<ResponseUserProfileShortDto> {
+    const payload: UserPayload = req.user;
+    const user = await this.getUserByEmail(payload.email);
+    const profile = await this.userProfilesService.findOne(user);
+    if (!profile) {
+      throw new NotFoundException('User profile have not created yet. Completed sign-up');
+    }
+    return {
+      ...ResponseUserProfileShortDto.fromEntityPartial(profile),
+      rating: 4.8, // TODO compute when rating is available
+    };
   }
 
   @Patch('profile')
