@@ -5,7 +5,7 @@ import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { hash } from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
-import { TransactionOptions, TransactionService } from 'src/components/TransactionService';
+import { TransactionOptions, TransactionService } from 'src/utils/TransactionService';
 import { Role } from 'src/auth/roles/role.enum';
 
 @Injectable()
