@@ -1,0 +1,50 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.title {
+  @include paragraph-3;
+  color: $gray-3;
+}
+
+.btn {
+  align-self: flex-start;
+}
+
+.btnIcon {
+  transition: $transition;
+
+  .container.active & {
+    transform: rotate(180deg);
+  }
+}
+
+.scoreDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+  max-height: 0;
+  transition: $transition;
+
+  .container.active & {
+    max-height: 600px;
+  }
+}
+
+.scoreDetailsItem {
+  @include paragraph-2;
+
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.scoreDetailsItemDivider {
+  flex-grow: 1;
+  border-bottom: 1px dashed $gray-5;
+}

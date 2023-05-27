@@ -22,13 +22,19 @@ import { Spin } from "antd"
 
 interface Props {
   link: string
+  linkQuery?: string
   noHeader?: boolean
   organizationId?: string
 }
 
 const userImg = "/images/user.svg"
 
-export default function Vacancies({ link, noHeader, organizationId }: Props) {
+export default function Vacancies({
+  link,
+  linkQuery,
+  noHeader,
+  organizationId,
+}: Props) {
   const user = {
     //role: "mentor",
     //role: "staff",
@@ -335,6 +341,7 @@ export default function Vacancies({ link, noHeader, organizationId }: Props) {
                         vacancy={vacancy}
                         noUser={user.role === "mentor"}
                         link={link}
+                        linkQuery={linkQuery}
                       />
                     ))}
                   </div>

@@ -6,6 +6,7 @@ import Input from "components/base/controls/Input"
 import Checkbox from "components/base/controls/Checkbox"
 import Radio from "components/base/controls/Radio"
 import Select from "components/base/controls/Select"
+import ImageUpload from "components/base/controls/ImageUpload"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import UploadIcon from "assets/icons/upload.svg"
 import MailSentIcon from "assets/icons/mail-sent.svg"
@@ -22,6 +23,8 @@ export default function CandidateRegistration() {
   const [isValid, setIsValid] = useState(false)
   const [form] = Form.useForm()
   const formValues = Form.useWatch([], form)
+
+  const [avatarUrl, setAvatarUrl] = useState("")
 
   useEffect(() => {
     form.validateFields({ validateOnly: true }).then(
@@ -86,11 +89,15 @@ export default function CandidateRegistration() {
             <div className={styles.formStepBlock}>
               <p className={styles.formStepBlockTitle}>Основная информация</p>
               <div className={styles.formImgContainer}>
-                <img className={styles.formImg} src={userImg} />
-                <Button type="text">
-                  <UploadIcon className="icon" />
-                  <span>Добавить фото</span>
-                </Button>
+                <img className={styles.formImg} src={avatarUrl || userImg} />
+                <Form.Item name="avatar">
+                  <ImageUpload setImgUrl={setAvatarUrl}>
+                    <Button type="text">
+                      <UploadIcon className="icon" />
+                      <span>Добавить фото</span>
+                    </Button>
+                  </ImageUpload>
+                </Form.Item>
               </div>
               <div className={styles.formHFields}>
                 <Form.Item

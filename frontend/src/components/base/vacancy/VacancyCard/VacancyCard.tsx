@@ -8,15 +8,21 @@ interface Props {
   vacancy: VacancyData
   noUser?: boolean
   link: string
+  linkQuery?: string
 }
 
 const userImg = "/images/user.svg"
 
-export default function VacancyCard({ vacancy, noUser, link }: Props) {
+export default function VacancyCard({
+  vacancy,
+  noUser,
+  link,
+  linkQuery = "",
+}: Props) {
   return (
     <Link
       className={styles.vacancy}
-      href={`${link}/${vacancy.id}`}
+      href={`${link}/${vacancy.id}${linkQuery}`}
       key={vacancy.id}
     >
       <div className={styles.vacancyHeader}>

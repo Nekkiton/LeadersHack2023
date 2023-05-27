@@ -3,6 +3,7 @@ import { Spin, notification } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import File from "components/base/controls/File"
+import Points from "components/base/Points"
 import ResponseStatus from "components/base/vacancy/ResponseStatus"
 import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import TimesIcon from "assets/icons/times.svg"
@@ -21,8 +22,8 @@ interface Props {
 
 export default function VacancyResponse({ backLink, responseId }: Props) {
   const user = {
-    //role: "curator",
-    role: "mentor",
+    role: "curator",
+    //role: "mentor",
     //role: "staff",
   }
 
@@ -141,13 +142,8 @@ export default function VacancyResponse({ backLink, responseId }: Props) {
               <p className={styles.cardTitle}>Сопроводительное письмо</p>
               <div>{data.coveringLetter}</div>
             </div>
-            {/* TODO: add section in accordance with Figma
-          https://www.figma.com/file/VMVVobtgBWqyjIvENBvTCO/%D0%9B%D0%A6%D0%A2-23%2F16?type=design&node-id=5516%3A18915&t=gNGKlJ35OxQRDtPf-1
-          */}
-            <div className={styles.complexCardBlock}>
-              <p className={styles.cardTitle}>Набрано баллов</p>
-              <div>{}</div>
-            </div>
+            {/* TODO: add data */}
+            <Points score={data.score} details={[]} />
           </div>
         </div>
       </div>

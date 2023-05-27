@@ -4,6 +4,7 @@ import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Input from "components/base/controls/Input"
 import Tabs from "components/base/navigation/Tabs"
+import ImageUpload from "components/base/controls/ImageUpload"
 import ProfileFeedbacks from "components/main/ProfileFeedbacks"
 import PenIcon from "assets/icons/pen.svg"
 import UploadIcon from "assets/icons/upload.svg"
@@ -26,6 +27,8 @@ export default function Profile() {
   const toggleModal = () => setIsModalOpen(!isModalOpen)
 
   const [activeTab, setActiveTab] = useState("personal")
+
+  const [avatarUrl, setAvatarUrl] = useState("")
 
   const [isValid, setIsValid] = useState(false)
   const [form] = Form.useForm()
@@ -88,9 +91,16 @@ export default function Profile() {
                 activeTab === "personal" ? styles.active : ""
               }`}
             >
-              <img className={styles.userImg} src={userImg} />
+              <img
+                className={styles.userImg}
+                src={avatarUrl || data?.avatar || userImg}
+              />
               <div className={styles.userImgBtn}>
-                <PenIcon />
+                <Form.Item name="avatar">
+                  <ImageUpload setImgUrl={setAvatarUrl}>
+                    <PenIcon />
+                  </ImageUpload>
+                </Form.Item>
               </div>
             </div>
             <div className={styles.main}>
@@ -101,11 +111,18 @@ export default function Profile() {
               >
                 <h3>Основная информация</h3>
                 <div className={styles.mobileImgContainer}>
-                  <img className={styles.userImg} src={userImg} />
-                  <Button type="text">
-                    <UploadIcon className="icon" />
-                    <span>Изменить фото</span>
-                  </Button>
+                  <img
+                    className={styles.userImg}
+                    src={avatarUrl || data?.avatar || userImg}
+                  />
+                  <Form.Item name="avatar">
+                    <ImageUpload setImgUrl={setAvatarUrl}>
+                      <Button type="text">
+                        <UploadIcon className="icon" />
+                        <span>Изменить фото</span>
+                      </Button>
+                    </ImageUpload>
+                  </Form.Item>
                 </div>
                 <div className={styles.hFields}>
                   <Form.Item
