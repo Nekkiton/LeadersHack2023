@@ -66,6 +66,9 @@ export class AuthController {
     if (!user) {
       throw new UnauthorizedException();
     }
+    if (user.role === Role.NOBODY) {
+      throw new UnauthorizedException();
+    }
     const matched = await this.authService.compare(user, dto.password);
     if (!matched) {
       throw new UnauthorizedException();
