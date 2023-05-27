@@ -8,10 +8,12 @@
 
 .input {
   @include paragraph-2;
+
   padding: 10px 12px;
   background: $white;
   border: 1px solid $gray-4 !important;
   border-radius: 8px;
+  transition: $transition;
 
   :global(.ant-input-prefix) {
     margin-right: 8px;
@@ -21,8 +23,13 @@
   :global(.ant-input),
   :global(.ant-picker-input) > input {
     @include paragraph-2;
-
     box-shadow: none !important;
+  }
+
+  :global(.ant-form-item-has-error) &,
+  :global(.ant-form-item-has-error .ant-iput),
+  :global(.ant-form-item-has-error .ant-picker-input) > input {
+    border-color: $red !important;
   }
 }
 

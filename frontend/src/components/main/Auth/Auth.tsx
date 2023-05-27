@@ -36,7 +36,7 @@ export default function Auth({ type: pageType }: Props) {
     console.log(data)
 
     if (pageType === "login") {
-      const res = await signIn(data); // role will be returned as result tomorrow (add redirect to specific page then)
+      const res = await signIn(data) // role will be returned as result tomorrow (add redirect to specific page then)
       if (res) {
         router.push("/")
       }
@@ -122,12 +122,12 @@ export default function Auth({ type: pageType }: Props) {
               pageType === "register" ||
               pageType === "setPassword") && (
               <div className={styles.formPasswordContainer}>
-                {/* TODO: input password type, red border when error */}
                 <Form.Item
                   name="password"
                   rules={[{ required: true, message: "Заполните это поле" }]}
                 >
                   <Input
+                    password
                     label={
                       pageType === "setPassword" ? "Новый пароль" : "Пароль"
                     }
@@ -158,7 +158,7 @@ export default function Auth({ type: pageType }: Props) {
                   },
                 ]}
               >
-                <Input label="Повторите пароль" />
+                <Input password label="Повторите пароль" />
               </Form.Item>
             )}
           </div>

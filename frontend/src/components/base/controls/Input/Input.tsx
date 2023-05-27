@@ -58,6 +58,8 @@ export default function Input({
       )}
       {password && (
         <BaseInput.Password
+          value={value}
+          onChange={(e) => onChange?.(e.target.value)}
           className={`${styles.input} ${className}`}
           placeholder={placeholder}
           iconRender={(visible) =>

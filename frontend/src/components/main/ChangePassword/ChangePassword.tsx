@@ -47,20 +47,13 @@ export default function ChangePassword() {
           name="old"
           rules={[{ required: true, message: "Заполните это поле" }]}
         >
-          <Input label="Старый пароль" />
+          <Input password label="Старый пароль" />
         </Form.Item>
         <Form.Item
           name="new1"
-          rules={[
-            { required: true, message: "Заполните это поле" },
-            {
-              enum: [formValues?.new2],
-              type: "enum",
-              message: "Пароли не совпадают",
-            },
-          ]}
+          rules={[{ required: true, message: "Заполните это поле" }]}
         >
-          <Input label="Новый пароль" />
+          <Input password label="Новый пароль" />
         </Form.Item>
         <Form.Item
           name="new2"
@@ -73,7 +66,7 @@ export default function ChangePassword() {
             },
           ]}
         >
-          <Input label="Повторите пароль" />
+          <Input password label="Повторите пароль" />
         </Form.Item>
         <Button className={styles.submit} htmlType="submit" disabled={!isValid}>
           Сохранить
