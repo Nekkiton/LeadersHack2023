@@ -11,6 +11,9 @@ export class ResponseUserProfileDto {
   @ApiProperty()
   patronymic: string;
 
+  @ApiProperty({ format: 'date' })
+  birthday: string;
+
   @ApiProperty()
   citizenship: string;
 
@@ -32,6 +35,7 @@ export class ResponseUserProfileDto {
       location: userProfile.location,
       phone: userProfile.phone,
       photo: userProfile.photo,
+      birthday: userProfile.birthday,
     };
   }
 }
