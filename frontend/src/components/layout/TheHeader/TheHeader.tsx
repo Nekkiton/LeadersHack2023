@@ -41,7 +41,7 @@ export default function TheHeader() {
           </div>
         </Link>
         <div className={styles.user}>
-          <DesktopNotifications notificationsCount={data.notificationsCount}/>
+          <DesktopNotifications notificationsCount={data.notificationsCount} />
           {/* TODO: show if user is not authed */}
           {false ? (
             <Link href="/login">
@@ -74,7 +74,9 @@ export default function TheHeader() {
                 <img className={styles.userImg} src={data.avatar || userImg} />
                 <div className={styles.userInfoContainer}>
                   <div className={styles.userInfo}>
-                    <span className={styles.userName}>{data.name} {data.surname?.charAt(0)}.</span>
+                    <span className={styles.userName}>
+                      {data.name} {data.surname?.charAt(0)}.
+                    </span>
                     <span className={styles.userRole}>{data.role}</span>
                   </div>
                   <ChevronDownIcon
@@ -95,11 +97,14 @@ export default function TheHeader() {
             </Button>
           </Link>
         ) : (
-          <img
-            className={`${styles.userImg} ${styles.mobile}`}
-            src={data.avatar || userImg}
-            onClick={() => setIsMobileMenuShowed(true)}
-          />
+          <div className={`${styles.mobileUserImgContainer} ${styles.marked}`}>
+            {/* TODO: marked if there are new notifications */}
+            <img
+              className={styles.userImg}
+              src={data.avatar || userImg}
+              onClick={() => setIsMobileMenuShowed(true)}
+            />
+          </div>
         )}
       </div>
       <MobileMenu

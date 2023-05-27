@@ -47,10 +47,6 @@
   width: 58px;
   height: 58px;
   object-fit: cover;
-
-  &.mobile {
-    display: none;
-  }
 }
 
 .userInfoContainer {
@@ -93,6 +89,27 @@
   display: none;
 }
 
+.mobileUserImgContainer {
+  display: none;
+  position: relative;
+
+  &.marked:after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $orange;
+  }
+
+  .userImg {
+    width: 45px;
+    height: 45px;
+  }
+}
+
 @include tablet {
   .header {
     padding: 8px 0;
@@ -107,10 +124,8 @@
     display: none;
   }
 
-  .userImg.mobile {
+  .mobileUserImgContainer {
     display: block;
-    width: 45px;
-    height: 45px;
   }
 
   .mobileBtn {

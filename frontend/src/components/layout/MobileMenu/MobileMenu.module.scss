@@ -123,3 +123,20 @@
   gap: 24px;
   margin-top: auto;
 }
+
+.notificationIcon {
+  width: 24px;
+  height: 24px;
+  position: relative;
+
+  &.marked:after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    right: 1px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: $orange;
+  }
+}

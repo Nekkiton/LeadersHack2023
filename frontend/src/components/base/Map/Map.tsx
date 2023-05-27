@@ -13,7 +13,12 @@ export default function Map({ items = [], children }: Props) {
   return (
     <div className={styles.container}>
       <div className={styles.map}>
-        <button onClick={() => setIsCardShowed(true)}>open card</button>
+        <p style={{ textAlign: "center", margin: "100px 0" }}>
+          Карта появится в ближайшее время
+        </p>
+        {false && (
+          <button onClick={() => setIsCardShowed(true)}>open card</button>
+        )}
       </div>
       {children(items[activeItemIdx], {
         className: `${styles.card} ${isCardShowed ? styles.active : ""}`,

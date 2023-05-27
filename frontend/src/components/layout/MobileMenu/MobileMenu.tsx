@@ -33,7 +33,6 @@ export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
         icon: <DocumentIcon />,
       },
       { text: "Наставники", link: "/staff/mentors", icon: <MentorIcon /> },
-      { text: "Уведомления", link: "/notifications", icon: <BellIcon /> },
     ],
     mentor: [
       {
@@ -42,7 +41,6 @@ export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
         icon: <DocumentIcon />,
       },
       { text: "Стажеры", link: "/mentor/interns", icon: <StudentIcon /> },
-      { text: "Уведомления", link: "/notifications", icon: <BellIcon /> },
     ],
     // TODO: add internship to curator and manage active internship
     curator: [
@@ -63,7 +61,6 @@ export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
         icon: <DocumentIcon />,
       },
       { link: "/curator/mailing", text: "Рассылки", icon: <UploadIcon /> },
-      { text: "Уведомления", link: "/notifications", icon: <BellIcon /> },
     ],
     candidate: [
       {
@@ -73,7 +70,6 @@ export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
         icon: <OrderIcon />,
       },
       { text: "Профиль", link: "/profile", icon: <UserIcon /> },
-      { text: "Уведомления", link: "/notifications", icon: <BellIcon /> },
     ],
     intern: [
       { text: "Вакансии", link: "/intern/vacancies", icon: <DocumentIcon /> },
@@ -85,7 +81,6 @@ export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
         icon: <OrderIcon />,
       },
       { text: "Профиль", link: "/profile", icon: <UserIcon /> },
-      { text: "Уведомления", link: "/notifications", icon: <BellIcon /> },
     ],
   }
 
@@ -137,6 +132,17 @@ export default function MobileMenu({ isShowed, setIsShowed, user }: Props) {
               <p>{item.text}</p>
             </Link>
           ))}
+          <Link
+            className={styles.linksLink}
+            href="/notifications"
+            onClick={() => setIsShowed(false)}
+          >
+            {/* TODO: marked if there are new notifications */}
+            <span className={`${styles.notificationIcon} ${styles.marked}`}>
+              <BellIcon />
+            </span>
+            <p>Уведомления</p>
+          </Link>
         </div>
       </div>
       <div className={styles.footer}>
