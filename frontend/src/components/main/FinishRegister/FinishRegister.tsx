@@ -29,7 +29,10 @@ export default function Profile() {
   }, [formValues])
 
   const onFinish = async (values: any) => {
-    const res = await signUpProfile(values)
+    const res = await signUpProfile({
+      ...values,
+      referralId: router.query.referralId,
+    })
     if (res.role === Role.STAFF) {
       router.push("/staff")
     } else if (res.role === Role.MENTOR) {

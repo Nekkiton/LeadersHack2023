@@ -46,8 +46,6 @@ export default function Auth({ type: pageType }: Props) {
           router.push("/curator")
         } else if (res.role === Role.INTERN || res.role === Role.CANDIDATE) {
           router.push("/intern")
-        } else if (res.role === Role.NOBODY) {
-          router.push("/register/finish")
         } else {
           router.push("/")
         }
@@ -62,7 +60,11 @@ export default function Auth({ type: pageType }: Props) {
       }
     } else if (pageType === "register") {
       await signUp(data)
-      router.push("/register/finish")
+      notification.open({
+        message: "Ссылка на звершение регистрации отправлена на вашу эл. почту",
+        closeIcon: <TimesIcon />,
+      })
+      router.push("/")
     } else if (pageType === "resetPassword") {
       setIsResetPasswordFinished(true)
     } else if (pageType === "setPassword") {
