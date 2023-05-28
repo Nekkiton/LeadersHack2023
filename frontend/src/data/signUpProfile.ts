@@ -13,7 +13,9 @@ interface QueryData {
 }
 
 export const signUpProfile = async (data: QueryData) => {
-  return axios.post("/api/v1/auth/sign-up/profile", data).then((res) => {
-    return res.data
-  })
+  return axios
+    .post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/sign-up/profile`, data)
+    .then((res) => {
+      return res.data
+    })
 }

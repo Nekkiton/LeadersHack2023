@@ -7,4 +7,6 @@ interface Data {
 }
 
 export const addUser = (data: Data) =>
-  axios.post("/api/v1/admin/users", data).then((res) => res.data as Data)
+  axios
+    .post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/admin/users`, data)
+    .then((res) => res.data as Data)
