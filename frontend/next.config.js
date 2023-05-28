@@ -1,6 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'standalone',
+  output: "standalone",
   reactStrictMode: true,
   webpack(config) {
     config.module.rules.push({
@@ -11,6 +11,9 @@ const nextConfig = {
 
     return config
   },
+  redirects: () => [
+    { source: "/candidate", destination: "/intern", permanent: true },
+  ],
 }
 
 module.exports = nextConfig

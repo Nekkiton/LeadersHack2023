@@ -9,7 +9,9 @@ import ChevronLeftIcon from "assets/icons/chevron-left.svg"
 import MailSentIcon from "assets/icons/mail-sent.svg"
 import TimesIcon from "assets/icons/times.svg"
 import styles from "./Auth.module.scss"
-import { signIn } from "data"
+import { signIn, signUp } from "data"
+import { AxiosError } from "axios"
+import { Role } from "models/Role"
 
 interface Props {
   type: "login" | "register" | "resetPassword" | "setPassword"
@@ -33,16 +35,26 @@ export default function Auth({ type: pageType }: Props) {
 
   /* TODO: send requests */
   const submit = async (data: any) => {
-    console.log(data)
-
     if (pageType === "login") {
-      const res = await signIn(data) // role will be returned as result tomorrow (add redirect to specific page then)
-      if (res) {
-        router.push("/")
+      try {
+        const res = await signIn(data)
+        if (res.role === Role.NOBODY) {
+          router.push("/")
+        } else {
+          router.push(res.role)
+        }
+      } catch (e) {
+        console.log(e)
+        if ((e as AxiosError).response?.status === 401) {
+          notification.open({
+            message: "Логин или пароль неправильны",
+            closeIcon: <TimesIcon />,
+          })
+        }
       }
     } else if (pageType === "register") {
-      router.push("/profile/register")
-      // TODO: add second step to profile page
+      await signUp(data)
+      router.push("/register/finish")
     } else if (pageType === "resetPassword") {
       setIsResetPasswordFinished(true)
     } else if (pageType === "setPassword") {
