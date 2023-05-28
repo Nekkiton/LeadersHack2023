@@ -16,3 +16,19 @@ export enum CandidateStatus {
   passed = "passed",
   rejected = "rejected",
 }
+
+export enum InternshipStage {
+  requests = "requests",
+  studying = "studying",
+  testing = "testing",
+  hackathon = "hackathon",
+  assignment = "assignment",
+  internship1 = "internship1",
+  internship2 = "internship2",
+  internship3 = "internship3",
+}
+
+export interface Period {
+  start: string
+  end: string
+}
