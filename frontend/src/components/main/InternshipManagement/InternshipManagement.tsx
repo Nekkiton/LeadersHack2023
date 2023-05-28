@@ -246,7 +246,7 @@ export default function InternshipManagement() {
               </Form.Item>
               <Form.Item
                 className={styles.formField}
-                name="sprintTrheeEnd"
+                name="sprintThreeEnd"
                 rules={[{ required: true, message: "Заполните это поле" }]}
               >
                 <Input label="Дата окончания третьей стажировки" datepicker />
