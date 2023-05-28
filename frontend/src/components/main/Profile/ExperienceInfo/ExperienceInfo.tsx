@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Form, Spin } from "antd"
+import { Form, Spin, notification } from "antd"
 import Button from "components/base/controls/Button"
 import Input from "components/base/controls/Input"
 import styles from "./ExperienceInfo.module.scss"
@@ -24,7 +24,13 @@ export default function Profile() {
     queryFn: () => fetchCandidateExperienceInfo(),
   })
 
-  const updateExperience = useMutation(saveExperienceInfo)
+  const updateExperience = useMutation(saveExperienceInfo, {
+    onSuccess: () => {
+      notification.success({
+        message: "Информация обновлена",
+      })
+    },
+  })
 
   if (isLoading) return <Spin />
 

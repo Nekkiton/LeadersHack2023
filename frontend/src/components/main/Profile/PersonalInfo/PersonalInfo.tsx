@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Form, Spin } from "antd"
+import { Form, Spin, notification } from "antd"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import Input from "components/base/controls/Input"
@@ -37,7 +37,13 @@ export default function PersonalInfo() {
     queryFn: () => fetchProfileInfo(),
   })
 
-  const updateProfile = useMutation(saveProfileInfo)
+  const updateProfile = useMutation(saveProfileInfo, {
+    onSuccess: () => {
+      notification.success({
+        message: "Информация обновлена",
+      })
+    },
+  })
 
   if (isLoading) return <Spin />
 
