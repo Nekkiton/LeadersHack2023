@@ -223,7 +223,7 @@ export default function CandidateRegistration() {
                 ]}
               >
                 <Radio
-                  label="Сколько часов вы готовы уделать стажировке?"
+                  label="Сколько часов вы готовы уделять стажировке?"
                   items={[
                     { value: 20, content: "20 часов в неделю (4 часа в день)" },
                     {
