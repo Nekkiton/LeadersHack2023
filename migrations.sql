@@ -258,7 +258,7 @@ CREATE TABLE IF NOT EXISTS "internship" (
 CREATE TABLE IF NOT EXISTS "organization" (
     "id" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
     "name" VARCHAR(255) NOT NULL,
-    "address" VARCHAR(255) NULL,
+    "address" VARCHAR(1000) NULL,
     "phone" VARCHAR(255) NULL,
     "email" VARCHAR(255) NULL,
     "logo" VARCHAR(1000) NULL
@@ -280,5 +280,14 @@ VALUES
         '+7 (910) 234-56-78',
         'career@moscow.ru'
     ) ON CONFLICT DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS "employee" (
+	"id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+	"organizationId" UUID NOT NULL,
+	"userId" UUID NOT NULL,
+    FOREIGN KEY("organizationId") REFERENCES "organization"("id"),
+    FOREIGN KEY("userId") REFERENCES "user"("id"),
+    UNIQUE ("organizationId", "userId")
+);
 
 END $$
