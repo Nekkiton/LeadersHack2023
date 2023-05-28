@@ -1,7 +1,6 @@
 import Link from "next/link"
 import styles from "./MailingCard.module.scss"
-import dayjs from "dayjs"
-import "dayjs/locale/ru";
+import { formatDate } from "utils/formatDate"
 
 interface Props {
   link: string
@@ -11,13 +10,11 @@ interface Props {
 export default function MailingCard({ item, link }: Props) {
   return (
     <Link className={styles.card} href={`${link}/${item.id}`}>
-      <p className={styles.title}>
-        {item.title}
-      </p>
+      <p className={styles.title}>{item.title}</p>
       <div className={styles.info}>
         <div className={styles.infoItem}>
           <span className={styles.infoItemTitle}>Отправка:</span>
-          <span>{dayjs(item.date).locale("ru").format('D MMMM YYYY в hh:mm')}</span>
+          <span>{formatDate(item.date, "D MMMM YYYY в hh:mm")}</span>
         </div>
         <div className={styles.infoItem}>
           <span className={styles.infoItemTitle}>Тип:</span>

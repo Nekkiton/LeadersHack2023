@@ -8,8 +8,7 @@ import styles from "./MailingItem.module.scss"
 import { useQuery } from "@tanstack/react-query"
 import { fetchMailingItem } from "data"
 import { Spin } from "antd"
-import dayjs from "dayjs"
-import "dayjs/locale/ru";
+import { formatDate } from "utils/formatDate"
 
 interface Props {
   backLink: string
@@ -17,7 +16,7 @@ interface Props {
 }
 
 export default function MailingItem({ backLink, mailId }: Props) {
-  const router = useRouter();
+  const router = useRouter()
 
   const { data, isLoading } = useQuery({
     queryKey: ["mailingItem", { id: mailId }],
@@ -38,9 +37,7 @@ export default function MailingItem({ backLink, mailId }: Props) {
         </Button>
       </Link>
       <div className={styles.header}>
-        <h1 className={styles.title}>
-          {data.title}
-        </h1>
+        <h1 className={styles.title}>{data.title}</h1>
         <div className={styles.headerControls}>
           {/* TODO: modals */}
           <Link href={`/curator/add-mailing?copy=${router.query.id}`}>
@@ -74,7 +71,7 @@ export default function MailingItem({ backLink, mailId }: Props) {
         <div className={styles.card}>
           <div className={styles.cardBlock}>
             <p className={styles.cardTitle}>Дата отправки</p>
-            <p>{dayjs(data.date).locale("ru").format('D MMMM YYYY в hh:mm')}</p>
+            <p>{formatDate(data.date, "D MMMM YYYY в hh:mm")}</p>
           </div>
           <div className={styles.cardBlock}>
             <p className={styles.cardTitle}>Тип</p>
