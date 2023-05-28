@@ -261,7 +261,7 @@ CREATE TABLE IF NOT EXISTS "organization" (
     "address" VARCHAR(255) NULL,
     "phone" VARCHAR(255) NULL,
     "email" VARCHAR(255) NULL,
-    "logo" VARCHAR(1000) NULL,
+    "logo" VARCHAR(1000) NULL
 );
 
 INSERT INTO
@@ -270,7 +270,7 @@ INSERT INTO
         "name",
         "address",
         "phone",
-        "email",
+        "email"
     )
 VALUES
     (
@@ -278,7 +278,7 @@ VALUES
         'КАРЬЕРНЫЙ ЦЕНТР ПРАВИТЕЛЬСТВА МОСКВЫ',
         'Калужская, ул. Большая Дмитровка, 7/5',
         '+7 (910) 234-56-78',
-        'career@moscow.ru',
+        'career@moscow.ru'
     ) ON CONFLICT DO NOTHING;
 
 END $$

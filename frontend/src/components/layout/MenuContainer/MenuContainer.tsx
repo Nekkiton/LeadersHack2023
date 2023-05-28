@@ -16,6 +16,9 @@ import UploadIcon from "assets/icons/upload.svg"
 import EventIcon from "assets/icons/event.svg"
 import styles from "./MenuContainer.module.scss"
 import { Role } from "models/Role"
+import { useQuery } from "@tanstack/react-query"
+import { fetchInternshipList } from "data"
+import dayjs from "dayjs"
 
 interface MenuItem {
   link?: string
@@ -48,14 +51,14 @@ interface Props {
 }
 
 export default function MenuContainer({ children, role }: Props) {
-  // TODO: fetch internship for curator
-  const internships = [
-    { id: "1", name: "Стажировка 2021-2022", status: "past" },
-    { id: "2", name: "Стажировка 2022-2023", status: "past" },
-    { id: "3", name: "Стажировка 2023-2024", status: "active" },
-  ]
+  let { data: internships } = useQuery({
+    queryKey: ["internshipList"],
+    queryFn: fetchInternshipList,
+    enabled: role === Role.CURATOR,
+  })
 
-  const links = { //
+  const links = {
+    //
     [Role.STAFF]: [
       {
         text: "Главная",
@@ -128,17 +131,20 @@ export default function MenuContainer({ children, role }: Props) {
   const [curInternship, setCurInternship] = useState("")
 
   useEffect(() => {
+    if (!internships) return
+
     const sessionVal = sessionStorage.getItem("curInternship")
     if (sessionVal && internships.some((i) => i.id === sessionVal)) {
       setCurInternship(sessionVal)
     } else {
-      const activeVal = internships.find((i) => i.status === "active")?.id
+      const year = dayjs().year()
+      const activeVal = internships.find((i) => +i.year === year)?.id
       if (activeVal) {
         setCurInternship(activeVal)
       }
     }
-  }, [])
-const r = role.toString();
+  }, [internships])
+
   useEffect(() => {
     if (curInternship) {
       sessionStorage.setItem("curInternship", curInternship)
@@ -148,26 +154,26 @@ const r = role.toString();
   return (
     <div className={styles.container}>
       <div className={styles.menu}>
-       {/* @ts-ignore  */}
+        {/* @ts-ignore  */}
         {links[role].map((item) => (
           <MenuItem item={item} key={item.text + item.link}>
             {item.icon && <span className={styles.linkIcon}>{item.icon}</span>}
             <span>{item.text}</span>
           </MenuItem>
         ))}
-        {role === Role.CURATOR && (
+        {internships && (
           <Select
             className={styles.bottomSelect}
             headerClassName={styles.bottomSelectHeader}
             items={internships.map((i) => ({
               key: i.id,
-              value: i.name,
+              value: `Стажировка ${i.year} - ${i.year + 1}`,
               selectedValue: (
                 <div className={styles.link}>
                   <span className={styles.linkIcon}>
                     <EventIcon />
                   </span>
-                  <p>{i.name}</p>
+                  <p>{`Стажировка ${i.year} - ${i.year + 1}`}</p>
                 </div>
               ),
             }))}

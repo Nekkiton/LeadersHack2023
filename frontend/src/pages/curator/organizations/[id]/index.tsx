@@ -1,5 +1,13 @@
+import { useRouter } from "next/router"
 import Organization from "components/main/Organization"
 
 export default function InternsPage() {
-  return <Organization backLink="/curator/organizations" />
+  const router = useRouter()
+
+  return (
+    <Organization
+      backLink="/curator/organizations"
+      id={router.query.id as string}
+    />
+  )
 }

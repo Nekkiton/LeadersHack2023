@@ -3,6 +3,7 @@ import dayjs from "dayjs"
 import isBetween from "dayjs/plugin/isBetween"
 import styles from "./InternshipTerms.module.scss"
 import { formatDate } from "utils/formatDate"
+import { Internship } from "models/Internship"
 
 dayjs.extend(isBetween)
 
@@ -51,10 +52,45 @@ const formatPeriod = (datesPeriod?: Period) => {
 }
 
 interface InternshipTermsProps {
-  stages?: Record<InternshipStage, Period>
+  internship: Internship
 }
 
-export default function InternshipTerms({ stages }: InternshipTermsProps) {
+export default function InternshipTerms({ internship }: InternshipTermsProps) {
+  const stages: Record<InternshipStage, Period> = {
+    [InternshipStage.requests]: {
+      start: internship.applicationStart,
+      end: internship.applicationEnd,
+    },
+    [InternshipStage.studying]: {
+      start: internship.trainingStart,
+      end: internship.trainingEnd,
+    },
+    [InternshipStage.testing]: {
+      start: internship.examStart,
+      end: internship.examEnd,
+    },
+    [InternshipStage.hackathon]: {
+      start: internship.championshipStart,
+      end: internship.championshipEnd,
+    },
+    [InternshipStage.assignment]: {
+      start: internship.distributionStart,
+      end: internship.distributionEnd,
+    },
+    [InternshipStage.internship1]: {
+      start: internship.sprintOneStart,
+      end: internship.sprintOneEnd,
+    },
+    [InternshipStage.internship2]: {
+      start: internship.sprintTwoStart,
+      end: internship.sprintTwoEnd,
+    },
+    [InternshipStage.internship3]: {
+      start: internship.sprintThreeStart,
+      end: internship.sprintThreeEnd,
+    },
+  }
+
   return (
     <div className={styles.timeline}>
       {internshipTimeline.map((item) => (

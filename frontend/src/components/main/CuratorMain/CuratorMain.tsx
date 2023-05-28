@@ -83,10 +83,7 @@ export default function CuratorMain() {
   const [candidatesChart, setCandidatesChart] = useState("responsesCount")
   const [vacanciesChart, setVacanciesChart] = useState("status")
 
-  const { data } = useQuery({
-    queryKey: ["internshipSchedule"],
-    queryFn: fetchInternshipSchedule,
-  })
+  const year = dayjs().year()
 
   // TODO: fetch data
   const candidatesData = {
@@ -129,15 +126,17 @@ export default function CuratorMain() {
             </Link>
           )}
         </div>
-        {data ? (
+        {internshipData ? (
           <div className={`${styles.card} ${styles.timelineCard}`}>
-            <InternshipTerms stages={data} />
+            <InternshipTerms internship={internshipData} />
           </div>
         ) : (
           <div className={`${styles.card} ${styles.timelineNothing}`}>
             <div className={styles.timelineNothingMsg}>
               <EventIcon className={styles.timelineNothingIcon} />
-              <p>Сроки стажировки 2023 - 2024 еще не определены</p>
+              <p>
+                Сроки стажировки {year} - {year + 1} еще не определены
+              </p>
             </div>
             <Link href="/curator/internship">
               <Button>Задать сроки стажировки</Button>
