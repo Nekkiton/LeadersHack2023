@@ -3,36 +3,36 @@ import { InternshipStage, Period } from "./types"
 
 const testData = {
   requests: {
-    start: "2022-01-01",
-    end: "2022-01-31",
+    start: "2023-02-01",
+    end: "2023-04-21",
   },
   studying: {
-    start: "2022-02-01",
-    end: "2022-02-28",
+    start: "2023-04-024",
+    end: "2023-04-28",
   },
   testing: {
-    start: "2022-03-01",
-    end: "2022-03-31",
+    start: "2023-05-15",
+    end: "2023-05-19",
   },
   hackathon: {
-    start: "2022-04-01",
-    end: "2022-04-30",
+    start: "2023-05-28",
+    end: "2023-06-02",
   },
   assignment: {
-    start: "2022-05-01",
-    end: "2022-05-31",
+    start: "2023-06-05",
+    end: "2023-11-30",
   },
   internship1: {
-    start: "2022-06-01",
-    end: "2022-06-30",
+    start: "2023-08-01",
+    end: "2023-09-30",
   },
   internship2: {
-    start: "2022-07-01",
-    end: "2022-07-31",
+    start: "2023-10-01",
+    end: "2023-11-30",
   },
   internship3: {
-    start: "2022-08-01",
-    end: "2022-08-31",
+    start: "2023-12-01",
+    end: "2024-01-31",
   },
 }
 
