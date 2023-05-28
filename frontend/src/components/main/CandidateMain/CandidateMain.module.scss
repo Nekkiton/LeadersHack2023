@@ -145,81 +145,6 @@
   border-radius: 24px 24px 0 0;
 }
 
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.timelineItem {
-  display: flex;
-  gap: 16px;
-  position: relative;
-  width: 100%;
-
-  &:not(:last-child):after {
-    content: "";
-    position: absolute;
-    width: 1px;
-    background: $gray-5;
-    top: 14px;
-    bottom: -26px;
-    left: 5.5px;
-  }
-}
-
-.timelineItemMarker {
-  flex-shrink: 0;
-  margin-top: 2px;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 1px solid $purpure;
-  background: $white;
-
-  .timelineItem.active & {
-    background: $purpure;
-  }
-}
-
-.timelineItemContent {
-  display: flex;
-  gap: 8px;
-  width: 100%;
-
-  &:not(:last-child) {
-    padding-bottom: 24px;
-    border-bottom: 1px solid $gray-5;
-  }
-}
-
-.timelineItemHeader {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-  width: 451px;
-  flex-shrink: 0;
-}
-
-.timelineItemDates {
-  @include paragraph-3;
-
-  color: $gray-3;
-}
-
-.timelineItemDescription {
-  @include paragraph-1;
-
-  .colored {
-    color: $purpure;
-    font-weight: 700;
-  }
-
-  .link {
-    color: $blue;
-  }
-}
-
 .notification {
   display: flex;
   align-items: center;
@@ -289,14 +214,6 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 16px;
-  }
-
-  .timelineItemDescription {
-    @include paragraph-2;
-  }
-
-  .timelineItemHeader {
-    width: 317px;
   }
 }
 
@@ -370,35 +287,9 @@
     @include paragraph-1;
   }
 
-  .timeline {
-    gap: 16px;
-  }
-
-  .timelineItem {
-    gap: 8px;
-  }
-
   .timelineContainer {
     gap: 16px;
     padding-top: 24px;
     padding-bottom: 24px;
-  }
-
-  .timelineItemContent {
-    flex-direction: column;
-    padding: 0;
-    border: none;
-  }
-
-  .timelineItemHeader {
-    width: auto;
-  }
-
-  .timelineItemDates {
-    font-size: 12px;
-  }
-
-  .timelineItemTitle {
-    @include heading-6;
   }
 }

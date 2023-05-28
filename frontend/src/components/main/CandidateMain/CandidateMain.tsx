@@ -6,43 +6,15 @@ import StudentEmoji from "assets/icons/student-emoji.svg"
 import ProgrammerEmoji from "assets/icons/programmer-emoji.svg"
 import WaiterEmoji from "assets/icons/waiter-emoji.svg"
 import styles from "./CandidateMain.module.scss"
+import InternPath from "./InternPath"
+import { fetchInternshipSchedule } from "data"
+import { useQuery } from "@tanstack/react-query"
 
 export default function CandidateMain() {
-  // TODO: fetch dates
-  const timeline = [
-    {
-      dates: "1 февраля — 21 апреля 2023",
-      title: "Заявка на стажировку",
-      description: (
-        <p>
-          Расскажи о себе и прими участие в отборе на 
-          <Link className={styles.link} href="/">
-            стажировку
-          </Link>
-        </p>
-      ),
-      status: "active",
-    },
-    {
-      dates: "1 февраля — 21 апреля 2023",
-      title: "Заявка на стажировку1",
-      description: "Расскажи о себе и прими участие в отборе на стажировку",
-    },
-    {
-      dates: "1 августа 2023 – 31 января 2024",
-      title: "Стажировка и трудоустройство",
-      description: (
-        <div>
-          Вливайся в команду Правительства Москвы в числе 125 лучших стажеров,
-          знакомься с коллегами и вместе с ними выполняй реальные задачи.
-          <p className={styles.colored}>
-            Прояви себя как профессионал и получи предложение о трудоустройстве
-            в Правительство Москвы
-          </p>
-        </div>
-      ),
-    },
-  ]
+  const { data } = useQuery({
+    queryKey: ["internshipSchedule"],
+    queryFn: fetchInternshipSchedule,
+  })
 
   // TODO: fetch data
   const isReceptionOpen = true
@@ -150,26 +122,7 @@ export default function CandidateMain() {
         </div>
         <div className={styles.timelineContainer}>
           <h2>Путь стажера</h2>
-          <div className={styles.timeline}>
-            {timeline.map((item) => (
-              <div
-                className={`${styles.timelineItem} ${
-                  item.status === "active" ? styles.active : ""
-                }`}
-              >
-                <span className={styles.timelineItemMarker}></span>
-                <div className={styles.timelineItemContent}>
-                  <div className={styles.timelineItemHeader}>
-                    <p className={styles.timelineItemDates}>{item.dates}</p>
-                    <h3 className={styles.timelineItemTitle}>{item.title}</h3>
-                  </div>
-                  <div className={styles.timelineItemDescription}>
-                    {item.description}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+          <InternPath stages={data} />
         </div>
       </div>
 
