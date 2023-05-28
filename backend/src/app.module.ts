@@ -13,6 +13,8 @@ import { ProfileModule } from './profile/profile.module';
 import { AdminModule } from './admin/admin.module';
 import { CandidatesModule } from './candidates/candidates.module';
 import { CandidateInfoModule } from './candidate-info/candidate-info.module';
+import { InternshipModule } from './internship/internship.module';
+import { IsAfterDateConstraint } from './validation/isAfterDate.validator';
 
 @Module({
   imports: [
@@ -41,6 +43,7 @@ import { CandidateInfoModule } from './candidate-info/candidate-info.module';
     AdminModule,
     CandidatesModule,
     CandidateInfoModule,
+    InternshipModule,
   ],
   controllers: [InternalController],
   providers: [
@@ -52,6 +55,7 @@ import { CandidateInfoModule } from './candidate-info/candidate-info.module';
       provide: 'APP_GUARD',
       useClass: RolesGuard,
     },
+    IsAfterDateConstraint,
   ],
 })
 export class AppModule {}

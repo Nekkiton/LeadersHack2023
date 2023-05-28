@@ -1,3 +1,4 @@
 import { TransformFnParams } from 'class-transformer';
+import * as dayjs from 'dayjs';
 
-export default ({ value }: TransformFnParams) => (value as string).substring(0, 10);
+export default ({ value }: TransformFnParams) => dayjs(value).format('YYYY-MM-DD');
