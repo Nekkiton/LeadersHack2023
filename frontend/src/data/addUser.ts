@@ -7,4 +7,4 @@ interface Data {
 }
 
 export const addUser = (data: Data) =>
-  axios.post("/api/v1/admin/users", { data }).then((res) => res.data as Data)
+  axios.post("/api/v1/admin/users", data).then((res) => res.data as Data)

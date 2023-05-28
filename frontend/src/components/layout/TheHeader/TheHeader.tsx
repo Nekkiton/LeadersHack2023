@@ -11,7 +11,6 @@ import ChevronDownIcon from "assets/icons/chevron-down.svg"
 import styles from "./TheHeader.module.scss"
 import { useQuery } from "@tanstack/react-query"
 import { fetchUserInfo } from "data"
-import { Spin } from "antd"
 
 const userImg = "/images/user.svg"
 const logoImg = "/images/logo.svg"
@@ -20,10 +19,10 @@ export default function TheHeader() {
   const [isMenuShowed, setIsMenuShowed] = useState(false)
   const [isMobileMenuShowed, setIsMobileMenuShowed] = useState(false)
 
-  const logout = () => alert("Выходи пожалуйста");
-  const notificationsCount = 1; // TODO: get from notification endpoint
+  const logout = () => alert("Выходи пожалуйста")
+  const notificationsCount = 1 // TODO: get from notification endpoint
 
-  const { data, isLoading } = useQuery({
+  const { data } = useQuery({
     queryKey: ["userInfo"],
     queryFn: () => fetchUserInfo(),
   })
@@ -41,8 +40,7 @@ export default function TheHeader() {
         </Link>
         <div className={styles.user}>
           <DesktopNotifications notificationsCount={notificationsCount} />
-          {/* TODO: show if user is not authed */}
-          {false ? (
+          {!data ? (
             <Link href="/login">
               <Button>
                 <span> Войти</span>
@@ -88,16 +86,18 @@ export default function TheHeader() {
             </BurgerMenu>
           )}
         </div>
-        {/* TODO: if user is not authed */}
-        {false ? (
+        {!data ? (
           <Link className={styles.mobileBtn} href="/login">
             <Button>
               <LoginIcon className="icon" />
             </Button>
           </Link>
         ) : (
-          <div className={`${styles.mobileUserImgContainer} ${styles.marked}`}>
-            {/* TODO: marked if there are new notifications */}
+          <div
+            className={`${styles.mobileUserImgContainer} ${
+              notificationsCount ? styles.marked : ""
+            }`}
+          >
             <img
               className={styles.userImg}
               src={data?.photo || userImg}

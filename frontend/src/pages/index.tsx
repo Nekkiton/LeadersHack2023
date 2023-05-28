@@ -1,12 +1,33 @@
 import Link from "next/link"
+import { Spin } from "antd"
+import { useRouter } from "next/router"
+import { useQuery } from "@tanstack/react-query"
+import { fetchUserInfo } from "data"
+import { Role } from "models/Role"
 
 export default function Home() {
-  return (
-    <div style={{ display: "flex", gap: "1em" }}>
-      <Link href="/staff">Staff</Link>
-      <Link href="/mentor">Mentor</Link>
-      <Link href="/curator">Curator</Link>
-      <Link href="/intern">Candidate and intern</Link>
-    </div>
-  )
+  const router = useRouter()
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["userInfo"],
+    queryFn: () => fetchUserInfo(),
+  })
+
+  if (isLoading) return <Spin />
+
+  if (data?.role === Role.STAFF) {
+    router.replace("/staff")
+  } else if (data?.role === Role.MENTOR) {
+    router.replace("/mentor")
+  } else if (data?.role === Role.CURATOR) {
+    router.replace("/curator")
+  } else if (data?.role === Role.INTERN) {
+    router.replace("/intern/app")
+  } else if (data?.role === Role.CANDIDATE) {
+    router.replace("/intern/register")
+  } else {
+    router.replace("/intern")
+  }
+
+  return <Spin />
 }
