@@ -3,6 +3,9 @@ import { Organization } from '../entities/organization.entity';
 
 export class ResponseOrganizationDto {
   @ApiProperty()
+  id: string;
+
+  @ApiProperty()
   name: string;
 
   @ApiProperty()
@@ -19,6 +22,7 @@ export class ResponseOrganizationDto {
 
   static fromEntity(organization: Organization): ResponseOrganizationDto {
     return {
+      id: organization.id,
       name: organization.name,
       address: organization.address,
       phone: organization.phone,
