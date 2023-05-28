@@ -23,8 +23,6 @@ export default function Home() {
     router.replace("/curator")
   } else if (data?.role === Role.INTERN) {
     router.replace("/intern/app")
-  } else if (data?.role === Role.CANDIDATE) {
-    router.replace("/intern/register")
   } else {
     router.replace("/intern")
   }

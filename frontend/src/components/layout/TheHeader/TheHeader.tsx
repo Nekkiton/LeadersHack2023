@@ -1,4 +1,5 @@
 import { useState } from "react"
+import { useRouter } from "next/router"
 import Link from "next/link"
 import Button from "components/base/controls/Button"
 import BurgerMenu from "components/base/controls/BurgerMenu"
@@ -11,15 +12,18 @@ import ChevronDownIcon from "assets/icons/chevron-down.svg"
 import styles from "./TheHeader.module.scss"
 import { useQuery } from "@tanstack/react-query"
 import { fetchUserInfo } from "data"
+import { Role } from "models/Role"
 
 const userImg = "/images/user.svg"
 const logoImg = "/images/logo.svg"
 
 export default function TheHeader() {
+  const router = useRouter()
+
   const [isMenuShowed, setIsMenuShowed] = useState(false)
   const [isMobileMenuShowed, setIsMobileMenuShowed] = useState(false)
 
-  const logout = () => alert("Выходи пожалуйста")
+  const logout = () => router.push("/login")
   const notificationsCount = 1 // TODO: get from notification endpoint
 
   const { data } = useQuery({
@@ -74,7 +78,13 @@ export default function TheHeader() {
                     <span className={styles.userName}>
                       {data?.name} {data?.surname?.charAt(0)}.
                     </span>
-                    <span className={styles.userRole}>{data?.role}</span>
+                    <span className={styles.userRole}>
+                      {data.role === Role.STAFF && "Кадровый специалист"}
+                      {data.role === Role.MENTOR && "Наставник"}
+                      {data.role === Role.CURATOR && "Куратор"}
+                      {data.role === Role.INTERN && "Стажер"}
+                      {data.role === Role.CANDIDATE && "Кандидат"}
+                    </span>
                   </div>
                   <ChevronDownIcon
                     className={`${styles.userMenuIcon} ${
