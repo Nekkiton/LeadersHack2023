@@ -1,0 +1,92 @@
+@import "assets/css/config";
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.navLink {
+  align-self: flex-start;
+}
+
+.title {
+  text-transform: uppercase;
+}
+
+.main {
+  display: flex;
+  align-items: flex-start;
+  gap: 32px;
+}
+
+.card {
+  padding: 16px;
+  border-radius: 8px;
+  background: $white;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.formBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.formTitleContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.formHint {
+  @include paragraph-3;
+  color: $gray-3;
+}
+
+.formHFields {
+  display: flex;
+  gap: 16px;
+
+  > * {
+    width: 100%;
+  }
+}
+
+.formAddBtn {
+  align-self: flex-start;
+}
+
+.formSmallField {
+  width: calc(50% - 6px);
+}
+
+.formControl {
+  align-self: flex-start;
+}
+
+.hint {
+  @include paragraph-2;
+
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex-shrink: 1.4;
+  gap: 8px;
+  color: $gray-3;
+}
+
+.hintIcon {
+  width: 24px;
+  height: 24px;
+
+  path {
+    stroke: $gray-3;
+  }
+}
