@@ -29,10 +29,6 @@
 .userImgContainer {
   align-self: flex-start;
   position: relative;
-
-  &:not(.active) {
-    display: none;
-  }
 }
 
 .userImg {
@@ -67,13 +63,9 @@
 }
 
 .fields {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 16px;
-
-  &.active {
-    display: flex;
-  }
 }
 
 .hFields {
