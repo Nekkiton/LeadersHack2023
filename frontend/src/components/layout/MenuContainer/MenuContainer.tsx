@@ -178,7 +178,7 @@ export default function MenuContainer({ children, role }: Props) {
               ),
             }))}
             value={curInternship}
-            onChange={setCurInternship}
+            onChange={(val) => val && setCurInternship(val)}
             opensUp
             same
           />
