@@ -5,24 +5,10 @@ import "antd/dist/reset.css"
 import "styles/globals.css"
 import "assets/css/index.scss"
 import AppContainer from "Application/AppContainer"
-import axios, { HttpStatusCode } from "axios"
-import router from "next/router"
 
 const queryClient = new QueryClient()
 
-axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-
-// axios.interceptors.response.use((response) => response, (error) => {
-//   if (error.response.status === HttpStatusCode.MovedPermanently
-//      && error.response.headers['location']?.includes('/login')) {
-//       router.replace(error.response.headers['location']);
-//       throw new axios.Cancel();
-//   }
-//   return error.response;
-// })
-
 export default function App({ Component, pageProps }: AppProps) {
-
   return (
     <QueryClientProvider client={queryClient}>
       <ConfigProvider
