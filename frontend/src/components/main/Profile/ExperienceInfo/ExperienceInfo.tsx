@@ -4,13 +4,8 @@ import Button from "components/base/controls/Button"
 import Input from "components/base/controls/Input"
 import styles from "./ExperienceInfo.module.scss"
 import { useState } from "react"
-import { useQuery } from "@tanstack/react-query"
-import { fetchCandidateExperienceInfo } from "data"
-
-const onFinish = (values: any) => {
-  // TODO: add form submit logic here
-  console.log("Success experience:", values)
-}
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { fetchCandidateExperienceInfo, saveExperienceInfo } from "data"
 
 export default function Profile() {
   const [isValid, setIsValid] = useState(false)
@@ -29,20 +24,24 @@ export default function Profile() {
     queryFn: () => fetchCandidateExperienceInfo(),
   })
 
+  const updateExperience = useMutation(saveExperienceInfo)
+
   if (isLoading) return <Spin />
 
   return (
     <Form
       className={styles.form}
       initialValues={{ ...data }}
-      onFinish={onFinish}
+      onFinish={(values) => {
+        updateExperience.mutate(values)
+      }}
       form={form}
     >
       <div className={styles.main}>
         <div className={`${styles.fields}`}>
           <h3>Образование</h3>
           <Form.Item
-            name={["education", "university"]}
+            name={["education", "name"]}
             rules={[
               {
                 required: true,
