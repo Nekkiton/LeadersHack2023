@@ -22,7 +22,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.use(cookieParser());
   // TODO disable in prod run
-  app.enableCors();
+  app.enableCors({ origin: '*' });
   const configService: ConfigService = app.get(ConfigService);
   await app.listen(configService.get('port'));
 }
