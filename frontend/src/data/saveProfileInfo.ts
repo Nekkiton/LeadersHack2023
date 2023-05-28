@@ -15,6 +15,6 @@ export default interface InputProfile {
 export const saveProfileInfo = async (data: InputProfile) => {
   console.log("Profile to update:", data)
   return axios
-    .patch("/api/v1/users/profile", data)
+    .patch(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/users/profile`, data)
     .then((res) => res.data as Profile)
 }

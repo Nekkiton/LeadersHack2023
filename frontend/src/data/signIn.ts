@@ -8,7 +8,7 @@ interface QueryData {
 
 export const signIn = async ({ email, password }: QueryData) => {
   return axios
-    .post("/api/v1/auth/sign-in", {
+    .post(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/auth/sign-in`, {
       email,
       password,
     })
