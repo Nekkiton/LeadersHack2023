@@ -9,16 +9,11 @@ import UploadIcon from "assets/icons/upload.svg"
 import styles from "./PersonalInfo.module.scss"
 import PasswordModal from "../PasswordModal"
 import { useState } from "react"
-import { useQuery } from "@tanstack/react-query"
-import { fetchProfileInfo } from "data"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import { fetchProfileInfo, saveProfileInfo } from "data"
 import dayjs from "dayjs"
 
 const userImg = "/images/user.svg"
-
-const onFinish = (values: any) => {
-  // TODO: add form submit logic here
-  console.log("Success profile:", values)
-}
 
 export default function PersonalInfo() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -42,6 +37,8 @@ export default function PersonalInfo() {
     queryFn: () => fetchProfileInfo(),
   })
 
+  const updateProfile = useMutation(saveProfileInfo)
+
   if (isLoading) return <Spin />
 
   const { birthday, ...restValues } = data ?? {}
@@ -57,7 +54,13 @@ export default function PersonalInfo() {
       <Form
         className={styles.form}
         initialValues={{ ...restValues, birthday: dayjs(birthday) }}
-        onFinish={onFinish}
+        onFinish={(values) => {
+          const { birthday, ...restValues } = values ?? {}
+          updateProfile.mutate({
+            ...restValues,
+            birthday: birthday?.toISOString(),
+          })
+        }}
         form={form}
       >
         <div className={`${styles.userImgContainer}`}>
