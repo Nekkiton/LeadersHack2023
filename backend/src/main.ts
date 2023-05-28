@@ -21,6 +21,8 @@ async function bootstrap() {
   // whitelist strip additional properties from DTO
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }));
   app.use(cookieParser());
+  // TODO disable in prod run
+  app.enableCors();
   const configService: ConfigService = app.get(ConfigService);
   await app.listen(configService.get('port'));
 }
