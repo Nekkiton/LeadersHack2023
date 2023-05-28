@@ -14,6 +14,7 @@ import { CandidatesModule } from './candidates/candidates.module';
 import { CandidateInfoModule } from './candidate-info/candidate-info.module';
 import { InternshipModule } from './internship/internship.module';
 import { IsAfterDateConstraint } from './validation/isAfterDate.validator';
+import { OrganizationsModule } from './organizations/organizations.module';
 
 @Module({
   imports: [
@@ -42,6 +43,7 @@ import { IsAfterDateConstraint } from './validation/isAfterDate.validator';
     CandidatesModule,
     CandidateInfoModule,
     InternshipModule,
+    OrganizationsModule,
   ],
   controllers: [InternalController],
   providers: [

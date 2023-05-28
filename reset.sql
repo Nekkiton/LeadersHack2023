@@ -1,5 +1,7 @@
 DELIMITER '//';
 
+DROP TABLE IF EXISTS "organization";
+
 DROP TABLE IF EXISTS "internship";
 
 DROP TABLE IF EXISTS "candidate_info";

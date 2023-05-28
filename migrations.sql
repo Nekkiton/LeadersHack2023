@@ -255,4 +255,30 @@ CREATE TABLE IF NOT EXISTS "internship" (
     "sprintThreeEnd" VARCHAR(63) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS "organization" (
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "name" VARCHAR(255) NOT NULL,
+    "address" VARCHAR(255) NULL,
+    "phone" VARCHAR(255) NULL,
+    "email" VARCHAR(255) NULL,
+    "logo" VARCHAR(1000) NULL,
+);
+
+INSERT INTO
+    "organization" (
+        "id",
+        "name",
+        "address",
+        "phone",
+        "email",
+    )
+VALUES
+    (
+        '00000000-0000-0000-0000-000000000001',
+        'КАРЬЕРНЫЙ ЦЕНТР ПРАВИТЕЛЬСТВА МОСКВЫ',
+        'Калужская, ул. Большая Дмитровка, 7/5',
+        '+7 (910) 234-56-78',
+        'career@moscow.ru',
+    ) ON CONFLICT DO NOTHING;
+
 END $$
