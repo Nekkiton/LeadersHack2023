@@ -45,10 +45,6 @@ ingress:
   enabled: true
   className: "nginx"
   annotations:
-    nginx.ingress.kubernetes.io/enable-cors: "true"
-    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
-    nginx.ingress.kubernetes.io/auth-url: http://backend-backend-deployment.default.svc.cluster.local:3000/api/v1/auth
-    nginx.ingress.kubernetes.io/auth-signin: https://geek-battle-2023.ru/login?redirectUrl=$request_uri
   hosts:
     - host: geek-battle-2023.ru
       paths:
@@ -60,7 +56,7 @@ ingress:
        - geek-battle-2023.ru
 
 ingressPublic:
-  enabled: true
+  enabled: false
   className: "nginx"
   annotations:
     nginx.ingress.kubernetes.io/enable-cors: "true"
@@ -70,8 +66,6 @@ ingressPublic:
       paths:
         - path: /api/v1/auth
           pathType: ImplementationSpecific
-        # - path: /api/v1/_internal
-        #   pathType: ImplementationSpecific
   tls:
    - secretName: geek-battle-ssl
      hosts:
