@@ -67,8 +67,8 @@ export class AuthController {
      */
     const ttlSeconds = parseInt(this.configService.get('jwt.expiresIn'), 10);
     res.cookie('access_token', token, {
-      // secure: true,
-      // sameSite: 'none', // TODO disable in prod
+      secure: true,
+      sameSite: 'none', // TODO disable in prod
       expires: new Date(Date.now() + ttlSeconds * 1000),
     });
   }
