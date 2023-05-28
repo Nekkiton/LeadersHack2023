@@ -5,7 +5,7 @@ const testData = [
     id: "5",
     type: ["email", "push"],
     title: "Тестирование кандидатов пройдет с 10 по 17 мая",
-    date: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
+    date: "2023-05-06T14:00:00Z",
     body: "Для современного мира высокое качество позиционных исследований прекрасно подходит для реализации поставленных обществом задач. Безусловно, существующая теория способствует повышению качества экспериментов, поражающих по своей масштабности и грандиозности. Господа.",
     recepient_roles: ["candidate", "mentor"],
   },
@@ -13,10 +13,10 @@ const testData = [
     id: "7",
     type: ["email", "push"],
     title: "Тестирование кандидатов пройдет с 20 по 27 мая",
-    date: new Date(Date.now()),
+    date: "2023-05-06T14:00:00Z",
     body: "ХеХеХе, я злобная вафелька и тебе никогда не пройти тестирование которая я тебе уготовил, хе-хе-хе",
     recepient_roles: ["intern", "mentor"],
-  }
+  },
 ]
 
 interface QueryParams {
@@ -27,7 +27,7 @@ interface QueryResponse {
   id: string
   type: string[]
   title: string
-  date: Date
+  date: string
   body: string
   recepient_roles: string[]
 }
@@ -35,5 +35,5 @@ interface QueryResponse {
 export const fetchMailingItem = async ({ id }: QueryParams) => {
   return axios
     .get("https://api.publicapis.org/entries")
-    .then((res) => testData.filter(d => d.id === id)[0] as QueryResponse);
+    .then((res) => testData.filter((d) => d.id === id)[0] as QueryResponse)
 }

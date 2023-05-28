@@ -2,6 +2,7 @@ import { InternshipStage, Period } from "data/types"
 import dayjs from "dayjs"
 import isBetween from "dayjs/plugin/isBetween"
 import styles from "./InternPath.module.scss"
+import { formatDate } from "utils/formatDate"
 
 dayjs.extend(isBetween)
 
@@ -70,10 +71,14 @@ const formatPeriod = (
   if (!stages) return ""
 
   if (currentStage === InternStage.internship) {
-    return `${stages.internship1.start} - ${stages.internship3.end}`
+    return `${formatDate(stages.internship1.start)} - ${formatDate(
+      stages.internship3.end
+    )}`
   }
 
-  return `${stages[currentStage].start} - ${stages[currentStage].end}`
+  return `${formatDate(stages[currentStage].start)} - ${formatDate(
+    stages[currentStage].end
+  )}`
 }
 
 interface InternPathProps {

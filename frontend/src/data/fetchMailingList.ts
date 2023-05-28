@@ -5,23 +5,23 @@ const testData = [
     id: "5",
     type: ["email", "push"],
     title: "Тестирование кандидатов пройдет с 10 по 17 мая",
-    date: new Date(Date.now() - 20 * 24 * 60 * 60 * 1000),
+    date: "2023-05-06T14:00:00Z",
     recepient_roles: ["candidate", "mentor"],
   },
   {
     id: "7",
     type: ["email", "push"],
     title: "Тестирование кандидатов пройдет с 20 по 27 мая",
-    date: new Date(Date.now()),
+    date: "2023-05-06T14:00:00Z",
     recepient_roles: ["intern", "mentor"],
-  }
+  },
 ]
 
 interface MailingItem {
   id: string
   type: string[]
   title: string
-  date: Date
+  date: string
   recepient_roles: string[]
 }
 interface QueryParams {
