@@ -1,5 +1,7 @@
 DELIMITER '//';
 
+DROP TABLE "internship";
+
 DROP TABLE "candidate_info";
 
 DO $$ BEGIN

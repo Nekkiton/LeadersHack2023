@@ -65,6 +65,12 @@ VALUES
         'nobody',
         'nobody@example.com',
         '$2b$10$ksf.zVF0WMYSwmZHZDpBG.dHnFxtKnThyPiu1tRbOhnNHn.qZZTLe'
+    ),
+    (
+        '00000000-0000-0000-0000-000000000007',
+        'curator',
+        'curator@example.com',
+        '$2b$10$SeuqglJpT.kRhgR31QIye.4Mvw0V7fx.XVKlWgxDA6aesFFp9IiFC'
     ) ON CONFLICT DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS "user_profile" (
@@ -148,6 +154,17 @@ VALUES
         'staff citizenship',
         'staff location',
         'staff phone'
+    ),
+    (
+        '00000000-0000-0000-0000-000000000006',
+        '00000000-0000-0000-0000-000000000007',
+        'curator name',
+        'curator surname',
+        'curator patronymic',
+        '2000-01-01',
+        'curator citizenship',
+        'curator location',
+        'curator phone'
     ) ON CONFLICT DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS "referral" (
@@ -213,5 +230,24 @@ VALUES
         '"{\"name\":\"education name\",\"specialty\":\"education specialty\",\"graduationYear\":\"2000\"}"',
         'it'
     ) ON CONFLICT DO NOTHING;
+
+CREATE TABLE IF NOT EXISTS "internship" (
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "year" VARCHAR(4) NOT NULL UNIQUE,
+    "applicationStart" VARCHAR(63) NOT NULL,
+    "applicationEnd" VARCHAR(63) NOT NULL,
+    "trainingStart" VARCHAR(63) NOT NULL,
+    "trainingEnd" VARCHAR(63) NOT NULL,
+    "examStart" VARCHAR(63) NOT NULL,
+    "examEnd" VARCHAR(63) NOT NULL,
+    "distributionStart" VARCHAR(63) NOT NULL,
+    "distributionEnd" VARCHAR(63) NOT NULL,
+    "sprintOneStart" VARCHAR(63) NOT NULL,
+    "sprintOneEnd" VARCHAR(63) NOT NULL,
+    "sprintTwoStart" VARCHAR(63) NOT NULL,
+    "sprintTwoEnd" VARCHAR(63) NOT NULL,
+    "sprintThreeStart" VARCHAR(63) NOT NULL,
+    "sprintThreeEnd" VARCHAR(63) NOT NULL
+);
 
 END $$
