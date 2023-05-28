@@ -9,6 +9,8 @@ import ExclamationIcon from "assets/icons/exclamation.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import TimesIcon from "assets/icons/times.svg"
 import styles from "./NewStaff.module.scss"
+import { addUser } from "data"
+import { Role } from "models/Role"
 
 interface Props {
   link: string
@@ -28,9 +30,11 @@ export default function NewStaff({ link }: Props) {
     )
   }, [formValues])
 
-  // TODO: create staff, handle errors
-  const saveStaff = (data: any) => {
-    console.log(data)
+  const saveStaff = async (data: any) => {
+    await addUser({
+      ...data,
+      role: Role.STAFF,
+    })
     notification.open({
       message: "Ссылка на регистрацию отправлена кадровому специалисту",
       closeIcon: <TimesIcon />,

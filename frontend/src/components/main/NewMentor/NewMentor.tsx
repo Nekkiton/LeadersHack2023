@@ -9,6 +9,8 @@ import ExclamationIcon from "assets/icons/exclamation.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import TimesIcon from "assets/icons/times.svg"
 import styles from "./NewMentor.module.scss"
+import { addUser } from "data"
+import { Role } from "models/Role"
 
 interface Props {
   link: string
@@ -28,9 +30,8 @@ export default function NewVacancy({ link }: Props) {
     )
   }, [formValues])
 
-  // TODO: create mentor, handle errors
-  const saveMentor = (data: any) => {
-    console.log(data)
+  const saveMentor = async (data: any) => {
+    await addUser({ ...data, role: Role.MENTOR })
     notification.open({
       message: "Ссылка на регистрацию отправлена наставнику",
       closeIcon: <TimesIcon />,
