@@ -2,6 +2,7 @@ import { InternshipStage, Period } from "data/types"
 import dayjs from "dayjs"
 import isBetween from "dayjs/plugin/isBetween"
 import styles from "./InternshipTerms.module.scss"
+import { formatDate } from "utils/formatDate"
 
 dayjs.extend(isBetween)
 
@@ -46,7 +47,7 @@ const getStatus = (datesPeriod?: Period) => {
 const formatPeriod = (datesPeriod?: Period) => {
   if (!datesPeriod) return ""
 
-  return `${datesPeriod.start} - ${datesPeriod.end}`
+  return `${formatDate(datesPeriod.start)} - ${formatDate(datesPeriod.end)}`
 }
 
 interface InternshipTermsProps {
