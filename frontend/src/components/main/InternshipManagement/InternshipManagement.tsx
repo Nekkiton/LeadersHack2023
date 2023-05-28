@@ -67,8 +67,8 @@ export default function InternshipManagement() {
         sprintOneEnd: dayjs(data.sprintOneEnd),
         sprintTwoStart: dayjs(data.sprintTwoStart),
         sprintTwoEnd: dayjs(data.sprintTwoEnd),
-        sprintThreeEnd: dayjs(data.sprintThreeStart),
-        sprintTrheeEnd: dayjs(data.sprintThreeEnd),
+        sprintThreeStart: dayjs(data.sprintThreeStart),
+        sprintThreeEnd: dayjs(data.sprintThreeEnd),
       }
 
   return (

@@ -14,6 +14,7 @@ import { CreateInternshipDto } from './dto/create-internship.dto';
 import { ResponseInternshipDto } from './dto/response-internship.dto.js';
 import {
   ApiBadRequestResponse,
+  ApiCookieAuth,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
@@ -29,12 +30,13 @@ import * as dayjs from 'dayjs';
 @Controller('internships')
 @Injectable()
 @ApiTags('internships')
+@ApiCookieAuth()
 export class InternshipController {
   constructor(private internshipService: InternshipService) {}
 
   @Get()
   @ApiOperation({ summary: 'Get all internships' })
-  @ApiCreatedResponse({ type: ResponseInternshipDto })
+  @ApiOkResponse({ type: ResponseInternshipDto })
   @ApiNotFoundResponse()
   @Roles(Role.CURATOR) // ?
   async getAll(): Promise<ResponseInternshipDto[]> {
