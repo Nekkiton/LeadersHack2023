@@ -8,8 +8,9 @@ import SearchBlockIcon from "assets/icons/search-block.svg"
 import PenIcon from "assets/icons/pen.svg"
 import styles from "./CuratorMain.module.scss"
 import { useQuery } from "@tanstack/react-query"
-import { fetchInternshipSchedule } from "data"
+import { fetchInternshipSchedule, fetchInternship } from "data"
 import InternshipTerms from "./InternshipTerms"
+import dayjs from "dayjs"
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
 
@@ -108,6 +109,11 @@ export default function CuratorMain() {
     },
   } as any
 
+  const { data: internshipData } = useQuery({
+    queryKey: ["internship", { id: "current" }],
+    queryFn: () => fetchInternship({ id: "current" }),
+  })
+
   return (
     <div className={styles.container}>
       <div className={styles.block}>
@@ -149,10 +155,10 @@ export default function CuratorMain() {
               items={[
                 { key: "responsesCount", value: "Количество заявок" },
                 { key: "age", value: "Возраст" },
-                { key: "towns", value: "Города" },
-                { key: "universities", value: "ВУЗы" },
-                { key: "workExp", value: "Опыт работы" },
-                { key: "internshipDir", value: "Направление стажировки" },
+                //{ key: "towns", value: "Города" },
+                //{ key: "universities", value: "ВУЗы" },
+                //{ key: "workExp", value: "Опыт работы" },
+                //{ key: "internshipDir", value: "Направление стажировки" },
               ]}
               value={candidatesChart}
               onChange={(val) => val && setCandidatesChart(val)}
