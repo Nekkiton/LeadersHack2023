@@ -21,11 +21,26 @@ export class Internship {
   @Column({ type: 'date' })
   trainingEnd: string;
 
+  @Column({ length: 2048 })
+  trainingLink: string;
+
   @Column({ type: 'date' })
   examStart: string;
 
   @Column({ type: 'date' })
   examEnd: string;
+
+  @Column({ length: 2048 })
+  examLink: string;
+
+  @Column({ type: 'date' })
+  championshipStart: string;
+
+  @Column({ type: 'date' })
+  championshipEnd: string;
+
+  @Column({ length: 2048 })
+  championshipLink: string;
 
   @Column({ type: 'date' })
   distributionStart: string;

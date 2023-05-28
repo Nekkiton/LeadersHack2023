@@ -1,8 +1,8 @@
 DELIMITER '//';
 
-DROP TABLE "internship";
+DROP TABLE IF EXISTS "internship";
 
-DROP TABLE "candidate_info";
+DROP TABLE IF EXISTS "candidate_info";
 
 DO $$ BEGIN
     IF EXISTS (

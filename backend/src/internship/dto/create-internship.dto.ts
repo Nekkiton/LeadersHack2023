@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { Expose, Transform } from 'class-transformer';
-import { IsDateString } from 'class-validator';
+import { IsDateString, IsUrl, MaxLength } from 'class-validator';
 import DateTransformer from 'src/components/DateTransformer';
 import { IsAfterDate } from 'src/validation/isAfterDate.validator';
 import * as dayjs from 'dayjs';
@@ -34,6 +34,11 @@ export class CreateInternshipDto {
   @IsAfterDate<CreateInternshipDto>('trainingStart')
   trainingEnd: string;
 
+  @IsUrl()
+  @MaxLength(2048)
+  @ApiProperty({ maxLength: 2048 })
+  trainingLink: string;
+
   @IsDateString()
   @ApiProperty({ format: 'date' })
   @Transform(DateTransformer)
@@ -46,10 +51,32 @@ export class CreateInternshipDto {
   @IsAfterDate<CreateInternshipDto>('examStart')
   examEnd: string;
 
+  @IsUrl()
+  @MaxLength(2048)
+  @ApiProperty({ maxLength: 2048 })
+  examLink: string;
+
   @IsDateString()
   @ApiProperty({ format: 'date' })
   @Transform(DateTransformer)
   @IsAfterDate<CreateInternshipDto>('examEnd')
+  championshipStart: string;
+
+  @IsDateString()
+  @ApiProperty({ format: 'date' })
+  @Transform(DateTransformer)
+  @IsAfterDate<CreateInternshipDto>('championshipStart')
+  championshipEnd: string;
+
+  @IsUrl()
+  @MaxLength(2048)
+  @ApiProperty({ maxLength: 2048 })
+  championshipLink: string;
+
+  @IsDateString()
+  @ApiProperty({ format: 'date' })
+  @Transform(DateTransformer)
+  @IsAfterDate<CreateInternshipDto>('championshipEnd')
   distributionStart: string;
 
   @Expose()
