@@ -38,10 +38,18 @@ export default function Auth({ type: pageType }: Props) {
     if (pageType === "login") {
       try {
         const res = await signIn(data)
-        if (res.role === Role.NOBODY) {
-          router.push("/")
+        if (res.role === Role.STAFF) {
+          router.push("/staff")
+        } else if (res.role === Role.MENTOR) {
+          router.push("/mentor")
+        } else if (res.role === Role.CURATOR) {
+          router.push("/curator")
+        } else if (res.role === Role.INTERN || res.role === Role.CANDIDATE) {
+          router.push("/intern")
+        } else if (res.role === Role.NOBODY) {
+          router.push("/register/finish")
         } else {
-          router.push(res.role)
+          router.push("/")
         }
       } catch (e) {
         console.log(e)

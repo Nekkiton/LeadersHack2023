@@ -8,6 +8,7 @@ import PenIcon from "assets/icons/pen.svg"
 import UploadIcon from "assets/icons/upload.svg"
 import { signUpProfile } from "data"
 import styles from "./FinishRegister.module.scss"
+import { Role } from "models/Role"
 
 const userImg = "/images/user.svg"
 
@@ -29,7 +30,17 @@ export default function Profile() {
 
   const onFinish = async (values: any) => {
     const res = await signUpProfile(values)
-    router.push(res.role)
+    if (res.role === Role.STAFF) {
+      router.push("/staff")
+    } else if (res.role === Role.MENTOR) {
+      router.push("/mentor")
+    } else if (res.role === Role.CURATOR) {
+      router.push("/curator")
+    } else if (res.role === Role.INTERN || res.role === Role.CANDIDATE) {
+      router.push("/intern")
+    } else {
+      router.push("/")
+    }
   }
 
   return (
