@@ -1,47 +1,60 @@
-import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
+import { ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
 import { Repository } from 'typeorm';
 import { hash } from 'bcrypt';
 import { ConfigService } from '@nestjs/config';
-import { TransactionOptions, TransactionService } from 'src/utils/TransactionService';
+import { TransactionOptions } from 'src/utils/TransactionService';
 import { Role } from 'src/auth/roles/role.enum';
+import { CUService } from 'src/utils/CUService';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { RegisterUserDto } from './dto/register-user.dto';
+import { promisify } from 'util';
+import { randomBytes } from 'crypto';
+
+const randomBytesAsync = promisify(randomBytes);
 
 @Injectable()
-export class UsersService extends TransactionService<User> {
+export class UsersService extends CUService<User, 'email', CreateUserDto, UpdateUserDto> {
   constructor(
     @InjectRepository(User)
     userRepository: Repository<User>,
     private configService: ConfigService,
   ) {
-    super(User, userRepository);
+    super(User, userRepository, { entityName: 'User', identityKeys: ['email'] });
   }
 
-  async createUser(dto: CreateUserDto, transaction?: TransactionOptions): Promise<User> {
-    const repository = this.getRepository(transaction);
-    const alreadyExist = await repository.exist({ where: { email: dto.email } });
-    if (alreadyExist) {
-      throw new BadRequestException('User with specified email already exists');
+  async register(
+    dto: RegisterUserDto,
+    role: Role,
+    transaction?: TransactionOptions,
+  ): Promise<{ user: User; password: string }> {
+    let passwordHash: string;
+    let password: string;
+    if (dto.password) {
+      password = dto.password;
+      passwordHash = await hash(dto.password, this.configService.get('jwt.saltRounds'));
+    } else {
+      const passwordLength = this.configService.get('application.generatedPasswordLength');
+      password = (await randomBytesAsync(passwordLength)).toString('base64url');
+      passwordHash = await hash(password, this.configService.get('jwt.saltRounds'));
     }
-    const user = repository.create(dto);
-    user.passwordHash = await hash(dto.password, this.configService.get('jwt.saltRounds'));
-    const created = await repository.save(user);
-    return created;
-  }
-
-  findOne(email: string, transaction?: TransactionOptions): Promise<User | null> {
-    const repository = this.getRepository(transaction);
-    return repository.findOneBy({ email });
+    const user = await this.create(
+      {
+        email: dto.email,
+        role,
+        passwordHash,
+      },
+      transaction,
+    );
+    return { user, password };
   }
 
   async promoteToCandidate(user: User, transaction?: TransactionOptions): Promise<User> {
-    const repository = this.getRepository(transaction);
     if (user.role !== Role.NOBODY) {
       throw new ForbiddenException();
     }
-    user.role = Role.CANDIDATE;
-    const updated = await repository.save(user);
-    return updated;
+    return this.update({ email: user.email }, { role: Role.CANDIDATE }, transaction);
   }
 }

@@ -2,6 +2,7 @@ export default () => ({
   port: 3000,
   application: {
     referralIdLength: 64,
+    generatedPasswordLength: 16,
   },
   database: {
     host: process.env.DATABASE_HOST,

@@ -14,7 +14,6 @@ import { CandidateInfoService } from 'src/candidate-info/candidate-info.service'
 import { CreateCandidateInfoDto } from 'src/candidate-info/dto/create-candidate-info.dto';
 import { ResponseCandidateInfoDto } from 'src/candidate-info/dto/response-candidate-info.dto';
 import { UpdateCandidateInfoDto } from 'src/candidate-info/dto/update-candidate-info.dto';
-import { User } from 'src/users/entities/user.entity';
 import { UsersService } from 'src/users/users.service';
 
 @Controller('candidates')
@@ -23,14 +22,6 @@ import { UsersService } from 'src/users/users.service';
 export class CandidatesController {
   constructor(private usersService: UsersService, private candidateInfoService: CandidateInfoService) {}
 
-  private async getUserByEmail(email: string): Promise<User> {
-    const user = await this.usersService.findOne(email);
-    if (!user) {
-      throw new NotFoundException('No user found. Are you signed-up?');
-    }
-    return user;
-  }
-
   @Get('info/me')
   @Roles(Role.CANDIDATE)
   @ApiOperation({ summary: 'Get current user candidate info' })
@@ -38,7 +29,7 @@ export class CandidatesController {
   @ApiNotFoundResponse()
   async getCandidateInfo(@Req() req): Promise<ResponseCandidateInfoDto> {
     const payload: UserPayload = req.user;
-    const user = await this.getUserByEmail(payload.email);
+    const user = await this.usersService.findOne({ email: payload.email });
     const info = await this.candidateInfoService.findOne(user);
     if (!info) {
       throw new NotFoundException('Candidate info have not created yet');
@@ -54,7 +45,7 @@ export class CandidatesController {
   @ApiNotFoundResponse()
   async createUserProfile(@Body() dto: CreateCandidateInfoDto, @Req() req): Promise<ResponseCandidateInfoDto> {
     const payload: UserPayload = req.user;
-    const user = await this.getUserByEmail(payload.email);
+    const user = await this.usersService.findOne({ email: payload.email });
     const profile = await this.candidateInfoService.create(user, dto);
     return ResponseCandidateInfoDto.fromEntity(profile);
   }
@@ -66,7 +57,7 @@ export class CandidatesController {
   @ApiNotFoundResponse()
   async updateUserProfile(@Body() dto: UpdateCandidateInfoDto, @Req() req): Promise<ResponseCandidateInfoDto> {
     const payload: UserPayload = req.user;
-    const user = await this.getUserByEmail(payload.email);
+    const user = await this.usersService.findOne({ email: payload.email });
     const profile = await this.candidateInfoService.update(user, dto);
     return ResponseCandidateInfoDto.fromEntity(profile);
   }

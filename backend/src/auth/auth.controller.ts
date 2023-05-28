@@ -7,6 +7,7 @@ import {
   HttpStatus,
   Injectable,
   Logger,
+  NotFoundException,
   Post,
   Res,
   UnauthorizedException,
@@ -19,8 +20,6 @@ import { ResponseSignInDto } from './dto/response-sign-in.dto';
 import { UsersService } from 'src/users/users.service';
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { ReferralsService } from 'src/referrals/referrals.service';
-import { CreateNobodyUserDto } from 'src/auth/dto/create-nobody-user.dto';
-import { ResponseNobodyUserDto } from 'src/auth/dto/response-nobody-user.dto';
 import { UserProfilesService } from 'src/user-profiles/user-profiles.service';
 import { User } from 'src/users/entities/user.entity';
 import { EntityManager } from 'typeorm';
@@ -39,6 +38,8 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { RegisterUserDto } from 'src/users/dto/register-user.dto';
+import { ResponseRegisterUserDto } from 'src/users/dto/response-register-user.dto';
 
 @Injectable()
 @Controller('auth')
@@ -66,8 +67,8 @@ export class AuthController {
      */
     const ttlSeconds = parseInt(this.configService.get('jwt.expiresIn'), 10);
     res.cookie('access_token', token, {
-      secure: true,
-      sameSite: 'none', // TODO disable in prod
+      // secure: true,
+      // sameSite: 'none', // TODO disable in prod
       expires: new Date(Date.now() + ttlSeconds * 1000),
     });
   }
@@ -79,10 +80,16 @@ export class AuthController {
   @ApiUnauthorizedResponse()
   @ApiBadRequestResponse()
   async signIn(@Body() dto: SignInDto, @Res({ passthrough: true }) res: Response) {
-    const user = await this.userService.findOne(dto.email);
-    if (!user) {
-      throw new UnauthorizedException();
+    let user: User;
+    try {
+      user = await this.userService.findOne({ email: dto.email });
+    } catch (error) {
+      if (error instanceof NotFoundException) {
+        throw new UnauthorizedException();
+      }
+      throw error;
     }
+
     if (user.role === Role.NOBODY) {
       throw new UnauthorizedException();
     }
@@ -113,24 +120,22 @@ export class AuthController {
   @Post('sign-up')
   @HttpCode(HttpStatus.CREATED)
   @ApiOperation({ summary: 'Creates default user' })
-  @ApiCreatedResponse({ type: ResponseNobodyUserDto })
+  @ApiCreatedResponse({ type: ResponseRegisterUserDto })
   @ApiBadRequestResponse()
-  async createNobodyUser(@Body() dto: CreateNobodyUserDto): Promise<ResponseNobodyUserDto> {
+  async createNobodyUser(@Body() dto: RegisterUserDto): Promise<ResponseRegisterUserDto> {
     let user: User;
     await this.entityManager.transaction(async (entityManager) => {
-      user = await this.userService.createUser(
-        {
-          email: dto.email,
-          password: dto.password,
-          role: Role.NOBODY,
-        },
-        { entityManager },
-      );
+      const registration = await this.userService.register(dto, Role.NOBODY, { entityManager });
+      user = registration.user;
       const referral = await this.referralService.createReferral(user, { entityManager });
       // TODO send invite email
-      this.logger.log(`Generated referralId="${referral.referralId}" for user="${dto.email}"`);
+      this.logger.log(
+        `Generated referralId="${referral.referralId}" for user="${dto.email}"` + dto.password
+          ? ''
+          : ` password="${registration.password}"`,
+      );
     });
-    return ResponseNobodyUserDto.fromEntity(user);
+    return ResponseRegisterUserDto.fromEntity(user);
   }
 
   @Public()
