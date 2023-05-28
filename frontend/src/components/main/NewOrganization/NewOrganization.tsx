@@ -10,6 +10,7 @@ import LinkExternalIcon from "assets/icons/link-external.svg"
 import ExclamationIcon from "assets/icons/exclamation.svg"
 import TimesIcon from "assets/icons/times.svg"
 import styles from "./NewOrganization.module.scss"
+import { addOrganization } from "data"
 
 export default function NewOrganization() {
   const router = useRouter()
@@ -28,24 +29,24 @@ export default function NewOrganization() {
   const [staffsCount, setStaffsCount] = useState(1)
   const [departmentsCount, setDepartmentsCount] = useState(1)
 
-  // TODO: send request
-  const submit = (data: any) => {
-    data.staffs = []
-    data.departments = []
+  const submit = async (data: any) => {
+    //data.staffs = []
+    //data.departments = []
 
-    for (let i = 0; i < staffsCount; i++) {
-      const name = `staffs[${i}]`
-      data.staffs.push(data[name])
-      delete data[name]
-    }
+    //for (let i = 0; i < staffsCount; i++) {
+    //const name = `staffs[${i}]`
+    //data.staffs.push(data[name])
+    //delete data[name]
+    //}
 
-    for (let i = 0; i < departmentsCount; i++) {
-      const name = `departments[${i}]`
-      data.departments.push(data[name])
-      delete data[name]
-    }
+    //for (let i = 0; i < departmentsCount; i++) {
+    //const name = `departments[${i}]`
+    //data.departments.push(data[name])
+    //delete data[name]
+    //}
 
-    console.log(data)
+    // TODO: fix logo
+    await addOrganization({ ...data, logo: "no logo" })
     router.push("/curator/organizations")
     notification.open({
       message: "Организация добавлена",
@@ -86,26 +87,28 @@ export default function NewOrganization() {
               <Input placeholder="Физический адрес организации" label="Адрес" />
             </Form.Item>
           </div>
-          <div className={styles.formBlock}>
-            <h3>Подразделения</h3>
-            {Array.from({ length: departmentsCount }).map((_i, idx) => (
-              <Form.Item
-                key={idx}
-                name={`departments[${idx}]`}
-                rules={[{ required: true, message: "Заполните это поле" }]}
+          {false && (
+            <div className={styles.formBlock}>
+              <h3>Подразделения</h3>
+              {Array.from({ length: departmentsCount }).map((_i, idx) => (
+                <Form.Item
+                  key={idx}
+                  name={`departments[${idx}]`}
+                  rules={[{ required: true, message: "Заполните это поле" }]}
+                >
+                  <Input label={`Подразделение ${idx + 1}`} />
+                </Form.Item>
+              ))}
+              <Button
+                className={styles.formAddBtn}
+                type="text"
+                onClick={() => setDepartmentsCount(departmentsCount + 1)}
               >
-                <Input label={`Подразделение ${idx + 1}`} />
-              </Form.Item>
-            ))}
-            <Button
-              className={styles.formAddBtn}
-              type="text"
-              onClick={() => setDepartmentsCount(departmentsCount + 1)}
-            >
-              <PlusIcon className="icon" />
-              <span>Добавить подразделение</span>
-            </Button>
-          </div>
+                <PlusIcon className="icon" />
+                <span>Добавить подразделение</span>
+              </Button>
+            </div>
+          )}
           <div className={styles.formBlock}>
             <h3>Контактная информация</h3>
             <div className={styles.formHFields}>
@@ -123,38 +126,40 @@ export default function NewOrganization() {
               </Form.Item>
             </div>
           </div>
-          <div className={styles.formBlock}>
-            <div className={styles.formTitleContainer}>
-              <h3>Кадровые специалисты</h3>
-              <p className={styles.formHint}>
-                Укажите данные сотрудника организации, который будет заниматься
-                подбором стажеров.
-                <br />
-                Если таких сотрудников несколько, укажите одного из них, а
-                остальных сможете добавить позже
-              </p>
-            </div>
-            {Array.from({ length: staffsCount }).map((_i, idx) => (
-              <Form.Item
-                key={idx}
-                name={`staffs[${idx}]`}
-                rules={[{ required: true, message: "Заполните это поле" }]}
+          {false && (
+            <div className={styles.formBlock}>
+              <div className={styles.formTitleContainer}>
+                <h3>Кадровые специалисты</h3>
+                <p className={styles.formHint}>
+                  Укажите данные сотрудника организации, который будет
+                  заниматься подбором стажеров.
+                  <br />
+                  Если таких сотрудников несколько, укажите одного из них, а
+                  остальных сможете добавить позже
+                </p>
+              </div>
+              {Array.from({ length: staffsCount }).map((_i, idx) => (
+                <Form.Item
+                  key={idx}
+                  name={`staffs[${idx}]`}
+                  rules={[{ required: true, message: "Заполните это поле" }]}
+                >
+                  <Input
+                    className={styles.formSmallField}
+                    label={`Эл. почта специалиста ${idx + 1}`}
+                  />
+                </Form.Item>
+              ))}
+              <Button
+                className={styles.formAddBtn}
+                type="text"
+                onClick={() => setStaffsCount(staffsCount + 1)}
               >
-                <Input
-                  className={styles.formSmallField}
-                  label={`Эл. почта специалиста ${idx + 1}`}
-                />
-              </Form.Item>
-            ))}
-            <Button
-              className={styles.formAddBtn}
-              type="text"
-              onClick={() => setStaffsCount(staffsCount + 1)}
-            >
-              <PlusIcon className="icon" />
-              <span>Добавить кадрового специалиста</span>
-            </Button>
-          </div>
+                <PlusIcon className="icon" />
+                <span>Добавить кадрового специалиста</span>
+              </Button>
+            </div>
+          )}
           <Button
             className={styles.formControl}
             htmlType="submit"
