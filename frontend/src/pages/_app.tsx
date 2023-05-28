@@ -10,13 +10,13 @@ import router from "next/router"
 
 const queryClient = new QueryClient()
 
-axios.interceptors.response.use((response) => {
-  if (response.status === HttpStatusCode.MovedPermanently
-     && response.headers['location']?.includes('/login')) {
-      router.replace(response.headers['location']);
+axios.interceptors.response.use((response) => response, (error) => {
+  if (error.response.status === HttpStatusCode.MovedPermanently
+     && error.response.headers['location']?.includes('/login')) {
+      router.replace(error.response.headers['location']);
       throw new axios.Cancel();
   }
-  return response;
+  return error.response;
 })
 
 export default function App({ Component, pageProps }: AppProps) {
