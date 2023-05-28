@@ -1,0 +1,63 @@
+@import "assets/css/config";
+
+.timeline {
+  display: flex;
+  gap: 24px;
+  margin-top: 7px;
+}
+
+.timelineItem {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 8px;
+  position: relative;
+
+  &.past {
+    color: $gray-4;
+  }
+
+  &:not(:last-child):after {
+    content: "";
+    position: absolute;
+    top: 5.5px;
+    left: 5px;
+    right: -24px;
+    height: 1px;
+    background: $gray-5;
+  }
+
+  &:last-child {
+    padding-right: 16px;
+  }
+}
+
+.timelineItemDot {
+  width: 12px;
+  height: 12px;
+  z-index: 1;
+  border-radius: 50%;
+  background: $white;
+  border: 1px solid $gray-4;
+
+  .timelineItem.past & {
+    background: $gray-4;
+  }
+
+  .timelineItem.active & {
+    border-color: $orange;
+    background: $orange;
+  }
+}
+
+.timelineItemTitle {
+  @include paragraph-2;
+}
+
+.timelineItemDates {
+  @include caption-1;
+
+  .timelineItem:not(.past) & {
+    color: $gray-3;
+  }
+}
