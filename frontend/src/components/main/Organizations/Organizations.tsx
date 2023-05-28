@@ -60,13 +60,18 @@ export default function Vacancies({ link }: Props) {
             placeholder="Поиск по вакансиям"
           />
           <div className={styles.organizations}>
-            <OrganizationCard link="/curator/organizations" />
-            <OrganizationCard link="/curator/organizations" />
+            {data.map((i) => (
+              <OrganizationCard
+                link="/curator/organizations"
+                organization={i}
+                key={i.id}
+              />
+            ))}
           </div>
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            totalItems={500} // take from data response
+            totalItems={10} //TODO:  take from data response
           />
         </>
       )}
