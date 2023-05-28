@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { Form } from "antd"
+import { Form, Spin } from "antd"
 import Button from "components/base/controls/Button"
 import Input from "components/base/controls/Input"
 import Checkbox from "components/base/controls/Checkbox"
@@ -12,6 +12,9 @@ import UploadIcon from "assets/icons/upload.svg"
 import MailSentIcon from "assets/icons/mail-sent.svg"
 import ExclamationIcon from "assets/icons/exclamation.svg"
 import styles from "./CandidateRegistration.module.scss"
+import { useQuery } from "@tanstack/react-query"
+import { fetchCandidateExperienceInfo, fetchProfileInfo } from "data"
+import dayjs from "dayjs"
 
 const userImg = "/images/user.svg"
 
@@ -33,9 +36,33 @@ export default function CandidateRegistration() {
     )
   }, [formValues, activeStep])
 
+  const { data: personalData, isLoading: isPersonalDataLoading } = useQuery({
+    queryKey: ["profileInfo"],
+    queryFn: () => fetchProfileInfo(),
+  })
+
+  const { data: experienceData, isLoading: isExperienceDataLoading } = useQuery(
+    {
+      queryKey: ["experienceInfo"],
+      queryFn: () => fetchCandidateExperienceInfo(),
+    }
+  )
+
+  if (isPersonalDataLoading || isExperienceDataLoading) return <Spin />
+
+  const initialValues = {
+    ...personalData,
+    ...experienceData,
+    birthday: dayjs(personalData?.birthday),
+  }
+
   // TODO: save data, handle errors
-  const onFinish = (data: any) => {
-    console.log(data)
+  const onFinish = (values: any) => {
+    const { birthday, ...restValues } = values ?? {}
+    console.log("values", {
+      ...restValues,
+      birthday: birthday?.format("YYYY-MM-DD"),
+    })
     setIsFinished(true)
   }
 
@@ -79,7 +106,7 @@ export default function CandidateRegistration() {
           className={styles.form}
           form={form}
           onFinish={onFinish}
-          initialValues={{ hours: 20 }}
+          initialValues={initialValues}
         >
           <div
             className={`${styles.formStep} ${
@@ -121,7 +148,7 @@ export default function CandidateRegistration() {
               <div className={styles.formHFields}>
                 <Form.Item
                   className={styles.formField}
-                  name="birthdate"
+                  name="birthday"
                   rules={[{ required: true, message: "Заполните это поле" }]}
                 >
                   <Input label="Дата рождения" datepicker />
@@ -135,7 +162,7 @@ export default function CandidateRegistration() {
                 </Form.Item>
               </div>
               <Form.Item
-                name="town"
+                name="location"
                 rules={[{ required: true, message: "Заполните это поле" }]}
               >
                 <Input label="Место жительства" />
@@ -160,7 +187,7 @@ export default function CandidateRegistration() {
             <div className={styles.formStepBlock}>
               <p className={styles.formStepBlockTitle}>Образование</p>
               <Form.Item
-                name="university"
+                name={["education", "name"]}
                 rules={[
                   { required: activeStep >= 2, message: "Заполните это поле" },
                 ]}
@@ -168,7 +195,7 @@ export default function CandidateRegistration() {
                 <Input label="Название учебного заведения (ВУЗ или СУЗ)" />
               </Form.Item>
               <Form.Item
-                name="faculty"
+                name={["education", "specialty"]}
                 rules={[
                   { required: activeStep >= 2, message: "Заполните это поле" },
                 ]}
@@ -176,7 +203,7 @@ export default function CandidateRegistration() {
                 <Input label="Факультет" />
               </Form.Item>
               <Form.Item
-                name="year"
+                name={["education", "graduationYear"]}
                 rules={[
                   { required: activeStep >= 2, message: "Заполните это поле" },
                 ]}
@@ -188,7 +215,7 @@ export default function CandidateRegistration() {
               <p className={styles.formStepBlockTitle}>
                 Опыт работы и проектной деятельности
               </p>
-              <Form.Item name="workExp">
+              <Form.Item name="experience">
                 <Input
                   label="Опыт работы"
                   notRequired
@@ -196,7 +223,7 @@ export default function CandidateRegistration() {
                   postscript="Напишите, когда и где вы работали и какие задачи выполняли. Это повысит ваши шансы на стажировку"
                 />
               </Form.Item>
-              <Form.Item name="projects">
+              <Form.Item name="projectActivity">
                 <Input
                   label="Проектная деятельность"
                   textarea
@@ -214,7 +241,7 @@ export default function CandidateRegistration() {
           >
             <div className={styles.formStepBlock}>
               <Form.Item
-                name="hours"
+                name="workSchedule"
                 rules={[
                   {
                     required: activeStep >= 3,
@@ -225,16 +252,19 @@ export default function CandidateRegistration() {
                 <Radio
                   label="Сколько часов вы готовы уделять стажировке?"
                   items={[
-                    { value: 20, content: "20 часов в неделю (4 часа в день)" },
                     {
-                      value: 40,
+                      value: "half_week",
+                      content: "20 часов в неделю (4 часа в день)",
+                    },
+                    {
+                      value: "full_week",
                       content: "40 часов в неделю (8 часов в день)",
                     },
                   ]}
                 />
               </Form.Item>
               <Form.Item
-                name="direction"
+                name="internshipDirection"
                 rules={[
                   { required: activeStep >= 3, message: "Заполните это поле" },
                 ]}
