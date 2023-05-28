@@ -74,6 +74,8 @@ ingressPublic:
           pathType: ImplementationSpecific
         - path: /login
           pathType: ImplementationSpecific
+        - path: /register/final
+          pathType: ImplementationSpecific
         - path: /favicon.ico
           pathType: ImplementationSpecific
 
