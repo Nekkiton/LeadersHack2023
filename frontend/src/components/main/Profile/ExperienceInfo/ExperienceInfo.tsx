@@ -42,7 +42,7 @@ export default function Profile() {
         <div className={`${styles.fields}`}>
           <h3>Образование</h3>
           <Form.Item
-            name="education.university"
+            name={["education", "university"]}
             rules={[
               {
                 required: true,
@@ -53,7 +53,7 @@ export default function Profile() {
             <Input label="Название учебного заведения (ВУЗ или СУЗ)" />
           </Form.Item>
           <Form.Item
-            name="education.specialty"
+            name={["education", "specialty"]}
             rules={[
               {
                 required: true,
@@ -64,7 +64,7 @@ export default function Profile() {
             <Input label="Факультет" />
           </Form.Item>
           <Form.Item
-            name="education.graduationYear"
+            name={["education", "graduationYear"]}
             rules={[
               {
                 required: true,

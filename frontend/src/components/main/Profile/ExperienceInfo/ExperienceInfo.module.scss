@@ -26,40 +26,6 @@
   border-radius: 8px;
 }
 
-.userImgContainer {
-  align-self: flex-start;
-  position: relative;
-
-  &:not(.active) {
-    display: none;
-  }
-}
-
-.userImg {
-  width: 164px;
-  height: 164px;
-  object-fit: cover;
-  border-radius: 50%;
-}
-
-.userImgBtn {
-  padding: 8px;
-  position: absolute;
-  bottom: -20px;
-  left: calc(50% - 20px);
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background: $white;
-  box-shadow: 0px 0px 20px rgba(71, 91, 172, 0.25);
-  transition: $transition;
-
-  &:hover {
-    transform: scale(1.1);
-    cursor: pointer;
-  }
-}
-
 .main {
   display: flex;
   flex-direction: column;
@@ -67,13 +33,9 @@
 }
 
 .fields {
-  display: none;
+  display: flex;
   flex-direction: column;
   gap: 16px;
-
-  &.active {
-    display: flex;
-  }
 }
 
 .hFields {
@@ -96,17 +58,6 @@
   gap: 24px;
 }
 
-.mobileImgContainer {
-  display: none;
-  align-items: center;
-  gap: 16px;
-}
-
-.passwordBtn.mobile {
-  display: none;
-  font-size: 16px !important;
-}
-
 @include tablet {
   .container {
     gap: 16px;
@@ -114,14 +65,6 @@
 
   .header {
     gap: 16px;
-  }
-
-  .userImgContainer {
-    display: none;
-  }
-
-  .mobileImgContainer {
-    display: flex;
   }
 }
 
@@ -169,18 +112,5 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-  }
-
-  .passwordBtn {
-    display: none;
-
-    &.mobile {
-      display: block;
-    }
-  }
-
-  .userImg {
-    width: 128px;
-    height: 128px;
   }
 }
