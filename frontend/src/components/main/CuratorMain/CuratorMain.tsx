@@ -7,6 +7,9 @@ import EventIcon from "assets/icons/event.svg"
 import SearchBlockIcon from "assets/icons/search-block.svg"
 import PenIcon from "assets/icons/pen.svg"
 import styles from "./CuratorMain.module.scss"
+import { useQuery } from "@tanstack/react-query"
+import { fetchInternshipSchedule } from "data"
+import InternshipTerms from "./InternshipTerms"
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false })
 
@@ -79,6 +82,11 @@ export default function CuratorMain() {
   const [candidatesChart, setCandidatesChart] = useState("responsesCount")
   const [vacanciesChart, setVacanciesChart] = useState("status")
 
+  const { data } = useQuery({
+    queryKey: ["internshipSchedule"],
+    queryFn: fetchInternshipSchedule,
+  })
+
   // TODO: fetch data
   const candidatesData = {
     responsesCount: {
@@ -100,44 +108,6 @@ export default function CuratorMain() {
     },
   } as any
 
-  const timeline = [
-    {
-      title: "Прием заявок",
-      dates: "1 февраля - 21 апреля 2023",
-      status: "past",
-    },
-    {
-      title: "Обучение",
-      dates: "1 февраля - 21 апреля 2023",
-      status: "active",
-    },
-    {
-      title: "Тестирование",
-      dates: "1 февраля - 21 апреля 2023",
-      status: "soon",
-    },
-    {
-      title: "Тестирование1",
-      dates: "1 февраля - 21 апреля 2023",
-      status: "soon",
-    },
-    {
-      title: "Тестирование2",
-      dates: "1 февраля - 21 апреля 2023",
-      status: "soon",
-    },
-    {
-      title: "Тестирование3",
-      dates: "1 февраля - 21 апреля 2023",
-      status: "soon",
-    },
-    {
-      title: "Тестирование4",
-      dates: "1 февраля - 21 апреля 2023",
-      status: "soon",
-    },
-  ]
-
   return (
     <div className={styles.container}>
       <div className={styles.block}>
@@ -153,8 +123,11 @@ export default function CuratorMain() {
             </Link>
           )}
         </div>
-        {/* TODO: show if no timeline */}
-        {false ? (
+        {data ? (
+          <div className={`${styles.card} ${styles.timelineCard}`}>
+            <InternshipTerms stages={data} />
+          </div>
+        ) : (
           <div className={`${styles.card} ${styles.timelineNothing}`}>
             <div className={styles.timelineNothingMsg}>
               <EventIcon className={styles.timelineNothingIcon} />
@@ -163,23 +136,6 @@ export default function CuratorMain() {
             <Link href="/curator/internship">
               <Button>Задать сроки стажировки</Button>
             </Link>
-          </div>
-        ) : (
-          <div className={`${styles.card} ${styles.timelineCard}`}>
-            <div className={styles.timeline}>
-              {timeline.map((item) => (
-                <div
-                  className={`${styles.timelineItem} ${styles[item.status]}`}
-                  key={item.title + item.dates}
-                >
-                  <span className={styles.timelineItemDot} />
-                  <div>
-                    <p className={styles.timelineItemTitle}>{item.title}</p>
-                    <p className={styles.timelineItemDates}>{item.dates}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
           </div>
         )}
       </div>
