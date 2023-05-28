@@ -64,7 +64,7 @@ export default function PersonalInfo() {
           const { birthday, ...restValues } = values ?? {}
           updateProfile.mutate({
             ...restValues,
-            birthday: birthday?.toISOString(),
+            birthday: birthday?.format("YYYY-MM-DD"),
           })
         }}
         form={form}
