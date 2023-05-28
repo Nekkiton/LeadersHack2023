@@ -1,9 +1,18 @@
 import { Controller, Get, Post, Body, Param, Injectable, HttpCode, HttpStatus, ParseUUIDPipe } from '@nestjs/common';
 import { OrganizationsService } from './organizations.service';
-import { ApiBadRequestResponse, ApiCookieAuth, ApiCreatedResponse, ApiNotFoundResponse, ApiOkResponse, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBadRequestResponse,
+  ApiCookieAuth,
+  ApiCreatedResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+} from '@nestjs/swagger';
 import { Role } from 'src/auth/roles/role.enum';
 import { Roles } from 'src/auth/roles/roles.decorator';
 import { ResponseOrganizationDto } from './dto/response-organization.dto';
+import { CreateOrganizationDto } from './dto/create-organization.dto';
 
 @Controller('organizations')
 @Injectable()
@@ -18,7 +27,7 @@ export class OrganizationsController {
   @ApiCreatedResponse({ type: ResponseOrganizationDto })
   @ApiBadRequestResponse()
   @Roles(Role.CURATOR)
-  async create(@Body() dto: ResponseOrganizationDto): Promise<ResponseOrganizationDto> {
+  async create(@Body() dto: CreateOrganizationDto): Promise<ResponseOrganizationDto> {
     const organization = await this.organizationsService.create(dto);
     return ResponseOrganizationDto.fromEntity(organization);
   }

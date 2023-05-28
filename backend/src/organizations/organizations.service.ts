@@ -7,12 +7,16 @@ import { CUService } from 'src/utils/CUService';
 import { UpdateOrganizationDto } from './dto/update-organization.dto';
 
 @Injectable()
-export class OrganizationsService extends CUService<Organization, 'name', CreateOrganizationDto, UpdateOrganizationDto> {
+export class OrganizationsService extends CUService<
+  Organization,
+  'name',
+  CreateOrganizationDto,
+  UpdateOrganizationDto
+> {
   constructor(
     @InjectRepository(Organization)
     repository: Repository<Organization>,
   ) {
     super(Organization, repository, { entityName: 'Organization', identityKeys: ['name'] });
-
   }
 }
