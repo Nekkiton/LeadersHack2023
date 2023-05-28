@@ -44,7 +44,7 @@ export default function TheHeader() {
         </Link>
         <div className={styles.user}>
           <DesktopNotifications notificationsCount={notificationsCount} />
-          {!data ? (
+          {!data?.role ? (
             <Link href="/login">
               <Button>
                 <span> Войти</span>
@@ -96,7 +96,7 @@ export default function TheHeader() {
             </BurgerMenu>
           )}
         </div>
-        {!data ? (
+        {!data?.role ? (
           <Link className={styles.mobileBtn} href="/login">
             <Button>
               <LoginIcon className="icon" />
