@@ -27,7 +27,7 @@ export class UsersController {
   async getUserProfile(@Req() req): Promise<ResponseUserProfileDto> {
     const payload: UserPayload = req.user;
     const user = await this.usersService.findOne({ email: payload.email });
-    const profile = await this.userProfilesService.findOne(user);
+    const profile = await this.userProfilesService.findOne({ user });
     if (!profile) {
       throw new NotFoundException('User profile have not created yet. Completed sign-up');
     }
@@ -41,7 +41,7 @@ export class UsersController {
   async getUserProfileShort(@Req() req): Promise<ResponseUserProfileShortDto> {
     const payload: UserPayload = req.user;
     const user = await this.usersService.findOne({ email: payload.email });
-    const profile = await this.userProfilesService.findOne(user);
+    const profile = await this.userProfilesService.findOne({ user });
     if (!profile) {
       throw new NotFoundException('User profile have not created yet. Completed sign-up');
     }
@@ -59,7 +59,7 @@ export class UsersController {
   async patchUserProfile(@Body() dto: UpdateUserProfileDto, @Req() req): Promise<ResponseUserProfileDto> {
     const payload: UserPayload = req.user;
     const user = await this.usersService.findOne({ email: payload.email });
-    const profile = await this.userProfilesService.update(user, dto);
+    const profile = await this.userProfilesService.update({ user }, dto);
     return ResponseUserProfileDto.fromEntity(profile);
   }
 }

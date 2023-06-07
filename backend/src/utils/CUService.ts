@@ -1,7 +1,6 @@
 import { BadRequestException, NotFoundException } from '@nestjs/common';
 import { FindOptionsRelations, Repository, FindOptionsWhere, DeepPartial } from 'typeorm';
 import { TransactionOptions, TransactionService } from './TransactionService';
-import { pick } from 'lodash';
 
 export type CUServiceOptions<T, IdentityKey> = {
   identityKeys: IdentityKey[];
@@ -23,27 +22,34 @@ export class CUService<
     super(cls, repository);
   }
 
-  async create(dto: CreateDTO, transaction?: TransactionOptions): Promise<Entity> {
+  async create(
+    identity: { [k in IdentityKey]: unknown },
+    dto: CreateDTO,
+    transaction?: TransactionOptions,
+  ): Promise<Entity> {
     const repository = this.getRepository(transaction);
-    const where = pick(dto, this.options.identityKeys) as FindOptionsWhere<Entity>;
+    const where = identity as FindOptionsWhere<Entity>;
     const alreadyExists = await repository.exist({ where });
     if (alreadyExists) {
       throw new BadRequestException(`${this.options.entityName} already exists`);
     }
-    const entity = repository.create(dto);
+    const entity = repository.create({
+      ...identity,
+      ...dto,
+    });
     const created = await repository.save(entity);
     return created;
   }
 
   async update(
-    condition: { [k in IdentityKey]: unknown },
+    identity: { [k in IdentityKey]: unknown },
     dto: UpdateDTO,
     transaction?: TransactionOptions,
   ): Promise<Entity> {
     const repository = this.getRepository(transaction);
-    const current = await this.findOne(condition, transaction);
+    const current = await this.findOne(identity, transaction);
     if (!current) {
-      const properties = Object.entries(condition)
+      const properties = Object.entries(identity)
         .map(([value, key]) => `${key}="${value}"`)
         .join(', ');
       throw new NotFoundException(`${this.options.entityName} with ${properties} not found`);
@@ -54,6 +60,18 @@ export class CUService<
     });
     const updated = await repository.save(entity);
     return updated;
+  }
+
+  async upsert(
+    identity: { [k in IdentityKey]: unknown },
+    dto: CreateDTO | UpdateDTO,
+    transaction?: TransactionOptions,
+  ): Promise<Entity> {
+    const exists = await this.checkExists(identity, transaction);
+    if (exists) {
+      return this.update(identity, dto as UpdateDTO, transaction);
+    }
+    return this.create(identity, dto as CreateDTO, transaction);
   }
 
   async findOne(condition: { [k in IdentityKey]: unknown }, transaction?: TransactionOptions): Promise<Entity> {

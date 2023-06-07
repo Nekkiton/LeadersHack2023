@@ -57,8 +57,8 @@ export default function InternshipManagement() {
         applicationEnd: dayjs(data.applicationEnd),
         trainingStart: dayjs(data.trainingStart),
         trainingEnd: dayjs(data.trainingEnd),
-        examStart: dayjs(data.examStart),
-        examEnd: dayjs(data.examEnd),
+        examinationStart: dayjs(data.examinationStart),
+        examinationEnd: dayjs(data.examinationEnd),
         championshipStart: dayjs(data.championshipStart),
         championshipEnd: dayjs(data.championshipEnd),
         distributionStart: dayjs(data.distributionStart),
@@ -139,21 +139,21 @@ export default function InternshipManagement() {
             <div className={styles.formHFields}>
               <Form.Item
                 className={styles.formField}
-                name="examStart"
+                name="examinationStart"
                 rules={[{ required: true, message: "Заполните это поле" }]}
               >
                 <Input label="Дата начала тестирования" datepicker />
               </Form.Item>
               <Form.Item
                 className={styles.formField}
-                name="examEnd"
+                name="examinationEnd"
                 rules={[{ required: true, message: "Заполните это поле" }]}
               >
                 <Input label="Дата окончания тестирования" datepicker />
               </Form.Item>
             </div>
             <Form.Item
-              name="examLink"
+              name="examinationLink"
               rules={[{ required: true, message: "Заполните это поле" }]}
             >
               <Input label="Ссылка на тестирование" />

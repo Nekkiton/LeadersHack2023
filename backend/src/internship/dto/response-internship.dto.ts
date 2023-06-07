@@ -23,13 +23,13 @@ export class ResponseInternshipDto {
   trainingLink: string;
 
   @ApiProperty({ format: 'date' })
-  examStart: string;
+  examinationStart: string;
 
   @ApiProperty({ format: 'date' })
-  examEnd: string;
+  examinationEnd: string;
 
   @ApiProperty({ maxLength: 2048 })
-  examLink;
+  examinationLink;
 
   @ApiProperty({ format: 'date' })
   championshipStart: string;
@@ -73,9 +73,9 @@ export class ResponseInternshipDto {
       trainingStart: entity.trainingStart,
       trainingEnd: entity.trainingEnd,
       trainingLink: entity.trainingLink,
-      examStart: entity.examStart,
-      examEnd: entity.examEnd,
-      examLink: entity.examLink,
+      examinationStart: entity.examinationStart,
+      examinationEnd: entity.examinationEnd,
+      examinationLink: entity.examinationLink,
       championshipStart: entity.championshipStart,
       championshipEnd: entity.championshipEnd,
       championshipLink: entity.championshipLink,

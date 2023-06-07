@@ -9,13 +9,13 @@ import { ReferralsModule } from './referrals/referrals.module';
 import { UserProfilesModule } from './user-profiles/user-profiles.module';
 import { RolesGuard } from './auth/roles/roles.guard';
 import { AuthGuard } from './auth/auth.guard';
-import { ProfileModule } from './profile/profile.module';
 import { CandidatesModule } from './candidates/candidates.module';
 import { CandidateInfoModule } from './candidate-info/candidate-info.module';
 import { InternshipModule } from './internship/internship.module';
 import { IsAfterDateConstraint } from './validation/isAfterDate.validator';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { EmployeeModule } from './employee/employee.module';
+import { ApplicationModule } from './application/application.module';
 
 @Module({
   imports: [
@@ -40,12 +40,12 @@ import { EmployeeModule } from './employee/employee.module';
     }),
     ReferralsModule,
     UserProfilesModule,
-    ProfileModule,
     CandidatesModule,
     CandidateInfoModule,
     InternshipModule,
     OrganizationsModule,
     EmployeeModule,
+    ApplicationModule,
   ],
   controllers: [InternalController],
   providers: [

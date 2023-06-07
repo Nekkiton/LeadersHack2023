@@ -11,7 +11,10 @@
             "cwd": "${workspaceFolder}/backend",
             "runtimeExecutable": "yarn",
             "args": ["start:debug"],
-            "console": "integratedTerminal"
+            "console": "integratedTerminal",
+            "env": {
+                "NODE_ENV": "development"
+            }
         }
     ]
 }

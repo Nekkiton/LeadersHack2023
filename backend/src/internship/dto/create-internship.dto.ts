@@ -43,23 +43,23 @@ export class CreateInternshipDto {
   @ApiProperty({ format: 'date' })
   @Transform(DateTransformer)
   @IsAfterDate<CreateInternshipDto>('trainingEnd')
-  examStart: string;
+  examinationStart: string;
 
   @IsDateString()
   @ApiProperty({ format: 'date' })
   @Transform(DateTransformer)
-  @IsAfterDate<CreateInternshipDto>('examStart')
-  examEnd: string;
+  @IsAfterDate<CreateInternshipDto>('examinationStart')
+  examinationEnd: string;
 
   @IsUrl()
   @MaxLength(2048)
   @ApiProperty({ maxLength: 2048 })
-  examLink: string;
+  examinationLink: string;
 
   @IsDateString()
   @ApiProperty({ format: 'date' })
   @Transform(DateTransformer)
-  @IsAfterDate<CreateInternshipDto>('examEnd')
+  @IsAfterDate<CreateInternshipDto>('examinationEnd')
   championshipStart: string;
 
   @IsDateString()

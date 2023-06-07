@@ -1,5 +1,19 @@
 DELIMITER '//';
 
+DO $$ BEGIN
+    DROP TABLE IF EXISTS "application";
+
+IF EXISTS (
+    SELECT
+        1
+    FROM
+        pg_type
+    WHERE
+        typname = 'application_status'
+) THEN DROP TYPE APPLICATION_STATUS;
+
+END IF;
+
 DROP TABLE IF EXISTS "employee";
 
 DROP TABLE IF EXISTS "organization";
@@ -8,15 +22,14 @@ DROP TABLE IF EXISTS "internship";
 
 DROP TABLE IF EXISTS "candidate_info";
 
-DO $$ BEGIN
-    IF EXISTS (
-        SELECT
-            1
-        FROM
-            pg_type
-        WHERE
-            typname = 'internship_direction'
-    ) THEN DROP TYPE INTERNSHIP_DIRECTION;
+IF EXISTS (
+    SELECT
+        1
+    FROM
+        pg_type
+    WHERE
+        typname = 'internship_direction'
+) THEN DROP TYPE INTERNSHIP_DIRECTION;
 
 END IF;
 

@@ -25,13 +25,13 @@ export class Internship {
   trainingLink: string;
 
   @Column({ type: 'date' })
-  examStart: string;
+  examinationStart: string;
 
   @Column({ type: 'date' })
-  examEnd: string;
+  examinationEnd: string;
 
   @Column({ length: 2048 })
-  examLink: string;
+  examinationLink: string;
 
   @Column({ type: 'date' })
   championshipStart: string;

@@ -6,9 +6,9 @@ export interface Internship {
   trainingStart: string
   trainingEnd: string
   trainingLink: string
-  examStart: string
-  examEnd: string
-  examLink: string
+  examinationStart: string
+  examinationEnd: string
+  examinationLink: string
   championshipStart: string
   championshipEnd: string
   championshipLink: string

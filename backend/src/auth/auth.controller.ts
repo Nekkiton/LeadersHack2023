@@ -67,8 +67,12 @@ export class AuthController {
      */
     const ttlSeconds = parseInt(this.configService.get('jwt.expiresIn'), 10);
     res.cookie('access_token', token, {
-      secure: true,
-      sameSite: 'none', // TODO disable in prod
+      ...(process.env.NODE_ENV === 'development'
+        ? {}
+        : {
+            secure: true,
+            sameSite: 'none', // TODO change after POC development
+          }),
       expires: new Date(Date.now() + ttlSeconds * 1000),
     });
   }
@@ -93,7 +97,7 @@ export class AuthController {
     if (user.role === Role.NOBODY) {
       throw new UnauthorizedException();
     }
-    const profile = await this.userProfileService.findOne(user);
+    const profile = await this.userProfileService.findOne({ user });
     if (!profile) {
       // User should complete sign-up first
       throw new UnauthorizedException();
@@ -156,7 +160,7 @@ export class AuthController {
       if (!referral) {
         throw new ForbiddenException();
       }
-      userProfile = await this.userProfileService.create(referral.user, dto, { entityManager });
+      userProfile = await this.userProfileService.create({ user: referral.user }, dto, { entityManager });
       user = userProfile.user;
       if (user.role === Role.NOBODY) {
         user = await this.userService.promoteToCandidate(userProfile.user, { entityManager });

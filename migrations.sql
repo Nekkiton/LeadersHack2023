@@ -1,22 +1,24 @@
 DELIMITER '//';
 
 DO $$ BEGIN
-    IF NOT EXISTS (
-        SELECT
-            1
-        FROM
-            pg_type
-        WHERE
-            typname = 'user_role'
-    ) THEN CREATE TYPE USER_ROLE AS ENUM (
-        'admin',
-        'nobody',
-        'candidate',
-        'intern',
-        'mentor',
-        'curator',
-        'staff'
-    );
+    CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+IF NOT EXISTS (
+    SELECT
+        1
+    FROM
+        pg_type
+    WHERE
+        typname = 'user_role'
+) THEN CREATE TYPE USER_ROLE AS ENUM (
+    'admin',
+    'nobody',
+    'candidate',
+    'intern',
+    'mentor',
+    'curator',
+    'staff'
+);
 
 END IF;
 
@@ -239,9 +241,9 @@ CREATE TABLE IF NOT EXISTS "internship" (
     "trainingStart" VARCHAR(63) NOT NULL,
     "trainingEnd" VARCHAR(63) NOT NULL,
     "trainingLink" VARCHAR(2048) NOT NULL,
-    "examStart" VARCHAR(63) NOT NULL,
-    "examEnd" VARCHAR(63) NOT NULL,
-    "examLink" VARCHAR(2048) NOT NULL,
+    "examinationStart" VARCHAR(63) NOT NULL,
+    "examinationEnd" VARCHAR(63) NOT NULL,
+    "examinationLink" VARCHAR(2048) NOT NULL,
     "championshipStart" VARCHAR(63) NOT NULL,
     "championshipEnd" VARCHAR(63) NOT NULL,
     "championshipLink" VARCHAR(2048) NOT NULL,
@@ -282,9 +284,9 @@ VALUES
     ) ON CONFLICT DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS "employee" (
-	"id" UUID NOT NULL DEFAULT uuid_generate_v4(),
-	"organizationId" UUID NOT NULL,
-	"userId" UUID NOT NULL,
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4(),
+    "organizationId" UUID NOT NULL,
+    "userId" UUID NOT NULL,
     FOREIGN KEY("organizationId") REFERENCES "organization"("id"),
     FOREIGN KEY("userId") REFERENCES "user"("id"),
     UNIQUE ("organizationId", "userId")
@@ -307,5 +309,34 @@ VALUES
         '00000000-0000-0000-0000-000000000001',
         '00000000-0000-0000-0000-000000000005'
     ) ON CONFLICT DO NOTHING;
+
+IF NOT EXISTS (
+    SELECT
+        1
+    FROM
+        pg_type
+    WHERE
+        typname = 'application_status'
+) THEN CREATE TYPE APPLICATION_STATUS AS ENUM (
+    'moderation',
+    'training',
+    'examination',
+    'championship',
+    'completed'
+);
+
+END IF;
+
+CREATE TABLE IF NOT EXISTS "application" (
+    "id" UUID NOT NULL DEFAULT uuid_generate_v4() PRIMARY KEY,
+    "userId" UUID NOT NULL,
+    "internshipId" UUID NOT NULL,
+    "status" APPLICATION_STATUS NOT NULL,
+    "score" JSONB,
+    "data" JSONB,
+    FOREIGN KEY("userId") REFERENCES "user"("id"),
+    FOREIGN KEY("internshipId") REFERENCES "internship"("id"),
+    UNIQUE ("userId", "internshipId")
+);
 
 END $$

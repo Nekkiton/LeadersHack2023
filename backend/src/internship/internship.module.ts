@@ -8,5 +8,6 @@ import { Internship } from './entities/internship.entity.ts';
   imports: [TypeOrmModule.forFeature([Internship])],
   controllers: [InternshipController],
   providers: [InternshipService],
+  exports: [InternshipService],
 })
 export class InternshipModule {}

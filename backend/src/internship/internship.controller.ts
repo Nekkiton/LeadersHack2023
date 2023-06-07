@@ -50,8 +50,7 @@ export class InternshipController {
   @ApiNotFoundResponse()
   @Roles(Role.CURATOR, Role.STAFF, Role.MENTOR, Role.INTERN, Role.CANDIDATE)
   async getCurrentInternship(): Promise<ResponseInternshipDto> {
-    const year = dayjs().year().toString();
-    const internship = await this.internshipService.findOne({ year });
+    const internship = await this.internshipService.findCurrent();
     return ResponseInternshipDto.fromEntity(internship);
   }
 
@@ -75,7 +74,7 @@ export class InternshipController {
   @ApiBadRequestResponse()
   @Roles(Role.CURATOR)
   async createInternship(@Body() dto: CreateInternshipDto): Promise<ResponseInternshipDto> {
-    const internship = await this.internshipService.create(dto);
+    const internship = await this.internshipService.create({ year: dto.year }, dto);
     return ResponseInternshipDto.fromEntity(internship);
   }
 
@@ -86,8 +85,7 @@ export class InternshipController {
   @ApiBadRequestResponse()
   @Roles(Role.CURATOR)
   async updateInternship(@Body() dto: UpdateInternshipDto): Promise<ResponseInternshipDto> {
-    const year = dayjs().year().toString();
-    const internship = await this.internshipService.update({ year }, dto);
+    const internship = await this.internshipService.updateCurrent(dto);
     return ResponseInternshipDto.fromEntity(internship);
   }
 }

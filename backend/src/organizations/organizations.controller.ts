@@ -54,7 +54,7 @@ export class OrganizationsController {
   @ApiBadRequestResponse()
   @Roles(Role.CURATOR)
   async create(@Body() dto: CreateOrganizationDto): Promise<ResponseOrganizationDto> {
-    const organization = await this.organizationsService.create(dto);
+    const organization = await this.organizationsService.create({ name: dto.name }, dto);
     return ResponseOrganizationDto.fromEntity(organization);
   }
 
@@ -92,7 +92,7 @@ export class OrganizationsController {
       const organization = await this.organizationsService.findOneById(organizationId, { entityManager });
       const { user, password } = await this.userService.register(dto, Role.MENTOR, { entityManager });
       const referral = await this.referralService.createReferral(user, { entityManager });
-      await this.employeeService.create({ user, organization }, { entityManager });
+      await this.employeeService.create({ user, organization }, { user, organization }, { entityManager });
       // TODO send email instead
       this.logger.log(
         `Invited "${dto.email}" referral=${referral.referralId}` + (dto.password ? '' : ` password=${password}`),
@@ -114,7 +114,7 @@ export class OrganizationsController {
       const organization = await this.organizationsService.findOneById(organizationId, { entityManager });
       const { user, password } = await this.userService.register(dto, Role.STAFF, { entityManager });
       const referral = await this.referralService.createReferral(user, { entityManager });
-      await this.employeeService.create({ user, organization }, { entityManager });
+      await this.employeeService.create({ user, organization }, { user, organization }, { entityManager });
       // TODO send email instead
       this.logger.log(
         `Invited "${dto.email}" referral=${referral.referralId}` + (dto.password ? '' : ` password=${password}`),

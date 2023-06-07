@@ -66,8 +66,8 @@ export default function InternshipTerms({ internship }: InternshipTermsProps) {
       end: internship.trainingEnd,
     },
     [InternshipStage.testing]: {
-      start: internship.examStart,
-      end: internship.examEnd,
+      start: internship.examinationStart,
+      end: internship.examinationEnd,
     },
     [InternshipStage.hackathon]: {
       start: internship.championshipStart,

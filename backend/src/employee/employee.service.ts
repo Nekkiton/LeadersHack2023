@@ -17,6 +17,10 @@ export class EmployeeService extends CUService<
     @InjectRepository(Employee)
     repository: Repository<Employee>,
   ) {
-    super(Employee, repository, { entityName: 'Employee', identityKeys: ['user', 'organization'] });
+    super(Employee, repository, {
+      entityName: 'Employee',
+      identityKeys: ['user', 'organization'],
+      relations: { user: true, organization: true },
+    });
   }
 }

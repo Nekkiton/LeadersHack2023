@@ -43,6 +43,9 @@ export class UsersService extends CUService<User, 'email', CreateUserDto, Update
     const user = await this.create(
       {
         email: dto.email,
+      },
+      {
+        email: dto.email,
         role,
         passwordHash,
       },
