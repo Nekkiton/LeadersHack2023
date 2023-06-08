@@ -3,8 +3,19 @@ import Button from "components/base/controls/Button"
 import NoDocumentIcon from "assets/icons/no-document.svg"
 import LinkExternalIcon from "assets/icons/link-external.svg"
 import styles from "./InternshipApp.module.scss"
+import { Spin } from "antd"
+import { useQuery } from "@tanstack/react-query"
+import { fetchInternshipApplication } from "data"
 
 export default function InternshipApp() {
+  const { data, isLoading } = useQuery({
+    queryKey: ["internshipApplication"],
+    queryFn: () => fetchInternshipApplication(),
+  })
+
+  if (isLoading) return <Spin />
+  console.log("👾 ~ InternshipApp ~ data:", data)
+
   // TODO: add modal
   const isReceptionOpen = true
   const status: string = "moderating" // waitStuding, studying, waitTesting, testing, waitCompetition, competition, rejected, accepted
@@ -15,27 +26,30 @@ export default function InternshipApp() {
     },
     {
       title: "На модерации",
-      status: "past",
+      status: "moderation",
     },
     {
       title: "Обучение",
-      status: "active",
+      status: "training",
     },
     {
       title: "Тестирование",
-      status: "future",
+      status: "examination",
     },
     {
       title: "Кейс-чемпионат",
-      status: "future",
+      status: "championship",
+    },
+    {
+      title: "Заявка одобрена",
+      status: "completed",
     },
   ]
 
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Заявка на стажировку 2023 — 2024</h1>
-      {/* TODO: if no application */}
-      {false ? (
+      {!data ? (
         <div className={styles.nothing}>
           <NoDocumentIcon className={styles.nothingIcon} />
           <div className={styles.nothingText}>
