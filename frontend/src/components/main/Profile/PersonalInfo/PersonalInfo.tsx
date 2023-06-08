@@ -90,7 +90,7 @@ export default function PersonalInfo() {
                 className={styles.userImg}
                 src={avatarUrl || data?.photo || userImg}
               />
-              <Form.Item name="avatar">
+              <Form.Item name="photo">
                 <ImageUpload setImgUrl={setAvatarUrl}>
                   <Button type="text">
                     <UploadIcon className="icon" />

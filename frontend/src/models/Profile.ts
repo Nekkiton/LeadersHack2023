@@ -20,3 +20,14 @@ export interface ProfileShort {
   role: Role
   rating: number
 }
+
+export interface UserProfile {
+  name: string
+  surname: string
+  patronymic: string
+  birthday: string
+  citizenship: string
+  location: string
+  phone: string
+  photo: string
+}
