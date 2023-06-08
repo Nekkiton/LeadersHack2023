@@ -52,7 +52,11 @@ export default function CandidateRegistration() {
     }
   )
 
-  const createApp = useMutation(createInternshipApplication)
+  const createApp = useMutation(createInternshipApplication, {
+    onSuccess: () => {
+      setIsFinished(true)
+    },
+  })
 
   if (isPersonalDataLoading || isExperienceDataLoading) return <Spin />
 
@@ -122,7 +126,6 @@ export default function CandidateRegistration() {
                 internshipDirection: values.internshipDirection,
               },
             })
-            setIsFinished(true)
           }}
           initialValues={initialValues}
         >
