@@ -12,8 +12,12 @@ import UploadIcon from "assets/icons/upload.svg"
 import MailSentIcon from "assets/icons/mail-sent.svg"
 import ExclamationIcon from "assets/icons/exclamation.svg"
 import styles from "./CandidateRegistration.module.scss"
-import { useQuery } from "@tanstack/react-query"
-import { fetchCandidateExperienceInfo, fetchProfileInfo } from "data"
+import { useMutation, useQuery } from "@tanstack/react-query"
+import {
+  createInternshipApplication,
+  fetchCandidateExperienceInfo,
+  fetchProfileInfo,
+} from "data"
 import dayjs from "dayjs"
 
 const userImg = "/images/user.svg"
@@ -48,22 +52,14 @@ export default function CandidateRegistration() {
     }
   )
 
+  const createApp = useMutation(createInternshipApplication)
+
   if (isPersonalDataLoading || isExperienceDataLoading) return <Spin />
 
   const initialValues = {
     ...personalData,
     ...experienceData,
     birthday: dayjs(personalData?.birthday),
-  }
-
-  // TODO: save data, handle errors
-  const onFinish = (values: any) => {
-    const { birthday, ...restValues } = values ?? {}
-    console.log("values", {
-      ...restValues,
-      birthday: birthday?.format("YYYY-MM-DD"),
-    })
-    setIsFinished(true)
   }
 
   if (isFinished)
@@ -105,7 +101,29 @@ export default function CandidateRegistration() {
         <Form
           className={styles.form}
           form={form}
-          onFinish={onFinish}
+          onFinish={(values) => {
+            createApp.mutate({
+              userProfile: {
+                name: values.name,
+                surname: values.surname,
+                patronymic: values.patronymic,
+                birthday: values.birthday.format("YYYY-MM-DD"),
+                citizenship: values.citizenship,
+                location: values.location,
+                phone: values.phone,
+                photo: values.avatar,
+              },
+              candidateProfile: {
+                workSchedule: values.workSchedule,
+                experience: values.experience,
+                projectActivity: values.projectActivity,
+                about: values.about,
+                education: values.education,
+                internshipDirection: values.internshipDirection,
+              },
+            })
+            setIsFinished(true)
+          }}
           initialValues={initialValues}
         >
           <div
@@ -117,7 +135,7 @@ export default function CandidateRegistration() {
               <p className={styles.formStepBlockTitle}>Основная информация</p>
               <div className={styles.formImgContainer}>
                 <img className={styles.formImg} src={avatarUrl || userImg} />
-                <Form.Item name="avatar">
+                <Form.Item name="photo">
                   <ImageUpload setImgUrl={setAvatarUrl}>
                     <Button type="text">
                       <UploadIcon className="icon" />
