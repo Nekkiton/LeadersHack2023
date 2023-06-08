@@ -9,7 +9,6 @@ interface ApplicationInput {
 }
 
 export const createInternshipApplication = async (data: ApplicationInput) => {
-  console.log("Create internship application:", data)
   return axios
     .post(
       `${process.env.NEXT_PUBLIC_API_ENDPOINT}/candidates/me/application`,
