@@ -223,32 +223,32 @@ export default function InternshipApp() {
                 <div className={styles.scoreDetailsItem}>
                   <span>График работы</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.workSchedule}</span>
+                  <span>{score?.workSchedule ?? 0}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>Опыт работы</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.experience}</span>
+                  <span>{score?.experience ?? 0}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>Проектная деятельность</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.projectActivity}</span>
+                  <span>{score?.projectActivity ?? 0}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>О себе</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.about}</span>
+                  <span>{score?.about ?? 0}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>Тестирование</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.training}</span>
+                  <span>{score?.training ?? 0}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>Кейс-чемпионат</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.championship}</span>
+                  <span>{score?.championship ?? 0}</span>
                 </div>
               </div>
             </div>
