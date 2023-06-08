@@ -7,6 +7,33 @@ import { Spin } from "antd"
 import { useQuery } from "@tanstack/react-query"
 import { fetchInternshipApplication } from "data"
 
+const timeline = [
+  {
+    title: "Заявка принята",
+    status: "past",
+  },
+  {
+    title: "На модерации",
+    status: "moderation",
+  },
+  {
+    title: "Обучение",
+    status: "training",
+  },
+  {
+    title: "Тестирование",
+    status: "examination",
+  },
+  {
+    title: "Кейс-чемпионат",
+    status: "championship",
+  },
+  {
+    title: "Заявка одобрена",
+    status: "completed",
+  },
+]
+
 export default function InternshipApp() {
   const { data, isLoading } = useQuery({
     queryKey: ["internshipApplication"],
@@ -14,37 +41,12 @@ export default function InternshipApp() {
   })
 
   if (isLoading) return <Spin />
-  console.log("👾 ~ InternshipApp ~ data:", data)
 
   // TODO: add modal
   const isReceptionOpen = true
-  const status: string = "moderating" // waitStuding, studying, waitTesting, testing, waitCompetition, competition, rejected, accepted
-  const timeline = [
-    {
-      title: "Заявка принята",
-      status: "past",
-    },
-    {
-      title: "На модерации",
-      status: "moderation",
-    },
-    {
-      title: "Обучение",
-      status: "training",
-    },
-    {
-      title: "Тестирование",
-      status: "examination",
-    },
-    {
-      title: "Кейс-чемпионат",
-      status: "championship",
-    },
-    {
-      title: "Заявка одобрена",
-      status: "completed",
-    },
-  ]
+  const status: string = data?.status ?? ""
+  const score = data?.score
+  const rejection = data?.data
 
   return (
     <div className={styles.container}>
@@ -86,32 +88,30 @@ export default function InternshipApp() {
               </div>
             ))}
           </div>
-          {/* TODO: different comments for different reasons */}
-          {status === "rejected" && (
+          {rejection?.rejectedOn && (
             <div className={`${styles.card} ${styles.comment}`}>
               <p className={styles.cardTitle}>Причина отклонения</p>
-              <p>
-                К сожалению, на кейс-чемпионате ты не смог показать достаточный
-                уровень знаний
-              </p>
+              <p>{rejection.rejectionReason}</p>
             </div>
           )}
           <div className={styles.cards}>
             <div className={`${styles.card} ${styles.hint}`}>
               <p className={styles.cardTitle}>Что дальше</p>
-              {status === "moderating" && (
+              {status === "moderation" && (
                 <>
                   <p>
                     Сейчас заявку смотрят кураторы. Они оценят твой опыт работы
                     и проектной деятельности и начислят баллы. Чем больше баллов
                     ты наберешь, тем выше шанс попасть на стажировку.
                   </p>
+                  {/* TODO: need to get dates  */}
                   <p>
                     Дождись начала обучения. Оно пройдет 24 — 28 апреля. Ссылка
                     на обучение появится здесь
                   </p>
                 </>
               )}
+              {/* TODO: no such status */}
               {status === "waitStudying" && (
                 <>
                   <p>
@@ -124,7 +124,7 @@ export default function InternshipApp() {
                   </p>
                 </>
               )}
-              {status === "studying" && (
+              {status === "training" && (
                 <div className={styles.hintWithBtn}>
                   <p>
                     До 28 апреля идет обучение. Советуем посещать занятия
@@ -145,7 +145,7 @@ export default function InternshipApp() {
                   400 человек для прохождения дальнейших этапов
                 </p>
               )}
-              {status === "testing" && (
+              {status === "examination" && (
                 <div className={styles.hintWithBtn}>
                   <p>
                     Пройди тестирование до 19 мая, чтобы пройти в следующий этап
@@ -158,13 +158,14 @@ export default function InternshipApp() {
                   </Button>
                 </div>
               )}
+              {/* TODO: no such status */}
               {status === "waitCompetition" && (
                 <p>
                   Поздравляем, тестирование пройдено! 20 мая мы объявим
                   результаты и узнаем, кто пройдет на следующий эта отбора
                 </p>
               )}
-              {status === "competition" && (
+              {status === "championship" && (
                 <div className={styles.hintWithBtn}>
                   <p>
                     Финальный этап отбора пройдет 29 мая — 2 июня. Вы
@@ -184,7 +185,7 @@ export default function InternshipApp() {
                   </Button>
                 </div>
               )}
-              {status === "rejected" && (
+              {rejection?.rejectedOn && (
                 <div className={styles.hintWithBtn}>
                   <p>
                     Попробуй подать заявку на стажировку в следующем году. А
@@ -195,7 +196,7 @@ export default function InternshipApp() {
                   <Button type="secondary">Узнать о старте</Button>
                 </div>
               )}
-              {status === "accepted" && (
+              {status === "completed" && (
                 <div className={styles.hintWithBtn}>
                   <p>
                     Поздравляем, отбор пройден! Ты в числе лучших 125 человек,
@@ -222,32 +223,32 @@ export default function InternshipApp() {
                 <div className={styles.scoreDetailsItem}>
                   <span>График работы</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>5</span>
+                  <span>{score?.workSchedule}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>Опыт работы</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>5</span>
+                  <span>{score?.experience}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>Проектная деятельность</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>5</span>
+                  <span>{score?.projectActivity}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>О себе</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>5</span>
+                  <span>{score?.about}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>Тестирование</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>5</span>
+                  <span>{score?.training}</span>
                 </div>
                 <div className={styles.scoreDetailsItem}>
                   <span>Кейс-чемпионат</span>
                   <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>5</span>
+                  <span>{score?.championship}</span>
                 </div>
               </div>
             </div>
