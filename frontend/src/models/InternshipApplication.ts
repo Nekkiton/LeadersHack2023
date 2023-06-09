@@ -10,12 +10,12 @@ export interface InternshipApplication {
   email: string
   status: ApplicationStatus
   score: {
-    workSchedule: number
-    experience: number
-    projectActivity: number
-    about: number
-    training: number
-    championship: number
+    workSchedule: number | null
+    experience: number | null
+    projectActivity: number | null
+    about: number | null
+    training: number | null
+    championship: number | null
   }
   data: {
     rejectedOn: ApplicationStatus

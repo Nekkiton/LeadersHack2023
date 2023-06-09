@@ -48,6 +48,11 @@ export default function InternshipApp() {
   const score = data?.score
   const rejection = data?.data
 
+  const totalScore = Object.values(score ?? {}).reduce(
+    (previousValue, currentValue) => (previousValue ?? 0) + (currentValue ?? 0),
+    0
+  )
+
   return (
     <div className={styles.container}>
       <h1 className={styles.title}>Заявка на стажировку 2023 — 2024</h1>
@@ -216,7 +221,7 @@ export default function InternshipApp() {
             <div className={`${styles.card} ${styles.score}`}>
               <div className={styles.scoreHeader}>
                 <p className={styles.cardTitle}>Набрано баллов:</p>
-                <h4>5</h4>
+                <h4>{totalScore}</h4>
               </div>
 
               <div className={styles.scoreDetails}>
