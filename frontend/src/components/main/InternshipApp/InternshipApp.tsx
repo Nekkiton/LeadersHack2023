@@ -218,38 +218,55 @@ export default function InternshipApp() {
                 <p className={styles.cardTitle}>Набрано баллов:</p>
                 <h4>5</h4>
               </div>
-              {/* TODO: manage visiblibty */}
+
               <div className={styles.scoreDetails}>
-                <div className={styles.scoreDetailsItem}>
-                  <span>График работы</span>
-                  <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.workSchedule ?? 0}</span>
-                </div>
-                <div className={styles.scoreDetailsItem}>
-                  <span>Опыт работы</span>
-                  <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.experience ?? 0}</span>
-                </div>
-                <div className={styles.scoreDetailsItem}>
-                  <span>Проектная деятельность</span>
-                  <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.projectActivity ?? 0}</span>
-                </div>
-                <div className={styles.scoreDetailsItem}>
-                  <span>О себе</span>
-                  <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.about ?? 0}</span>
-                </div>
-                <div className={styles.scoreDetailsItem}>
-                  <span>Тестирование</span>
-                  <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.training ?? 0}</span>
-                </div>
-                <div className={styles.scoreDetailsItem}>
-                  <span>Кейс-чемпионат</span>
-                  <span className={styles.scoreDetailsItemDivider}></span>
-                  <span>{score?.championship ?? 0}</span>
-                </div>
+                {score?.workSchedule ? (
+                  <div className={styles.scoreDetailsItem}>
+                    <span>График работы</span>
+                    <span className={styles.scoreDetailsItemDivider}></span>
+                    <span>{score.workSchedule}</span>
+                  </div>
+                ) : null}
+
+                {score?.experience ? (
+                  <div className={styles.scoreDetailsItem}>
+                    <span>Опыт работы</span>
+                    <span className={styles.scoreDetailsItemDivider}></span>
+                    <span>{score.experience}</span>
+                  </div>
+                ) : null}
+
+                {score?.projectActivity ? (
+                  <div className={styles.scoreDetailsItem}>
+                    <span>Проектная деятельность</span>
+                    <span className={styles.scoreDetailsItemDivider}></span>
+                    <span>{score.projectActivity}</span>
+                  </div>
+                ) : null}
+
+                {score?.about ? (
+                  <div className={styles.scoreDetailsItem}>
+                    <span>О себе</span>
+                    <span className={styles.scoreDetailsItemDivider}></span>
+                    <span>{score.about}</span>
+                  </div>
+                ) : null}
+
+                {score?.training ? (
+                  <div className={styles.scoreDetailsItem}>
+                    <span>Тестирование</span>
+                    <span className={styles.scoreDetailsItemDivider}></span>
+                    <span>{score.training}</span>
+                  </div>
+                ) : null}
+
+                {score?.championship ? (
+                  <div className={styles.scoreDetailsItem}>
+                    <span>Кейс-чемпионат</span>
+                    <span className={styles.scoreDetailsItemDivider}></span>
+                    <span>{score.championship}</span>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>
