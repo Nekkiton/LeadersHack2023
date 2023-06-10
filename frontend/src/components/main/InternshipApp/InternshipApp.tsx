@@ -7,6 +7,7 @@ import { Spin } from "antd"
 import { useQuery } from "@tanstack/react-query"
 import { fetchInternshipApplication } from "data"
 import AppTimeline from "./AppTimeline"
+import { formatDate } from "utils/formatDate"
 
 export default function InternshipApp() {
   const { data, isLoading } = useQuery({
@@ -21,6 +22,7 @@ export default function InternshipApp() {
   const status: string = data?.status ?? ""
   const score = data?.score
   const rejection = data?.data
+  const internship = data?.internship
 
   const totalScore = Object.values(score ?? {}).reduce(
     (previousValue, currentValue) => (previousValue ?? 0) + (currentValue ?? 0),
@@ -73,11 +75,14 @@ export default function InternshipApp() {
                     и проектной деятельности и начислят баллы. Чем больше баллов
                     ты наберешь, тем выше шанс попасть на стажировку.
                   </p>
-                  {/* TODO: need to get dates  */}
-                  <p>
-                    Дождись начала обучения. Оно пройдет 24 — 28 апреля. Ссылка
-                    на обучение появится здесь
-                  </p>
+                  {internship?.trainingStart && internship?.trainingEnd ? (
+                    <p>
+                      Дождись начала обучения. Оно пройдет 24 — 28 апреля.
+                      {formatDate(internship?.trainingStart, "D MMMM")} -{" "}
+                      {formatDate(internship?.trainingEnd, "D MMMM")}
+                      Ссылка на обучение появится здесь
+                    </p>
+                  ) : null}
                 </>
               )}
               {/* TODO: no such status */}
