@@ -69,7 +69,7 @@ export default function Candidate({ backLink, candidateId }: Props) {
           </Button>
         </Link>
         <div className={styles.header}>
-          <StudentInfo profile={data.user} />
+          <StudentInfo profile={data.userProfile} />
           <div className={styles.headerControls}>
             {/* TODO: если резюме не оценено еще? */}
             {role === Role.CURATOR &&

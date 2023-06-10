@@ -1,30 +1,21 @@
 import UserRating from "components/base/user/UserRating"
 import styles from "./StudentInfo.module.scss"
-
-interface Props {
-  profile: {
-    avatar: string
-    age: string
-    name: string
-    address: string
-    reviews: {
-      count: number | null
-      averageRate: number | null
-    }
-  } // TODO: user object here
-}
+import dayjs from 'dayjs';
 
 const userImg = "/images/user.svg"
 
 export default function StudentInfo({ profile }: any) {
+
+  const birthday = dayjs(profile.birthday);
+  const age = birthday.diff(Date.now(), 'year')
   return (
     <div className={styles.user}>
-    <img className={styles.userImg} src={profile.avatar ?? userImg} />
+    <img className={styles.userImg} src={profile.photo ?? userImg} />
     <div className={styles.userInfoContainer}>
       <h1 className={styles.userName}>{profile.name}</h1>
       <div className={styles.userInfo}>
         <p>
-          {profile.age} года, {profile.address}
+          {age} года, {profile.location}
         </p>
         <UserRating
           count={profile.reviews?.count}
