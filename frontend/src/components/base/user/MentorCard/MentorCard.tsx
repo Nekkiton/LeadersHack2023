@@ -56,8 +56,8 @@ export default function UserCard({ mentorInfo }: Props) {
             <div>
               <p className={styles.cardUserName}>{mentorInfo.name}</p>
               <UserRating
-                count={mentorInfo.reviews.count}
-                averageRate={mentorInfo.reviews.averageRate}
+                count={mentorInfo.reviews?.count}
+                averageRate={mentorInfo.reviews?.averageRate}
               />
             </div>
           </div>

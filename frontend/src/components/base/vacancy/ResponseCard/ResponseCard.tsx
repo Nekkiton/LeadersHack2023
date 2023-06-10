@@ -27,8 +27,8 @@ export default function ResponseCard({ link, responseInfo }: Props) {
           <div>
             <p>{responseInfo.name}</p>
             <UserRating
-              count={responseInfo.reviews.count}
-              averageRate={responseInfo.reviews.averageRate}
+              count={responseInfo.reviews?.count}
+              averageRate={responseInfo.reviews?.averageRate}
             />
           </div>
         </div>

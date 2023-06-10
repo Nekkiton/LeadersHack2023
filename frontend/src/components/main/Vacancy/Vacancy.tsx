@@ -178,8 +178,8 @@ export default function Vacancy({ backLink, link }: Props) {
               <span>{data?.company.address}</span>
             </div>
             <UserRating
-              count={data.company.reviews.count}
-              averageRate={data.company.reviews.averageRate}
+              count={data.company.reviews?.count}
+              averageRate={data.company.reviews?.averageRate}
             />
           </div>
         </div>
@@ -197,8 +197,8 @@ export default function Vacancy({ backLink, link }: Props) {
                     <div>
                       <p>{data?.mentor.name}</p>
                       <UserRating
-                        count={data.mentor.reviews.count}
-                        averageRate={data.mentor.reviews.averageRate}
+                        count={data.mentor.reviews?.count}
+                        averageRate={data.mentor.reviews?.averageRate}
                       />
                     </div>
                   </div>

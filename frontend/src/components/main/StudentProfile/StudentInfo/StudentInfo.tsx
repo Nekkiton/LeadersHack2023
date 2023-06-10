@@ -8,8 +8,8 @@ interface Props {
     name: string
     address: string
     reviews: {
-      count: number
-      averageRate: number
+      count: number | null
+      averageRate: number | null
     }
   } // TODO: user object here
 }
@@ -27,8 +27,8 @@ export default function StudentInfo({ profile }: any) {
           {profile.age} года, {profile.address}
         </p>
         <UserRating
-          count={profile.reviews.count}
-          averageRate={profile.reviews.averageRate}
+          count={profile.reviews?.count}
+          averageRate={profile.reviews?.averageRate}
         />
       </div>
     </div>
