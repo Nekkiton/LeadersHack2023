@@ -3,7 +3,6 @@ import Input from "components/base/controls/Input"
 import Button from "components/base/controls/Button"
 import Select from "components/base/controls/Select"
 import Status from "components/base/vacancy/Status"
-import ResponseCard from "components/base/vacancy/ResponseCard"
 import Pagination from "components/base/navigation/Pagination"
 import UserQuestionIcon from "assets/icons/user-question.svg"
 import SearchIcon from "assets/icons/search.svg"
@@ -12,6 +11,7 @@ import styles from "./Candidates.module.scss"
 import { useQuery } from "@tanstack/react-query"
 import { fetchCandidateList } from "data"
 import { Spin } from "antd"
+import CandidateCard from "./CandidateCard"
 
 export default function Candidates() {
   const updateSorting = (
@@ -127,10 +127,10 @@ export default function Candidates() {
           </div>
           <div className={styles.candidates}>
             {data?.items.map((candidate) => (
-              <ResponseCard
-                key={candidate.id}
+              <CandidateCard
+                key={candidate.user.email}
                 link={`/curator/candidates`}
-                responseInfo={candidate}
+                candidateInfo={candidate}
               />
             ))}
           </div>

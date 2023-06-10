@@ -19,7 +19,7 @@ export default function UserRating({ count, averageRate }: Props) {
         <StarIcon className={styles.ratingIcon} />
       </div>
       {/* TODO: if there are feedbacks */}
-      {true ? (
+      {count > 0 ? (
         <>
           <Button type="text" onClick={() => setIsModalShowed(true)}>
             отзывов: {count}
