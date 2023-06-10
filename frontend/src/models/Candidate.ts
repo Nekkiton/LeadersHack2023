@@ -1,5 +1,6 @@
 export interface Candidate {
   user: {
+    id: string
     role: string
     email: string
   }
