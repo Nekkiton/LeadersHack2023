@@ -127,6 +127,10 @@ export default function Candidate({ backLink, candidateId }: Props) {
       <RateResumeModal
         isShowed={isRateResumeShowed}
         setIsShowed={setIsRateResumeShowed}
+        id={candidateId}
+        experience={data.candidateProfile.experience}
+        projectActivity={data.candidateProfile.projectActivity}
+        about={data.candidateProfile.about}
       />
     </>
   )

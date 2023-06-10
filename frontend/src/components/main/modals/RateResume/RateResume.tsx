@@ -11,9 +11,9 @@ interface Props {
   isShowed: boolean
   setIsShowed: (val: boolean) => void
   experience?: string
+  id: string
   projectActivity?: string
   about?: string
-  id?: string
 }
 
 export default function RateResumeModal({
