@@ -19,6 +19,9 @@ export default () => ({
         rejectionReason: 'Извините, в стажировке могут принять участие только граждане РФ.',
       },
     },
+    championship: {
+      rejectionReason: 'К сожалению, на кейс-чемпионате ты не смог показать достаточный уровень знаний',
+    },
     autoScore: {
       workSchedule: {
         constraint: {

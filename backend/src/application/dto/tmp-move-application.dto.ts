@@ -5,7 +5,7 @@ import { ApplicationStatus } from '../application-status/application-status.enum
 /**
  * TODO delete after demo
  */
-export class PromoteApplicationDto {
+export class TmpMoveApplicationDto {
   @ApiProperty()
   @IsEnum(ApplicationStatus)
   @IsIn([ApplicationStatus.TRAINING, ApplicationStatus.EXAMINATION, ApplicationStatus.CHAMPIONSHIP])
@@ -17,11 +17,4 @@ export class PromoteApplicationDto {
   @Max(50) // TODO configurable
   @IsOptional()
   examination?: number;
-
-  @ApiProperty({ type: 'number' })
-  @IsInt()
-  @Min(0)
-  @Max(50) // TODO configurable
-  @IsOptional()
-  championship?: number;
 }

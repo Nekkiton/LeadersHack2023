@@ -29,7 +29,7 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { ApplicationStatus } from 'src/application/application-status/application-status.enum';
 import { ApplicationService } from 'src/application/application.service';
 import { CandidateApplicationDto } from 'src/application/dto/candidate-application.dto';
-import { PromoteApplicationDto } from 'src/application/dto/promote-application.dto';
+import { TmpMoveApplicationDto } from 'src/application/dto/tmp-move-application.dto';
 import { RateApplicationDto } from 'src/application/dto/rate-application.dto';
 import { ResponseApplicationDto } from 'src/application/dto/response-application.dto';
 import { ResponseCandidateDto } from 'src/application/dto/response-candidate.dto';
@@ -46,6 +46,8 @@ import { InternshipService } from 'src/internship/internship.service';
 import { UserProfilesService } from 'src/user-profiles/user-profiles.service';
 import { UsersService } from 'src/users/users.service';
 import { EntityManager } from 'typeorm';
+import { PromoteCandidateDto } from 'src/application/dto/promote-candidate.dto';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('candidates')
 @ApiTags('candidates')
@@ -59,6 +61,7 @@ export class CandidatesController {
     private applicationService: ApplicationService,
     @InjectEntityManager()
     private entityManager: EntityManager,
+    private configService: ConfigService,
   ) {}
 
   @Get('me/info')
@@ -228,17 +231,17 @@ export class CandidatesController {
     return result;
   }
 
-  @Post(':id/application/promote')
+  @Post(':id/application/move')
   @Roles(Role.CURATOR)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({ summary: 'Warning! Temporary added operation', deprecated: true })
   @ApiOkResponse()
   @ApiBadRequestResponse()
   @ApiNotFoundResponse()
-  async promoteCandidateApplication(
+  async moveCandidateApplication(
     @Param('id', new ParseUUIDPipe())
     id: string,
-    @Body() dto: PromoteApplicationDto,
+    @Body() dto: TmpMoveApplicationDto,
   ): Promise<void> {
     const user = await this.usersService.findOneById(id);
     const internship = await this.internshipService.findCurrent();
@@ -269,19 +272,54 @@ export class CandidatesController {
         if (application.status !== ApplicationStatus.EXAMINATION) {
           throw new BadRequestException(`Cannot promote candidate to CHAMPIONSHIP from a non-EXAMINATION status`);
         }
-        await this.applicationService.update(
-          { user, internship },
-          {
-            status: ApplicationStatus.CHAMPIONSHIP,
-            score: {
-              ...application.score,
-              championship: dto.championship,
-            },
-          },
-        );
+        await this.applicationService.update({ user, internship }, { status: ApplicationStatus.CHAMPIONSHIP });
         break;
       default:
         break;
     }
+  }
+
+  @Post(':id/application/promote')
+  @Roles(Role.CURATOR)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Admits or denies an internship to a candidate' })
+  @ApiOkResponse()
+  @ApiBadRequestResponse()
+  @ApiNotFoundResponse()
+  async promoteCandidateApplication(
+    @Param('id', new ParseUUIDPipe())
+    id: string,
+    @Body() dto: PromoteCandidateDto,
+  ): Promise<void> {
+    const user = await this.usersService.findOneById(id);
+    const internship = await this.internshipService.findCurrent();
+    const application = await this.applicationService.findOne({ user, internship });
+    if (application.status !== ApplicationStatus.CHAMPIONSHIP) {
+      throw new BadRequestException('The championship is not taking place at the moment.');
+    }
+    await this.applicationService.update(
+      { user, internship },
+      {
+        status: ApplicationStatus.COMPLETED,
+        score: {
+          ...application.score,
+          championship: dto.championship,
+        },
+        data: {
+          ...application.data,
+          ...(dto.admitted
+            ? {
+                accepted: {
+                  by: user.email,
+                  on: new Date().toISOString(),
+                },
+              }
+            : {
+                rejectedOn: ApplicationStatus.CHAMPIONSHIP,
+                rejectionReason: this.configService.get('application.championship.rejectionReason'),
+              }),
+        },
+      },
+    );
   }
 }
