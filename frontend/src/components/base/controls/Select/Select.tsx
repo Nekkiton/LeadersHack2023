@@ -40,7 +40,7 @@ export default function Select({
 
   useEffect(() => {
     if (multiple) setNewValue(value || [])
-    else setNewValue(value ? [value] : [])
+    else setNewValue(value === null || value === undefined ? [] : [value])
   }, [value])
 
   const toggleItem = (key: string | number) => {
