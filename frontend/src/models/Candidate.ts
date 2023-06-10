@@ -1,3 +1,5 @@
+import { ApplicationStatus } from "./InternshipApplication"
+
 export interface Candidate {
   user: {
     id: string
@@ -43,6 +45,6 @@ export interface Candidate {
       training: number | null
       championship: number | null
     }
-    status: string
+    status: ApplicationStatus
   }
 }

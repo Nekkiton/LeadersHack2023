@@ -20,10 +20,7 @@ export default function CandidateCard({ link, candidateInfo }: Props) {
       href={`${link}/${candidateInfo.user.id}`}
     >
       <div className={styles.candidateBlock}>
-        <CandidateStatus
-          className={styles.candidateStatus}
-          status={candidateInfo.application.status}
-        />
+        <CandidateStatus status={candidateInfo.application.status} />
 
         <div className={styles.candidateUser}>
           <img

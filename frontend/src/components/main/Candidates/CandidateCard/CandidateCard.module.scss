@@ -20,11 +20,6 @@
   gap: 8px;
 }
 
-.candidateStatus {
-  @include paragraph-3;
-  color: $gray-3;
-}
-
 .candidateUser {
   @include paragraph-2;
 

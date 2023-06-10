@@ -2,7 +2,7 @@ import React from "react"
 import styles from "./AppTimeline.module.scss"
 import { ApplicationStatus } from "models/InternshipApplication"
 
-export const statusTitles: Record<ApplicationStatus, string> = {
+const statusTitles: Record<ApplicationStatus, string> = {
   [ApplicationStatus.created]: "Заявка принята",
   [ApplicationStatus.moderation]: "На модерации",
   [ApplicationStatus.training]: "Обучение",
@@ -11,7 +11,7 @@ export const statusTitles: Record<ApplicationStatus, string> = {
   [ApplicationStatus.completed]: "Заявка одобрена",
 }
 
-export const statusList = [
+const statusList = [
   ApplicationStatus.created,
   ApplicationStatus.moderation,
   ApplicationStatus.training,
