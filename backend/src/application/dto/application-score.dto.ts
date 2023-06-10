@@ -14,7 +14,7 @@ export class ApplicationScore {
   about: number;
 
   @ApiProperty({ type: 'number' })
-  training: number;
+  examination: number;
 
   @ApiProperty({ type: 'number' })
   championship: number;

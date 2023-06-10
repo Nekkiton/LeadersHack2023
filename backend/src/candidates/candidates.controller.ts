@@ -29,6 +29,7 @@ import { InjectEntityManager } from '@nestjs/typeorm';
 import { ApplicationStatus } from 'src/application/application-status/application-status.enum';
 import { ApplicationService } from 'src/application/application.service';
 import { CandidateApplicationDto } from 'src/application/dto/candidate-application.dto';
+import { PromoteApplicationDto } from 'src/application/dto/promote-application.dto';
 import { RateApplicationDto } from 'src/application/dto/rate-application.dto';
 import { ResponseApplicationDto } from 'src/application/dto/response-application.dto';
 import { ResponseCandidateDto } from 'src/application/dto/response-candidate.dto';
@@ -163,9 +164,9 @@ export class CandidatesController {
     const updateDto: UpdateApplicationDto = {
       score: {
         ...application.score,
-        experience: (application.score.experience || 0) + dto.experience,
-        projectActivity: (application.score.projectActivity || 0) + dto.projectActivity,
-        about: (application.score.about || 0) + dto.about,
+        experience: dto.experience,
+        projectActivity: dto.projectActivity,
+        about: dto.about,
       },
       data: {
         ...application.data,
@@ -174,6 +175,7 @@ export class CandidatesController {
           on: new Date().toISOString(),
         },
       },
+      status: ApplicationStatus.WAIT_FOR_TRAINING,
     };
     await this.applicationService.update({ user, internship }, updateDto);
   }
@@ -224,5 +226,62 @@ export class CandidatesController {
       result.push(ResponseCandidateDto.buildFrom(user, userProfile, candidateProfile, application));
     }
     return result;
+  }
+
+  @Post(':id/application/promote')
+  @Roles(Role.CURATOR)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Warning! Temporary added operation', deprecated: true })
+  @ApiOkResponse()
+  @ApiBadRequestResponse()
+  @ApiNotFoundResponse()
+  async promoteCandidateApplication(
+    @Param('id', new ParseUUIDPipe())
+    id: string,
+    @Body() dto: PromoteApplicationDto,
+  ): Promise<void> {
+    const user = await this.usersService.findOneById(id);
+    const internship = await this.internshipService.findCurrent();
+    const application = await this.applicationService.findOne({ user, internship });
+    switch (dto.status) {
+      case ApplicationStatus.TRAINING:
+        if (application.status !== ApplicationStatus.WAIT_FOR_TRAINING) {
+          throw new BadRequestException(`Cannot promote candidate to TRAINING from a non-WAIT_FOR_TRAINING status`);
+        }
+        await this.applicationService.update({ user, internship }, { status: ApplicationStatus.TRAINING });
+        break;
+      case ApplicationStatus.EXAMINATION:
+        if (application.status !== ApplicationStatus.TRAINING) {
+          throw new BadRequestException(`Cannot promote candidate to EXAMINATION from a non-TRAINING status`);
+        }
+        await this.applicationService.update(
+          { user, internship },
+          {
+            status: ApplicationStatus.EXAMINATION,
+            score: {
+              ...application.score,
+              examination: dto.examination,
+            },
+          },
+        );
+        break;
+      case ApplicationStatus.CHAMPIONSHIP:
+        if (application.status !== ApplicationStatus.EXAMINATION) {
+          throw new BadRequestException(`Cannot promote candidate to CHAMPIONSHIP from a non-EXAMINATION status`);
+        }
+        await this.applicationService.update(
+          { user, internship },
+          {
+            status: ApplicationStatus.CHAMPIONSHIP,
+            score: {
+              ...application.score,
+              championship: dto.championship,
+            },
+          },
+        );
+        break;
+      default:
+        break;
+    }
   }
 }

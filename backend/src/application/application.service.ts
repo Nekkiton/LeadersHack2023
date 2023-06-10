@@ -54,7 +54,7 @@ export class ApplicationService extends CUService<
       experience: null,
       projectActivity: null,
       about: null,
-      training: null,
+      examination: null,
       championship: null,
       ...autoScore,
     };

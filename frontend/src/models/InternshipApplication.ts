@@ -15,7 +15,7 @@ export interface InternshipApplication {
     experience: number | null
     projectActivity: number | null
     about: number | null
-    training: number | null
+    examination: number | null
     championship: number | null
   }
   data: {
