@@ -11,6 +11,7 @@ interface Props {
   onClick?: MouseEventHandler<any>
   htmlType?: "button" | "submit" | "reset"
   style?: CSSProperties
+  href?: string
 }
 
 export default function Button({
@@ -21,6 +22,7 @@ export default function Button({
   onClick,
   htmlType,
   style,
+  href,
 }: Props) {
   return (
     <BaseButton
@@ -29,6 +31,7 @@ export default function Button({
       htmlType={htmlType}
       disabled={disabled}
       style={style}
+      href={href}
     >
       {children}
     </BaseButton>

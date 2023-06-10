@@ -31,7 +31,7 @@ export default function InternshipApp() {
 
   return (
     <div className={styles.container}>
-      <h1 className={styles.title}>Заявка на стажировку 2023 — 2024</h1>
+      <h1 className={styles.title}>Заявка на стажировку {internship?.year}</h1>
       {!data ? (
         <div className={styles.nothing}>
           <NoDocumentIcon className={styles.nothingIcon} />
@@ -77,10 +77,10 @@ export default function InternshipApp() {
                   </p>
                   {internship?.trainingStart && internship?.trainingEnd ? (
                     <p>
-                      Дождись начала обучения. Оно пройдет 24 — 28 апреля.
+                      Дождись начала обучения. Оно пройдет{" "}
                       {formatDate(internship?.trainingStart, "D MMMM")} -{" "}
-                      {formatDate(internship?.trainingEnd, "D MMMM")}
-                      Ссылка на обучение появится здесь
+                      {formatDate(internship?.trainingEnd, "D MMMM")}. Ссылка на
+                      обучение появится здесь
                     </p>
                   ) : null}
                 </>
@@ -89,8 +89,10 @@ export default function InternshipApp() {
               {status === "waitStudying" && (
                 <>
                   <p>
-                    Дождись начала обучения. Оно пройдет 24 — 28 апреля. Ссылка
-                    на расписание и обучение появится здесь.
+                    Дождись начала обучения. Оно пройдет{" "}
+                    {formatDate(internship?.trainingStart, "D MMMM")} -{" "}
+                    {formatDate(internship?.trainingEnd, "D MMMM")}. Ссылка на
+                    расписание и обучение появится здесь.
                   </p>
                   <p>
                     Обучение пройдет в онлайн-формате. Будет 5 вебинаров,
@@ -101,32 +103,38 @@ export default function InternshipApp() {
               {status === "training" && (
                 <div className={styles.hintWithBtn}>
                   <p>
-                    До 28 апреля идет обучение. Советуем посещать занятия
-                    онлайн, чтобы познакомиться со спикерами и иметь возможность
+                    До {formatDate(internship?.trainingEnd, "D MMMM")} идет
+                    обучение. Советуем посещать занятия онлайн,
+                    чтобы познакомиться со спикерами и иметь возможность
                     задавать им вопросы вживую
                   </p>
-                  {/* TODO: add link */}
-                  <Button>
+
+                  <Button href={internship?.trainingLink}>
                     <span>Перейти к обучению</span>
                     <LinkExternalIcon className="icon" />
                   </Button>
                 </div>
               )}
+              {/* TODO: no such status */}
               {status === "waitTesting" && (
                 <p>
-                  15 — 19 мая будет доступно тестирование для проверки знаний,
-                  полученных на обучении. По итогам тестирования будут отобраны
-                  400 человек для прохождения дальнейших этапов
+                  {formatDate(internship?.examinationStart, "D MMMM")} -{" "}
+                  {formatDate(internship?.examinationEnd, "D MMMM")} будет
+                  доступно тестирование для проверки знаний, полученных
+                  на обучении. По итогам тестирования будут отобраны 400 человек
+                  для прохождения дальнейших этапов
                 </p>
               )}
               {status === "examination" && (
                 <div className={styles.hintWithBtn}>
                   <p>
-                    Пройди тестирование до 19 мая, чтобы пройти в следующий этап
-                    отбора. Оно займет 30 минут и у тебя будет 1 попытка
+                    Пройди тестирование до{" "}
+                    {formatDate(internship?.examinationEnd, "D MMMM")}, чтобы
+                    пройти в следующий этап отбора. Оно займет 30 минут и у тебя
+                    будет 1 попытка
                   </p>
-                  {/* TODO: add link */}
-                  <Button>
+
+                  <Button href={internship?.examinationLink}>
                     <span>Пройти тестирование</span>
                     <LinkExternalIcon className="icon" />
                   </Button>
@@ -135,14 +143,17 @@ export default function InternshipApp() {
               {/* TODO: no such status */}
               {status === "waitCompetition" && (
                 <p>
-                  Поздравляем, тестирование пройдено! 20 мая мы объявим
+                  Поздравляем, тестирование пройдено!{" "}
+                  {formatDate(internship?.examinationEnd, "D MMMM")} мы объявим
                   результаты и узнаем, кто пройдет на следующий эта отбора
                 </p>
               )}
               {status === "championship" && (
                 <div className={styles.hintWithBtn}>
                   <p>
-                    Финальный этап отбора пройдет 29 мая — 2 июня. Вы
+                    Финальный этап отбора пройдет{" "}
+                    {formatDate(internship?.championshipStart, "D MMMM")} -{" "}
+                    {formatDate(internship?.championshipEnd, "D MMMM")}. Вы
                     разделитесь на команды и подготовите проекты по заданной
                     теме. 2 июня пройдет защита проектов, по результатам которой
                     лучшие кандидаты попадут на стажировку.
@@ -151,8 +162,8 @@ export default function InternshipApp() {
                     Вся информация о чемпионате будет в telegram-канале.
                     Присоединяйся
                   </p>
-                  {/* TODO: add link */}
-                  <Button>
+
+                  <Button href={internship?.championshipLink}>
                     <LinkExternalIcon className="icon" />
                     <span>Перейти в telegram-канал</span>
                     <LinkExternalIcon />
