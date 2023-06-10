@@ -1,4 +1,4 @@
-import styles from "./ResponseStatus.module.scss"
+import styles from "./CandidateStatus.module.scss"
 
 interface Props {
   status: string
