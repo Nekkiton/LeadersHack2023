@@ -83,7 +83,10 @@ export class CUService<
     return entity;
   }
 
-  async findAll(condition?: { [k in keyof Entity]: unknown }, transaction?: TransactionOptions): Promise<Entity[]> {
+  async findAll(
+    condition?: { [k in keyof Partial<Entity>]: unknown },
+    transaction?: TransactionOptions,
+  ): Promise<Entity[]> {
     const repository = this.getRepository(transaction);
     const where = condition as FindOptionsWhere<Entity>;
     return repository.find({ where, relations: this.options.relations });

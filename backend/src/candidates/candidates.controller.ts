@@ -2,14 +2,17 @@ import {
   BadRequestException,
   Body,
   Controller,
+  DefaultValuePipe,
   Get,
   HttpCode,
   HttpStatus,
   NotFoundException,
   Param,
+  ParseEnumPipe,
   ParseUUIDPipe,
   Patch,
   Post,
+  Query,
   Req,
 } from '@nestjs/common';
 import {
@@ -19,13 +22,16 @@ import {
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
+  ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
 import { InjectEntityManager } from '@nestjs/typeorm';
+import { ApplicationStatus } from 'src/application/application-status/application-status.enum';
 import { ApplicationService } from 'src/application/application.service';
 import { CandidateApplicationDto } from 'src/application/dto/candidate-application.dto';
 import { RateApplicationDto } from 'src/application/dto/rate-application.dto';
 import { ResponseApplicationDto } from 'src/application/dto/response-application.dto';
+import { ResponseCandidateDto } from 'src/application/dto/response-candidate.dto';
 import { UpdateApplicationDto } from 'src/application/dto/update-application.dto';
 import { Application } from 'src/application/entities/application.entity';
 import { UserPayload } from 'src/auth/auth.service';
@@ -170,5 +176,53 @@ export class CandidatesController {
       },
     };
     await this.applicationService.update({ user, internship }, updateDto);
+  }
+
+  @Get(':id')
+  @Roles(Role.CURATOR)
+  @ApiOperation({ summary: 'Get a particular candidate with application for running internship' })
+  @ApiOkResponse({ type: ResponseCandidateDto })
+  @ApiNotFoundResponse()
+  async getCandidateApplication(
+    @Param('id', new ParseUUIDPipe())
+    id: string,
+  ): Promise<ResponseCandidateDto> {
+    const user = await this.usersService.findOneById(id);
+    const internship = await this.internshipService.findCurrent();
+    const userProfile = await this.userProfileService.findOne({ user });
+    const candidateProfile = await this.candidateInfoService.findOne({ user });
+    const application = await this.applicationService.findOne({ user, internship });
+    return ResponseCandidateDto.buildFrom(user, userProfile, candidateProfile, application);
+  }
+
+  @Get('')
+  @Roles(Role.CURATOR)
+  @ApiOperation({ summary: 'Get all candidates with applications for running internship' })
+  @ApiOkResponse({ type: Array<ResponseCandidateDto> })
+  @ApiNotFoundResponse()
+  @ApiQuery({
+    name: 'status',
+    enum: ApplicationStatus,
+    description: 'Status to filter. Default: moderation',
+    required: false,
+  })
+  async getCandidatesApplications(
+    @Query('status', new DefaultValuePipe(ApplicationStatus.MODERATION), new ParseEnumPipe(ApplicationStatus))
+    status?: ApplicationStatus,
+  ): Promise<Array<ResponseCandidateDto>> {
+    const internship = await this.internshipService.findCurrent();
+    const applications = await this.applicationService.findAll({ internship, status });
+    const result: ResponseCandidateDto[] = [];
+    for (const application of applications) {
+      const user = application.user;
+      /**
+       * TODO nested sub queries are not optimal in terms of performance.
+       * Need to add a JOIN property to the application model so it join profiles automatically.
+       */
+      const userProfile = await this.userProfileService.findOne({ user });
+      const candidateProfile = await this.candidateInfoService.findOne({ user });
+      result.push(ResponseCandidateDto.buildFrom(user, userProfile, candidateProfile, application));
+    }
+    return result;
   }
 }
