@@ -1,4 +1,5 @@
 export enum ApplicationStatus {
+  created = "created",
   moderation = "moderation",
   training = "training",
   examination = "examination",

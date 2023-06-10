@@ -6,33 +6,7 @@ import styles from "./InternshipApp.module.scss"
 import { Spin } from "antd"
 import { useQuery } from "@tanstack/react-query"
 import { fetchInternshipApplication } from "data"
-
-const timeline = [
-  {
-    title: "Заявка принята",
-    status: "past",
-  },
-  {
-    title: "На модерации",
-    status: "moderation",
-  },
-  {
-    title: "Обучение",
-    status: "training",
-  },
-  {
-    title: "Тестирование",
-    status: "examination",
-  },
-  {
-    title: "Кейс-чемпионат",
-    status: "championship",
-  },
-  {
-    title: "Заявка одобрена",
-    status: "completed",
-  },
-]
+import AppTimeline from "./AppTimeline"
 
 export default function InternshipApp() {
   const { data, isLoading } = useQuery({
@@ -82,17 +56,7 @@ export default function InternshipApp() {
         </div>
       ) : (
         <>
-          <div className={`${"s"} ${styles.timeline}`}>
-            {timeline.map((item) => (
-              <div
-                className={`${styles.timelineItem} ${styles[item.status]}`}
-                key={item.title}
-              >
-                <span className={styles.timelineItemMark}></span>
-                <p>{item.title}</p>
-              </div>
-            ))}
-          </div>
+          <AppTimeline activeStatus={data.status} />
           {rejection?.rejectedOn && (
             <div className={`${styles.card} ${styles.comment}`}>
               <p className={styles.cardTitle}>Причина отклонения</p>

@@ -55,69 +55,6 @@
   color: $gray-3;
 }
 
-.timeline {
-  display: flex;
-  margin-top: 7px;
-  width: 100%;
-}
-
-.timelineItem {
-  @include paragraph-2;
-
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  width: 100%;
-  position: relative;
-  padding: 23px 24px 16px 0;
-  background: $white;
-
-  &:first-child {
-    padding-left: 16px;
-    border-radius: 8px 0 0 8px;
-
-    &:after {
-      left: 28px !important;
-    }
-  }
-
-  &:last-child {
-    padding-right: 16px;
-    border-radius: 0 8px 8px 0;
-  }
-
-  &.past {
-    color: $gray-4;
-  }
-
-  &:not(:last-child):after {
-    content: "";
-    position: absolute;
-    top: 28px;
-    left: 12px;
-    right: -24px;
-    height: 1px;
-    background: $gray-5;
-  }
-}
-
-.timelineItemMark {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 1px solid $gray-4;
-  background: $white;
-
-  .timelineItem.active & {
-    border-color: $orange;
-    background: $orange;
-  }
-
-  .timelineItem.past & {
-    background: $gray-4;
-  }
-}
-
 .hint {
   display: flex;
   flex-direction: column;
