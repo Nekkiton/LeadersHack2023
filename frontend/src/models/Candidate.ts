@@ -1,5 +1,4 @@
 import { ApplicationStatus } from "./InternshipApplication"
-
 export interface Candidate {
   user: {
     id: string
@@ -46,5 +45,10 @@ export interface Candidate {
       championship: number | null
     }
     status: ApplicationStatus
+    data: {
+      rejectedOn:	ApplicationStatus
+      rejectionReason: string
+      rated: null
+    }
   }
 }

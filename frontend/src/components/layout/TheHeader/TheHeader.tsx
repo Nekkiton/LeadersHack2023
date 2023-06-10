@@ -43,7 +43,6 @@ export default function TheHeader() {
           </div>
         </Link>
         <div className={styles.user}>
-          <DesktopNotifications notificationsCount={notificationsCount} />
           {!data?.role ? (
             <Link href="/login">
               <Button>
@@ -52,48 +51,51 @@ export default function TheHeader() {
               </Button>
             </Link>
           ) : (
-            <BurgerMenu
-              items={[
-                <Link href="/profile">
-                  <Button type="text">
-                    <UserIcon className="icon" />
-                    <span>Профиль</span>
-                  </Button>
-                </Link>,
-                <Button
-                  className={styles.userLogout}
-                  type="text"
-                  onClick={logout}
-                >
-                  <LogoutIcon className="icon" />
-                  <span>Выйти</span>
-                </Button>,
-              ]}
-              onChange={setIsMenuShowed}
-            >
-              <div className={styles.userProfile}>
-                <img className={styles.userImg} src={data?.photo || userImg} />
-                <div className={styles.userInfoContainer}>
-                  <div className={styles.userInfo}>
-                    <span className={styles.userName}>
-                      {data?.name} {data?.surname?.charAt(0)}.
-                    </span>
-                    <span className={styles.userRole}>
-                      {data.role === Role.STAFF && "Кадровый специалист"}
-                      {data.role === Role.MENTOR && "Наставник"}
-                      {data.role === Role.CURATOR && "Куратор"}
-                      {data.role === Role.INTERN && "Стажер"}
-                      {data.role === Role.CANDIDATE && "Кандидат"}
-                    </span>
+            <>
+              <DesktopNotifications notificationsCount={notificationsCount} />
+              <BurgerMenu
+                items={[
+                  <Link href="/profile">
+                    <Button type="text">
+                      <UserIcon className="icon" />
+                      <span>Профиль</span>
+                    </Button>
+                  </Link>,
+                  <Button
+                    className={styles.userLogout}
+                    type="text"
+                    onClick={logout}
+                  >
+                    <LogoutIcon className="icon" />
+                    <span>Выйти</span>
+                  </Button>,
+                ]}
+                onChange={setIsMenuShowed}
+              >
+                <div className={styles.userProfile}>
+                  <img className={styles.userImg} src={data?.photo || userImg} />
+                  <div className={styles.userInfoContainer}>
+                    <div className={styles.userInfo}>
+                      <span className={styles.userName}>
+                        {data?.name} {data?.surname?.charAt(0)}.
+                      </span>
+                      <span className={styles.userRole}>
+                        {data.role === Role.STAFF && "Кадровый специалист"}
+                        {data.role === Role.MENTOR && "Наставник"}
+                        {data.role === Role.CURATOR && "Куратор"}
+                        {data.role === Role.INTERN && "Стажер"}
+                        {data.role === Role.CANDIDATE && "Кандидат"}
+                      </span>
+                    </div>
+                    <ChevronDownIcon
+                      className={`${styles.userMenuIcon} ${
+                        isMenuShowed ? styles.active : ""
+                      }`}
+                    />
                   </div>
-                  <ChevronDownIcon
-                    className={`${styles.userMenuIcon} ${
-                      isMenuShowed ? styles.active : ""
-                    }`}
-                  />
                 </div>
-              </div>
-            </BurgerMenu>
+              </BurgerMenu>
+            </>
           )}
         </div>
         {!data?.role ? (

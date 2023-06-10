@@ -9,6 +9,7 @@ const statusTitles: Record<ApplicationStatus, string> = {
   [ApplicationStatus.examination]: "Тестирование",
   [ApplicationStatus.championship]: "Кейс-чемпионат",
   [ApplicationStatus.completed]: "Заявка одобрена",
+  [ApplicationStatus.rejected]: "Заявка отклонена",
 }
 
 const statusList = [
@@ -18,6 +19,7 @@ const statusList = [
   ApplicationStatus.examination,
   ApplicationStatus.championship,
   ApplicationStatus.completed,
+  ApplicationStatus.rejected,
 ]
 
 interface Props {

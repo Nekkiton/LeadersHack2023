@@ -5,6 +5,7 @@ export enum ApplicationStatus {
   examination = "examination",
   championship = "championship",
   completed = "completed",
+  rejected = "rejected",
 }
 
 export interface InternshipApplication {

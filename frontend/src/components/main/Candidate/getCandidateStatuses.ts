@@ -1,33 +1,33 @@
-import { CandidateStatus } from "data/types"
+import { ApplicationStatus } from "models/InternshipApplication"
 
-export const statusTitles: Record<CandidateStatus, string> = {
-  [CandidateStatus.accepted]: "Заявка принята",
-  [CandidateStatus.moderation]: "На модерации",
-  [CandidateStatus.education]: "Проходит обучение",
-  [CandidateStatus.tested]: "Прошел тестирование",
-  [CandidateStatus.hackathon]: "Проходит кейс-чемпионат",
-  [CandidateStatus.passed]: "Отобран на стажировку",
-  [CandidateStatus.rejected]: "Отклонен",
+export const statusTitles: Record<ApplicationStatus, string> = {
+  [ApplicationStatus.created]: "Заявка принята",
+  [ApplicationStatus.moderation]: "На модерации",
+  [ApplicationStatus.examination]: "Проходит обучение",
+  [ApplicationStatus.training]: "Прошел тестирование",
+  [ApplicationStatus.championship]: "Проходит кейс-чемпионат",
+  [ApplicationStatus.completed]: "Отобран на стажировку",
+  [ApplicationStatus.rejected]: "Отклонен",
 }
 
 const baseStatusList = [
-  CandidateStatus.accepted,
-  CandidateStatus.moderation,
-  CandidateStatus.education,
-  CandidateStatus.tested,
-  CandidateStatus.hackathon,
-  CandidateStatus.passed,
+  ApplicationStatus.created,
+  ApplicationStatus.moderation,
+  ApplicationStatus.training,
+  ApplicationStatus.championship,
+  ApplicationStatus.completed,
+  ApplicationStatus.rejected
 ]
 
 export const getCandidateStatuses = (
-  activeStatus: CandidateStatus,
-  previousStatus: CandidateStatus
+  activeStatus: ApplicationStatus,
+  previousStatus: ApplicationStatus
 ) => {
-  if (activeStatus === CandidateStatus.rejected) {
+  if (activeStatus === ApplicationStatus.rejected) {
     const statusBeforeRejecting = baseStatusList.indexOf(previousStatus)
 
     const statusList = baseStatusList.slice(0, statusBeforeRejecting + 1)
-    statusList.push(CandidateStatus.rejected)
+    statusList.push(ApplicationStatus.rejected)
 
     return statusList
   }

@@ -8,6 +8,7 @@ const statusTitles: Record<ApplicationStatus, string> = {
   [ApplicationStatus.examination]: "Прошел тестирование",
   [ApplicationStatus.championship]: "Проходит кейс-чемпионат",
   [ApplicationStatus.completed]: "Отобран на стажировку",
+  [ApplicationStatus.rejected]: "Отклонен",
 }
 
 const statusColors: Record<ApplicationStatus, string> = {
@@ -17,6 +18,7 @@ const statusColors: Record<ApplicationStatus, string> = {
   [ApplicationStatus.examination]: "purpure",
   [ApplicationStatus.championship]: "light-blue",
   [ApplicationStatus.completed]: "green",
+  [ApplicationStatus.rejected]: "red",
 }
 
 interface Props {

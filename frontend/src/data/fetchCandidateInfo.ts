@@ -1,5 +1,6 @@
 import axios from "axios"
 import { CandidateStatus } from "./types"
+import { Candidate } from "models/Candidate"
 
 const testData = [
   {
@@ -120,6 +121,6 @@ interface QueryResponse {
 
 export const fetchCandidateInfo = async ({ id }: QueryParams) => {
   return axios
-    .get("https://api.publicapis.org/entries")
-    .then((res) => testData.filter((d) => d.id === id)[0] as QueryResponse)
+    .get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/candidate/${id}`)
+    .then((res) => res.data as Candidate)
 }

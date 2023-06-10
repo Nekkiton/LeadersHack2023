@@ -7,7 +7,7 @@ interface Props {
   score: number
   details: {
     title: string
-    score: number
+    score: number | null
   }[]
 }
 

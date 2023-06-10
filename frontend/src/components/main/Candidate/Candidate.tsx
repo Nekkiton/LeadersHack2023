@@ -14,6 +14,8 @@ import StudentInfo from "components/main/StudentProfile/StudentInfo"
 import Timeline from "components/base/controls/Timeline"
 import { getCandidateStatuses, statusTitles } from "./getCandidateStatuses"
 import { Role } from "models/Role"
+import { getDetailScore, getTotalScore } from "./getTotalScore"
+import { ApplicationStatus } from "models/InternshipApplication"
 
 interface Props {
   backLink: string
@@ -22,7 +24,8 @@ interface Props {
 
 export default function Candidate({ backLink, candidateId }: Props) {
   const [isRateResumeShowed, setIsRateResumeShowed] = useState(false)
-  const [isSetHackathonResultShowed, setIsSetHackathonResultShowed] = useState(false)
+  const [isSetHackathonResultShowed, setIsSetHackathonResultShowed] =
+    useState(false)
 
   const { data, isLoading } = useQuery({
     queryKey: ["fetchCandidateInfo", { id: candidateId }],
@@ -36,9 +39,25 @@ export default function Candidate({ backLink, candidateId }: Props) {
     queryKey: ["userInfo"],
     queryFn: () => fetchUserInfo(),
   })
-  const role = userInfo.data?.role;
+  const role = userInfo.data?.role
 
   if (!data || isLoading || userInfo.isLoading) return <Spin />
+
+  const stProfile = {
+    user: {
+      phone: data.userProfile.phone,
+      email: data.userProfile.email,
+    },
+    education: {
+      name: data.candidateProfile.education.name,
+      specialty: data.candidateProfile.education.specialty,
+      graduationYear: data.candidateProfile.education.graduationYear,
+    },
+    schedule: data.candidateProfile.workSchedule,
+    experience: data.candidateProfile.experience,
+    projectActivity: data.candidateProfile.projectActivity,
+    about: data.candidateProfile.about,
+  }
 
   return (
     <>
@@ -53,43 +72,49 @@ export default function Candidate({ backLink, candidateId }: Props) {
           <StudentInfo profile={data.user} />
           <div className={styles.headerControls}>
             {/* TODO: если резюме не оценено еще? */}
-            {role === Role.CURATOR && data?.status === "moderation" && (
-              <Button onClick={() => setIsRateResumeShowed(true)}>
-                Оценить резюме
-              </Button>
-            )}
+            {role === Role.CURATOR &&
+              data?.application.status === ApplicationStatus.moderation && (
+                <Button onClick={() => setIsRateResumeShowed(true)}>
+                  Оценить резюме
+                </Button>
+              )}
             {/* TODO: если результаты еще не внесены */}
-            {role === Role.CURATOR && data.status === "hackathon" && (
-              <Button onClick={() => setIsSetHackathonResultShowed(true)}>
-                Внести результаты кейс-чемпионата
-              </Button>
-            )}
+            {role === Role.CURATOR &&
+              data.application.status === ApplicationStatus.championship && (
+                <Button onClick={() => setIsSetHackathonResultShowed(true)}>
+                  Внести результаты кейс-чемпионата
+                </Button>
+              )}
           </div>
         </div>
         <div className={styles.cards}>
-          <StudentProfile profile={data} />
+          <StudentProfile profile={stProfile} />
           <div className={`${styles.card} ${styles.complexCard}`}>
             <div className={styles.complexCardBlock}>
               <p className={styles.cardTitle}>Статус</p>
               <Timeline
-                activeItem={data.status}
+                activeItem={data.application.status}
                 itemList={getCandidateStatuses(
-                  data.status,
-                  data.previousStatus
+                  data.application.status,
+                  data.application.data.rejectedOn
                 )}
                 itemTitles={statusTitles}
               />
-              {data.status === "rejected" && data.rejectionReason && (
-                <div className={styles.statusComment}>
-                  <p className={styles.statusCommentTitle}>
-                    Причина отклонения
-                  </p>
-                  <p>{data.rejectionReason}</p>
-                </div>
-              )}
+              {data.application.status === ApplicationStatus.rejected &&
+                data.application.data.rejectionReason && (
+                  <div className={styles.statusComment}>
+                    <p className={styles.statusCommentTitle}>
+                      Причина отклонения
+                    </p>
+                    <p>{data.application.data.rejectionReason}</p>
+                  </div>
+                )}
             </div>
             {/* TODO: add data */}
-            <Points score={data.score} details={[]} />
+            <Points
+              score={getTotalScore(data.application.score)}
+              details={getDetailScore(data.application.score)}
+            />
           </div>
         </div>
       </div>
