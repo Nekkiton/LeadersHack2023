@@ -6,6 +6,8 @@ import {
   HttpCode,
   HttpStatus,
   NotFoundException,
+  Param,
+  ParseUUIDPipe,
   Patch,
   Post,
   Req,
@@ -22,7 +24,9 @@ import {
 import { InjectEntityManager } from '@nestjs/typeorm';
 import { ApplicationService } from 'src/application/application.service';
 import { CandidateApplicationDto } from 'src/application/dto/candidate-application.dto';
+import { RateApplicationDto } from 'src/application/dto/rate-application.dto';
 import { ResponseApplicationDto } from 'src/application/dto/response-application.dto';
+import { UpdateApplicationDto } from 'src/application/dto/update-application.dto';
 import { Application } from 'src/application/entities/application.entity';
 import { UserPayload } from 'src/auth/auth.service';
 import { Role } from 'src/auth/roles/role.enum';
@@ -130,5 +134,41 @@ export class CandidatesController {
       application = await this.applicationService.createApplication(user, userProfile, candidateProfile, internship);
     });
     return ResponseApplicationDto.fromEntity(application);
+  }
+
+  @Post(':id/application/rate')
+  @Roles(Role.CURATOR)
+  @HttpCode(HttpStatus.OK)
+  @ApiOperation({ summary: 'Rate candidate during moderation step' })
+  @ApiOkResponse()
+  @ApiBadRequestResponse()
+  @ApiNotFoundResponse()
+  async rateCandidateApplication(
+    @Param('id', new ParseUUIDPipe())
+    id: string,
+    @Body() dto: RateApplicationDto,
+  ): Promise<void> {
+    const user = await this.usersService.findOneById(id);
+    const internship = await this.internshipService.findCurrent();
+    const application = await this.applicationService.findOne({ user, internship });
+    if (application.data?.rated) {
+      throw new BadRequestException(`Candidate is already rated by ${application.data.rated.by}`);
+    }
+    const updateDto: UpdateApplicationDto = {
+      score: {
+        ...application.score,
+        experience: (application.score.experience || 0) + dto.experience,
+        projectActivity: (application.score.projectActivity || 0) + dto.projectActivity,
+        about: (application.score.about || 0) + dto.about,
+      },
+      data: {
+        ...application.data,
+        rated: {
+          by: user.email,
+          on: new Date().toISOString(),
+        },
+      },
+    };
+    await this.applicationService.update({ user, internship }, updateDto);
   }
 }

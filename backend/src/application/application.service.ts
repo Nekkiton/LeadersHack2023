@@ -58,15 +58,15 @@ export class ApplicationService extends CUService<
       championship: null,
       ...autoScore,
     };
-    const data: ApplicationData = validation.valid
-      ? {
-          rejectedOn: null,
-          rejectionReason: null,
-        }
-      : {
-          rejectedOn: ApplicationStatus.MODERATION,
-          rejectionReason: validation.rejectionReason,
-        };
+    const data: ApplicationData = {
+      ...ApplicationData.getDefault(),
+      ...(validation.valid
+        ? {}
+        : {
+            rejectedOn: ApplicationStatus.MODERATION,
+            rejectionReason: validation.rejectionReason,
+          }),
+    };
     const status = validation.valid ? ApplicationStatus.MODERATION : ApplicationStatus.COMPLETED;
     return this.create({ user, internship }, { data, score, status });
   }
