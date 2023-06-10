@@ -3,6 +3,9 @@ import { User } from '../entities/user.entity';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class ResponseUserDto {
+  @ApiProperty()
+  id: string;
+
   @ApiProperty({ enum: Role })
   role: Role;
 
@@ -10,6 +13,6 @@ export class ResponseUserDto {
   email: string;
 
   static fromEntity(user: User): ResponseUserDto {
-    return { role: user.role, email: user.email };
+    return { id: user.id, role: user.role, email: user.email };
   }
 }
