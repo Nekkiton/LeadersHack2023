@@ -121,6 +121,6 @@ interface QueryResponse {
 
 export const fetchCandidateInfo = async ({ id }: QueryParams) => {
   return axios
-    .get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/candidate/${id}`)
+    .get(`${process.env.NEXT_PUBLIC_API_ENDPOINT}/candidates/${id}`)
     .then((res) => res.data as Candidate)
 }
