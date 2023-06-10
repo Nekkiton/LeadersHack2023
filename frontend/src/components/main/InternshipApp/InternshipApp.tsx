@@ -221,11 +221,11 @@ export default function InternshipApp() {
                   </div>
                 ) : null}
 
-                {score?.training ? (
+                {score?.examination ? (
                   <div className={styles.scoreDetailsItem}>
                     <span>Тестирование</span>
                     <span className={styles.scoreDetailsItemDivider}></span>
-                    <span>{score.training}</span>
+                    <span>{score.examination}</span>
                   </div>
                 ) : null}
 
