@@ -319,6 +319,7 @@ IF NOT EXISTS (
         typname = 'application_status'
 ) THEN CREATE TYPE APPLICATION_STATUS AS ENUM (
     'moderation',
+    'wait_for_training',
     'training',
     'examination',
     'championship',

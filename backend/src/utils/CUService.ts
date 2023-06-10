@@ -49,10 +49,8 @@ export class CUService<
     const repository = this.getRepository(transaction);
     const current = await this.findOne(identity, transaction);
     if (!current) {
-      const properties = Object.entries(identity)
-        .map(([value, key]) => `${key}="${value}"`)
-        .join(', ');
-      throw new NotFoundException(`${this.options.entityName} with ${properties} not found`);
+      const properties = Object.keys(identity).join(', ');
+      throw new NotFoundException(`${this.options.entityName} with specified ${properties} not found`);
     }
     const entity = repository.create({
       ...current,
@@ -79,10 +77,8 @@ export class CUService<
     const where = condition as FindOptionsWhere<Entity>;
     const entity = await repository.findOne({ where, relations: this.options.relations });
     if (!entity) {
-      const properties = Object.entries(condition)
-        .map(([value, key]) => `${key}="${value}"`)
-        .join(', ');
-      throw new NotFoundException(`${this.options.entityName} with ${properties} not found`);
+      const properties = Object.keys(condition).join(', ');
+      throw new NotFoundException(`${this.options.entityName} with specified ${properties} not found`);
     }
     return entity;
   }
