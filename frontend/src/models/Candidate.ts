@@ -36,12 +36,12 @@ export interface Candidate {
       trainingEnd: string
     }
     score: {
-      workSchedule: null
-      experience: null
-      projectActivity: null
-      about: null
-      training: null
-      championship: null
+      workSchedule: number | null
+      experience: number | null
+      projectActivity: number | null
+      about: number | null
+      training: number | null
+      championship: number | null
     }
     status: string
   }

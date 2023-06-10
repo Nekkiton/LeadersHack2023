@@ -9,6 +9,7 @@ import { fetchInternshipApplication } from "data"
 import AppTimeline from "./AppTimeline"
 import { formatDate } from "utils/formatDate"
 import dayjs from "dayjs"
+import { calculateTotal } from "utils/calculateTotal"
 
 export default function InternshipApp() {
   const { data, isLoading } = useQuery({
@@ -26,10 +27,7 @@ export default function InternshipApp() {
   const internship = data?.internship
 
   const today = dayjs()
-  const totalScore = Object.values(score ?? {}).reduce(
-    (previousValue, currentValue) => (previousValue ?? 0) + (currentValue ?? 0),
-    0
-  )
+  const totalScore = calculateTotal(score)
 
   return (
     <div className={styles.container}>

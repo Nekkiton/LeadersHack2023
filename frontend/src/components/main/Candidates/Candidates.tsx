@@ -128,7 +128,7 @@ export default function Candidates() {
           <div className={styles.candidates}>
             {data?.items.map((candidate) => (
               <CandidateCard
-                key={candidate.user.email}
+                key={candidate.user.id}
                 link={`/curator/candidates`}
                 candidateInfo={candidate}
               />
