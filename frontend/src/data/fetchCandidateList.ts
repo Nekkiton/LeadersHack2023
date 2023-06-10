@@ -18,7 +18,8 @@ export const fetchCandidateList = async ({ page }: QueryParams) => {
       ({
         items: res.data,
         page: 1,
-        totalItems: 10,
+        // TODO: implement pagination on BE and set proper totalItems
+        totalItems: res.data.length,
       } as QueryResponse)
   )
 }

@@ -13,6 +13,8 @@ export default function Pagination({
   currentPage,
   totalItems,
 }: Props) {
+  if (totalItems <= 10) return null
+
   return (
     <div className={styles.container}>
       <Button className={styles.showMore} type="secondary">

@@ -137,7 +137,7 @@ export default function Candidates() {
           <Pagination
             currentPage={currentPage}
             setCurrentPage={setCurrentPage}
-            totalItems={500} // take from data response
+            totalItems={data.totalItems}
           />
         </>
       )}
