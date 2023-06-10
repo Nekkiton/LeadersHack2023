@@ -4,6 +4,7 @@ import { IsDateString, IsUrl, MaxLength } from 'class-validator';
 import DateTransformer from 'src/components/DateTransformer';
 import { IsAfterDate } from 'src/validation/isAfterDate.validator';
 import * as dayjs from 'dayjs';
+import { isCurrentYear } from 'src/validation/isCurrentYear.validator';
 
 export class CreateInternshipDto {
   @Expose()
@@ -14,6 +15,7 @@ export class CreateInternshipDto {
   @IsDateString()
   @ApiProperty({ format: 'date' })
   @Transform(DateTransformer)
+  @isCurrentYear()
   applicationStart: string;
 
   @IsDateString()
@@ -118,5 +120,6 @@ export class CreateInternshipDto {
   @ApiProperty({ format: 'date' })
   @Transform(DateTransformer)
   @IsAfterDate<CreateInternshipDto>('sprintThreeStart')
+  @isCurrentYear()
   sprintThreeEnd: string;
 }

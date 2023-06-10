@@ -121,13 +121,13 @@ export class CandidatesController {
       const payload: UserPayload = req.user;
       const user = await this.usersService.findOne({ email: payload.email }, { entityManager });
       const internship = await this.internshipService.findCurrent({ entityManager });
-      if (dto.userProfile) {
-        await this.userProfileService.update({ user }, dto.userProfile, { entityManager });
-      }
-      if (dto.candidateProfile) {
-        await this.candidateInfoService.update({ user }, dto.candidateProfile, { entityManager });
-      }
-      application = await this.applicationService.createApplication(user, internship);
+      const userProfile = dto.userProfile
+        ? await this.userProfileService.upsert({ user }, dto.userProfile, { entityManager })
+        : await this.userProfileService.findOne({ user });
+      const candidateProfile = dto.candidateProfile
+        ? await this.candidateInfoService.upsert({ user }, dto.candidateProfile, { entityManager })
+        : await this.candidateInfoService.findOne({ user });
+      application = await this.applicationService.createApplication(user, userProfile, candidateProfile, internship);
     });
     return ResponseApplicationDto.fromEntity(application);
   }

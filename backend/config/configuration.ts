@@ -3,6 +3,31 @@ export default () => ({
   application: {
     referralIdLength: 64,
     generatedPasswordLength: 16,
+    moderation: {
+      birthday: {
+        constraint: {
+          operation: 'isAgeBetween',
+          values: [18, 35],
+        },
+        rejectionReason: 'Извините, к стажировке допускаются только граждане от 18 до 35 лет.',
+      },
+      citizenship: {
+        constraint: {
+          operation: 'isIncludedIn',
+          values: ['Гражданство РФ'],
+        },
+        rejectionReason: 'Извините, в стажировке могут принять участие только граждане РФ.',
+      },
+    },
+    autoScore: {
+      workSchedule: {
+        constraint: {
+          operation: 'isIncludedIn',
+          values: ['full_week'],
+        },
+        score: 5,
+      },
+    },
   },
   database: {
     host: process.env.DATABASE_HOST,
