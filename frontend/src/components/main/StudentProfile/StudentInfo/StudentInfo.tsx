@@ -6,8 +6,8 @@ const userImg = "/images/user.svg"
 
 export default function StudentInfo({ profile }: any) {
 
-  const birthday = dayjs(profile.birthday);
-  const age = birthday.diff(Date.now(), 'year')
+  const today = dayjs(Date.now());
+  const age = today.diff(profile.birthday, 'year')
   return (
     <div className={styles.user}>
     <img className={styles.userImg} src={profile.photo ?? userImg} />
